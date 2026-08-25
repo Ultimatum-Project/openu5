@@ -1,0 +1,13 @@
+{
+  "name": "starving-damage",
+  "_doc": "Hambre: con food==0, CADA cambio de hora imprime 'Starving!' y daña rand_range(1,8) a cada miembro vivo (kernel 0x2B66-0x2B74 + kernel_party_random_damage 0x2AA8). Paridad byte a byte de los rolls: sembrar g_rng_seed NO basta (verificado en vivo: el binario consume RNG en cantidades no modeladas antes del roll — idle/animaciones), así que capture_seed captura g_rng_seed EN VIVO con breakpoints en la entrada de kernel_party_random_damage (roll 0) y en rand_range 0x2092 (retorno en pila dentro de [0x2AA8,0x2AE8); si se observa el roll k se deshacen k transiciones con rng_unstep — el pty puede perder pausas) y siembra el clon con esa semilla: los HP finales deben coincidir byte a byte (fórmula del daño + orden de rolls + RNG portado). kernel-survival.md §2 y rng.md.",
+  "initial": "saved-gam",
+  "setup": [
+    { "global": "food", "value": 0 },
+    { "global": "minute", "value": 59 }
+  ],
+  "actions": [
+    { "op": "pass_turn", "times": 1, "capture_seed": "party_random_damage" }
+  ],
+  "fields": ["party_hp", "food", "minute"]
+}

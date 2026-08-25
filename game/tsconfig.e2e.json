@@ -1,0 +1,16 @@
+{
+  // Type-check gate para las specs E2E — y en particular los capítulos del Grand
+  // Tour (game/e2e/grandtour/*), cuyas specs codifican ASSERTS de offsets del .GAM
+  // load-bearing. El tsconfig raíz sólo incluye `src`+`tests`, así que Playwright
+  // (esbuild) transpila los specs SIN type-check; a ×19 capítulos eso amplifica el
+  // riesgo de un error de tipos que ningún gate ve (deuda #4 de la review de ch01).
+  //
+  // Hereda las opciones estrictas del tsconfig del juego pero apunta el `include` a
+  // `e2e` y añade los tipos de Node (los specs usan `node:fs`/`node:path`/`node:url`)
+  // junto a los del test runner de Playwright.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "@playwright/test"]
+  },
+  "include": ["e2e"]
+}

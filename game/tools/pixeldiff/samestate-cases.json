@@ -1,0 +1,44 @@
+{
+  "_doc": "Casos canónicos MISMO-ESTADO del arnés píxel-diff (task #26 fase 2). Cada caso empareja un SAVED.GAM (sembrado en el oráculo por capture_original.py y cargado en el port por __u5test.loadNativeSave) con el nombre de shot compartido por ambas capturas. Los saves viven en original/av-saves (gitignored, EA); aquí sólo se referencian por ruta. 'regions' (nivel raíz) es el manifiesto de máscaras por defecto (modo strict de fase 2); un caso puede sobreescribirlo con su propia clave 'regions' (p.ej. una vista de mazmorra first-person, sin paneles/cielo, necesita otras regiones). El campo 'state' documenta loc/hora REALES medidos en los bytes del save (offsets 0x2ed loc, 0x2d9 hora), no la etiqueta aspiracional del plan-sesion-av.",
+  "regions": "regions-samestate.json",
+  "cases": [
+    {
+      "name": "overworld_day",
+      "save": "original/av-saves/SAVED.GAM.02",
+      "state": "loc=0 overworld, hora=12 (día), party Elwood/Iolo/Gorn x=23 y=128",
+      "note": "Britannia overworld a mediodía. Cielo con sol, viewport lit al máximo. Caso canónico de fase 1 (antes 'overworld_02')."
+    },
+    {
+      "name": "overworld_night",
+      "save": "original/av-saves/SAVED.GAM.03",
+      "state": "loc=0 overworld, hora=0 (medianoche), misma posición que overworld_day",
+      "note": "MISMO sitio que overworld_day pero a medianoche: ejercita la MÁSCARA DE LUZ nocturna y la banda del cielo nocturna. Este caso destapó un FINDING (task #26 fase 2) que se ARREGLÓ en #55: el diamante nocturno de 37 tiles NO era radio de la party sino el HALO del EMISOR de la MOONGATE (tile 0xDC, kernel_moongate_render 0x475a, radio 10) — en SAVED.GAM.03 la moonstone 6 está en (23,126), 2 al norte de la party, así que el diamante va centrado en la puerta (mi mapa lit-tiles lo mostraba desplazado al norte). El port horneaba la moongate como entidad, no en el terrainAt del flood → emisor nunca disparaba (9 tiles lit). Fix en coreview.ts::visField (moongateCells). PRE-VALIDADO por el arnés contra el original headless: viewport_light 1.0, tiles oscuros port=84 = orig=84 EXACTO. Por eso expect=PASS.",
+      "expect": "PASS"
+    },
+    {
+      "name": "town_day",
+      "save": "original/av-saves/SAVED.GAM.04",
+      "state": "loc=2 Britain (pueblo), hora=12 (día), party x=16 y=15",
+      "note": "Interior de pueblo (Britain) de día: antorchas de pared, fuente/ladrillo, NPCs. Caso canónico de fase 1 (antes 'town_04')."
+    },
+    {
+      "name": "town_night",
+      "save": "original/av-saves/SAVED.GAM.05",
+      "state": "loc=2 Britain (pueblo), hora=22 (noche), misma posición que town_day",
+      "note": "MISMO pueblo que town_day pero de noche: ejercita la máscara de luz en interior de pueblo (antorchas iluminando el entorno oscuro)."
+    },
+    {
+      "name": "castle_lb",
+      "save": "original/u5/saves/samestate/SAVED.GAM.castle-lb",
+      "state": "loc=17 Castillo de Lord British, floor 0, (15,28), hora=5 (amanecer), fecha 5-12",
+      "note": "Estado NUEVO (tanda 3): castillo de LB con las tablas de MÓVILES/NPC POBLADAS — save LEGÍTIMO del usuario (entró de verdad y grabó dentro), no byte-patch. Valida el veredicto de tanda 3: el byte-patch fallaba (port repuebla NPCs vs original con móviles vacíos, viewport_light 0.636); con un save legítimo ambos cargan LOS MISMOS móviles → mismo-estado válido. Ejercita el mapa de castillo (muros, alfombra, fuente, guardias, LB) + luz de amanecer."
+    },
+    {
+      "name": "britain_legit",
+      "save": "original/u5/saves/samestate/SAVED.GAM.britain",
+      "state": "loc=2 Britain (pueblo), floor 0, (15,29), hora=6 (amanecer), fecha 5-12",
+      "note": "Control de interior LEGÍTIMO (tanda 3): mismo pueblo que town_day/town_night pero con save del usuario (móviles poblados). El CONTENIDO calca (town, NPCs, paneles, cielo). FINDING que destapó (task #26): la party está en y=29, a 2 del borde SUR del mapa de Britain (32 alto). El viewport llega a y=32..34 (FUERA del mapa). El PORT dejaba esas 3 filas en NEGRO (tile 0); el ORIGINAL las rellena con la HIERBA del borde del pueblo. viewport_light 0.727 (port 33 tiles oscuros = filas 8-10 exactas, orig 0). ARREGLADO en task #70: DERIVACIÓN del kernel 0x4402 (get_tile_ptr) — para g_location 1..0x7f (small map), cualquier coord con x<0|y<0|x>31|y>31 salta a 0x4496 y devuelve el PUNTERO FIJO DS:0x6A07, que es el ÚLTIMO byte del buffer 32×32 (base 0x6608, +0x3FF) = la celda (31,31) del propio mapa. NO es clamp de índice, NO es wrap, NO es una constante hardcodeada: SIEMPRE la celda (31,31). En Britain (31,31)=5=hierba → borde de hierba. Fix: `ActiveMap.edgeFillTile` (map.ts) + coreview.ts (window, visField/LOS y ambientSfx usan el mismo fetch, como el original). Reconcilia la tabla per-mapa de Ultima5Redux GetOutOfBoundsSprite (Sin Vraal=Desert/Sutek+Grendel=Swamp/Stonegate=Hills = sus celdas (31,31)). Tests unit: skin-coreview.test.ts (borde S/E = hierba, overworld intacto). expect=PASS: la próxima captura headless valida el pixel-diff (el original ya está capturado; re-shot del port confirma filas 8-10 = hierba lit).",
+      "expect": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,583 @@
+{
+ "task": "#39 inferible-sweep fase2",
+ "note": "re/notes/inferible-sweep-f2.md",
+ "verified": [
+  {
+   "file": "DUNGEON.OVL",
+   "off": 982,
+   "role": "dng_getkey (dungeon input poller + idle re-render)",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "DUNGEON.OVL",
+   "off": 4172,
+   "role": "per_location_wall_inscription",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "DUNGEON.OVL",
+   "off": 4316,
+   "role": "dng_get_tile (map[floor][y*8+x], mask lit-bit)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "DUNGEON.OVL",
+   "off": 4734,
+   "role": "magic_field_sparkle_drawer",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "DUNGEON.OVL",
+   "off": 4938,
+   "role": "wall_segment_blit (perspective tables)",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "DUNGEON.OVL",
+   "off": 5386,
+   "role": "forward_raytrace_column",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "DUNGEON.OVL",
+   "off": 5762,
+   "role": "side_raytrace_column",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "DUNGEON.OVL",
+   "off": 6022,
+   "role": "fountain_vector_drawer",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "DUNGEON.OVL",
+   "off": 6482,
+   "role": "feature_overlay_drawer_by_nibble",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "DUNGEON.OVL",
+   "off": 6800,
+   "role": "dng_render_corridor (light gate + raycast)",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "DUNGEON.OVL",
+   "off": 7136,
+   "role": "dng_redraw (corridor+indicator+anim)",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "DUNGEON.OVL",
+   "off": 7180,
+   "role": "dng_landing_ok (Uus/Des Por empty-corridor gate)",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "CAST.OVL",
+   "off": 506,
+   "role": "mani_caster",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "CAST.OVL",
+   "off": 1086,
+   "role": "repel_undead_an_xen_corp",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "CAST.OVL",
+   "off": 1188,
+   "role": "in_wis_peer_coords",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "CAST.OVL",
+   "off": 1200,
+   "role": "kal_xen_summon",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "CAST.OVL",
+   "off": 1868,
+   "role": "untransform_actors (clear flag 0x10)",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "CAST.OVL",
+   "off": 1972,
+   "role": "in_bet_xen_swarms",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "CAST.OVL",
+   "off": 2118,
+   "role": "an_ex_por_seal_door_sub",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "CAST.OVL",
+   "off": 2814,
+   "role": "self_transform_rat",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "CAST.OVL",
+   "off": 3224,
+   "role": "in_quas_corp_mass_fear",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "CAST.OVL",
+   "off": 7222,
+   "role": "line_spell_worker",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "CAST2.OVL",
+   "off": 962,
+   "role": "mani_apply (heal rand30 cap)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "CAST2.OVL",
+   "off": 1034,
+   "role": "rel_hur_set_wind",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "CAST2.OVL",
+   "off": 1896,
+   "role": "magic_door_open_worker",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "CAST2.OVL",
+   "off": 2282,
+   "role": "light_spell_set",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "CAST2.OVL",
+   "off": 2296,
+   "role": "time_spell_state_writer",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "CAST2.OVL",
+   "off": 2324,
+   "role": "table_driven_summoner",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "CAST2.OVL",
+   "off": 3684,
+   "role": "spectacle_cue (location=0xff spell handler)",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "SJOG.OVL",
+   "off": 4160,
+   "role": "loot_fixed",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "SJOG.OVL",
+   "off": 4280,
+   "role": "loot_random",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "SJOG.OVL",
+   "off": 6964,
+   "role": "count_party_ready (per-member ammo)",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "SJOG.OVL",
+   "off": 7020,
+   "role": "sum_flee_edges",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "SJOG.OVL",
+   "off": 8210,
+   "role": "combat_turn_upkeep (field dissip + time-spell countdown)",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "SJOG.OVL",
+   "off": 8254,
+   "role": "end_combat_cleanup",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "SJOG.OVL",
+   "off": 8408,
+   "role": "combat_cell_blocked",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "SJOG.OVL",
+   "off": 8520,
+   "role": "combat_actor_surrounded",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "TOWN.OVL",
+   "off": 286,
+   "role": "find_npc_by_objIdx",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "TOWN.OVL",
+   "off": 368,
+   "role": "town_time_tile_transform (hour-gated tiles)",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "TOWN.OVL",
+   "off": 2492,
+   "role": "town_attack_engine_commit",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "TOWN.OVL",
+   "off": 3192,
+   "role": "town_objactor_randomwalk",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "TOWN.OVL",
+   "off": 4338,
+   "role": "shadowlord_possess_slot",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "TOWN.OVL",
+   "off": 5780,
+   "role": "npc_activate_all_town",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "TOWN.OVL",
+   "off": 5926,
+   "role": "npc_place",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "NPC.OVL",
+   "off": 416,
+   "role": "npc_seek (seek-to-stairs)",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "NPC.OVL",
+   "off": 1196,
+   "role": "npc_path_backtrace",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "NPC.OVL",
+   "off": 2634,
+   "role": "npc_on_stairs_for_floor",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "NPC.OVL",
+   "off": 2974,
+   "role": "npc_can_move",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "NPC.OVL",
+   "off": 3328,
+   "role": "npc_ai_step (jump-table aiType 0..7)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ZSTATS.OVL",
+   "off": 632,
+   "role": "print_padded_string",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ZSTATS.OVL",
+   "off": 1304,
+   "role": "is_item_equipped",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ZSTATS.OVL",
+   "off": 1388,
+   "role": "find_prev_owned",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ZSTATS.OVL",
+   "off": 1444,
+   "role": "find_next_owned",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ZSTATS.OVL",
+   "off": 2458,
+   "role": "build_extended_item_table",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ZSTATS.OVL",
+   "off": 3082,
+   "role": "hand_state",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "SHOPPES.OVL",
+   "off": 0,
+   "role": "strcpy_append (helper)",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "SHOPPES.OVL",
+   "off": 3160,
+   "role": "party_owns_any_equipment (SELL up-front gate)",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "SHOPPES2.OVL",
+   "off": 466,
+   "role": "serve_tavern_round",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "SHOPPES2.OVL",
+   "off": 1636,
+   "role": "barkeep_greeting_wrapper (RNG flavor)",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "SHOPPES3.OVL",
+   "off": 0,
+   "role": "count_guests_here",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "SHOPPES3.OVL",
+   "off": 1172,
+   "role": "find_prev_guest_here",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "SHOPPES3.OVL",
+   "off": 1206,
+   "role": "find_next_guest_here",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "ENDGAME.OVL",
+   "off": 570,
+   "role": "text_accum_char (word-wrap)",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "ENDGAME.OVL",
+   "off": 652,
+   "role": "spell_cardinal (date spelled; port numerizes - divergencia declarada)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ENDGAME.OVL",
+   "off": 1278,
+   "role": "frame_present_leaf (throne cutscene)",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "ENDGAME.OVL",
+   "off": 1442,
+   "role": "wander_sprite (cutscene actor walk)",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "INTRO.OVL",
+   "off": 1654,
+   "role": "print_menu_line (video-inverse highlight)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "INTRO.OVL",
+   "off": 7714,
+   "role": "draw_transfer_stat (U4 import)",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "INTRO.OVL",
+   "off": 8228,
+   "role": "draw_transfer_frame (U4 import)",
+   "inference": "CONFIRMED",
+   "coverage": "AUSENTE"
+  },
+  {
+   "file": "BLCKTHRN.OVL",
+   "off": 0,
+   "role": "beep_delay",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "BLCKTHRN.OVL",
+   "off": 632,
+   "role": "print_question",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "BLCKTHRN.OVL",
+   "off": 1296,
+   "role": "present_reward_cutscene",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "BLCKTHRN.OVL",
+   "off": 1354,
+   "role": "interrogate",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "FLAMES.OVL",
+   "off": 0,
+   "role": "plink_link_thunk (inert)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "CMDS.OVL",
+   "off": 1854,
+   "role": "land_nearby_pred (X-it helper)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "CMDS.OVL",
+   "off": 5306,
+   "role": "is_pushable_tile (Push helper)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "OUTSUBS.OVL",
+   "off": 152,
+   "role": "viewport_compose_16x16",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "OUTSUBS.OVL",
+   "off": 436,
+   "role": "outdoor_viewport_chunk_load",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "OUTSUBS.OVL",
+   "off": 712,
+   "role": "viewport_scroll_shift",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "OUTSUBS.OVL",
+   "off": 872,
+   "role": "map_table_ptr_by_floor",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "OUTSUBS.OVL",
+   "off": 1382,
+   "role": "seed_underworld_plot",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  }
+ ],
+ "summary": {
+  "total": 81,
+  "confirmed": 81,
+  "refuted": 0,
+  "coverage": {
+   "PARCIAL": 27,
+   "AUSENTE": 17,
+   "CUBIERTA": 37
+  }
+ }
+}

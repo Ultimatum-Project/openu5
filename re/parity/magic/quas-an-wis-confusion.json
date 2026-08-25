@@ -1,0 +1,31 @@
+{
+ "name": "quas-an-wis-confusion",
+ "note": "Quas An Wis (Confusi\u00f3n, combat-only bit 0x01) \u2192 'C'(0x43)/20.",
+ "spec": {
+  "seed": 1,
+  "spell": "Quas_An_Wis",
+  "casterIndex": 0,
+  "ctx": {
+   "location": 129,
+   "inCombat": true
+  },
+  "roster": [
+   {
+    "class": "M",
+    "mp": 22,
+    "level": 8
+   }
+  ],
+  "spellQuantities": {
+   "31": 1
+  }
+ },
+ "expect": {
+  "time_spell": 67,
+  "time_spell_turns": 20
+ },
+ "compareFields": [
+  "time_spell",
+  "time_spell_turns"
+ ]
+}

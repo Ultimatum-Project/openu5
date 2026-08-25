@@ -1,0 +1,31 @@
+{
+ "name": "in-an-negate",
+ "note": "In An (Negate magic) \u2192 'N'(0x4E)/10.",
+ "spec": {
+  "seed": 1,
+  "spell": "In_An",
+  "casterIndex": 0,
+  "ctx": {
+   "location": 0,
+   "inCombat": false
+  },
+  "roster": [
+   {
+    "class": "M",
+    "mp": 22,
+    "level": 8
+   }
+  ],
+  "spellQuantities": {
+   "32": 1
+  }
+ },
+ "expect": {
+  "time_spell": 78,
+  "time_spell_turns": 10
+ },
+ "compareFields": [
+  "time_spell",
+  "time_spell_turns"
+ ]
+}

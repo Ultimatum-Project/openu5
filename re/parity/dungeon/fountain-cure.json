@@ -1,0 +1,33 @@
+{
+ "name": "fountain-cure",
+ "note": "Fuente 0x50: cura veneno del PJ activo (status->'G').",
+ "spec": {
+  "seed": 1,
+  "roster": [
+   {
+    "dex": 15,
+    "hp": 30,
+    "maxHp": 30,
+    "status": "P"
+   }
+  ],
+  "activeCharacter": 0,
+  "pos": {
+   "dungeon": 33,
+   "floor": 0,
+   "x": 2,
+   "y": 2,
+   "facing": "east"
+  },
+  "cells": [
+   {
+    "floor": 0,
+    "x": 2,
+    "y": 2,
+    "type": 5,
+    "sub": 0
+   }
+  ],
+  "action": "drink"
+ }
+}

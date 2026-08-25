@@ -1,0 +1,910 @@
+{
+  "Reagent": [
+    {
+      "ItemName": "SulfurAsh",
+      "ItemNameHighlight": "sulphurous ash,ash",
+      "ItemSprite": "SulfurAsh.2d",
+      "ItemSpriteExposed": 0
+    },
+    {
+      "ItemName": "Ginseng",
+      "ItemNameHighlight": "ginseng",
+      "ItemSprite": "Ginseng.2d",
+      "ItemSpriteExposed": 0
+    },
+    {
+      "ItemName": "Garlic",
+      "ItemNameHighlight": "garlic",
+      "ItemSprite": "Garlic.2d",
+      "ItemSpriteExposed": 0
+    },
+    {
+      "ItemName": "SpiderSilk",
+      "ItemNameHighlight": "spider silk,silk",
+      "ItemSprite": "SpiderSilk.2d",
+      "ItemSpriteExposed": 0
+    },
+    {
+      "ItemName": "BloodMoss",
+      "ItemNameHighlight": "blood moss,moss",
+      "ItemSprite": "BloodMoss.2d",
+      "ItemSpriteExposed": 0
+    },
+    {
+      "ItemName": "BlackPearl",
+      "ItemNameHighlight": "black pearl,pearl",
+      "ItemSprite": "BlackPearl.2d",
+      "ItemSpriteExposed": 0
+    },
+    {
+      "ItemName": "NightShade",
+      "ItemNameHighlight": "nightshade",
+      "ItemSprite": "NightShade.2d",
+      "ItemSpriteExposed": 0
+    },
+    {
+      "ItemName": "MandrakeRoot",
+      "ItemNameHighlight": "mandrake root,mandrake",
+      "ItemSprite": "MandrakeRoot.2d",
+      "ItemSpriteExposed": 0
+    }
+  ],
+  "Armament": [
+    {
+      "ItemName": "BareHands",
+      "ItemNameHighlight": "",
+      "ItemSprite": "265",
+      "ItemSpriteExposed": 265
+    },
+    {
+      "ItemName": "LeatherHelm",
+      "ItemNameHighlight": "",
+      "ItemSprite": "265",
+      "ItemSpriteExposed": 265
+    },
+    {
+      "ItemName": "ChainCoif",
+      "ItemNameHighlight": "",
+      "ItemSprite": "265",
+      "ItemSpriteExposed": 265
+    },
+    {
+      "ItemName": "IronHelm",
+      "ItemNameHighlight": "",
+      "ItemSprite": "265",
+      "ItemSpriteExposed": 265
+    },
+    {
+      "ItemName": "SpikedHelm",
+      "ItemNameHighlight": "",
+      "ItemSprite": "265",
+      "ItemSpriteExposed": 265
+    },
+    {
+      "ItemName": "SmallShield",
+      "ItemNameHighlight": "",
+      "ItemSprite": "262",
+      "ItemSpriteExposed": 262
+    },
+    {
+      "ItemName": "LargeShield",
+      "ItemNameHighlight": "",
+      "ItemSprite": "262",
+      "ItemSpriteExposed": 262
+    },
+    {
+      "ItemName": "SpikedShield",
+      "ItemNameHighlight": "",
+      "ItemSprite": "262",
+      "ItemSpriteExposed": 262
+    },
+    {
+      "ItemName": "MagicShield",
+      "ItemNameHighlight": "",
+      "ItemSprite": "262",
+      "ItemSpriteExposed": 262
+    },
+    {
+      "ItemName": "JewelShield",
+      "ItemNameHighlight": "",
+      "ItemSprite": "262",
+      "ItemSpriteExposed": 262
+    },
+    {
+      "ItemName": "ClothArmour",
+      "ItemNameHighlight": "",
+      "ItemSprite": "267",
+      "ItemSpriteExposed": 267
+    },
+    {
+      "ItemName": "LeatherArmour",
+      "ItemNameHighlight": "",
+      "ItemSprite": "267",
+      "ItemSpriteExposed": 267
+    },
+    {
+      "ItemName": "Ringmail",
+      "ItemNameHighlight": "",
+      "ItemSprite": "267",
+      "ItemSpriteExposed": 267
+    },
+    {
+      "ItemName": "ScaleMail",
+      "ItemNameHighlight": "",
+      "ItemSprite": "267",
+      "ItemSpriteExposed": 267
+    },
+    {
+      "ItemName": "ChainMail",
+      "ItemNameHighlight": "",
+      "ItemSprite": "267",
+      "ItemSpriteExposed": 267
+    },
+    {
+      "ItemName": "PlateMail",
+      "ItemNameHighlight": "",
+      "ItemSprite": "267",
+      "ItemSpriteExposed": 267
+    },
+    {
+      "ItemName": "MysticArmour",
+      "ItemNameHighlight": "",
+      "ItemSprite": "267",
+      "ItemSpriteExposed": 267
+    },
+    {
+      "ItemName": "Dagger",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "Sling",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "Club",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "FlamingOil",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "MainGauche",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "Spear",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "ThrowingAxe",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "ShortSword",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "Mace",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "MorningStar",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "Bow",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "Arrows",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "Crossbow",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "Quarrels",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "LongSword",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "TwoHHammer",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "TwoHAxe",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "TwoHSword",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "Halberd",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "SwordofChaos",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "MagicBow",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "SilverSword",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "MagicAxe",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "GlassSword",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "JeweledSword",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "MysticSword",
+      "ItemNameHighlight": "",
+      "ItemSprite": "261",
+      "ItemSpriteExposed": 261
+    },
+    {
+      "ItemName": "RingInvisibility",
+      "ItemNameHighlight": "",
+      "ItemSprite": "266",
+      "ItemSpriteExposed": 266
+    },
+    {
+      "ItemName": "RingProtection",
+      "ItemNameHighlight": "",
+      "ItemSprite": "266",
+      "ItemSpriteExposed": 266
+    },
+    {
+      "ItemName": "RingRegeneration",
+      "ItemNameHighlight": "",
+      "ItemSprite": "266",
+      "ItemSpriteExposed": 266
+    },
+    {
+      "ItemName": "AmuletOfTurning",
+      "ItemNameHighlight": "",
+      "ItemSprite": "268",
+      "ItemSpriteExposed": 268
+    },
+    {
+      "ItemName": "SpikedCollar",
+      "ItemNameHighlight": "",
+      "ItemSprite": "268",
+      "ItemSpriteExposed": 268
+    },
+    {
+      "ItemName": "Ankh",
+      "ItemNameHighlight": "",
+      "ItemSprite": "268",
+      "ItemSpriteExposed": 268
+    }
+  ],
+  "Spell": [
+    {
+      "ItemName": "In_Lor",
+      "ItemNameHighlight": "In Lor",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Grav_Por",
+      "ItemNameHighlight": "Grav Por",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "An_Zu",
+      "ItemNameHighlight": "An Zu",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "An_Nox",
+      "ItemNameHighlight": "An Nox",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Mani",
+      "ItemNameHighlight": "Vas Mani,Mani",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "An_Ylem",
+      "ItemNameHighlight": "An Ylem",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "An_Sanct",
+      "ItemNameHighlight": "An Sanct",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "An_Xen_Corp",
+      "ItemNameHighlight": "An Xen Corp",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Rel_Hur",
+      "ItemNameHighlight": "Rel Hur",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Wis",
+      "ItemNameHighlight": "In Wis",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Kal_Xen",
+      "ItemNameHighlight": "Kal Xen",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Xen_Mani",
+      "ItemNameHighlight": "In Xen Mani",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Vas_Lor",
+      "ItemNameHighlight": "Vas Lor",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Vas_Flam",
+      "ItemNameHighlight": "Vas Flam",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Flam_Grav",
+      "ItemNameHighlight": "In Flam Grav",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Nox_Grav",
+      "ItemNameHighlight": "In Nox Grav",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Zu_Grav",
+      "ItemNameHighlight": "In Zu Grav",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Por",
+      "ItemNameHighlight": "In Por",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "An_Grav",
+      "ItemNameHighlight": "An Grav",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Sanct",
+      "ItemNameHighlight": "In Sanct",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Sanct_Grav",
+      "ItemNameHighlight": "In Sanct Grav",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Uus_Por",
+      "ItemNameHighlight": "Uus Por",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Des_Por",
+      "ItemNameHighlight": "Des Por",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Wis_Quas",
+      "ItemNameHighlight": "Wis Quas",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Bet_Xen",
+      "ItemNameHighlight": "In Bet Xen",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "An_Ex_Por",
+      "ItemNameHighlight": "An Ex Por",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Ex_Por",
+      "ItemNameHighlight": "In Ex Por",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Vas_Mani",
+      "ItemNameHighlight": "Vas Mani",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Zu",
+      "ItemNameHighlight": "In Zu",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Rel_Tym",
+      "ItemNameHighlight": "Rel Tym",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Vas_Por_Ylem",
+      "ItemNameHighlight": "In Vas Por Ylem",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Quas_An_Wis",
+      "ItemNameHighlight": "Quas An Wis",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_An",
+      "ItemNameHighlight": "In An",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Wis_An_Ylem",
+      "ItemNameHighlight": "Wis An Ylem",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "An_Xen_Ex",
+      "ItemNameHighlight": "An Xen Ex",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Rel_Xen_Bet",
+      "ItemNameHighlight": "Rel Xen Bet",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Sanct_Lor",
+      "ItemNameHighlight": "Sanct Lor",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Xen_Corp",
+      "ItemNameHighlight": "Xen Corp",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Quas_Xen",
+      "ItemNameHighlight": "In Quas Xen",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Quas_Wis",
+      "ItemNameHighlight": "In Quas Wis",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Nox_Hur",
+      "ItemNameHighlight": "In Nor Hur",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Quas_Corp",
+      "ItemNameHighlight": "In Quas Corp",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Mani_Corp",
+      "ItemNameHighlight": "In Mani Corp",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Kal_Xen_Corp",
+      "ItemNameHighlight": "Kal Xen Corp",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Vas_Grav_Corp",
+      "ItemNameHighlight": "In Vas Grav Corp",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Flam_Hur",
+      "ItemNameHighlight": "In Flam Hur",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Vas_Rel_Por",
+      "ItemNameHighlight": "Vas Rel Por",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "An_Tym",
+      "ItemNameHighlight": "An Tym",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Nox",
+      "ItemNameHighlight": "Nox",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    }
+  ],
+  "Item": [
+    {
+      "ItemName": "Carpet",
+      "ItemNameHighlight": "",
+      "ItemSprite": "283",
+      "ItemSpriteExposed": 283
+    },
+    {
+      "ItemName": "Grapple",
+      "ItemNameHighlight": "",
+      "ItemSprite": "12",
+      "ItemSpriteExposed": 12
+    },
+    {
+      "ItemName": "Spyglass",
+      "ItemNameHighlight": "",
+      "ItemSprite": "89",
+      "ItemSpriteExposed": 89
+    },
+    {
+      "ItemName": "HMSCape",
+      "ItemNameHighlight": "",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "PocketWatch",
+      "ItemNameHighlight": "",
+      "ItemSprite": "256",
+      "ItemSpriteExposed": 256
+    },
+    {
+      "ItemName": "BlackBadge",
+      "ItemNameHighlight": "",
+      "ItemSprite": "256",
+      "ItemSpriteExposed": 256
+    },
+    {
+      "ItemName": "WoodenBox",
+      "ItemNameHighlight": "",
+      "ItemSprite": "270",
+      "ItemSpriteExposed": 270
+    },
+    {
+      "ItemName": "Sextant",
+      "ItemNameHighlight": "",
+      "ItemSprite": "256",
+      "ItemSpriteExposed": 256
+    },
+    {
+      "ItemName": "Vas_Lor",
+      "ItemNameHighlight": "",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Rel_Hur",
+      "ItemNameHighlight": "",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Sanct",
+      "ItemNameHighlight": "",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_An",
+      "ItemNameHighlight": "",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Quas_Wis",
+      "ItemNameHighlight": "",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Kal_Xen_Corp",
+      "ItemNameHighlight": "",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "In_Mani_Corp",
+      "ItemNameHighlight": "",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "An_Tym",
+      "ItemNameHighlight": "",
+      "ItemSprite": "260",
+      "ItemSpriteExposed": 260
+    },
+    {
+      "ItemName": "Blue",
+      "ItemNameHighlight": "",
+      "ItemSprite": "259",
+      "ItemSpriteExposed": 259
+    },
+    {
+      "ItemName": "Yellow",
+      "ItemNameHighlight": "",
+      "ItemSprite": "259",
+      "ItemSpriteExposed": 259
+    },
+    {
+      "ItemName": "Red",
+      "ItemNameHighlight": "",
+      "ItemSprite": "259",
+      "ItemSpriteExposed": 259
+    },
+    {
+      "ItemName": "Green",
+      "ItemNameHighlight": "",
+      "ItemSprite": "259",
+      "ItemSpriteExposed": 259
+    },
+    {
+      "ItemName": "Orange",
+      "ItemNameHighlight": "",
+      "ItemSprite": "259",
+      "ItemSpriteExposed": 259
+    },
+    {
+      "ItemName": "Purple",
+      "ItemNameHighlight": "",
+      "ItemSprite": "259",
+      "ItemSpriteExposed": 259
+    },
+    {
+      "ItemName": "Black",
+      "ItemNameHighlight": "",
+      "ItemSprite": "259",
+      "ItemSpriteExposed": 259
+    },
+    {
+      "ItemName": "White",
+      "ItemNameHighlight": "",
+      "ItemSprite": "259",
+      "ItemSpriteExposed": 259
+    },
+    {
+      "ItemName": "Falsehood",
+      "ItemNameHighlight": "",
+      "ItemSprite": "436",
+      "ItemSpriteExposed": 436
+    },
+    {
+      "ItemName": "Hatred",
+      "ItemNameHighlight": "",
+      "ItemSprite": "436",
+      "ItemSpriteExposed": 436
+    },
+    {
+      "ItemName": "Cowardice",
+      "ItemNameHighlight": "",
+      "ItemSprite": "436",
+      "ItemSpriteExposed": 436
+    },
+    {
+      "ItemName": "Amulet",
+      "ItemNameHighlight": "",
+      "ItemSprite": "439",
+      "ItemSpriteExposed": 439
+    },
+    {
+      "ItemName": "Crown",
+      "ItemNameHighlight": "",
+      "ItemSprite": "437",
+      "ItemSpriteExposed": 437
+    },
+    {
+      "ItemName": "Sceptre",
+      "ItemNameHighlight": "",
+      "ItemSprite": "438",
+      "ItemSpriteExposed": 438
+    },
+    {
+      "ItemName": "NewMoon",
+      "ItemNameHighlight": "",
+      "ItemSprite": "281",
+      "ItemSpriteExposed": 281
+    },
+    {
+      "ItemName": "CrescentWaxing",
+      "ItemNameHighlight": "",
+      "ItemSprite": "281",
+      "ItemSpriteExposed": 281
+    },
+    {
+      "ItemName": "FirstQuarter",
+      "ItemNameHighlight": "",
+      "ItemSprite": "281",
+      "ItemSpriteExposed": 281
+    },
+    {
+      "ItemName": "GibbousWaxing",
+      "ItemNameHighlight": "",
+      "ItemSprite": "281",
+      "ItemSpriteExposed": 281
+    },
+    {
+      "ItemName": "FullMoon",
+      "ItemNameHighlight": "",
+      "ItemSprite": "281",
+      "ItemSpriteExposed": 281
+    },
+    {
+      "ItemName": "GibbousWaning",
+      "ItemNameHighlight": "",
+      "ItemSprite": "281",
+      "ItemSpriteExposed": 281
+    },
+    {
+      "ItemName": "LastQuarter",
+      "ItemNameHighlight": "",
+      "ItemSprite": "281",
+      "ItemSpriteExposed": 281
+    },
+    {
+      "ItemName": "CrescentWaning",
+      "ItemNameHighlight": "",
+      "ItemSprite": "281",
+      "ItemSpriteExposed": 281
+    },
+    {
+      "ItemName": "Torches",
+      "ItemNameHighlight": "",
+      "ItemSprite": "269",
+      "ItemSpriteExposed": 269
+    },
+    {
+      "ItemName": "Gems",
+      "ItemNameHighlight": "",
+      "ItemSprite": "264",
+      "ItemSpriteExposed": 264
+    },
+    {
+      "ItemName": "Keys",
+      "ItemNameHighlight": "",
+      "ItemSprite": "263",
+      "ItemSpriteExposed": 263
+    },
+    {
+      "ItemName": "SkullKeys",
+      "ItemNameHighlight": "",
+      "ItemSprite": "263",
+      "ItemSpriteExposed": 263
+    },
+    {
+      "ItemName": "Food",
+      "ItemNameHighlight": "",
+      "ItemSprite": "271",
+      "ItemSpriteExposed": 271
+    },
+    {
+      "ItemName": "Gold",
+      "ItemNameHighlight": "",
+      "ItemSprite": "258",
+      "ItemSpriteExposed": 258
+    }
+  ]
+}

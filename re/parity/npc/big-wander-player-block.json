@@ -1,0 +1,12 @@
+{
+ "name": "big-wander-player-block",
+ "kind": "wander",
+ "note": "Big-wander con el jugador en (17,16): el NPC no puede pisar la casilla del party (npc_can_move ∧ ocupación).",
+ "spec": {
+  "seed": 4660,
+  "location": 18, "floor": 0, "hour": 14,
+  "npc": {"slot": 7, "aiType": 2, "post": {"x": 16, "y": 16}, "start": {"x": 16, "y": 16}, "type": 112},
+  "player": {"floor": 0, "x": 17, "y": 16},
+  "turns": 24
+ }
+}

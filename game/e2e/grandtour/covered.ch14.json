@@ -1,0 +1,17 @@
+{
+  "chapter": "ch14",
+  "coveredIds": [
+    "cell-deceit-fountain",
+    "cell-deceit-trap",
+    "command-c",
+    "command-d",
+    "command-e",
+    "command-k",
+    "command-s",
+    "dungeon-deceit",
+    "spell-0-in-lor"
+  ],
+  "notes": [
+    "Deceit (loc 33) — PIVOTE A MAZMORRA, Entrega 1 (greenlight §2.A+B+D). Primer capítulo 3D del tour: arnés de nav con facing (enterDungeon/walkDungeonTo/dungeonKlimb/dungeonCastInLor en nav.ts) sobre la mecánica ya endurecida del core (#47). El pather EVITA Room/Trap/campo → CERO combate. TESTIGOS: In Lor éxito silencioso, luz por EFECTO (lightDepth 0→4); hoyo simple (1,3) 'in the pit.' por (S)earch direccional SIN pisarlo; fuente (1,5) Heal 'Healed!'. Ruta seed-0: revela la puerta secreta (1,0) + wrap toroidal para rodear los pitfalls; klimb down/up entre floors 0-1; SALE por la escalera (1,1) al overworld (forma \"travesía\": dungeonState no serializa → sello desde Britannia, 240,73 — la celda de la entrada, DUNGEON 0x1d10 en crudo). DIFERIDO a Entrega 2 (sin greenlight): cell-deceit-room (combate) y cell-deceit-chest (floor 7, tras salas de combate). GEMAS 0→0 (#65). LLAVES 1→1, oro 200→200, karma 80→80 INALTERADOS (mazmorra sin oro/llaves; NO se abre cofre). Delta esperado: currentMp/spellQuantities (In Lor), currentHp (fuente Heal). Comandos e/c/s/d/k. HORA CANÓNICA 10:00, encadenado sobre ch13.gam."
+  ]
+}

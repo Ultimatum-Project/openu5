@@ -1,0 +1,20 @@
+{
+  "chapter": "ch12",
+  "coveredIds": [
+    "command-e",
+    "command-k",
+    "command-s",
+    "command-t",
+    "floor-7-z0",
+    "floor-7-z1",
+    "location-7-skara-brae",
+    "npc-towne-39-kindor",
+    "npc-towne-40-saul",
+    "search-56-loc7-6-7"
+  ],
+  "notes": [
+    "Froed (dn37) OMITIDO (best-effort, niño que HUYE aiType 3): Error: approachAndTalk(37): no se pudo enganchar (NPC deambulante)",
+    "Flain (dn38, z1) OMITIDO (best-effort, aiType 2 en cuarto pequeño / gate / moral): Error: approachAndTalk(38): no se pudo enganchar (NPC deambulante)",
+    "Skara Brae (loc 7) — CIERRA las 8 towns TOWNE (se había saltado; el brief de ch09 la dio por visitada por error). location + z0/z1 (2 plantas), 4 NPCs towne. TESTIGOS byte-exactos: Kindor → 'Mantra of Spirituality' (⭐ mantra in-town, completa el trío con BEH/ch08 y LUM/ch09); Saul → 'Shadowlord's bolt' (ataque del Shadowlord al pueblo); Froed → 'Greymarch' (CROSS-REF a ch08 Yew: Froed es el hijo del preso de la celda C). Flain (mago de la Opresión, z1, best-effort): saludo hostil SIN delatar a la Resistencia (⚠ trampa moral esquivada). HORA CANÓNICA 10:00 (z0 Froed/Kindor/Saul; z1 Flain). GEMAS 0→0 (#65). LLAVES 1→1 (CERO (J)immy: smallmap 7 sin cerrojos). Oro 200→200 y karma 80→80 INALTERADOS. Señales 0/2, searches 1/2 (z0, best-effort). Comandos e/t/s/l(+k si z1). LECCIÓN ch10/ch11 aplicada: gate de saludo en DESCRIPTION — Froed condicional (IfElseKnowsName, no dispara en 1er encuentro), Flain Label 0; Kindor/Saul limpios."
+  ]
+}

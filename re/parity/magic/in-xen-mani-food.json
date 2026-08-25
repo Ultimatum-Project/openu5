@@ -1,0 +1,30 @@
+{
+ "name": "in-xen-mani-food",
+ "note": "In Xen Mani con seed 4660 \u2192 rand(1,3)=1 \u2192 food+1. Verificar el valor exacto contra el binario sembrando la misma semilla.",
+ "spec": {
+  "seed": 4660,
+  "spell": "In_Xen_Mani",
+  "casterIndex": 0,
+  "ctx": {
+   "location": 0,
+   "inCombat": false
+  },
+  "roster": [
+   {
+    "class": "M",
+    "mp": 22,
+    "level": 8
+   }
+  ],
+  "spellQuantities": {
+   "11": 1
+  },
+  "food": 100
+ },
+ "expect": {
+  "food": 101
+ },
+ "compareFields": [
+  "food"
+ ]
+}

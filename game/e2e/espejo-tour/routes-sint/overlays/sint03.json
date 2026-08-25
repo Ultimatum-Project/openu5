@@ -1,0 +1,41 @@
+{
+  "entry": {
+    "checkpoint": "sint02",
+    "note": "Encadena del checkpoint de sint02."
+  },
+  "segments": {
+    "sint03-g02": {
+      "note": "Trato en la herreria de estano (arneses de ledger por overlay).",
+      "insertOps": [
+        {
+          "afterOcrLn": 20,
+          "ops": [
+            {
+              "seedInt": 25
+            },
+            {
+              "seedStr": 30
+            }
+          ]
+        },
+        {
+          "afterOcrLn": 28,
+          "at": "first",
+          "ops": [
+            {
+              "enterLoc": 12
+            }
+          ]
+        },
+        {
+          "afterOcrLn": 40,
+          "ops": [
+            {
+              "wait": 350
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

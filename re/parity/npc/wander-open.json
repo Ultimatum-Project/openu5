@@ -1,0 +1,12 @@
+{
+ "name": "wander-open",
+ "kind": "wander",
+ "note": "Wander (aiType 1) en campo abierto: skip ~50% (rand&8) + dir rand(0,63)&3+1, radio Manhattan 3 desde el puesto (10,10).",
+ "spec": {
+  "seed": 4660,
+  "location": 2, "floor": 0, "hour": 8,
+  "npc": {"slot": 1, "aiType": 1, "post": {"x": 10, "y": 10}, "start": {"x": 10, "y": 10}, "type": 112},
+  "player": {"floor": 0, "x": 0, "y": 0},
+  "turns": 24
+ }
+}

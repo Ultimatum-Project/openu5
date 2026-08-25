@@ -1,0 +1,11 @@
+{
+ "name": "search-chest-trap",
+ "note": "Search de cofre 0x40 con threshold ALTO (DEX 1, floor 7 -> thr=21): rand(1,30)<=thr -> rand(1,8) clasifica la trampa (2 tiradas).",
+ "spec": {
+  "seed": 4242,
+  "roster": [{ "dex": 1, "hp": 30, "maxHp": 30 }],
+  "pos": { "dungeon": 33, "floor": 7, "x": 2, "y": 2, "facing": "east" },
+  "cells": [{ "floor": 7, "x": 3, "y": 2, "type": 4, "sub": 0 }],
+  "action": "search"
+ }
+}

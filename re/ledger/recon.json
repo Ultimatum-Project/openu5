@@ -1,0 +1,320 @@
+{
+  "exe": {
+    "signature": "MZ",
+    "file_size": 36592,
+    "declared_image": 36592,
+    "header_bytes": 2048,
+    "entry_cs": 2077,
+    "entry_ip": 0,
+    "ss": 2415,
+    "sp": 100,
+    "relocations": 409,
+    "reloc_offset": 30,
+    "overlay_num": 0,
+    "code_after_header": 34544
+  },
+  "overlays": [
+    {
+      "name": "BLCKTHRN.OVL",
+      "size": 3184,
+      "head": "558bec83",
+      "functions_est": 9,
+      "subsystem": "Blackthorn / c\u00e1rcel",
+      "is_data": false
+    },
+    {
+      "name": "CAST.OVL",
+      "size": 8560,
+      "head": "558bec83",
+      "functions_est": 32,
+      "subsystem": "lanzar hechizos",
+      "is_data": false
+    },
+    {
+      "name": "CAST2.OVL",
+      "size": 4544,
+      "head": "558bec57",
+      "functions_est": 18,
+      "subsystem": "hechizos 2",
+      "is_data": false
+    },
+    {
+      "name": "CMDS.OVL",
+      "size": 7440,
+      "head": "558bec83",
+      "functions_est": 22,
+      "subsystem": "comandos del jugador (mover, get, open, jimmy, push, yell...)",
+      "is_data": false
+    },
+    {
+      "name": "COMBAT.OVL",
+      "size": 7408,
+      "head": "558bec83",
+      "functions_est": 22,
+      "subsystem": "combate t\u00e1ctico",
+      "is_data": false
+    },
+    {
+      "name": "COMSUBS.OVL",
+      "size": 5216,
+      "head": "558bec83",
+      "functions_est": 23,
+      "subsystem": "subrutinas de combate",
+      "is_data": false
+    },
+    {
+      "name": "DATA.OVL",
+      "size": 48464,
+      "head": "d651680f",
+      "functions_est": 0,
+      "subsystem": "?",
+      "is_data": true
+    },
+    {
+      "name": "DNGLOOK.OVL",
+      "size": 5040,
+      "head": "558bec83",
+      "functions_est": 15,
+      "subsystem": "render/vista de mazmorra",
+      "is_data": false
+    },
+    {
+      "name": "DUNGEON.OVL",
+      "size": 8016,
+      "head": "558bec83",
+      "functions_est": 31,
+      "subsystem": "motor de mazmorra 3D",
+      "is_data": false
+    },
+    {
+      "name": "ENDGAME.OVL",
+      "size": 2800,
+      "head": "558bec83",
+      "functions_est": 8,
+      "subsystem": "secuencia final",
+      "is_data": false
+    },
+    {
+      "name": "FLAMES.OVL",
+      "size": 32,
+      "head": "558bec56",
+      "functions_est": 1,
+      "subsystem": "animaci\u00f3n de llamas (32B)",
+      "is_data": false
+    },
+    {
+      "name": "FONT.OVL",
+      "size": 3744,
+      "head": "558bec83",
+      "functions_est": 10,
+      "subsystem": "fuente",
+      "is_data": false
+    },
+    {
+      "name": "INTRO.OVL",
+      "size": 8400,
+      "head": "d9950000",
+      "functions_est": 19,
+      "subsystem": "intro + creaci\u00f3n de personaje (la gitana)",
+      "is_data": false
+    },
+    {
+      "name": "LOOKOBJ.OVL",
+      "size": 4560,
+      "head": "558bec81",
+      "functions_est": 16,
+      "subsystem": "mirar objetos",
+      "is_data": false
+    },
+    {
+      "name": "MAINOUT.OVL",
+      "size": 7344,
+      "head": "e815ca2b",
+      "functions_est": 32,
+      "subsystem": "render overworld",
+      "is_data": false
+    },
+    {
+      "name": "NPC.OVL",
+      "size": 4912,
+      "head": "558bec83",
+      "functions_est": 17,
+      "subsystem": "IA y horarios de NPC",
+      "is_data": false
+    },
+    {
+      "name": "OUTSUBS.OVL",
+      "size": 2464,
+      "head": "558bec83",
+      "functions_est": 11,
+      "subsystem": "subrutinas overworld",
+      "is_data": false
+    },
+    {
+      "name": "SHOPPES.OVL",
+      "size": 5936,
+      "head": "558bec57",
+      "functions_est": 22,
+      "subsystem": "tiendas",
+      "is_data": false
+    },
+    {
+      "name": "SHOPPES2.OVL",
+      "size": 2848,
+      "head": "558bec83",
+      "functions_est": 10,
+      "subsystem": "tiendas 2",
+      "is_data": false
+    },
+    {
+      "name": "SHOPPES3.OVL",
+      "size": 2528,
+      "head": "558bec83",
+      "functions_est": 8,
+      "subsystem": "tiendas 3",
+      "is_data": false
+    },
+    {
+      "name": "SJOG.OVL",
+      "size": 8800,
+      "head": "558bec83",
+      "functions_est": 35,
+      "subsystem": "por identificar (\u00bfscroll/anim?)",
+      "is_data": false
+    },
+    {
+      "name": "TALK.OVL",
+      "size": 4880,
+      "head": "558bec83",
+      "functions_est": 29,
+      "subsystem": "motor de conversaci\u00f3n",
+      "is_data": false
+    },
+    {
+      "name": "TOWN.OVL",
+      "size": 6256,
+      "head": "558bec56",
+      "functions_est": 32,
+      "subsystem": "l\u00f3gica de pueblos",
+      "is_data": false
+    },
+    {
+      "name": "ZSTATS.OVL",
+      "size": 4880,
+      "head": "558bec83",
+      "functions_est": 17,
+      "subsystem": "pantalla de stats",
+      "is_data": false
+    }
+  ],
+  "dataovl_coverage": {
+    "size": 48464,
+    "covered": 6562,
+    "pct": 13.5,
+    "top_gaps": [
+      [
+        20118,
+        28346
+      ],
+      [
+        8078,
+        6392
+      ],
+      [
+        17639,
+        2207
+      ],
+      [
+        16692,
+        889
+      ],
+      [
+        6893,
+        861
+      ],
+      [
+        15162,
+        604
+      ],
+      [
+        6246,
+        600
+      ],
+      [
+        4762,
+        306
+      ],
+      [
+        5860,
+        290
+      ],
+      [
+        19854,
+        252
+      ],
+      [
+        15798,
+        210
+      ],
+      [
+        14726,
+        188
+      ]
+    ]
+  },
+  "shared_globals": {
+    "CMDS.OVL": {
+      "abs_refs": 40,
+      "globals_5xxx": 31,
+      "sample": [
+        22446,
+        22447,
+        22448,
+        22619,
+        22646,
+        22648,
+        22650,
+        22651
+      ]
+    },
+    "COMBAT.OVL": {
+      "abs_refs": 27,
+      "globals_5xxx": 23,
+      "sample": [
+        21388,
+        22440,
+        22452,
+        22646,
+        22648,
+        22650,
+        22651,
+        22658
+      ]
+    },
+    "CAST.OVL": {
+      "abs_refs": 37,
+      "globals_5xxx": 28,
+      "sample": [
+        21722,
+        22448,
+        22449,
+        22452,
+        22459,
+        22646,
+        22648,
+        22650
+      ]
+    }
+  },
+  "totals": {
+    "kernel_code": 34544,
+    "code_overlays": 119792,
+    "dataovl": 48464,
+    "total_distinct": 202800
+  },
+  "functions": {
+    "overlays": 439,
+    "kernel": 181,
+    "grand_total": 620
+  }
+}

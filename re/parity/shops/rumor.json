@@ -1,0 +1,11 @@
+{
+  "cases": [
+    {"op": "rumor", "keyword": "honesty"},
+    {"op": "rumor", "keyword": "crown"},
+    {"op": "rumor", "keyword": "crow"},
+    {"op": "rumor", "keyword": "falsehood"},
+    {"op": "rumor", "keyword": "undead"},
+    {"op": "rumor", "keyword": "spir"},
+    {"op": "rumor", "keyword": "zzz"}
+  ]
+}

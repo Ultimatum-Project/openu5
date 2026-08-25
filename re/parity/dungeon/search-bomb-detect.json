@@ -1,0 +1,11 @@
+{
+ "name": "search-bomb-detect",
+ "note": "Search de bomba 0x62 con threshold BAJO (DEX 30, floor 0 -> thr=0): rand(1,30)>0 -> 'A bomb trap!' + desarma el tile.",
+ "spec": {
+  "seed": 16962,
+  "roster": [{ "dex": 30, "hp": 30, "maxHp": 30 }],
+  "pos": { "dungeon": 33, "floor": 0, "x": 2, "y": 2, "facing": "east" },
+  "cells": [{ "floor": 0, "x": 3, "y": 2, "type": 6, "sub": 2 }],
+  "action": "search"
+ }
+}

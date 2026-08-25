@@ -1,0 +1,182 @@
+[
+  {
+    "id": "momento-01",
+    "acto": 1,
+    "titulo": {
+      "es": "El regreso a Britannia",
+      "en": "The return to Britannia"
+    },
+    "ambiente": {
+      "es": "Acabas de cruzar la puerta lunar y despiertas en la cabaña de Iolo. Shamino y él te esperan; fuera, Britannia lleva años bajo la Ley de Blackthorn.",
+      "en": "You have just come through the moongate and wake in Iolo's hut. He and Shamino are waiting; outside, Britannia has lived for years under Blackthorn's Law."
+    },
+    "lugar": {
+      "es": "Iolo's Hut",
+      "en": "Iolo's Hut"
+    },
+    "miniatura": "minimapa",
+    "disponible": true
+  },
+  {
+    "id": "momento-02",
+    "acto": 1,
+    "titulo": {
+      "es": "La compañía al completo",
+      "en": "The full company"
+    },
+    "ambiente": {
+      "es": "Seis viajando juntos: Iolo, Shamino y los que se han ido sumando por el camino. El grupo ya no crece más — a partir de aquí, lo que cambie será lo que lleven encima.",
+      "en": "Six travelling together: Iolo, Shamino and those who joined along the way. The company cannot grow further — from here on, what changes is what they carry."
+    },
+    "lugar": {
+      "es": "A las puertas de Britain",
+      "en": "At the gates of Britain"
+    },
+    "miniatura": "minimapa",
+    "disponible": true
+  },
+  {
+    "id": "momento-03",
+    "acto": 2,
+    "titulo": {
+      "es": "Ante Faulinei",
+      "en": "Facing Faulinei"
+    },
+    "ambiente": {
+      "es": "El Shadowlord de la Falsedad está frente a ti, convocado sobre la Llama de la Verdad. Llevas su fragmento en la mano.",
+      "en": "The Shadowlord of Falsehood stands before thee, summoned over the Flame of Truth. Thou dost hold his shard in thy hand."
+    },
+    "lugar": {
+      "es": "Lycaeum",
+      "en": "The Lycaeum"
+    },
+    "miniatura": "shardFalsedad",
+    "disponible": true
+  },
+  {
+    "id": "momento-04",
+    "acto": 2,
+    "titulo": {
+      "es": "Ante Astaroth",
+      "en": "Facing Astaroth"
+    },
+    "ambiente": {
+      "es": "El Shadowlord del Odio, convocado sobre la Llama del Amor en la abadía. Su fragmento pesa en tu mano y no queda más que usarlo.",
+      "en": "The Shadowlord of Hatred, summoned over the Flame of Love in the abbey. His shard is heavy in thy hand and nothing remains but to use it."
+    },
+    "lugar": {
+      "es": "Empath Abbey",
+      "en": "Empath Abbey"
+    },
+    "miniatura": "shardOdio",
+    "disponible": true
+  },
+  {
+    "id": "momento-05",
+    "acto": 2,
+    "titulo": {
+      "es": "Ante Nosfentor",
+      "en": "Facing Nosfentor"
+    },
+    "ambiente": {
+      "es": "El Shadowlord de la Cobardía, el último de los tres, sobre la Llama del Coraje. Con este fragmento se cierra el trío y se abre el camino al Underworld.",
+      "en": "The Shadowlord of Cowardice, last of the three, over the Flame of Courage. This shard closes the set — and opens the way to the Underworld."
+    },
+    "lugar": {
+      "es": "Serpent's Hold",
+      "en": "Serpent's Hold"
+    },
+    "miniatura": "shardCobardia",
+    "disponible": true
+  },
+  {
+    "id": "momento-06",
+    "acto": 3,
+    "titulo": {
+      "es": "La cámara de Blackthorn",
+      "en": "Blackthorn's chamber"
+    },
+    "ambiente": {
+      "es": "Al otro lado de la puerta está el trono del usurpador, y su interrogatorio sobre el mantra de un santuario.",
+      "en": "Beyond this door sit the usurper's throne and his interrogation about a shrine's mantra."
+    },
+    "lugar": {
+      "es": "Palace of Blackthorn",
+      "en": "Palace of Blackthorn"
+    },
+    "miniatura": "minimapa",
+    "disponible": true
+  },
+  {
+    "id": "momento-07",
+    "acto": 3,
+    "titulo": {
+      "es": "La Corona y la Caja de Sándalo",
+      "en": "The Crown and the Sandalwood Box"
+    },
+    "ambiente": {
+      "es": "La Corona del usurpador ya es tuya. Queda la Caja de Sándalo, al otro lado del pasadizo del clavicémbalo, y con ella el camino a Doom.",
+      "en": "The usurper's Crown is already yours. The Sandalwood Box remains, beyond the harpsichord passage — and with it the road to Doom."
+    },
+    "lugar": {
+      "es": "Lord British's Castle",
+      "en": "Lord British's Castle"
+    },
+    "miniatura": "corona",
+    "disponible": true
+  },
+  {
+    "id": "momento-08",
+    "acto": 4,
+    "titulo": {
+      "es": "La boca del Underworld",
+      "en": "The mouth of the Underworld"
+    },
+    "ambiente": {
+      "es": "Has salido por el fondo de Shame y el mapa cambia entero: bajo tierra no amanece nunca. Una antorcha encendida es toda la luz que hay.",
+      "en": "Thou hast come out at the bottom of Shame, and the whole map changes: below ground the sun never rises. One lit torch is all the light there is."
+    },
+    "lugar": {
+      "es": "Underworld, bajo Shame",
+      "en": "Underworld, beneath Shame"
+    },
+    "miniatura": "minimapa",
+    "disponible": true
+  },
+  {
+    "id": "momento-09",
+    "acto": 4,
+    "titulo": {
+      "es": "Las puertas del Doom",
+      "en": "The gates of Doom"
+    },
+    "ambiente": {
+      "es": "La boca del Doom se abre un paso al este y la roca negra cierra todo lo demás. Llevas la Caja de Sándalo; falta el Amuleto. Se puede bajar — todavía no cerrar.",
+      "en": "The mouth of Doom opens one step east, and black rock closes everything else. Thou bearest the Sandalwood Box; the Amulet is still wanting. Thou mayst descend — not yet finish."
+    },
+    "lugar": {
+      "es": "Ante la Mazmorra del Doom",
+      "en": "Before the Dungeon of Doom"
+    },
+    "miniatura": "caja",
+    "disponible": true
+  },
+  {
+    "id": "momento-10",
+    "acto": 4,
+    "titulo": {
+      "es": "El rescate de Lord British",
+      "en": "The rescue of Lord British"
+    },
+    "ambiente": {
+      "es": "Estás sobre la boca del Doom con el Amuleto, la Corona, el Cetro y la Caja. Todo lo que el rescate pide está en tus manos; lo que queda es bajar hasta el fondo.",
+      "en": "Thou standest upon the mouth of Doom with Amulet, Crown, Sceptre and Box. All the rescue asks is in thy hands; what remains is the descent to the deep."
+    },
+    "lugar": {
+      "es": "La boca del Doom",
+      "en": "The mouth of Doom"
+    },
+    "miniatura": "corona",
+    "disponible": true
+  }
+]

@@ -1,0 +1,314 @@
+{
+  "part": "sint02",
+  "source": "SINTETICO — prosa inventada por el port, cero material de EA",
+  "sintetico": true,
+  "entry": {
+    "checkpoint": "sint01",
+    "entryClock": {
+      "hour": 10,
+      "minute": 0
+    },
+    "note": "Encadena del checkpoint de sint01."
+  },
+  "segments": [
+    {
+      "id": "sint02-g01",
+      "ctx": "resume",
+      "seam": null,
+      "ocr": {
+        "from": 1,
+        "to": 6
+      },
+      "script": [
+        {
+          "todo": "Ready?",
+          "ocrLn": 1
+        },
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        }
+      ],
+      "expect": [
+        {
+          "text": "Ready?",
+          "ocrLn": 1,
+          "class": "auto"
+        }
+      ],
+      "note": "Ready?"
+    },
+    {
+      "id": "sint02-g02",
+      "ctx": "dungeon",
+      "seam": "dungeon-enter",
+      "enter": {
+        "loc": 34,
+        "banner": "LANTERN PIT",
+        "dungeon": true
+      },
+      "ocr": {
+        "from": 7,
+        "to": 40
+      },
+      "openedBy": "3b",
+      "script": [
+        {
+          "dng": "advance",
+          "from": "Advance",
+          "sim": 1,
+          "ocrLn": 9
+        },
+        {
+          "dng": "turnLeft",
+          "from": "Turn left",
+          "sim": 1,
+          "ocrLn": 11
+        },
+        {
+          "dng": "advance",
+          "from": "Advunee",
+          "sim": 0.714,
+          "ocrLn": 13
+        },
+        {
+          "dng": "ignite",
+          "from": "Ignite torch!",
+          "sim": 1,
+          "ocrLn": 15
+        },
+        {
+          "dng": "klimb",
+          "dir": "down",
+          "from": "Klimb-Down!",
+          "sim": 1,
+          "ocrLn": 17
+        }
+      ],
+      "expect": [
+        {
+          "text": "LANTERN PIT",
+          "ocrLn": 8,
+          "class": "auto"
+        },
+        {
+          "text": "Advance",
+          "ocrLn": 9,
+          "class": "auto"
+        },
+        {
+          "text": "Ignite torch!",
+          "ocrLn": 15,
+          "class": "auto"
+        }
+      ],
+      "note": "entrada-dng: el pozo de la linterna."
+    },
+    {
+      "id": "sint02-g03",
+      "ctx": "post-combat",
+      "seam": "victory",
+      "enter": {
+        "loc": 34,
+        "dungeon": true,
+        "carryover": true,
+        "dungeonFrom": "visita-abierta-en-sint02-g02"
+      },
+      "ocr": {
+        "from": 41,
+        "to": 70
+      },
+      "openedBy": "3d",
+      "script": [
+        {
+          "dng": "advance",
+          "from": "Advance",
+          "sim": 1,
+          "ocrLn": 43
+        },
+        {
+          "dng": "turnRight",
+          "from": "Turn rlght",
+          "sim": 1,
+          "ocrLn": 45
+        },
+        {
+          "dng": "back",
+          "from": "Back up",
+          "sim": 1,
+          "ocrLn": 47
+        }
+      ],
+      "expect": [
+        {
+          "text": "Advance",
+          "ocrLn": 43,
+          "class": "auto"
+        },
+        {
+          "text": "Back up",
+          "ocrLn": 47,
+          "class": "auto"
+        }
+      ],
+      "note": "interior-dng: pasillo tras la escaramuza."
+    },
+    {
+      "id": "sint02-g04",
+      "ctx": "dungeon",
+      "seam": null,
+      "ocr": {
+        "from": 71,
+        "to": 90
+      },
+      "skip": "pendiente-runner",
+      "skipReason": "material no clasificable como pasillo (nav=0, sala=2)",
+      "script": [
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "todo": "Entering room..",
+          "ocrLn": 72
+        },
+        {
+          "key": "a",
+          "ocrLn": 74
+        }
+      ],
+      "expect": [
+        {
+          "text": "Entering room..",
+          "ocrLn": 72,
+          "class": "auto"
+        }
+      ],
+      "note": "sala-combate."
+    },
+    {
+      "id": "sint02-g05",
+      "ctx": "dungeon",
+      "seam": "dungeon-enter",
+      "enter": {
+        "loc": 23,
+        "banner": "HOLLOW SHAFT",
+        "dungeon": true
+      },
+      "ocr": {
+        "from": 111,
+        "to": 130
+      },
+      "script": [
+        {
+          "dng": "advance",
+          "from": "Advance",
+          "sim": 1,
+          "ocrLn": 113
+        },
+        {
+          "todo": "The shaft is glassed over.",
+          "ocrLn": 115
+        }
+      ],
+      "expect": [
+        {
+          "text": "HOLLOW SHAFT",
+          "ocrLn": 112,
+          "class": "auto"
+        },
+        {
+          "text": "Advance",
+          "ocrLn": 113,
+          "class": "auto"
+        }
+      ],
+      "skip": "pendiente-runner",
+      "skipReason": "material no clasificable como pasillo (nav=2, sala=0)",
+      "note": "entrada-dng cuya location NO es mazmorra: la visita no resuelve."
+    },
+    {
+      "id": "sint02-g06",
+      "ctx": "post-combat",
+      "seam": "victory",
+      "ocr": {
+        "from": 131,
+        "to": 150
+      },
+      "skip": "pendiente-runner",
+      "skipReason": "interior con mazmorra INDETERMINABLE: la visita se abrió en sint02-g05, cuya costura `dungeon-enter` no dejó una loc 33..40 (banner OCR: \"HOLLOW SHAFT\") — sin id no hay costura que comprobar, y abrirlo pulsaría las teclas del pasillo sin saber dónde",
+      "script": [
+        {
+          "dng": "advance",
+          "from": "Advance",
+          "sim": 1,
+          "ocrLn": 133
+        },
+        {
+          "dng": "back",
+          "from": "Back up",
+          "sim": 1,
+          "ocrLn": 135
+        },
+        {
+          "dng": "turnLeft",
+          "from": "Turn left",
+          "sim": 1,
+          "ocrLn": 137
+        }
+      ],
+      "expect": [
+        {
+          "text": "Advance",
+          "ocrLn": 133,
+          "class": "auto"
+        }
+      ],
+      "note": "pasillo colgando de una visita irresoluble: el veredicto es INDETERMINABLE."
+    },
+    {
+      "id": "sint02-g07",
+      "ctx": "post-combat",
+      "seam": null,
+      "ocr": {
+        "from": 151,
+        "to": 170
+      },
+      "skip": "pendiente-runner",
+      "skipReason": "interior con mazmorra INDETERMINABLE: la visita se abrió en sint02-g05, cuya costura `dungeon-enter` no dejó una loc 33..40 (banner OCR: \"HOLLOW SHAFT\") — sin id no hay costura que comprobar, y abrirlo pulsaría las teclas del pasillo sin saber dónde",
+      "script": [
+        {
+          "nav": [
+            {
+              "m": "east",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "todo": "The lantern gutters.",
+          "ocrLn": 93
+        }
+      ],
+      "expect": [
+        {
+          "text": "The lantern gutters.",
+          "ocrLn": 93,
+          "class": "auto"
+        }
+      ],
+      "note": "post-combat colgando de una visita irresoluble."
+    }
+  ]
+}

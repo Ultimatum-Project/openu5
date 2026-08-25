@@ -1,0 +1,16 @@
+{
+  "cases": [
+    {"op": "innRest", "location": 2, "partySize": 1, "int": 15},
+    {"op": "innRest", "location": 2, "partySize": 6, "int": 20},
+    {"op": "innRest", "location": 3, "partySize": 4, "int": 10},
+    {"op": "innPickup", "location": 2, "int": 15, "months": 1},
+    {"op": "innPickup", "location": 2, "int": 15, "months": 3},
+    {"op": "innPickup", "location": 24, "int": 25, "months": 12},
+    {"op": "tavernRound", "barTown": 0, "living": 1},
+    {"op": "tavernRound", "barTown": 2, "living": 6},
+    {"op": "wine", "wineIdx": 0},
+    {"op": "wine", "wineIdx": 4},
+    {"op": "rations", "barTown": 3, "int": 33},
+    {"op": "rations", "barTown": 8, "int": 0}
+  ]
+}

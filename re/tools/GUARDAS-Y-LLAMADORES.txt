@@ -1,0 +1,147 @@
+# GUARDAS-Y-LLAMADORES — toda guarda/verificador del repo que NO es `re/tools/test_*.py`,
+# CON SU LLAMADOR o con la razón de no tener ninguno. Nace del censo #133.
+#
+# POR QUÉ EXISTE, con el caso que lo motivó. `docs/publicacion/web/cifras/guarda_cifras.py`
+# (el default-deny de la ficha #75) estaba escrita, aterrizada, VERDE y con mutantes… y
+# `grep -rn guarda_cifras` sobre TODO el repositorio devolvía CERO invocaciones: sólo se
+# nombraba a sí misma en su docstring y en dos frases de prosa que decían que «vigila».
+# En esa misma ventana `verificacion.html` publicaba una cifra cinco días rancia.
+#     ★★ Una guarda sin llamador es indistinguible de una guarda que pasa.
+# Fue la QUINTA instancia de la clase «tiene test ≠ está vigilado» (§GUARDA-RUTAS de
+# `build-demo-publica.sh` cuenta la tercera y la cuarta).
+#
+# 🔴 Y POR QUÉ NO BASTABA `test_puerta.py` SOLO. Ese default-deny existe desde #55 y
+# funciona — pero su población es UNA: `re/tools/test_*.py` (su `_todos()` hace
+# `glob("test_*.py")` sobre `re/tools`). Las cinco instancias de la clase cayeron TODAS
+# fuera de esa población: en `docs/publicacion/`, en `game/tools/`, en `demo-byo/`. La
+# clase reincidía porque la guarda que la cerraría no veía el sitio donde ocurre.
+# Este fichero es la MISMA forma sobre las poblaciones restantes.
+#
+# QUÉ ES «LLAMADOR» AQUÍ: el sitio que la EJECUTA, no el que la nombra. Un docstring, una
+# línea de prosa o un comentario que diga «esto lo vigila X» NO son llamadores — es
+# exactamente el error que costó las cinco instancias. Se escribe el fichero:línea del
+# `subprocess.run` / `node` / `python3` / `import` que la corre.
+#
+# 🔴 SE INSERTA, NO SE REESCRIBE (misma advertencia que FUERA-DE-PUERTA.txt): es un fichero
+# COMPARTIDO. El control es el diff: cero borrados.
+#
+# Formato:  <RUTA desde la raíz>  # <llamador con fichero:línea, o razón de no tenerlo>
+# 🔴 RUTA, no nombre pelado — al revés que FUERA-DE-PUERTA.txt, porque esta población cruza
+# directorios y dos ficheros pueden llamarse igual en dos sitios.
+
+# ── re/tools: BIBLIOTECAS que ejecuta un test de la batería ───────────────────
+# No son scripts sueltos: los importa un `test_*.py` que SÍ está en FICHEROS, así que su
+# código corre en cada aterrizaje. El llamador es el import.
+re/tools/verify_cites.py  # test_frontier.py:567 y test_call_cero.py:32 `import verify_cites` — ambos en FICHEROS
+re/tools/verify_show.py  # test_verify_show.py:24, test_frontier.py:844, test_strcites.py:16 — los tres en FICHEROS
+re/tools/verify_strcites.py  # test_strcites.py:15 `from verify_strcites import ...` — en FICHEROS
+re/tools/check_manual_merge.py  # test_check_manual_merge.py:8 `import check_manual_merge` — en FICHEROS
+
+# ── re/tools: INSTRUMENTOS DE OPERADOR, no guardas ────────────────────────────
+# No tienen veredicto: no pasan ni fallan, imprimen o escriben. Un default-deny sobre ellos
+# no protegería nada — se declaran para que el censo no los cuente como huérfanos y para que
+# nadie los cablee a una puerta por parecerse de nombre a los de arriba.
+re/tools/verify_index.py  # NO es guarda: CLI que lista rutinas pendientes del barrido (docstring §uso). Sin veredicto que vigilar
+re/tools/verify_lookup.py  # NO es guarda: CLI resolutor (str/glob/call) del barrido de verificación. Sin veredicto
+re/tools/verify_mark.py  # NO es guarda: ESCRITOR — asienta veredictos en frontier.json desde stdin. Sin veredicto
+
+# ── re/tools: TRINQUETE SIN LLAMADOR — pendiente de adjudicación del lead ─────
+# 🔴 Éste sí es una guarda, con control negativo integrado, y NADIE la corre: sólo aparece
+# en actas de carriles que la ejecutaron a mano (`pool-174-acta.md:259` y 6 más, todas con
+# «EXIT=0» copiado a mano). Es la misma forma que guarda_cifras.py tenía el 09-08.
+# MEDIDO en este carril (#133): 0,25 s wall, EXIT=0, control negativo en rojo como debe.
+# Su puerta natural es la batería; entrar ahí es commit del lead (precedente #123), así que
+# queda DECLARADA como propuesta viva en vez de cableada a espaldas suyas.
+re/tools/verify_pool174_claims.py  # bateria_aterrizaje.sh (fase «trinquete pool 174», commit deliberado del lead 09-08; era huérfana — ver #133)
+
+# ── docs/publicacion: las CINCO del ensamblador del sitio ─────────────────────
+# `build-demo-publica.sh` es el criterio de terminado del sitio y tiene el $DEST delante:
+# es su puerta natural, no la batería. Las cinco llamadas son incondicionales salvo la del
+# roster, que cuelga de `[ -f game/assets/init.gam ]` (condición legítima: sin material que
+# filtrar no hay nada que auditar).
+#
+# 🔴 LOS NÚMEROS DE LÍNEA DE ESTA SECCIÓN ESTABAN LOS CUATRO RANCIOS (medido el 11-08 al
+# añadir la quinta): decían 712/881/888/901 y el ensamblador los tenía en 760/977/984/1012,
+# unas cien líneas más abajo. Corregidos aquí. Pero la deriva NO es un descuido de nadie:
+# es lo que le pasa SIEMPRE a una cita por número de línea sobre un fichero que crece por
+# el medio, y volverá a pasar. Lo que hace de esta línea una cita ÚTIL no es el número
+# —que caduca— sino el NOMBRE del script llamador, que es lo que sostiene el predicado de
+# `test_puerta.py`. Quien la lea: verifica con `grep -n <nombre> build-demo-publica.sh`
+# antes de citar el número, y si al pasar por aquí lo ves movido, corrígelo como se
+# corrigieron éstos.
+docs/publicacion/guarda_roster_ea.py  # build-demo-publica.sh:760 `python3 ... guarda_roster_ea.py "$DEST"`
+docs/publicacion/web/guarda_rutas.py  # build-demo-publica.sh:977 `python3 ... || FAIL=1`
+docs/publicacion/web/guarda_huerfanas.py  # build-demo-publica.sh:984 `python3 ... || FAIL=1`
+docs/publicacion/web/guarda_canonicas.py  # build-demo-publica.sh:999 `python3 ... "$DEST" || FAIL=1` — §CANONICAS, nacida en el lote 4 de #157
+docs/publicacion/web/cifras/guarda_cifras.py  # build-demo-publica.sh:1012 — cableada en e0bc5f17, el caso que abrió #133
+
+# ── docs/publicacion: la del GÉNESIS (otro ensamblador, otra puerta) ──────────
+# 🔴 NO se suma a las CINCO de arriba y por eso va en su propia sección: aquéllas cuelgan de
+# `build-demo-publica.sh` (el sitio desplegado) y ésta de `genesis-publico.sh` (el árbol del
+# repo público). Dos ensambladores distintos, dos puertas distintas — meterla en el rótulo
+# de arriba sería la deriva de cifra que este mismo fichero persigue (ver el aviso de las
+# «doce y tres» más abajo).
+# Su caso: los tres gates anti-EA del génesis miran extensión, ruta y medios, y NINGUNO abre
+# un fichero — la prosa TLK de EA dentro de un .json o un .ts los pasaba los tres en verde
+# (fuga de #376, 98 route JSON con 17.030 palabras verbatim). Ésta barre el CONTENIDO del
+# destino con el predicado de `re/tools/agujas_tlk.py`, el MISMO que usa la guarda de índice
+# `test_rutas_espejo_sin_prosa_tlk_ea.py`. rc 0/1/64; el 64 aborta el génesis.
+docs/publicacion/guarda_prosa_ea.py  # genesis-publico.sh:391 `python3 "$PUB/guarda_prosa_ea.py" "$DEST" || rc_prosa=$?` — incondicional. Y que la INVOCACIÓN siga ahí (no una mención en un comentario) lo carea test_genesis_guardas.py::test_el_genesis_invoca_la_guarda_de_prosa_y_trata_el_64, en la batería
+
+# ── docs/manual/companion: los seis del manual, todos en la batería ───────────
+# `test_companion_ea.py` (en FICHEROS) los lanza uno a uno con `_node(...)`, que es
+# `subprocess.run(["node", BUILD/<script>])` — ejecución real, no import.
+docs/manual/companion/build/verify-atlas.mjs  # test_companion_ea.py:292 `_node("verify-atlas.mjs")`
+docs/manual/companion/build/verify-byo-runtime.mjs  # test_companion_ea.py:311 `_node(...)`
+docs/manual/companion/build/verify-byo-pixels.mjs  # test_companion_ea.py:327 `_node(...)`
+docs/manual/companion/build/verify-mapa-canvas.mjs  # test_companion_ea.py:344 `_node(...)`
+docs/manual/companion/build/verify-repintado.mjs  # test_companion_ea.py:371 `_node(...)`
+docs/manual/companion/build/verify-sin-ficheros.mjs  # test_companion_ea.py:387 `_node(...)`
+
+# ── demo-byo/verificacion: DOCE arneses con puerta y TRES sin ella ────────────
+# Los que tienen puerta los ejecuta un `test_byo_*` / `test_*` de FICHEROS por subprocess
+# (`["node", str(ARNES)]`), así que corren en cada aterrizaje. Los TRES sin puerta llevan
+# su razón escrita en su propia línea, que es lo que este fichero exige.
+# 🔴 EL RÓTULO DE ARRIBA ESTABA RANCIO ANTES DE QUE YO LO TOCARA (medido el 15-08 al añadir
+# el arnés de #293): decía «diez con puerta y dos sin ella» = 12, y las líneas de debajo
+# eran 14 (once con puerta, tres sin). Con la de #293 son 15 = 12 + 3. Es la clase que este
+# mismo fichero persigue —una cifra a mano al lado de lo que cuenta— cometida sobre sí
+# mismo, y por eso se corrige AQUÍ en vez de dejarla para otra ficha: quien lea el rótulo
+# creyendo el número decide sobre una población que no es la real. Se cuenta a mano porque
+# el fichero es prosa; el careo automático es `test_puerta.py::test_ninguna_guarda_queda_sin_adjudicar`,
+# que compara el ÁRBOL con estas líneas y por eso no puede leer el rótulo.
+demo-byo/verificacion/verifica-comparte.mjs  # test_byo_comparte.py:70 (ARNES) → :150 `["node","--import","tsx",str(ARNES)]`
+demo-byo/verificacion/verifica-comparte-navegador.mjs  # test_byo_comparte.py:338 (SONDA) → :359 `["node", str(SONDA)]`
+demo-byo/verificacion/verifica-momentos.mjs  # test_byo_momentos.py:60 (ARNES) → :99 `_node(ARNES, *args)`
+demo-byo/verificacion/verifica-momentos-navegador.mjs  # test_byo_momentos.py:932 (SONDA) → :959 `["node", str(SONDA)]`
+demo-byo/verificacion/verifica-momentos-shot.mjs  # test_byo_momentos.py:1480 (SONDA_SHOT) → :1492 `["node", ...]`
+demo-byo/verificacion/verifica-extraccion-vieja.mjs  # test_extraccion_vieja.py:52 (ARNES) → :102 `subprocess.run(orden…)`, orden armada en :85
+demo-byo/verificacion/verifica-tarjeta.mjs  # test_byo_tarjeta.py:43 (ARNES) → :60 `["node","--import","tsx",str(ARNES)]`
+demo-byo/verificacion/verifica-tarjeta-rica.mjs  # test_byo_tarjeta_rica.py:42 (ARNES) → :58 `["node", ...]`
+demo-byo/verificacion/verifica-transferencia.mjs  # test_byo_transferencia.py:48 (ARNES) → :71 `["node", ...]`
+demo-byo/verificacion/verifica-nombres-lugar.mjs  # test_nombres_lugar.py:41 (ARNES) → :61 `["node", ...]`
+demo-byo/verificacion/verifica-panel-no-tapa.mjs  # test_panel_no_tapa.py:60 (ARNES) → :89 `["node", str(ARNES)]`
+demo-byo/verificacion/verifica-tarjeta-geometria.mjs  # test_byo_tarjeta_geometria.py:82 (ARNES) → :109 `["node", str(ARNES), *args]` (DOS llamadas: :138 el árbol real y :143 con `--mutante=sinWidth`)
+# Y las dos sin puerta, cada una con su razón:
+demo-byo/verificacion/verifica-estados.mjs  # SIN LLAMADOR, declarado: depende de `original/u5` y `game/assets` (material de EA) ⇒ no puede entrar en la batería. Sonda de mano; su cabecera trae el uso
+demo-byo/verificacion/verifica-replay-thumbs-byo.mjs  # DECLARADA FUERA CON RAZÓN (decisión del lead 09-08, #133): exige `npx vite build demo-byo` (~30 s de build) y chromium — su mitad barata (almacén separado, default-deny de records, barrido al borrar) YA está en la puerta vía tests/replay-thumb-ea-limpio.test.ts; lo que esta sonda añade (la miniatura RENDERIZA en la lista de /byo) es visual y se corre a mano en cada carril que toque esa lista
+
+# ── game/tools y game/e2e ─────────────────────────────────────────────────────
+game/tools/verify-boot-save-replay.mjs  # SIN LLAMADOR, declarado: necesita chromium. Su gemelo BARATO sí está en la batería (tests/replay-thumb-ea-limpio.test.ts:156)
+game/tools/verify-replay-thumbs.mjs  # SIN LLAMADOR, declarado: ídem chromium; gemelo barato en tests/replay-thumb-ea-limpio.test.ts:26
+game/e2e/grandtour/verify-corpus.mjs  # package.json:16 `"verify:corpus": "node ..."` — script invocable, pero NINGÚN otro script lo encadena (`verify:all` no lo incluye)
+game/e2e/espejo-tour/tools/guarda-colisiones-3h.ts  # NO es guarda pese al nombre: «sale 0 siempre, es un CENSO» (su cabecera). El gate SÍ existe y está en vitest: tests/espejo-ocr-profile.test.ts:71-75
+
+# ── game/tools/pixeldiff: DOS pytest fuera de toda suite ──────────────────────
+# 🔴 Se declaran a sí mismos huérfanos («No se engancha a ninguna suite del repo», cabecera
+# de test_pdlib.py) y lo son: `test_puerta.py` no los ve porque su población es `re/tools`.
+# Uno de ellos (`test_idx6_is_brown`) es, por su propio docstring, «la guarda anti-ceguera
+# del arnés»: si idx6 vuelve a oliva, la comparación original-vs-port queda oliva-contra-
+# oliva y deja de ver la regresión de paleta. Eso es precisamente una guarda que, sin
+# llamador, no se distingue de una que pasa.
+# MEDIDO en este carril (#133): los dos juntos, 10 passed en 0,30 s (0,85 s wall).
+# Entrar en FICHEROS es commit del lead (precedente #123) ⇒ declarados como propuesta.
+game/tools/pixeldiff/test_pdlib.py  # bateria_aterrizaje.sh FICHEROS (commit deliberado del lead 09-08; era huérfana — ver #133)
+game/tools/pixeldiff/test_compare.py  # bateria_aterrizaje.sh FICHEROS (commit deliberado del lead 09-08; era huérfana — ver #133)
+docs/publicacion/sonda-robots.sh  # SIN LLAMADOR POR DISEÑO: sonda POST-DESPLIEGUE, mide lo SERVIDO (curl -L a staging y producción, atribuyendo cada directiva a su User-agent). Fuera del ensamblador por decisión escrita en su cabecera — build-demo-publica.sh no sondea la red (sin conexión sería no determinista, y «si no se puede comprobar, que pase» fabrica el verde). Se corre A MANO tras desplegar
+demo-byo/verificacion/verifica-raf-iframe.mjs  # SIN LLAMADOR POR DISEÑO (#173, 11-08): lanza DOS navegadores (chromium + webkit) y tarda ~15 s. Mide dónde puede vivir el iframe de la captura para que los dos motores lo pinten — webkit da 0 fotogramas fuera de pantalla y chromium 0 con visibility:hidden, así que la decisión NO es comprobable con un solo motor. Fuera de la batería porque webkit no está en su cadena; se corre A MANO al tocar el escondite del iframe (momentos-instala.ts) y sale 1 si algún motor lo suspende

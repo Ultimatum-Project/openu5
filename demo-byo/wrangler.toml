@@ -1,0 +1,94 @@
+# CONFIGURACIÓN DE CLOUDFLARE PAGES para el sitio público con la tabla de récords.
+#
+# 🔴 ESTE FICHERO NO DESPLIEGA NADA POR SÍ SOLO Y NADIE LO HA EJECUTADO TODAVÍA. Los
+# `*_id` de abajo están VACÍOS a propósito: son los identificadores que devuelve Cloudflare
+# al crear el KV y el D1, y crearlos es una acción sobre la cuenta del usuario. Mientras
+# estén vacíos, `wrangler pages deploy` falla al validar la configuración — que es lo que se
+# quiere de un fichero que, relleno a medias, desplegaría un endpoint sin almacén detrás.
+#
+# ══ POR QUÉ EL PROYECTO DE PAGES ES `demo-byo/` Y NO LA RAÍZ ═════════════════════════
+# En Pages el enrutado es POR FICHERO dentro de `functions/`, y el código compartido se
+# importa DESDE FUERA de esa carpeta (patrón documentado: `import { x } from "../src/x.ts"`).
+# Poniendo la raíz del proyecto en `demo-byo/`, los imports relativos de
+# `functions/api/*` → `src/records-*.ts` funcionan igual en el despliegue que en el árbol, y
+# el validador que corre en el servidor es LITERALMENTE el mismo módulo que usa el cliente.
+#
+# ══ PASOS DE INFRAESTRUCTURA (los ejecuta el usuario/lead, NO este carril) ═══════════
+#
+#   1. KV — el almacén de los registros:
+#        npx wrangler kv namespace create RECORDS_KV
+#      Copia el `id` que imprime a `kv_namespaces.id` de abajo.
+#
+#   2. D1 — el índice ordenable:
+#        npx wrangler d1 create openu5-records
+#      Copia el `database_id` a `d1_databases.database_id`.
+#
+#   3. Esquema (idempotente; repítelo en cada cambio de esquema):
+#        npx wrangler d1 execute openu5-records --remote \
+#          --file=demo-byo/records-esquema.sql
+#
+#   4. Sal del limitador de frecuencia (secreto; sin ella NO se limita por IP —ver el
+#      porqué en `EntornoRecords.RECORDS_SAL`—, así que ponerla es parte del despliegue):
+#        head -c 32 /dev/urandom | base64 | \
+#          npx wrangler pages secret put RECORDS_SAL --project-name=openu5-web
+#
+#   5. Ensamblar el sitio FUERA DEL REPOSITORIO (#130).
+#      🔴 NO lo ensambles en `demo-byo/dist-sitio`. Así estaba escrito y FABRICABA UN ROJO DE
+#      BATERÍA: `test_genesis_manifiesto::test_la_whitelist_NO_deja_pasar_material_EA_ni_medios`
+#      escanea el SISTEMA DE FICHEROS a propósito (default-deny: lo gitignored también puede
+#      viajar a un génesis que copia por glob), así que mientras el directorio exista da 66
+#      ficheros de medios en rojo. Toda batería corrida entre ensamblar y limpiar salía roja
+#      CON PINTA DE REGRESIÓN AJENA. El guarda hacía su trabajo; el runbook era el defecto.
+#      🔴 `VITE_RECORDS_API` ES LO QUE ENCIENDE LA SECCIÓN DE RÉCORDS EN /byo, y sin ella la
+#      página no pide nada a estos endpoints (ni los menciona). Va en el build de la landing:
+#        SITIO="$(mktemp -d -t openu5-sitio)"                 # FUERA del árbol de git
+#        npm run build                                        # el juego
+#        VITE_RECORDS_API=/api npx vite build demo-byo        # la landing, CON tabla
+#        bash docs/publicacion/build-demo-publica.sh "$SITIO"
+#
+#   6. Desplegar ese directorio POR RUTA, desde `demo-byo/` (la raíz del proyecto de Pages):
+#        (cd demo-byo && npx wrangler pages deploy "$SITIO" --project-name=openu5-web)
+#      🔴 EL ARGUMENTO POSICIONAL GANA A LA CONFIGURACIÓN, y por eso el paso 5 puede vivir
+#      fuera del repo. Medido en el propio wrangler (4.120.0, `wrangler-dist/cli.js`):
+#        const directory = args.directory ?? config.pages_build_output_dir;
+#      No hay error de «ambos a la vez»: si pasas el directorio, `pages_build_output_dir` ni
+#      se mira. Se sigue entrando en `demo-byo/` porque de ahí salen las BINDINGS (KV, D1,
+#      secreto) y el enrutado de `functions/` — lo único que se muda es de dónde salen los
+#      ASSETS. `pages_build_output_dir` se queda abajo para el build desde el panel/CI, que
+#      no pasa argumento.
+#      ⚠ Y va entre PARÉNTESIS: el `cd` vive en un subshell, así que el resto de tu sesión no
+#      se queda dentro de `demo-byo/`. Un `rm` relativo tras un `cd` que no volvió ya mintió
+#      dos veces en este repo — aquí no hay `rm` que pueda apuntar mal porque `$SITIO` es
+#      absoluto y está fuera del árbol.
+#
+#   6-bis. Comprobar que no quedó sitio ensamblado DENTRO del repo. El `mktemp` del paso 5
+#      cumple la condición solo; esto la VERIFICA, y es el MISMO predicado que corre en la
+#      batería de aterrizaje (una implementación, dos llamadores — no dos copias que puedan
+#      divergir):
+#        python3 -m pytest re/tools/test_sin_dist_sitio.py -q
+#
+#   7. Comprobar contra lo SERVIDO, no contra lo desplegado:
+#        curl -s https://openu5.org/api/tabla?base=01-fuga-de-britannia | head -c 200
+#        curl -si -X POST https://openu5.org/api/partida -H 'content-type: application/json' \
+#             -d '{"no":"soy un record"}' | head -3      # debe dar 400 con el motivo
+#      …y que la sección aparece de verdad en /byo (si no, el build fue sin la variable del
+#      paso 5: el sitio queda exactamente como antes, sin error visible).
+#
+# ⚠ Los pasos 1-4 tocan la cuenta de Cloudflare y NO son reversibles con un `git revert`.
+# Este carril los deja escritos y no los ejecuta.
+
+name = "openu5-web"
+compatibility_date = "2026-08-08"
+pages_build_output_dir = "dist-sitio"
+
+# El registro de teclas: `rec:<id>` → JSON canónico. Valores de ~decenas de KB, muy por
+# debajo del techo de 25 MB de KV, y lecturas cacheadas en el borde.
+[[kv_namespaces]]
+binding = "RECORDS_KV"
+id = "21d2d26cd00441a884f2ad9a99432960"   # creado 2026-08-09 (paso 1 ejecutado con el usuario)
+
+# El índice. Ordenar por turnos y filtrar por momento es lo que KV no sabe hacer.
+[[d1_databases]]
+binding = "RECORDS_DB"
+database_name = "openu5-records"
+database_id = "f1610e7c-506c-445d-b926-782bdd432510"   # creado 2026-08-09 (paso 2 ejecutado con el usuario)

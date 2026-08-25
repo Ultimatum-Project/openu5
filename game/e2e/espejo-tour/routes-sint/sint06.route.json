@@ -1,0 +1,114 @@
+{
+  "part": "sint06",
+  "source": "SINTETICO — prosa inventada por el port, cero material de EA",
+  "sintetico": true,
+  "entry": {
+    "checkpoint": "sint05",
+    "note": "Encadena del checkpoint de sint05."
+  },
+  "segments": [
+    {
+      "id": "sint06-g01",
+      "ctx": "start",
+      "seam": null,
+      "ocr": {
+        "from": 1,
+        "to": 5
+      },
+      "script": [
+        {
+          "todo": "Ready?",
+          "ocrLn": 1
+        },
+        {
+          "key": "z",
+          "ocrLn": 2
+        }
+      ],
+      "expect": [
+        {
+          "text": "Ready?",
+          "ocrLn": 1,
+          "class": "auto"
+        }
+      ],
+      "note": "Ready?"
+    },
+    {
+      "id": "sint06-g02",
+      "ctx": "dungeon",
+      "seam": "dungeon-enter",
+      "enter": {
+        "loc": 36,
+        "banner": "KETTLE DEEP",
+        "dungeon": true
+      },
+      "ocr": {
+        "from": 6,
+        "to": 40
+      },
+      "openedBy": "3b",
+      "script": [
+        {
+          "dng": "advance",
+          "from": "Advance",
+          "sim": 1,
+          "ocrLn": 8
+        },
+        {
+          "dng": "back",
+          "from": "Back up",
+          "sim": 1,
+          "ocrLn": 10
+        },
+        {
+          "dng": "klimb",
+          "dir": "up",
+          "from": "Klimb-Up!",
+          "sim": 1,
+          "ocrLn": 12
+        }
+      ],
+      "expect": [
+        {
+          "text": "KETTLE DEEP",
+          "ocrLn": 7,
+          "class": "auto"
+        },
+        {
+          "text": "Klimb-Up!",
+          "ocrLn": 12,
+          "class": "auto"
+        }
+      ],
+      "note": "entrada-dng: la caldera honda. Sin un solo paso de nav."
+    },
+    {
+      "id": "sint06-g03",
+      "ctx": "smallmap",
+      "seam": null,
+      "ocr": {
+        "from": 41,
+        "to": 55
+      },
+      "script": [
+        {
+          "typed": "KETTLE",
+          "ocrLn": 43
+        },
+        {
+          "key": "Enter",
+          "ocrLn": 44
+        }
+      ],
+      "expect": [
+        {
+          "text": "The kettle rings hollow.",
+          "ocrLn": 45,
+          "class": "auto"
+        }
+      ],
+      "note": "Parte MUDA: ni un paso de nav en toda la ruta (registro de desamparadas)."
+    }
+  ]
+}

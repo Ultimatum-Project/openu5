@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  typecheck:
+    name: Typecheck (tsc, no game data)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Typecheck game (src)
+        run: npx tsc --noEmit
+        working-directory: game
+      - name: Typecheck e2e project
+        run: npm run typecheck:e2e -w game
+      # - name: Lint
+      #   run: npm run lint --if-present
+
+  unit-pure:
+    name: Unit tests (tier 1, no game data)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # test:pure = subconjunto de vitest que no lee game/assets/ (fixtures
+      # sintéticos). Ver prerequisito en la cabecera. --if-present para que el
+      # workflow sea válido desde el día 0 del repo público.
+      - name: Pure unit tests (game)
+        run: npm run test:pure -w game --if-present
+      - name: Extractor unit tests (synthetic fixtures only)
+        run: npm run test:pure -w extractor --if-present
+
+  build:
+    name: Production build (no game data)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build
+        run: npm run build -w game
+      # El smoke de preview (npm run smoke) NECESITA assets extraídos para
+      # arrancar el juego → tier 2 local, no CI-1.
+      - name: Upload dist (debug aid)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: game/dist
+          retention-days: 7

@@ -1,0 +1,19 @@
+{
+  "_doc": [
+    "Permisos EXPLÍCITOS de siembra de nombres desde la prosa (R4 de #84).",
+    "",
+    "Lo comprueba re/tools/seed_gate.py sobre cada nota nueva o modificada. Vacío",
+    "es el estado normal y deseable: la vía para nombrar una rutina es la CAPA",
+    "MANUAL (frontier-manual.json), donde el nombre va acompañado de su cita.",
+    "Sembrar desde la prosa es la vía ACCIDENTAL — la que ya pisó nombres curados",
+    "12 veces en 7 actas — y por eso aquí hay que firmarla con nombre y offset",
+    "exactos.",
+    "",
+    "Formato:  \"notas\": { \"mi-acta.md\": { \"ULTIMA.EXE:0x1234\": \"nombre_sembrado\" } }",
+    "",
+    "Una entrada que ya no corresponde a ninguna siembra real es ROJO igual que una",
+    "siembra sin declarar: si no, esto se llena de permisos muertos que no protegen",
+    "de nada."
+  ],
+  "notas": {}
+}

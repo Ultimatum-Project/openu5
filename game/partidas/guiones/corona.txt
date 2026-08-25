@@ -1,0 +1,136 @@
+# GUION DE TECLAS de la partida «corona» (momento-07) — La Corona y la Caja de Sándalo
+#
+# El único momento de interior con TRES salidas medidas desde su bolsa de 31 celdas:
+# el pasadizo del clavicémbalo en (17,13) —justo al norte—, una puerta mágica en (15,19)
+# y una escalera (K)limb en (15,15). Rumbos MEDIDOS desde (17,14): N 0 · S 3 · E 0 · O 3.
+#
+# 🔴 EL «N 0» DE AQUÍ SÍ ES UNA PARED-QUE-NO-SE-CRUZA-ANDANDO, y no es el mismo caso que
+# el N 0 de los rituales: en (17,13) hay el tile 0x4F del PASADIZO, que no se pisa — se
+# abre con la melodía, y sólo si el clavicémbalo está inmediatamente al sur de una celda
+# de la bolsa. Dos «N 0» idénticos en la sonda, dos causas distintas: la sonda de pasos no
+# las separa, y quien mire sólo el número las unificará.
+#
+# La escena elegida es la CORONA, que es lo que el título promete y lo que el picker de
+# este momento tiene y ningún otro: `buildUseRows` da 20 filas aquí y la Corona está en la
+# 17 (los otros momentos de acto III paran en 19 filas sin ella). El (U)se de la Corona no
+# es direccional — no lleva flecha detrás.
+l
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+l
+ArrowLeft
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowUp
+ArrowUp
+ArrowUp
+l
+ArrowDown
+u
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+Enter
+l
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowUp
+ArrowUp
+ArrowUp
+l
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+l
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowUp
+ArrowUp
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+l
+ArrowUp
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowUp
+ArrowUp
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+l
+ArrowLeft
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowUp
+ArrowUp
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+l
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowUp
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowDown
+ArrowDown
+ArrowUp
+ArrowUp
+l
+ArrowUp
+ArrowLeft

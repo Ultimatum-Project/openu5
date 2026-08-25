@@ -1,0 +1,12 @@
+OpenU5 is an original engine implementation licensed under GPL-3.0.
+
+Third-party material:
+
+- Tile metadata (game/src/core/data/TileData.json) is derived from
+  Ultima5Redux by Brad Hannah, licensed under the MIT License.
+  https://github.com/bradhannah/Ultima5Redux
+
+OpenU5 contains no game data, art, music, text or maps from
+Ultima V: Warriors of Destiny. "Ultima" is a registered trademark of
+Electronic Arts. This project is not affiliated with or endorsed by
+Electronic Arts or Origin Systems.

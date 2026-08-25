@@ -1,0 +1,14 @@
+{
+  "chapter": "ch18",
+  "coveredIds": [
+    "cell-doom-room",
+    "cell-doom-trap",
+    "dungeon-doom",
+    "enemy-21-bats",
+    "enemy-27-reapers",
+    "enemy-39-dragons"
+  ],
+  "notes": [
+    "DESCENSO JUGABLE de Doom (loc 40, 8 plantas) — cierra el §PROBE bancado de ch17. Ruta física DERIVADA de 60 pasos (docs/guias/doom/gen-doom-ruta-v5.py). Des Por INERTE en Doom (game.ts:5456) → descenso SÓLO físico (planDungeonDescent noDespor). N1: spawn en la celda-sala (1,1) SIN combate (spawn ≠ step-onto). N3: única bajada = escalera INTERIOR de la sala #99 → klimb-escape (resolveRoomDescend; gate game.ts:5610 escaped=!victory&&delta → desciende HUYENDO). N4/N5: laberinto por FOSOS (cell-doom-trap) + escaleras up/down. N6: sala #103 (5 Dragon, gatesInDaemon) GANADA con el resolvedor ranged (Ring of Invisibility inmuniza posesión combat.ts:2384; Magic Bow alcance 15 out-DPSea el gating bajo seed 0) — ninguna sala se banca por combate. Corte LIMPIO en N7 (floor6, 7,0): el desenlace es de ch19-endgame (#179, absorcion en cm127; pisar floor7 no dispara nada). COSTURA #47: loadout del descenso sembrado (3×L8/240HP + Magic Bow/Ring/flechas/Glass Swords + luz; ch17.gam trae la party débil con Shamino muerto). El .GAM nativo NO representa la posición 3D de mazmorra (saveNative sólo dungeonRoomsCleared) → sin chNN.gam; el determinismo ×2 se sella como DIGEST del descenso."
+  ]
+}

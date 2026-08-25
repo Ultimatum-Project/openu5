@@ -1,0 +1,12 @@
+{
+ "name": "schedule-h18",
+ "kind": "schedule",
+ "note": "schedule_index con times=[8,12,18,22] a hora 18 → idx2→(5,12) (posiciones distintas por índice).",
+ "spec": {
+  "seed": 1,
+  "location": 2, "floor": 0, "hour": 18,
+  "npc": {"slot": 2, "aiType": 0, "post": {"x": 0, "y": 0}, "start": {"x": 0, "y": 0}, "type": 112},
+  "sched": {"aiTypes": [0,0,0], "x": [3,4,5], "y": [10,11,12], "z": [0,0,0], "times": [8,12,18,22]},
+  "turns": 0
+ }
+}

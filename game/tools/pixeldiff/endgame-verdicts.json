@@ -1,0 +1,332 @@
+{
+  "_doc": "Veredictos SELLADOS del arnés visual del desenlace (#176). Lo produce endgame_visual.py --write; NO se edita a mano. Los sha1 atan estos veredictos a los manifiestos con los que se midieron: si alguien cambia casos o regiones sin re-medir, re/tools/test_endgame_visual.py se pone ROJO.",
+  "manifest_sha1": {
+    "endgame-cases.json": "f1a67310a59ea096280e334f567048edef093dd4",
+    "regions-endgame-chrome.json": "3b5418b6e1cfd9c90b37eb082d79f3668a3d7662",
+    "regions-endgame-full.json": "d27fd9d4ba4d75604953e74770bbb8d3e5668e3b"
+  },
+  "cases": [
+    {
+      "name": "sala_verde",
+      "phase": "greenScene",
+      "t": 35.0,
+      "verdict": "PASS",
+      "regions": [
+        {
+          "name": "viewport",
+          "mode": "hist_video",
+          "score": 0.8821,
+          "passed": true
+        },
+        {
+          "name": "viewport_celdas",
+          "mode": "lit_tiles",
+          "score": 1.0,
+          "passed": true
+        },
+        {
+          "name": "panel_roster",
+          "mode": "ignore",
+          "score": null,
+          "passed": null
+        },
+        {
+          "name": "panel_stats",
+          "mode": "ignore",
+          "score": null,
+          "passed": null
+        },
+        {
+          "name": "consola",
+          "mode": "ignore",
+          "score": null,
+          "passed": null
+        }
+      ]
+    },
+    {
+      "name": "dialogo_caja",
+      "phase": "dialogue",
+      "t": 60.0,
+      "verdict": "PASS",
+      "regions": [
+        {
+          "name": "viewport",
+          "mode": "hist_video",
+          "score": 0.8788,
+          "passed": true
+        },
+        {
+          "name": "viewport_celdas",
+          "mode": "lit_tiles",
+          "score": 1.0,
+          "passed": true
+        },
+        {
+          "name": "panel_roster",
+          "mode": "ignore",
+          "score": null,
+          "passed": null
+        },
+        {
+          "name": "panel_stats",
+          "mode": "ignore",
+          "score": null,
+          "passed": null
+        },
+        {
+          "name": "consola",
+          "mode": "ignore",
+          "score": null,
+          "passed": null
+        }
+      ]
+    },
+    {
+      "name": "orbe_moongate",
+      "phase": "orbMoongate",
+      "t": 92.0,
+      "verdict": "PASS",
+      "regions": [
+        {
+          "name": "viewport",
+          "mode": "hist_video",
+          "score": 0.879,
+          "passed": true
+        },
+        {
+          "name": "viewport_celdas",
+          "mode": "lit_tiles",
+          "score": 1.0,
+          "passed": true
+        },
+        {
+          "name": "panel_roster",
+          "mode": "ignore",
+          "score": null,
+          "passed": null
+        },
+        {
+          "name": "panel_stats",
+          "mode": "ignore",
+          "score": null,
+          "passed": null
+        },
+        {
+          "name": "consola",
+          "mode": "ignore",
+          "score": null,
+          "passed": null
+        }
+      ]
+    },
+    {
+      "name": "disolucion",
+      "phase": "dissolve",
+      "t": 100.0,
+      "verdict": "PASS",
+      "regions": [
+        {
+          "name": "pantalla",
+          "mode": "hist_video",
+          "score": 0.9361,
+          "passed": true
+        },
+        {
+          "name": "pantalla_celdas",
+          "mode": "lit_tiles",
+          "score": 0.9474,
+          "passed": true
+        },
+        {
+          "name": "pantalla_tinta",
+          "mode": "presence",
+          "score": 0.9458,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "historia_0",
+      "phase": "storyHouse",
+      "t": 107.0,
+      "verdict": "PASS",
+      "regions": [
+        {
+          "name": "pantalla",
+          "mode": "hist_video",
+          "score": 0.9223,
+          "passed": true
+        },
+        {
+          "name": "pantalla_celdas",
+          "mode": "lit_tiles",
+          "score": 0.9342,
+          "passed": true
+        },
+        {
+          "name": "pantalla_tinta",
+          "mode": "presence",
+          "score": 0.8239,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "historia_1",
+      "phase": "storyHouse",
+      "t": 110.5,
+      "verdict": "FAIL",
+      "regions": [
+        {
+          "name": "pantalla",
+          "mode": "hist_video",
+          "score": 0.8404,
+          "passed": true
+        },
+        {
+          "name": "pantalla_celdas",
+          "mode": "lit_tiles",
+          "score": 0.7982,
+          "passed": false
+        },
+        {
+          "name": "pantalla_tinta",
+          "mode": "presence",
+          "score": 0.8037,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "historia_2",
+      "phase": "storyDream",
+      "t": 118.0,
+      "verdict": "FAIL",
+      "regions": [
+        {
+          "name": "pantalla",
+          "mode": "hist_video",
+          "score": 0.8662,
+          "passed": true
+        },
+        {
+          "name": "pantalla_celdas",
+          "mode": "lit_tiles",
+          "score": 0.6798,
+          "passed": false
+        },
+        {
+          "name": "pantalla_tinta",
+          "mode": "presence",
+          "score": 0.624,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "name": "historia_3",
+      "phase": "storyDream",
+      "t": 120.5,
+      "verdict": "FAIL",
+      "regions": [
+        {
+          "name": "pantalla",
+          "mode": "hist_video",
+          "score": 0.917,
+          "passed": true
+        },
+        {
+          "name": "pantalla_celdas",
+          "mode": "lit_tiles",
+          "score": 0.7939,
+          "passed": false
+        },
+        {
+          "name": "pantalla_tinta",
+          "mode": "presence",
+          "score": 0.9141,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "historia_4",
+      "phase": "storyDream",
+      "t": 122.0,
+      "verdict": "PASS",
+      "regions": [
+        {
+          "name": "pantalla",
+          "mode": "hist_video",
+          "score": 0.9224,
+          "passed": true
+        },
+        {
+          "name": "pantalla_celdas",
+          "mode": "lit_tiles",
+          "score": 0.8596,
+          "passed": true
+        },
+        {
+          "name": "pantalla_tinta",
+          "mode": "presence",
+          "score": 0.8033,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "historia_5",
+      "phase": "storyDream",
+      "t": 128.0,
+      "verdict": "FAIL",
+      "regions": [
+        {
+          "name": "pantalla",
+          "mode": "hist_video",
+          "score": 0.748,
+          "passed": false
+        },
+        {
+          "name": "pantalla_celdas",
+          "mode": "lit_tiles",
+          "score": 0.9781,
+          "passed": true
+        },
+        {
+          "name": "pantalla_tinta",
+          "mode": "presence",
+          "score": 0.6124,
+          "passed": false
+        }
+      ]
+    },
+    {
+      "name": "pergamino",
+      "phase": "terminalFreeze",
+      "t": 131.0,
+      "verdict": "PASS",
+      "regions": [
+        {
+          "name": "pantalla",
+          "mode": "hist_video",
+          "score": 0.9359,
+          "passed": true
+        },
+        {
+          "name": "pantalla_celdas",
+          "mode": "lit_tiles",
+          "score": 0.9956,
+          "passed": true
+        },
+        {
+          "name": "pantalla_tinta",
+          "mode": "presence",
+          "score": 0.9232,
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

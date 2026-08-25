@@ -1,0 +1,26 @@
+{
+  "chapter": "ch06",
+  "coveredIds": [
+    "command-e",
+    "command-k",
+    "command-l",
+    "command-s",
+    "command-t",
+    "floor-1-z0",
+    "floor-1-z1",
+    "location-1-moonglow",
+    "npc-towne-1-zachariah",
+    "npc-towne-2-malifora",
+    "npc-towne-3-malik",
+    "npc-towne-5-lord-stuart-the-hungry",
+    "search-109-loc1-19-24",
+    "search-110-loc1-20-24",
+    "search-26-loc1-24-19",
+    "sign-1-14-20",
+    "sign-1-16-20",
+    "word-fallax"
+  ],
+  "notes": [
+    "Moonglow: no tiene herrería de compra byte-exacta (mercaderes = tavernero/sanador), pero SÍ ejercita economía por la vía del GUARDIA: TRIBUTO PAGADO ×2 (40 gp en total = 10 gp × vivos por demanda), oro 200→160 — el beat guard-tribute-paid, con aserto del importe exacto y del prompt cerrado (#52/#46). Su otra novedad es la Word of Power FALLAX extraída de Malifora por diálogo real + la recuperación de los 4 NPCs de sala aislada/sanctum con goToCell MULTI-NIVEL (recoverPartition backed by nav-graph #13). NPCs cubiertos: Malifora(2), Malik(3), Zachariah(1), Donn Piatt(4), Lord Stuart(5) — TODOS. Zachariah(1)/Donn Piatt(4) son sanctums interiores de planta 0 (z0-room ← z1-component, partición multi-nivel) que el solver de componentes del grafo recupera; Lord Stuart(5) es sala aislada de planta 1. Búsquedas/señales tras muro quedan best-effort (determinista bajo seed-0)."
+  ]
+}

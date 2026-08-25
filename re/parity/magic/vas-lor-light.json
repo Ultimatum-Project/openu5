@@ -1,0 +1,30 @@
+{
+ "name": "vas-lor-light",
+ "note": "Vas Lor \u2192 255 minutos.",
+ "spec": {
+  "seed": 1,
+  "spell": "Vas_Lor",
+  "casterIndex": 0,
+  "ctx": {
+   "location": 0,
+   "inCombat": false
+  },
+  "roster": [
+   {
+    "class": "M",
+    "mp": 22,
+    "level": 8,
+    "int": 22
+   }
+  ],
+  "spellQuantities": {
+   "12": 2
+  }
+ },
+ "expect": {
+  "light_mins": 255
+ },
+ "compareFields": [
+  "light_mins"
+ ]
+}

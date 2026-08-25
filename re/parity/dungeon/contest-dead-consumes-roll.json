@@ -1,0 +1,44 @@
+{
+ "name": "contest-dead-consumes-roll",
+ "note": "Contest sue\u00f1o con un miembro 'D' en medio: rand(1,30) por TODOS (incluido el muerto), status solo a vivos.",
+ "spec": {
+  "seed": 48879,
+  "roster": [
+   {
+    "dex": 5,
+    "hp": 40,
+    "maxHp": 40,
+    "status": "G"
+   },
+   {
+    "dex": 15,
+    "hp": 0,
+    "maxHp": 40,
+    "status": "D"
+   },
+   {
+    "dex": 25,
+    "hp": 40,
+    "maxHp": 40,
+    "status": "G"
+   }
+  ],
+  "pos": {
+   "dungeon": 33,
+   "floor": 0,
+   "x": 2,
+   "y": 2,
+   "facing": "east"
+  },
+  "cells": [
+   {
+    "floor": 0,
+    "x": 3,
+    "y": 2,
+    "type": 8,
+    "sub": 0
+   }
+  ],
+  "action": "forward"
+ }
+}

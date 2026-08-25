@@ -1,0 +1,25 @@
+{
+  "chapter": "ch07",
+  "coveredIds": [
+    "command-e",
+    "command-j",
+    "command-k",
+    "command-l",
+    "command-s",
+    "command-t",
+    "floor-3-z0",
+    "floor-3-z1",
+    "location-3-jhelom",
+    "npc-towne-13-bullwier",
+    "npc-towne-14-trian",
+    "npc-towne-15-goeth",
+    "npc-towne-16-thorne",
+    "search-32-loc3-21-16",
+    "search-33-loc3-20-10",
+    "sign-3-15-28",
+    "word-inopia"
+  ],
+  "notes": [
+    "Jhelom (loc 3): location+z0/z1, 4 NPCs towne multi-paso (13/14/15/16 = Bullwier/Trian/Goeth/Thorne). TESTIGOS de contenido byte-exactos: Goeth → WORD OF POWER INOPIA ('Drow of Rewop'+'AIPONI', word-inopia) TRAS PUERTA CON LLAVE (5,25) resuelta por goToCell allowLocked + (J)immy best-DEX; Bullwier → Ambrose/'towne of Cove' (rumor Mystic weapons; NUNCA pati/fool → CallGuards); Trian → 'each word backwards' (name-gate); Thorne → 'Mantra for Valor is RA' (greeting-Label). HORA CANÓNICA 13:00 (diurna: patio en z0, Goeth en z1 = ruta más corta). LLAVES 2→2 (jimmy exitoso NO gasta llave, fiel a game.ts; roll best-DEX acierta a la 1ª bajo seed-0). Oro 200→180 · Karma 80→80 INALTERADOS (Jhelom no ejercita economía ni afecta karma). ⚠ CORREGIDO en la auditoría final (01-08): esta nota decía «Karma 80 y oro 1 INALTERADOS» y el .gam sellado trae oro 200 — la cifra «1» caducó con el pin entryGold=DEFAULT_ENTRY_GOLD (#52) y la contradicción era SILENCIOSA por partida doble: el orden invertido («karma … y oro …») no casaba con ninguno de los patrones que parsea el detector de auditoria-estatica-sellos.md, así que ni salía en el denominador. Ahora las dos cifras se LEEN EN VIVO e interpolan, en el formato `CAMPO a→b` que sí se parsea: no puede volver a divergir del sello. Búsquedas z0 best-effort (esquinas NE/SE tras otras puertas con llave quedan fuera; subconjunto determinista). Comandos e/t/s/l/j/k. Corrección de corpus: Lord Michael es de Empath Abbey, no de Jhelom."
+  ]
+}

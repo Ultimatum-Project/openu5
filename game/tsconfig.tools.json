@@ -1,0 +1,26 @@
+{
+  // Type-check gate de game/tools — la ficha #267: estos scripts corren por `tsx`
+  // (sin type-check) y el tsconfig del juego sólo incluye `src`+`tests`, así que sus
+  // referencias muertas eran invisibles hasta ejecutar (caso real fichado por el
+  // carril de #254). Misma clase y mismo remedio que #369 (game/e2e).
+  //
+  //   cd game && npx tsc --noEmit -p tsconfig.tools.json
+  //
+  // Hereda las opciones estrictas del tsconfig del juego, apunta el `include` a
+  // `tools` entero (los .ts que `tools` importa de `src/` entran como dependencias
+  // y se typechequean igual) y añade los tipos de Node + Playwright (las sondas
+  // usan `node:fs`/`node:path` y `chromium` de @playwright/test).
+  //
+  // NO se fusiona con tsconfig.json (mismo argumento que el gate e2e): tools
+  // necesita types node+playwright y src lleva vite/client — ampliar el include
+  // del gate de src lo debilitaría.
+  //
+  // `tools/portrait-reflow/tsconfig.json` (anterior a este gate) cubre SÓLO su
+  // subdirectorio y sigue funcionando standalone; este gate lo SUBSUME — los dos
+  // heredan del mismo tsconfig raíz y no pueden divergir en opciones.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "@playwright/test"]
+  },
+  "include": ["tools"]
+}

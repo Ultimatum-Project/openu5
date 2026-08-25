@@ -1,0 +1,20 @@
+{
+  "chapter": "ch11",
+  "coveredIds": [
+    "command-e",
+    "command-k",
+    "command-s",
+    "command-t",
+    "floor-26-z0",
+    "floor-26-z1",
+    "location-26-bordermarch",
+    "npc-keep-2-sir-simon",
+    "npc-keep-3-lady-tessa",
+    "npc-keep-30-dupre",
+    "npc-keep-31-sentri",
+    "search-97-loc26-11-4"
+  ],
+  "notes": [
+    "Bordermarch (loc 26) — 2º KEEP del tour: location + z0/z1 (nav component-aware), 4 NPCs keep. TESTIGOS byte-exactos del REGALIA de endgame: Sir Simon → 'magical barriers' (Cetro, \"held by the Shadowlords in their earthly fortress\"); Tessa → 'Amulet which Lord British once bore' (Underworld). Compañeros TALK-ONLY (decisión del lead, sin JoinParty → roster/.gam intactos): Dupre → 'hardly recognize thee' (gate de saludo L0 'y'); Sentri → 'Spectres of Evil' (gate L0 + 'evil'). HORA CANÓNICA 10:00 (z0 Tessa; z1 Simon/Dupre/Sentri). GEMAS 0→0 (#65). LLAVES 1→1 (CERO (J)immy: smallmap 26 sin tiles-cerrojo → sin arriesgar la tirada de DEX). Oro 200→200 y karma 80→80 INALTERADOS (healer shop-26-healers-herbs DIFERIDO; PATO de Dupre esquivado). Search 1/1 (z0, best-effort). 0 señales en loc 26. Comandos e/t/s/k. LECCIÓN ch10 aplicada: escaneo de DESCRIPTION por gates que consumen tokens (Dupre/Sentri caen en Label de saludo; Sir Simon/Tessa limpios)."
+  ]
+}

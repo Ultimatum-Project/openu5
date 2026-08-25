@@ -1,0 +1,2275 @@
+{
+ "amplia": [
+  "BLCKTHRN.OVL:0x278",
+  "BLCKTHRN.OVL:0x510",
+  "BLCKTHRN.OVL:0x54a",
+  "CAST.OVL:0x1fa",
+  "CAST.OVL:0x43e",
+  "CAST.OVL:0x4a4",
+  "CAST.OVL:0x4b0",
+  "CAST.OVL:0x74c",
+  "CAST.OVL:0x846",
+  "CAST.OVL:0xafe",
+  "CAST.OVL:0xc98",
+  "CAST2.OVL:0x3c2",
+  "CAST2.OVL:0x40a",
+  "CAST2.OVL:0x768",
+  "CAST2.OVL:0x914",
+  "CMDS.OVL:0x73e",
+  "COMBAT.OVL:0xd30",
+  "COMBAT.OVL:0x1236",
+  "COMSUBS.OVL:0x4d4",
+  "COMSUBS.OVL:0x97c",
+  "DNGLOOK.OVL:0x93a",
+  "DNGLOOK.OVL:0xa48",
+  "DNGLOOK.OVL:0xc6c",
+  "DNGLOOK.OVL:0xfda",
+  "DNGLOOK.OVL:0x1130",
+  "DUNGEON.OVL:0x3d6",
+  "DUNGEON.OVL:0x104c",
+  "DUNGEON.OVL:0x10dc",
+  "DUNGEON.OVL:0x127e",
+  "DUNGEON.OVL:0x1786",
+  "ENDGAME.OVL:0x28c",
+  "ENDGAME.OVL:0x4fe",
+  "ENDGAME.OVL:0x5a2",
+  "INTRO.OVL:0x676",
+  "INTRO.OVL:0x1e22",
+  "LOOKOBJ.OVL:0x1ac",
+  "LOOKOBJ.OVL:0x24c",
+  "LOOKOBJ.OVL:0xabe",
+  "LOOKOBJ.OVL:0xb60",
+  "LOOKOBJ.OVL:0xb98",
+  "LOOKOBJ.OVL:0xbd0",
+  "LOOKOBJ.OVL:0xc36",
+  "LOOKOBJ.OVL:0xc9c",
+  "LOOKOBJ.OVL:0xe16",
+  "MAINOUT.OVL:0x7a",
+  "MAINOUT.OVL:0xa1a",
+  "MAINOUT.OVL:0xd22",
+  "MAINOUT.OVL:0xf4e",
+  "MAINOUT.OVL:0x105c",
+  "NPC.OVL:0x4ac",
+  "NPC.OVL:0xb9e",
+  "OUTSUBS.OVL:0x1b4",
+  "OUTSUBS.OVL:0x2c8",
+  "OUTSUBS.OVL:0x566",
+  "SHOPPES.OVL:0xc58",
+  "SHOPPES2.OVL:0x1d2",
+  "SHOPPES2.OVL:0x664",
+  "SJOG.OVL:0x1040",
+  "SJOG.OVL:0x10b8",
+  "SJOG.OVL:0x1b34",
+  "SJOG.OVL:0x203e",
+  "TALK.OVL:0x4da",
+  "TALK.OVL:0x75a",
+  "TALK.OVL:0x93a",
+  "TALK.OVL:0x960",
+  "TALK.OVL:0x96e",
+  "TALK.OVL:0x9d8",
+  "TALK.OVL:0xa2c",
+  "TALK.OVL:0xa3c",
+  "TALK.OVL:0xbd4",
+  "TALK.OVL:0xd42",
+  "TALK.OVL:0xd7a",
+  "TALK.OVL:0x127e",
+  "TOWN.OVL:0x11e",
+  "TOWN.OVL:0x170",
+  "TOWN.OVL:0x1726",
+  "ULTIMA.EXE:0x1c5b",
+  "ULTIMA.EXE:0x3b9e",
+  "ULTIMA.EXE:0x4dea",
+  "ULTIMA.EXE:0x6f1e",
+  "ULTIMA.EXE:0x72f5",
+  "ZSTATS.OVL:0x278",
+  "ZSTATS.OVL:0x518",
+  "ZSTATS.OVL:0x56c",
+  "ZSTATS.OVL:0x99a",
+  "ZSTATS.OVL:0xc0a"
+ ],
+ "estrecha": [
+  "BLCKTHRN.OVL:0x0",
+  "CAST2.OVL:0x8ea",
+  "CMDS.OVL:0x14ba",
+  "COMBAT.OVL:0x5b6",
+  "COMBAT.OVL:0x111a",
+  "COMBAT.OVL:0x120e",
+  "COMBAT.OVL:0x139a",
+  "COMBAT.OVL:0x13e2",
+  "COMBAT.OVL:0x14d6",
+  "COMBAT.OVL:0x1a5c",
+  "COMBAT.OVL:0x1b1e",
+  "COMSUBS.OVL:0x0",
+  "COMSUBS.OVL:0x56",
+  "COMSUBS.OVL:0x94",
+  "COMSUBS.OVL:0x48a",
+  "DNGLOOK.OVL:0x6a8",
+  "DNGLOOK.OVL:0x844",
+  "DNGLOOK.OVL:0x97e",
+  "DNGLOOK.OVL:0xd3e",
+  "DNGLOOK.OVL:0x109e",
+  "DNGLOOK.OVL:0x117e",
+  "DUNGEON.OVL:0x134a",
+  "DUNGEON.OVL:0x150a",
+  "DUNGEON.OVL:0x1682",
+  "DUNGEON.OVL:0x1952",
+  "DUNGEON.OVL:0x1a90",
+  "DUNGEON.OVL:0x1be0",
+  "DUNGEON.OVL:0x1c0c",
+  "FLAMES.OVL:0x0",
+  "INTRO.OVL:0x2024",
+  "LOOKOBJ.OVL:0x10fc",
+  "MAINOUT.OVL:0x354",
+  "MAINOUT.OVL:0x598",
+  "MAINOUT.OVL:0xfc4",
+  "MAINOUT.OVL:0x1578",
+  "MAINOUT.OVL:0x198c",
+  "MAINOUT.OVL:0x1a60",
+  "NPC.OVL:0x1a0",
+  "NPC.OVL:0xd00",
+  "OUTSUBS.OVL:0x98",
+  "SHOPPES.OVL:0x0",
+  "SHOPPES3.OVL:0x0",
+  "SJOG.OVL:0x1b6c",
+  "SJOG.OVL:0x20d8",
+  "SJOG.OVL:0x2148",
+  "TALK.OVL:0x4e2",
+  "TALK.OVL:0x574",
+  "TALK.OVL:0x788",
+  "TOWN.OVL:0xc78",
+  "TOWN.OVL:0x10f2",
+  "ULTIMA.EXE:0x2bd4",
+  "ULTIMA.EXE:0x39cc",
+  "ULTIMA.EXE:0x3a74",
+  "ULTIMA.EXE:0x3f54",
+  "ULTIMA.EXE:0x3f6e",
+  "ZSTATS.OVL:0x5a4"
+ ],
+ "sin_rastro": [
+  "CAST.OVL:0x7b4",
+  "CAST2.OVL:0xe64",
+  "LOOKOBJ.OVL:0xa9c",
+  "LOOKOBJ.OVL:0xcf4",
+  "LOOKOBJ.OVL:0xdda",
+  "LOOKOBJ.OVL:0xe7a",
+  "LOOKOBJ.OVL:0xf7e",
+  "MAINOUT.OVL:0xe04",
+  "NPC.OVL:0xa4a",
+  "SHOPPES3.OVL:0x494",
+  "SHOPPES3.OVL:0x4b6",
+  "TALK.OVL:0x4d2",
+  "TALK.OVL:0x7aa",
+  "TOWN.OVL:0x9bc",
+  "TOWN.OVL:0x1694",
+  "ULTIMA.EXE:0x1588",
+  "ULTIMA.EXE:0x1649",
+  "ULTIMA.EXE:0x3702",
+  "ULTIMA.EXE:0x4f3c",
+  "ULTIMA.EXE:0x72f0",
+  "ULTIMA.EXE:0x72fa",
+  "ULTIMA.EXE:0x7315",
+  "ULTIMA.EXE:0x737f",
+  "ULTIMA.EXE:0x73da",
+  "ULTIMA.EXE:0x76a1",
+  "ULTIMA.EXE:0x76ac"
+ ],
+ "detalle": {
+  "BLCKTHRN.OVL:0x0": {
+   "role": "beep_delay",
+   "amplia": [
+    "0xec-basura-de-pila-origen.md:10",
+    "0xec-basura-de-pila-origen.md:13",
+    "0xec-basura-de-pila-origen.md:32",
+    "arena-entry-triggers.md:92",
+    "arena-entry-triggers.md:102",
+    "asm-frontier-lote-b.md:147"
+   ],
+   "estrecha": [
+    "camp-scene-kernel.md:157"
+   ],
+   "n_amplia": 207,
+   "n_estrecha": 1
+  },
+  "BLCKTHRN.OVL:0x278": {
+   "role": "print_question",
+   "amplia": [
+    "blackthorn.md:17",
+    "blackthorn.md:31",
+    "dungeon-wanderer.md:43",
+    "zstats.md:18",
+    "ztats-layout.md:136",
+    "ztats-layout.md:376"
+   ],
+   "estrecha": [],
+   "n_amplia": 6,
+   "n_estrecha": 0
+  },
+  "BLCKTHRN.OVL:0x510": {
+   "role": "present_reward_cutscene",
+   "amplia": [
+    "endgame-derivation.md:21",
+    "endgame-derivation.md:22",
+    "endgame-derivation.md:141",
+    "endgame-derivation.md:144",
+    "endgame-derivation.md:161",
+    "endgame-derivation.md:164"
+   ],
+   "estrecha": [],
+   "n_amplia": 9,
+   "n_estrecha": 0
+  },
+  "BLCKTHRN.OVL:0x54a": {
+   "role": "interrogate",
+   "amplia": [
+    "blackthorn.md:17",
+    "blackthorn.md:34",
+    "blackthorn.md:159",
+    "blackthorn.md:175"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "CAST.OVL:0x1fa": {
+   "role": "mani_caster",
+   "amplia": [
+    "drink-ahead-fidelity.md:64"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "CAST.OVL:0x43e": {
+   "role": "repel_undead_an_xen_corp",
+   "amplia": [
+    "combat-spells.md:267",
+    "dnglook-raster-spec.md:180",
+    "dungeon-map-buffers.md:219",
+    "gypsy.md:162",
+    "intro-demo-scene.md:232",
+    "intro-demo-scene.md:233"
+   ],
+   "estrecha": [],
+   "n_amplia": 9,
+   "n_estrecha": 0
+  },
+  "CAST.OVL:0x4a4": {
+   "role": "in_wis_peer_coords",
+   "amplia": [
+    "brief-intro-demo-kernel.md:1",
+    "brief-intro-demo-kernel.md:87",
+    "demo-scene-data.md:4",
+    "demo-scene-data.md:44",
+    "demo-scene-data.md:187",
+    "font.md:17"
+   ],
+   "estrecha": [],
+   "n_amplia": 24,
+   "n_estrecha": 0
+  },
+  "CAST.OVL:0x4b0": {
+   "role": "kal_xen_summon",
+   "amplia": [
+    "endgame-derivation.md:49",
+    "esc-sala-derivacion.md:74",
+    "magic.md:166",
+    "ring-expiry-derivation.md:69",
+    "ring-expiry-derivation.md:217",
+    "sfx-catalog.md:269"
+   ],
+   "estrecha": [],
+   "n_amplia": 11,
+   "n_estrecha": 0
+  },
+  "CAST.OVL:0x74c": {
+   "role": "untransform_actors (clear flag 0x10)",
+   "amplia": [
+    "combat-spells.md:299",
+    "dungeon.md:30",
+    "kernel-sweep-4.md:149"
+   ],
+   "estrecha": [],
+   "n_amplia": 3,
+   "n_estrecha": 0
+  },
+  "CAST.OVL:0x7b4": {
+   "role": "in_bet_xen_swarms",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "CAST.OVL:0x846": {
+   "role": "an_ex_por_seal_door_sub",
+   "amplia": [
+    "combat-use-potions.md:104",
+    "falsedad-merma-tiendas.md:64",
+    "falsedad-merma-tiendas.md:116",
+    "falsedad-merma-tiendas.md:133",
+    "falsedad-merma-tiendas.md:159",
+    "falsedad-merma-tiendas.md:163"
+   ],
+   "estrecha": [],
+   "n_amplia": 9,
+   "n_estrecha": 0
+  },
+  "CAST.OVL:0xafe": {
+   "role": "self_transform_rat",
+   "amplia": [
+    "cannon-fire.md:11",
+    "cannon-fire.md:26",
+    "combat-spells.md:297",
+    "globals-negdisp-adjudicacion.md:57"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "CAST.OVL:0xc98": {
+   "role": "in_quas_corp_mass_fear",
+   "amplia": [
+    "combat-spells.md:271"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "CAST2.OVL:0x3c2": {
+   "role": "mani_apply (heal rand30 cap)",
+   "amplia": [
+    "magic.md:111",
+    "potions-scrolls.md:90"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "CAST2.OVL:0x40a": {
+   "role": "rel_hur_set_wind",
+   "amplia": [
+    "citas-sesgo-overlay.md:48",
+    "citas-strings-57-cierre.md:31",
+    "diff-ocr-masivo.md:63",
+    "magic.md:170",
+    "potions-scrolls.md:38",
+    "transport.md:239"
+   ],
+   "estrecha": [],
+   "n_amplia": 6,
+   "n_estrecha": 0
+  },
+  "CAST2.OVL:0x768": {
+   "role": "magic_door_open_worker",
+   "amplia": [
+    "combat-spells.md:53",
+    "combat-spells.md:55",
+    "dnglook-raster-spec.md:239",
+    "dungeon-input-model.md:59"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "CAST2.OVL:0x8ea": {
+   "role": "light_spell_set",
+   "amplia": [
+    "camp-scene-kernel.md:167",
+    "dungeon.md:331",
+    "magic.md:142",
+    "potions-scrolls.md:37",
+    "potions-scrolls.md:55",
+    "shrines.md:287"
+   ],
+   "estrecha": [
+    "potions-scrolls.md:55"
+   ],
+   "n_amplia": 6,
+   "n_estrecha": 1
+  },
+  "CAST2.OVL:0x914": {
+   "role": "table_driven_summoner",
+   "amplia": [
+    "dungeon-wanderer.md:77"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "CAST2.OVL:0xe64": {
+   "role": "spectacle_cue (location=0xff spell handler)",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "CMDS.OVL:0x73e": {
+   "role": "land_nearby_pred (X-it helper)",
+   "amplia": [
+    "asm-frontier-lote-b.md:91",
+    "transport.md:292",
+    "transport.md:297",
+    "transport.md:300",
+    "transport.md:399"
+   ],
+   "estrecha": [],
+   "n_amplia": 5,
+   "n_estrecha": 0
+  },
+  "CMDS.OVL:0x14ba": {
+   "role": "is_pushable_tile (Push helper)",
+   "amplia": [
+    "asm-frontier-lote-b.md:68",
+    "cmds.md:52",
+    "cmds.md:351",
+    "passability-18flags.md:82",
+    "passability-18flags.md:83",
+    "passability-18flags.md:124"
+   ],
+   "estrecha": [
+    "cmds.md:52",
+    "passability-18flags.md:82",
+    "passability-18flags.md:83",
+    "passability-18flags.md:124"
+   ],
+   "n_amplia": 6,
+   "n_estrecha": 4
+  },
+  "COMBAT.OVL:0x5b6": {
+   "role": "armed_with_weapon_msg",
+   "amplia": [
+    "careo-combate-fixes.md:75",
+    "careo-combate-fixes.md:79"
+   ],
+   "estrecha": [
+    "careo-combate-fixes.md:75"
+   ],
+   "n_amplia": 2,
+   "n_estrecha": 1
+  },
+  "COMBAT.OVL:0xd30": {
+   "role": "ai_target_selection",
+   "amplia": [
+    "combat-use-potions.md:63",
+    "combat.md:319",
+    "combat.md:339",
+    "combat.md:341"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "COMBAT.OVL:0x111a": {
+   "role": "cbt_floor_triggers",
+   "amplia": [
+    "arena-entry-triggers.md:7",
+    "cbt-unidades-0-0-y-cruce-movil.md:271",
+    "censo-clases-specs-salas.md:44",
+    "combat.md:51",
+    "combat.md:405",
+    "combat.md:407"
+   ],
+   "estrecha": [
+    "cbt-unidades-0-0-y-cruce-movil.md:271",
+    "combat.md:405",
+    "combat.md:407",
+    "room-triggers.md:7",
+    "room-triggers.md:8",
+    "sonda-0xec-testigo-yt.md:62"
+   ],
+   "n_amplia": 23,
+   "n_estrecha": 7
+  },
+  "COMBAT.OVL:0x120e": {
+   "role": "random_board_cell",
+   "amplia": [
+    "combat-spells.md:294",
+    "combat.md:63",
+    "combat.md:351",
+    "combat.md:380",
+    "disasm-ceiling-false-deferrals.md:26",
+    "overlay-load-layout.md:153"
+   ],
+   "estrecha": [
+    "summon-gate-resolved.md:44",
+    "summon-gate-resolved.md:61",
+    "witness-9cb6-bonus.md:5",
+    "witness-9cb6-bonus.md:9",
+    "witness-summon-position.md:6"
+   ],
+   "n_amplia": 16,
+   "n_estrecha": 5
+  },
+  "COMBAT.OVL:0x1236": {
+   "role": "clear_object_sprite_slot",
+   "amplia": [
+    "trigger-sala-impacto-distancia.md:81",
+    "trigger-sala-impacto-distancia.md:87"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "COMBAT.OVL:0x139a": {
+   "role": "effective_defender_dex",
+   "amplia": [
+    "combat.md:135",
+    "overworld-b34-regalia.md:92"
+   ],
+   "estrecha": [
+    "overworld-b34-regalia.md:92"
+   ],
+   "n_amplia": 2,
+   "n_estrecha": 1
+  },
+  "COMBAT.OVL:0x13e2": {
+   "role": "attack_defense_stat_selector",
+   "amplia": [
+    "combat-spells.md:100",
+    "combat.md:122",
+    "combat.md:129",
+    "combat.md:134",
+    "death-resurrection-audit.md:46",
+    "death-resurrection-audit.md:221"
+   ],
+   "estrecha": [
+    "combat-spells.md:100",
+    "fx-lineaoe-negate-derivation.md:175"
+   ],
+   "n_amplia": 14,
+   "n_estrecha": 2
+  },
+  "COMBAT.OVL:0x14d6": {
+   "role": "hit_roll",
+   "amplia": [
+    "audit-byte-wrap.md:31",
+    "combat.md:110",
+    "combat.md:280",
+    "combat.md:327",
+    "combat.md:333",
+    "demo-scene-data.md:54"
+   ],
+   "estrecha": [
+    "audit-byte-wrap.md:31",
+    "combat.md:110"
+   ],
+   "n_amplia": 9,
+   "n_estrecha": 2
+  },
+  "COMBAT.OVL:0x1a5c": {
+   "role": "enemy_wound_classification",
+   "amplia": [
+    "careo-combate-fixes.md:20",
+    "combat-ui-spec.md:188",
+    "combat.md:237",
+    "combat.md:239",
+    "combat.md:307",
+    "trigger-sala-impacto-distancia.md:91"
+   ],
+   "estrecha": [
+    "combat.md:239"
+   ],
+   "n_amplia": 6,
+   "n_estrecha": 1
+  },
+  "COMBAT.OVL:0x1b1e": {
+   "role": "end_of_turn_terrain_field_damage",
+   "amplia": [
+    "cast-input.md:107",
+    "combat.md:83",
+    "combat.md:398",
+    "field-spell-port.md:70",
+    "sprite-frame-drop-tercer-sapo-cargador.md:152"
+   ],
+   "estrecha": [
+    "combat.md:398",
+    "field-spell-port.md:70",
+    "sprite-frame-drop-tercer-sapo-cargador.md:152"
+   ],
+   "n_amplia": 5,
+   "n_estrecha": 3
+  },
+  "COMSUBS.OVL:0x0": {
+   "role": "int_saving_throw_dispatch",
+   "amplia": [
+    "0xec-basura-de-pila-origen.md:10",
+    "0xec-basura-de-pila-origen.md:13",
+    "0xec-basura-de-pila-origen.md:32",
+    "arena-entry-triggers.md:92",
+    "arena-entry-triggers.md:102",
+    "asm-frontier-lote-b.md:147"
+   ],
+   "estrecha": [
+    "audit-byte-wrap.md:32",
+    "combat-spells.md:170",
+    "combat-spells.md:172",
+    "combat.md:370",
+    "fx-lineaoe-negate-derivation.md:168",
+    "stubs-no-tabulados-adjudicados.md:35"
+   ],
+   "n_amplia": 207,
+   "n_estrecha": 8
+  },
+  "COMSUBS.OVL:0x56": {
+   "role": "field_dissipation_per_round",
+   "amplia": [
+    "combat.md:396",
+    "cotejo-51-verified-heredado.md:124",
+    "dungeon.md:31",
+    "endgame-derivation.md:542",
+    "intro-scene-tables.md:126",
+    "intro-scene-tables.md:282"
+   ],
+   "estrecha": [
+    "combat.md:396",
+    "cotejo-51-verified-heredado.md:124"
+   ],
+   "n_amplia": 13,
+   "n_estrecha": 2
+  },
+  "COMSUBS.OVL:0x94": {
+   "role": "print_combatant_name",
+   "amplia": [
+    "brief-intro-demo-kernel.md:58",
+    "combat-ui-spec.md:56",
+    "combate-hotfix-20260722.md:55",
+    "combate-hotfix-20260722.md:113",
+    "endgame-derivation.md:378",
+    "endgame-derivation.md:386"
+   ],
+   "estrecha": [
+    "combat-ui-spec.md:56",
+    "combate-hotfix-20260722.md:55",
+    "combate-hotfix-20260722.md:113"
+   ],
+   "n_amplia": 15,
+   "n_estrecha": 3
+  },
+  "COMSUBS.OVL:0x48a": {
+   "role": "isqrt",
+   "amplia": [
+    "asm-frontier-lote-b.md:106",
+    "asm-frontier-lote-b.md:117",
+    "citas-notas-rebarrido.md:181",
+    "citas-notas-rebarrido.md:183",
+    "citas-notas-rebarrido.md:185",
+    "citas-notas-rebarrido.md:186"
+   ],
+   "estrecha": [
+    "citas-notas-rebarrido.md:183",
+    "citas-notas-rebarrido.md:185",
+    "citas-notas-rebarrido.md:186",
+    "citas-notas-rebarrido.md:189",
+    "polearm-attack.md:41"
+   ],
+   "n_amplia": 11,
+   "n_estrecha": 5
+  },
+  "COMSUBS.OVL:0x4d4": {
+   "role": "euclidean_distance",
+   "amplia": [
+    "blackthorn.md:208",
+    "combat.md:323",
+    "combat.md:387",
+    "combate-hotfix-20260722.md:87"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "COMSUBS.OVL:0x97c": {
+   "role": "consume_ammo",
+   "amplia": [
+    "combat.md:285",
+    "combat.md:520",
+    "combat.md:534"
+   ],
+   "estrecha": [],
+   "n_amplia": 3,
+   "n_estrecha": 0
+  },
+  "DNGLOOK.OVL:0x6a8": {
+   "role": "gem_view_8x8_iconic_floor_map",
+   "amplia": [
+    "censo-a346.md:37",
+    "censo-a346.md:40",
+    "command-dispatch.md:245",
+    "covetous-wiki-mapping.md:37",
+    "dnglook-raster-spec.md:35",
+    "dnglook-raster-spec.md:44"
+   ],
+   "estrecha": [
+    "command-dispatch.md:245",
+    "dungeon.md:261"
+   ],
+   "n_amplia": 14,
+   "n_estrecha": 2
+  },
+  "DNGLOOK.OVL:0x844": {
+   "role": "mark_visited_cell (bitmap DS:0x58E0)",
+   "amplia": [
+    "0xec-mecanismo-derivado.md:106",
+    "dnglook-raster-spec.md:41",
+    "dnglook-raster-spec.md:64",
+    "dungeon-map-buffers.md:174",
+    "dungeon-map-buffers.md:382",
+    "dungeon.md:304"
+   ],
+   "estrecha": [
+    "0xec-mecanismo-derivado.md:106",
+    "dungeon-map-buffers.md:174",
+    "dungeon-map-buffers.md:382",
+    "prosa-autofiel-tanda2.md:147"
+   ],
+   "n_amplia": 16,
+   "n_estrecha": 4
+  },
+  "DNGLOOK.OVL:0x93a": {
+   "role": "clear_consumed_markers (Room 0xF->0xA)",
+   "amplia": [
+    "dnglook-raster-spec.md:42",
+    "dnglook-raster-spec.md:45",
+    "dungeon-map-buffers.md:146",
+    "dungeon-map-buffers.md:352",
+    "dungeon.md:424",
+    "dungeon.md:465"
+   ],
+   "estrecha": [],
+   "n_amplia": 8,
+   "n_estrecha": 0
+  },
+  "DNGLOOK.OVL:0x97e": {
+   "role": "floor_wedge_A (corridor opening)",
+   "amplia": [
+    "asm-frontier-lote-b.md:125",
+    "camp-apparition-scene.md:127",
+    "camp-scene-kernel.md:106",
+    "citas-pool-adjudicacion.md:98",
+    "citas-pool-adjudicacion.md:99",
+    "cmds.md:303"
+   ],
+   "estrecha": [
+    "asm-frontier-lote-b.md:125"
+   ],
+   "n_amplia": 12,
+   "n_estrecha": 1
+  },
+  "DNGLOOK.OVL:0xa48": {
+   "role": "floor_wedge_B (corridor closure)",
+   "amplia": [
+    "asm-frontier-lote-b.md:126",
+    "dnglook-raster-spec.md:46",
+    "dnglook-raster-spec.md:51",
+    "dnglook-raster-spec.md:127",
+    "dnglook-raster-spec.md:132",
+    "dnglook-raster-spec.md:133"
+   ],
+   "estrecha": [],
+   "n_amplia": 6,
+   "n_estrecha": 0
+  },
+  "DNGLOOK.OVL:0xc6c": {
+   "role": "base_frame (floor/ceiling/side fill)",
+   "amplia": [
+    "dnglook-raster-spec.md:47",
+    "dnglook-raster-spec.md:48",
+    "dnglook-raster-spec.md:50",
+    "dnglook-raster-spec.md:84",
+    "dnglook-raster-spec.md:116"
+   ],
+   "estrecha": [],
+   "n_amplia": 5,
+   "n_estrecha": 0
+  },
+  "DNGLOOK.OVL:0xd3e": {
+   "role": "build_first_person_11x11",
+   "amplia": [
+    "camp-scene-kernel.md:165",
+    "cbt-unidades-0-0-y-cruce-movil.md:155",
+    "dnglook-raster-spec.md:36",
+    "dnglook-raster-spec.md:37",
+    "dnglook-raster-spec.md:48",
+    "dnglook-raster-spec.md:50"
+   ],
+   "estrecha": [
+    "dungeon-wanderer.md:108",
+    "dungeon-wanderer.md:113",
+    "globals-negdisp-adjudicacion.md:74"
+   ],
+   "n_amplia": 16,
+   "n_estrecha": 3
+  },
+  "DNGLOOK.OVL:0xfda": {
+   "role": "move_party_dungeon (wrap/floor/exit)",
+   "amplia": [
+    "dnglook-raster-spec.md:38",
+    "dungeon-wanderer.md:96",
+    "dungeon-wanderer.md:149"
+   ],
+   "estrecha": [],
+   "n_amplia": 3,
+   "n_estrecha": 0
+  },
+  "DNGLOOK.OVL:0x109e": {
+   "role": "load_wall_variant_gfx",
+   "amplia": [
+    "camp-scene-kernel.md:165",
+    "dnglook-raster-spec.md:39",
+    "dungeon-wanderer.md:34",
+    "dungeon3d-audit.md:23",
+    "dungeon3d-audit.md:74",
+    "overworld-b34-regalia.md:15"
+   ],
+   "estrecha": [
+    "dungeon-wanderer.md:34"
+   ],
+   "n_amplia": 18,
+   "n_estrecha": 1
+  },
+  "DNGLOOK.OVL:0x1130": {
+   "role": "free_wall_variant_gfx (teardown)",
+   "amplia": [
+    "camp-scene-kernel.md:165",
+    "dnglook-raster-spec.md:40"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "DNGLOOK.OVL:0x117e": {
+   "role": "corridor_sprite_overlay",
+   "amplia": [
+    "0xec-basura-de-pila-origen.md:12",
+    "0xec-basura-de-pila-origen.md:18",
+    "0xec-basura-de-pila-origen.md:33",
+    "0xec-mecanismo-derivado.md:9",
+    "0xec-mecanismo-derivado.md:52",
+    "cbt-unidades-0-0-y-cruce-movil.md:222"
+   ],
+   "estrecha": [
+    "0xec-basura-de-pila-origen.md:12",
+    "cbt-unidades-0-0-y-cruce-movil.md:238",
+    "cbt-unidades-0-0-y-cruce-movil.md:240",
+    "dnglook-117e-body.md:1",
+    "dnglook-117e-body.md:17",
+    "dnglook-117e-body.md:70"
+   ],
+   "n_amplia": 39,
+   "n_estrecha": 11
+  },
+  "DUNGEON.OVL:0x3d6": {
+   "role": "dng_getkey (dungeon input poller + idle re-render)",
+   "amplia": [
+    "dungeon.md:295",
+    "intro-scene-tables.md:114",
+    "sfx-catalog.md:132"
+   ],
+   "estrecha": [],
+   "n_amplia": 3,
+   "n_estrecha": 0
+  },
+  "DUNGEON.OVL:0x104c": {
+   "role": "per_location_wall_inscription",
+   "amplia": [
+    "dungeon-decor-mazmorra.md:66"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "DUNGEON.OVL:0x10dc": {
+   "role": "dng_get_tile (map[floor][y*8+x], mask lit-bit)",
+   "amplia": [
+    "dungeon.md:299",
+    "dungeon3d-audit.md:311",
+    "klimb-grapple.md:103",
+    "klimb-grapple.md:120"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "DUNGEON.OVL:0x127e": {
+   "role": "magic_field_sparkle_drawer",
+   "amplia": [
+    "auditoria-general-cierre-20260727.md:37",
+    "auditoria-general-cierre-20260727.md:39",
+    "auditoria-general-cierre-20260727.md:40",
+    "dungeon-decor-mazmorra.md:60",
+    "dungeon-decor-mazmorra.md:76",
+    "dungeon3d-audit.md:437"
+   ],
+   "estrecha": [],
+   "n_amplia": 9,
+   "n_estrecha": 0
+  },
+  "DUNGEON.OVL:0x134a": {
+   "role": "wall_segment_blit (perspective tables)",
+   "amplia": [
+    "combat-commands.md:141",
+    "dungeon3d-audit.md:130",
+    "dungeon3d-audit.md:154",
+    "dungeon3d-audit.md:210",
+    "dungeon3d-audit.md:247",
+    "dungeon3d-audit.md:307"
+   ],
+   "estrecha": [
+    "dungeon3d-audit.md:154"
+   ],
+   "n_amplia": 8,
+   "n_estrecha": 1
+  },
+  "DUNGEON.OVL:0x150a": {
+   "role": "forward_raytrace_column",
+   "amplia": [
+    "dnglook-raster-spec.md:248",
+    "dungeon.md:99",
+    "dungeon3d-audit.md:234"
+   ],
+   "estrecha": [
+    "dungeon.md:99"
+   ],
+   "n_amplia": 3,
+   "n_estrecha": 1
+  },
+  "DUNGEON.OVL:0x1682": {
+   "role": "side_raytrace_column",
+   "amplia": [
+    "dnglook-raster-spec.md:248",
+    "dungeon.md:99",
+    "dungeon3d-audit.md:229",
+    "shadowlord-ritual.md:19"
+   ],
+   "estrecha": [
+    "dungeon.md:99"
+   ],
+   "n_amplia": 4,
+   "n_estrecha": 1
+  },
+  "DUNGEON.OVL:0x1786": {
+   "role": "fountain_vector_drawer",
+   "amplia": [
+    "dungeon-decor-mazmorra.md:69",
+    "dungeon3d-audit.md:295",
+    "dungeon3d-audit.md:372"
+   ],
+   "estrecha": [],
+   "n_amplia": 3,
+   "n_estrecha": 0
+  },
+  "DUNGEON.OVL:0x1952": {
+   "role": "feature_overlay_drawer_by_nibble",
+   "amplia": [
+    "dnglook-raster-spec.md:248",
+    "dungeon.md:99",
+    "dungeon3d-audit.md:306",
+    "dungeon3d-audit.md:310",
+    "dungeon3d-audit.md:414"
+   ],
+   "estrecha": [
+    "dungeon.md:99"
+   ],
+   "n_amplia": 5,
+   "n_estrecha": 1
+  },
+  "DUNGEON.OVL:0x1a90": {
+   "role": "dng_render_corridor (light gate + raycast)",
+   "amplia": [
+    "dnglook-raster-spec.md:36",
+    "dungeon.md:96",
+    "dungeon.md:300",
+    "dungeon3d-audit.md:263",
+    "dungeon3d-audit.md:377",
+    "dungeon3d-audit.md:434"
+   ],
+   "estrecha": [
+    "dungeon.md:96"
+   ],
+   "n_amplia": 6,
+   "n_estrecha": 1
+  },
+  "DUNGEON.OVL:0x1be0": {
+   "role": "dng_redraw (corridor+indicator+anim)",
+   "amplia": [
+    "dnglook-raster-spec.md:114",
+    "dungeon-map-buffers.md:93",
+    "dungeon.md:96",
+    "dungeon.md:300",
+    "fx-lineaoe-negate-derivation.md:45"
+   ],
+   "estrecha": [
+    "dnglook-raster-spec.md:114",
+    "dungeon.md:96"
+   ],
+   "n_amplia": 5,
+   "n_estrecha": 2
+  },
+  "DUNGEON.OVL:0x1c0c": {
+   "role": "dng_landing_ok (Uus/Des Por empty-corridor gate)",
+   "amplia": [
+    "dungeon-map-buffers.md:91",
+    "dungeon.md:114",
+    "dungeon.md:117",
+    "dungeon.md:300"
+   ],
+   "estrecha": [
+    "dungeon.md:114",
+    "dungeon.md:117"
+   ],
+   "n_amplia": 4,
+   "n_estrecha": 2
+  },
+  "ENDGAME.OVL:0x28c": {
+   "role": "spell_cardinal (date spelled; port numerizes - divergencia declarada)",
+   "amplia": [
+    "endgame.md:14",
+    "intro-scene-tables.md:128"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "ENDGAME.OVL:0x4fe": {
+   "role": "frame_present_leaf (throne cutscene)",
+   "amplia": [
+    "endgame-derivation.md:181",
+    "fanfarria-endgame-espectral.md:197",
+    "fanfarria-endgame-espectral.md:256"
+   ],
+   "estrecha": [],
+   "n_amplia": 3,
+   "n_estrecha": 0
+  },
+  "ENDGAME.OVL:0x5a2": {
+   "role": "wander_sprite (cutscene actor walk)",
+   "amplia": [
+    "endgame-derivation.md:181",
+    "endgame.md:18",
+    "transport.md:55",
+    "verbo-transporte-fix.md:18"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "FLAMES.OVL:0x0": {
+   "role": "plink_link_thunk (inert)",
+   "amplia": [
+    "0xec-basura-de-pila-origen.md:10",
+    "0xec-basura-de-pila-origen.md:13",
+    "0xec-basura-de-pila-origen.md:32",
+    "arena-entry-triggers.md:92",
+    "arena-entry-triggers.md:102",
+    "asm-frontier-lote-b.md:147"
+   ],
+   "estrecha": [
+    "asm-frontier-lote-b.md:147"
+   ],
+   "n_amplia": 207,
+   "n_estrecha": 1
+  },
+  "INTRO.OVL:0x676": {
+   "role": "print_menu_line (video-inverse highlight)",
+   "amplia": [
+    "gypsy.md:165",
+    "intro-ovl-map.md:119",
+    "intro-ovl-map.md:174",
+    "intro.md:33",
+    "npc.md:117",
+    "prosa-autofiel-tanda3.md:83"
+   ],
+   "estrecha": [],
+   "n_amplia": 6,
+   "n_estrecha": 0
+  },
+  "INTRO.OVL:0x1e22": {
+   "role": "draw_transfer_stat (U4 import)",
+   "amplia": [
+    "gypsy.md:173",
+    "intro-ovl-map.md:127",
+    "intro-ovl-map.md:174",
+    "intro.md:42"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "INTRO.OVL:0x2024": {
+   "role": "draw_transfer_frame (U4 import)",
+   "amplia": [
+    "intro.md:45",
+    "intro.md:268",
+    "intro.md:291"
+   ],
+   "estrecha": [
+    "intro.md:291"
+   ],
+   "n_amplia": 3,
+   "n_estrecha": 1
+  },
+  "LOOKOBJ.OVL:0x1ac": {
+   "role": "draw_zodiac_star",
+   "amplia": [
+    "zodiac-derivation.md:50",
+    "zodiac-derivation.md:76"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0x24c": {
+   "role": "draw_zodiac_lines",
+   "amplia": [
+    "zodiac-derivation.md:53",
+    "zodiac-derivation.md:88"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0xa9c": {
+   "role": "gem_cell_origin",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0xabe": {
+   "role": "gem_glyph_4dots",
+   "amplia": [
+    "camp-scene-kernel.md:127",
+    "combat-commands.md:9",
+    "combat-get-treasure-dispatch.md:28",
+    "combat-get-treasure-dispatch.md:49"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0xb60": {
+   "role": "gem_glyph_2strokes",
+   "amplia": [
+    "cannon-fire.md:49"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0xb98": {
+   "role": "gem_glyph_2lines",
+   "amplia": [
+    "blackthorn.md:255",
+    "blackthorn.md:346",
+    "death-resurrection-audit.md:122",
+    "shrines.md:114"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0xbd0": {
+   "role": "gem_glyph_box",
+   "amplia": [
+    "dungeon-wanderer.md:89"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0xc36": {
+   "role": "gem_glyph_lines_yellow",
+   "amplia": [
+    "blackthorn.md:251",
+    "cbt-unidades-0-0-y-cruce-movil.md:270"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0xc9c": {
+   "role": "gem_glyph_lines_points",
+   "amplia": [
+    "kernel-sweep-3.md:227",
+    "kernel-sweep-3.md:297",
+    "kernel-sweep-3.md:305",
+    "shrines.md:168",
+    "zodiac-derivation.md:18",
+    "zodiac-derivation.md:138"
+   ],
+   "estrecha": [],
+   "n_amplia": 6,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0xcf4": {
+   "role": "gem_glyph_dithered_terrain",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0xdda": {
+   "role": "gem_glyph_2pts_adapter",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0xe16": {
+   "role": "gem_glyph_4pts",
+   "amplia": [
+    "intro.md:75",
+    "ui-render-map.md:27"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0xe7a": {
+   "role": "gem_glyph_wall_outline_door",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0xf7e": {
+   "role": "draw_gem_map_tile_dispatcher",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "LOOKOBJ.OVL:0x10fc": {
+   "role": "gem_view_32x32",
+   "amplia": [
+    "command-dispatch.md:245",
+    "dnglook-raster-spec.md:339",
+    "lookobj.md:44"
+   ],
+   "estrecha": [
+    "command-dispatch.md:245"
+   ],
+   "n_amplia": 3,
+   "n_estrecha": 1
+  },
+  "MAINOUT.OVL:0x7a": {
+   "role": "object_proximity_activate",
+   "amplia": [
+    "auditoria-cobertura-completa.md:73",
+    "fx-lineaoe-negate-derivation.md:94",
+    "intro-blit-formats.md:233"
+   ],
+   "estrecha": [],
+   "n_amplia": 3,
+   "n_estrecha": 0
+  },
+  "MAINOUT.OVL:0x354": {
+   "role": "move_party",
+   "amplia": [
+    "kernel-survival.md:196",
+    "kernel-survival.md:228",
+    "kernel-survival.md:231",
+    "sfx-catalog.md:524",
+    "sfx-catalog.md:532",
+    "sfx-catalog.md:605"
+   ],
+   "estrecha": [
+    "kernel-survival.md:228",
+    "kernel-survival.md:231",
+    "sfx-catalog.md:524",
+    "sfx-catalog.md:532",
+    "sfx-catalog.md:605"
+   ],
+   "n_amplia": 10,
+   "n_estrecha": 5
+  },
+  "MAINOUT.OVL:0x598": {
+   "role": "tick_and_getkey (wind+naval)",
+   "amplia": [
+    "loops.md:19",
+    "oracle-underworld-z.md:18",
+    "oracle-underworld-z.md:19",
+    "transport.md:104",
+    "transport.md:106",
+    "transport.md:386"
+   ],
+   "estrecha": [
+    "loops.md:19"
+   ],
+   "n_amplia": 6,
+   "n_estrecha": 1
+  },
+  "MAINOUT.OVL:0xa1a": {
+   "role": "darkness_tile_tick (0xFF->light0)",
+   "amplia": [
+    "intro.md:237"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "MAINOUT.OVL:0xd22": {
+   "role": "spawn_purchased_ship",
+   "amplia": [
+    "objects.md:5",
+    "transport.md:260"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "MAINOUT.OVL:0xe04": {
+   "role": "weighted_pick",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "MAINOUT.OVL:0xf4e": {
+   "role": "pick_spawn_coords",
+   "amplia": [
+    "field-duration-witness.md:48",
+    "loops.md:55",
+    "loops.md:141",
+    "overworld-ai-rng.md:24"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "MAINOUT.OVL:0xfc4": {
+   "role": "spawn_monster",
+   "amplia": [
+    "asm-frontier-lote-e.md:49",
+    "loops.md:50",
+    "native-persist-enemies.md:30",
+    "overworld-ai-rng.md:23",
+    "overworld-ai-rng.md:206",
+    "overworld-ai-rng.md:312"
+   ],
+   "estrecha": [
+    "native-persist-enemies.md:30",
+    "overworld-ai-rng.md:206"
+   ],
+   "n_amplia": 8,
+   "n_estrecha": 2
+  },
+  "MAINOUT.OVL:0x105c": {
+   "role": "is_npc_ship_tile",
+   "amplia": [
+    "overworld-ai-rng.md:30",
+    "overworld-ai-rng.md:218",
+    "overworld-ai-rng.md:292"
+   ],
+   "estrecha": [],
+   "n_amplia": 3,
+   "n_estrecha": 0
+  },
+  "MAINOUT.OVL:0x1578": {
+   "role": "move_world_object (tile-class)",
+   "amplia": [
+    "asm-frontier-lote-b.md:50",
+    "asm-frontier-lote-b.md:56",
+    "overworld-ai-rng.md:60",
+    "overworld-ai-rng.md:67",
+    "overworld-ai-rng.md:75"
+   ],
+   "estrecha": [
+    "asm-frontier-lote-b.md:50",
+    "asm-frontier-lote-b.md:56"
+   ],
+   "n_amplia": 5,
+   "n_estrecha": 2
+  },
+  "MAINOUT.OVL:0x198c": {
+   "role": "npc_ship_wind_drift",
+   "amplia": [
+    "asm-frontier-lote-b.md:43",
+    "asm-frontier-lote-b.md:163",
+    "asm-frontier-lote-e.md:1",
+    "asm-frontier-lote-e.md:5",
+    "asm-frontier-lote-e.md:9",
+    "asm-frontier-lote-e.md:33"
+   ],
+   "estrecha": [
+    "overworld-ai-rng.md:46",
+    "serpent-ranged-derivation.md:11"
+   ],
+   "n_amplia": 22,
+   "n_estrecha": 2
+  },
+  "MAINOUT.OVL:0x1a60": {
+   "role": "world_turn",
+   "amplia": [
+    "antim-freeze.md:23",
+    "dungeon3d-audit.md:154",
+    "kernel-survival.md:190",
+    "kernel-survival.md:204",
+    "loops.md:27",
+    "loops.md:74"
+   ],
+   "estrecha": [
+    "antim-freeze.md:23",
+    "kernel-survival.md:190",
+    "overworld-ai-rng.md:15",
+    "overworld-b34-regalia.md:22",
+    "transport.md:127"
+   ],
+   "n_amplia": 14,
+   "n_estrecha": 5
+  },
+  "NPC.OVL:0x1a0": {
+   "role": "npc_seek (seek-to-stairs)",
+   "amplia": [
+    "npc.md:84",
+    "npc.md:312"
+   ],
+   "estrecha": [
+    "npc.md:84"
+   ],
+   "n_amplia": 2,
+   "n_estrecha": 1
+  },
+  "NPC.OVL:0x4ac": {
+   "role": "npc_path_backtrace",
+   "amplia": [
+    "intro-demo-scene.md:59",
+    "zodiac-derivation.md:51"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "NPC.OVL:0xa4a": {
+   "role": "npc_on_stairs_for_floor",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "NPC.OVL:0xb9e": {
+   "role": "npc_can_move",
+   "amplia": [
+    "asm-frontier-lote-b.md:30",
+    "asm-frontier-lote-b.md:122",
+    "asm-frontier-lote-e.md:63",
+    "asm-frontier-plan.md:157",
+    "dnglook-raster-spec.md:46",
+    "dnglook-raster-spec.md:47"
+   ],
+   "estrecha": [],
+   "n_amplia": 14,
+   "n_estrecha": 0
+  },
+  "NPC.OVL:0xd00": {
+   "role": "npc_ai_step (jump-table aiType 0..7)",
+   "amplia": [
+    "npc.md:128",
+    "npc.md:321"
+   ],
+   "estrecha": [
+    "npc.md:128"
+   ],
+   "n_amplia": 2,
+   "n_estrecha": 1
+  },
+  "OUTSUBS.OVL:0x98": {
+   "role": "viewport_compose_16x16",
+   "amplia": [
+    "anim-composition-adjudication.md:44",
+    "audio-profile-1988.md:64",
+    "audio-profile-1988.md:67",
+    "cmds.md:141",
+    "cmds.md:165",
+    "combat-spells.md:56"
+   ],
+   "estrecha": [
+    "death-resurrection-audit.md:236",
+    "top21-triage.md:121"
+   ],
+   "n_amplia": 29,
+   "n_estrecha": 2
+  },
+  "OUTSUBS.OVL:0x1b4": {
+   "role": "outdoor_viewport_chunk_load",
+   "amplia": [
+    "falsedad-merma-tiendas.md:29",
+    "kernel-survival.md:238",
+    "kernel-survival.md:280",
+    "shadowlord-merma-52.md:16",
+    "water-anim-audit.md:51",
+    "water-anim-audit.md:100"
+   ],
+   "estrecha": [],
+   "n_amplia": 8,
+   "n_estrecha": 0
+  },
+  "OUTSUBS.OVL:0x2c8": {
+   "role": "viewport_scroll_shift",
+   "amplia": [
+    "kernel-survival.md:238",
+    "kernel-survival.md:281"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "OUTSUBS.OVL:0x566": {
+   "role": "seed_underworld_plot",
+   "amplia": [
+    "kernel-survival.md:285",
+    "oracle-underworld-z.md:4",
+    "oracle-underworld-z.md:9"
+   ],
+   "estrecha": [],
+   "n_amplia": 3,
+   "n_estrecha": 0
+  },
+  "SHOPPES.OVL:0x0": {
+   "role": "strcpy_append (helper)",
+   "amplia": [
+    "0xec-basura-de-pila-origen.md:10",
+    "0xec-basura-de-pila-origen.md:13",
+    "0xec-basura-de-pila-origen.md:32",
+    "arena-entry-triggers.md:92",
+    "arena-entry-triggers.md:102",
+    "asm-frontier-lote-b.md:147"
+   ],
+   "estrecha": [
+    "camp-scene-kernel.md:157",
+    "espejo-fase2.md:65",
+    "stubs-no-tabulados-adjudicados.md:35",
+    "stubs-no-tabulados-adjudicados.md:36"
+   ],
+   "n_amplia": 207,
+   "n_estrecha": 4
+  },
+  "SHOPPES.OVL:0xc58": {
+   "role": "party_owns_any_equipment (SELL up-front gate)",
+   "amplia": [
+    "asm-frontier-lote-b.md:136"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "SHOPPES2.OVL:0x1d2": {
+   "role": "serve_tavern_round",
+   "amplia": [
+    "dungeon-input-model.md:93",
+    "dungeon.md:59",
+    "dungeon.md:294",
+    "kernel-render-sweep.md:269",
+    "shops.md:135",
+    "use-merchants.md:125"
+   ],
+   "estrecha": [],
+   "n_amplia": 6,
+   "n_estrecha": 0
+  },
+  "SHOPPES2.OVL:0x664": {
+   "role": "barkeep_greeting_wrapper (RNG flavor)",
+   "amplia": [
+    "combate-hotfix-20260722.md:91",
+    "ztats-layout.md:234"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "SHOPPES3.OVL:0x0": {
+   "role": "count_guests_here",
+   "amplia": [
+    "0xec-basura-de-pila-origen.md:10",
+    "0xec-basura-de-pila-origen.md:13",
+    "0xec-basura-de-pila-origen.md:32",
+    "arena-entry-triggers.md:92",
+    "arena-entry-triggers.md:102",
+    "asm-frontier-lote-b.md:147"
+   ],
+   "estrecha": [
+    "espejo-fase2.md:65"
+   ],
+   "n_amplia": 207,
+   "n_estrecha": 1
+  },
+  "SHOPPES3.OVL:0x494": {
+   "role": "find_prev_guest_here",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "SHOPPES3.OVL:0x4b6": {
+   "role": "find_next_guest_here",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "SJOG.OVL:0x1040": {
+   "role": "loot_fixed",
+   "amplia": [
+    "bolt-owner-static-crack.md:27",
+    "bolt-owner-static-crack.md:77",
+    "camp-apparition-scene.md:40",
+    "cmds.md:173",
+    "cmds.md:202",
+    "cmds.md:359"
+   ],
+   "estrecha": [],
+   "n_amplia": 8,
+   "n_estrecha": 0
+  },
+  "SJOG.OVL:0x10b8": {
+   "role": "loot_random",
+   "amplia": [
+    "cmds.md:173",
+    "cmds.md:213",
+    "cmds.md:360"
+   ],
+   "estrecha": [],
+   "n_amplia": 3,
+   "n_estrecha": 0
+  },
+  "SJOG.OVL:0x1b34": {
+   "role": "count_party_ready (per-member ammo)",
+   "amplia": [
+    "sjog.md:7",
+    "sjog.md:78"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "SJOG.OVL:0x1b6c": {
+   "role": "sum_flee_edges",
+   "amplia": [
+    "careo-combate-fixes.md:101",
+    "combat-ui-spec.md:210",
+    "combat.md:63",
+    "combat.md:84",
+    "esc-sala-derivacion.md:116",
+    "esc-sala-derivacion.md:124"
+   ],
+   "estrecha": [
+    "combat.md:63",
+    "combat.md:84",
+    "esc-sala-derivacion.md:116",
+    "esc-sala-derivacion.md:124"
+   ],
+   "n_amplia": 10,
+   "n_estrecha": 4
+  },
+  "SJOG.OVL:0x203e": {
+   "role": "end_combat_cleanup",
+   "amplia": [
+    "sjog.md:86"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "SJOG.OVL:0x20d8": {
+   "role": "combat_cell_blocked",
+   "amplia": [
+    "combat.md:354",
+    "combat.md:490",
+    "combat.md:493",
+    "combat.md:495",
+    "mapeo-enemigo-mover.md:52",
+    "mapeo-enemigo-mover.md:190"
+   ],
+   "estrecha": [
+    "combat.md:354",
+    "combat.md:490",
+    "mapeo-enemigo-mover.md:52"
+   ],
+   "n_amplia": 7,
+   "n_estrecha": 3
+  },
+  "SJOG.OVL:0x2148": {
+   "role": "combat_actor_surrounded",
+   "amplia": [
+    "combat.md:350",
+    "combat.md:495",
+    "fx-lineaoe-negate-derivation.md:148",
+    "fx-lineaoe-negate-derivation.md:150",
+    "sjog.md:88"
+   ],
+   "estrecha": [
+    "combat.md:350"
+   ],
+   "n_amplia": 5,
+   "n_estrecha": 1
+  },
+  "TALK.OVL:0x4d2": {
+   "role": "thunk_inject_0x8d_newline",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0x4da": {
+   "role": "thunk_inject_0xa2_quote",
+   "amplia": [
+    "witness-summon-position.md:17",
+    "witness-summon-position.md:19"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0x4e2": {
+   "role": "talk_flush_line",
+   "amplia": [
+    "cmds.md:112",
+    "globals-negdisp-adjudicacion.md:78",
+    "globals-negdisp-adjudicacion.md:256"
+   ],
+   "estrecha": [
+    "globals-negdisp-adjudicacion.md:78",
+    "globals-negdisp-adjudicacion.md:256"
+   ],
+   "n_amplia": 3,
+   "n_estrecha": 2
+  },
+  "TALK.OVL:0x574": {
+   "role": "talk_emit_char",
+   "amplia": [
+    "globals-negdisp-adjudicacion.md:78",
+    "globals-negdisp-adjudicacion.md:252",
+    "shops.md:38",
+    "sjog.md:63"
+   ],
+   "estrecha": [
+    "globals-negdisp-adjudicacion.md:78",
+    "globals-negdisp-adjudicacion.md:252"
+   ],
+   "n_amplia": 4,
+   "n_estrecha": 2
+  },
+  "TALK.OVL:0x75a": {
+   "role": "talk_seek_section",
+   "amplia": [
+    "asm-frontier-lote-b.md:83",
+    "blackthorn.md:85",
+    "blackthorn.md:87",
+    "blackthorn.md:90"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0x788": {
+   "role": "talk_run_until_stop",
+   "amplia": [
+    "asm-frontier-lote-b.md:31",
+    "asm-frontier-lote-b.md:97",
+    "asm-frontier-lote-b.md:129",
+    "asm-frontier-lote-b.md:159",
+    "asm-frontier-plan.md:160",
+    "mapeo-enemigo-mover.md:178"
+   ],
+   "estrecha": [
+    "asm-frontier-lote-b.md:97"
+   ],
+   "n_amplia": 7,
+   "n_estrecha": 1
+  },
+  "TALK.OVL:0x7aa": {
+   "role": "talk_say_section",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0x93a": {
+   "role": "question_response_branch_selector",
+   "amplia": [
+    "dnglook-raster-spec.md:42",
+    "dnglook-raster-spec.md:45",
+    "dungeon-map-buffers.md:146",
+    "dungeon-map-buffers.md:352",
+    "dungeon.md:424",
+    "dungeon.md:465"
+   ],
+   "estrecha": [],
+   "n_amplia": 8,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0x960": {
+   "role": "question_default_fallthrough",
+   "amplia": [
+    "globals-negdisp-adjudicacion.md:234"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0x96e": {
+   "role": "matched_answer_emitter",
+   "amplia": [
+    "dungeon-map-buffers.md:175"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0x9d8": {
+   "role": "talk_find_keyword_section",
+   "amplia": [
+    "asm-frontier-lote-b.md:83"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0xa2c": {
+   "role": "talk_read_input",
+   "amplia": [
+    "fanfarria-endgame-espectral.md:259"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0xa3c": {
+   "role": "say_quoted_section4_farewell",
+   "amplia": [
+    "asm-frontier-lote-c.md:40",
+    "asm-frontier-plan.md:175",
+    "camp-apparition-scene.md:36",
+    "camp-apparition-scene.md:40",
+    "lote-E-dataovl-residual.md:10",
+    "lote-E-dataovl-residual.md:15"
+   ],
+   "estrecha": [],
+   "n_amplia": 9,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0xbd4": {
+   "role": "match_answer_in_question",
+   "amplia": [
+    "intro-attract-loop.md:26"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0xd42": {
+   "role": "mark_npc_met",
+   "amplia": [
+    "shadowlord-urban.md:205"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0xd7a": {
+   "role": "test_npc_met",
+   "amplia": [
+    "shadowlord-urban.md:206",
+    "shadowlord-urban.md:212"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "TALK.OVL:0x127e": {
+   "role": "run_scripted_conversation (was load_talk)",
+   "amplia": [
+    "auditoria-general-cierre-20260727.md:37",
+    "auditoria-general-cierre-20260727.md:39",
+    "auditoria-general-cierre-20260727.md:40",
+    "dungeon-decor-mazmorra.md:60",
+    "dungeon-decor-mazmorra.md:76",
+    "dungeon3d-audit.md:437"
+   ],
+   "estrecha": [],
+   "n_amplia": 9,
+   "n_estrecha": 0
+  },
+  "TOWN.OVL:0x11e": {
+   "role": "find_npc_by_objIdx",
+   "amplia": [
+    "camp-apparition-scene.md:72",
+    "camp-scene-kernel.md:81",
+    "camp-scene-kernel.md:169",
+    "camp-scene-kernel.md:244",
+    "demo-scene-data.md:93",
+    "npc.md:184"
+   ],
+   "estrecha": [],
+   "n_amplia": 8,
+   "n_estrecha": 0
+  },
+  "TOWN.OVL:0x170": {
+   "role": "town_time_tile_transform (hour-gated tiles)",
+   "amplia": [
+    "content-audit.md:257",
+    "witness-idle-anim-sequences.md:21",
+    "witness-idle-anim-sequences.md:55",
+    "witness-idle-anim-sequences.md:229"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "TOWN.OVL:0x9bc": {
+   "role": "town_attack_engine_commit",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "TOWN.OVL:0xc78": {
+   "role": "town_objactor_randomwalk",
+   "amplia": [
+    "blackthorn.md:333",
+    "blackthorn.md:341",
+    "loops.md:100",
+    "loops.md:124"
+   ],
+   "estrecha": [
+    "loops.md:124"
+   ],
+   "n_amplia": 4,
+   "n_estrecha": 1
+  },
+  "TOWN.OVL:0x10f2": {
+   "role": "shadowlord_possess_slot",
+   "amplia": [
+    "shadowlord-urban.md:141",
+    "shadowlord-urban.md:144",
+    "shadowlord-urban.md:162",
+    "shadowlord-urban.md:167",
+    "shadowlord-urban.md:170",
+    "shadowlord-urban.md:254"
+   ],
+   "estrecha": [
+    "shadowlord-urban.md:141",
+    "shadowlord-urban.md:144"
+   ],
+   "n_amplia": 6,
+   "n_estrecha": 2
+  },
+  "TOWN.OVL:0x1694": {
+   "role": "npc_activate_all_town",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "TOWN.OVL:0x1726": {
+   "role": "npc_place",
+   "amplia": [
+    "npc.md:67",
+    "npc.md:166",
+    "overlay-load-layout.md:155"
+   ],
+   "estrecha": [],
+   "n_amplia": 3,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x1588": {
+   "role": "keyword_lookup_ci (string table, case-insensitive)",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x1649": {
+   "role": "dos_read_file (INT21 AH=3Fh wrapper)",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x1c5b": {
+   "role": "clamp_normalize_rect (40x25 grid, order coords)",
+   "amplia": [
+    "kernel-sweep-3.md:336"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x2bd4": {
+   "role": "tile_flag_bit (passability bitmap)",
+   "amplia": [
+    "combat-spells.md:206",
+    "combat.md:500",
+    "interactions-piano-fire-audit.md:164",
+    "kernel-survival.md:165",
+    "los-passability-audit.md:12",
+    "los-passability-audit.md:92"
+   ],
+   "estrecha": [
+    "combat-spells.md:206",
+    "combat.md:500",
+    "interactions-piano-fire-audit.md:164",
+    "kernel-survival.md:165",
+    "los-passability-audit.md:92",
+    "los-passability-audit.md:130"
+   ],
+   "n_amplia": 19,
+   "n_estrecha": 11
+  },
+  "ULTIMA.EXE:0x3702": {
+   "role": "find_actor_at / is_occupied",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x39cc": {
+   "role": "set_map_tile (town/keep override)",
+   "amplia": [
+    "kernel-sweep-3.md:256",
+    "kernel-sweep-4.md:257"
+   ],
+   "estrecha": [
+    "kernel-sweep-4.md:257"
+   ],
+   "n_amplia": 2,
+   "n_estrecha": 1
+  },
+  "ULTIMA.EXE:0x3a74": {
+   "role": "set_actor_record (sprite slot 0x5C5A)",
+   "amplia": [
+    "kernel-sweep-4.md:259",
+    "native-persist-enemies.md:20",
+    "native-persist-enemies.md:35",
+    "witness-o1-0x6b4.md:53",
+    "witness-o1-0x6b4.md:160"
+   ],
+   "estrecha": [
+    "kernel-sweep-4.md:259",
+    "native-persist-enemies.md:35",
+    "witness-o1-0x6b4.md:53"
+   ],
+   "n_amplia": 5,
+   "n_estrecha": 3
+  },
+  "ULTIMA.EXE:0x3b9e": {
+   "role": "read_decimal_input (signed keyboard number)",
+   "amplia": [
+    "kernel-sweep-3.md:232"
+   ],
+   "estrecha": [],
+   "n_amplia": 1,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x3f54": {
+   "role": "sub_word_clamped_floor0 (saturating sub)",
+   "amplia": [
+    "blackthorn.md:288",
+    "falsedad-merma-tiendas.md:35",
+    "falsedad-merma-tiendas.md:44",
+    "falsedad-merma-tiendas.md:256",
+    "falsedad-merma-tiendas.md:294",
+    "kernel-sweep-3.md:221"
+   ],
+   "estrecha": [
+    "falsedad-merma-tiendas.md:35",
+    "falsedad-merma-tiendas.md:44",
+    "falsedad-merma-tiendas.md:294",
+    "shops.md:52"
+   ],
+   "n_amplia": 9,
+   "n_estrecha": 4
+  },
+  "ULTIMA.EXE:0x3f6e": {
+   "role": "test_tile_opacity (LOS bitmap 0x6a14; projectile stop)",
+   "amplia": [
+    "asm-frontier-plan.md:205",
+    "cast-line-area-spell-derivation.md:25",
+    "cast-line-area-spell-derivation.md:32",
+    "cast-line-area-spell-derivation.md:34",
+    "censo-reauditoria-0x6a14.md:189",
+    "combat-spells.md:59"
+   ],
+   "estrecha": [
+    "asm-frontier-plan.md:205",
+    "cast-line-area-spell-derivation.md:25",
+    "cast-line-area-spell-derivation.md:32",
+    "cast-line-area-spell-derivation.md:34",
+    "combat-spells.md:198",
+    "combat-spells.md:204"
+   ],
+   "n_amplia": 40,
+   "n_estrecha": 17
+  },
+  "ULTIMA.EXE:0x4dea": {
+   "role": "draw_char_boxed (Ztats render)",
+   "amplia": [
+    "citas-clase-a-endurecida.md:99",
+    "kernel-sweep-3.md:371",
+    "kernel-sweep-3.md:375",
+    "ui-scroll-audit.md:7",
+    "ui-scroll-audit.md:18"
+   ],
+   "estrecha": [],
+   "n_amplia": 5,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x4f3c": {
+   "role": "box_border_painter (leaf)",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x6f1e": {
+   "role": "stristr (conversation keyword matcher)",
+   "amplia": [
+    "censo-auto-infiel.md:10",
+    "content-audit.md:94",
+    "content-audit.md:293",
+    "kernel-sweep-3.md:331",
+    "prosa-autofiel-tanda3.md:64",
+    "prosa-autofiel-tanda3.md:188"
+   ],
+   "estrecha": [],
+   "n_amplia": 6,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x72f0": {
+   "role": "dos_set_int_vector (thunk)",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x72f5": {
+   "role": "dos_get_int_vector (thunk)",
+   "amplia": [
+    "top21-triage.md:18",
+    "top21-triage.md:110"
+   ],
+   "estrecha": [],
+   "n_amplia": 2,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x72fa": {
+   "role": "install_int_handler (getvect+setvect)",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x7315": {
+   "role": "io_buffer_cache_sweep (LRU housekeeping)",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x737f": {
+   "role": "data_file_open (random-access .DAT)",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x73da": {
+   "role": "data_file_lseek (paragraph->byte, INT21 AH=42h)",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x76a1": {
+   "role": "reset_file_io_state (helper)",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "ULTIMA.EXE:0x76ac": {
+   "role": "loader_farcall_trampoline (preserve-flags)",
+   "amplia": [],
+   "estrecha": [],
+   "n_amplia": 0,
+   "n_estrecha": 0
+  },
+  "ZSTATS.OVL:0x278": {
+   "role": "print_padded_string",
+   "amplia": [
+    "blackthorn.md:17",
+    "blackthorn.md:31",
+    "dungeon-wanderer.md:43",
+    "zstats.md:18",
+    "ztats-layout.md:136",
+    "ztats-layout.md:376"
+   ],
+   "estrecha": [],
+   "n_amplia": 6,
+   "n_estrecha": 0
+  },
+  "ZSTATS.OVL:0x518": {
+   "role": "is_item_equipped",
+   "amplia": [
+    "witness-summon-position.md:24",
+    "witness-summon-position.md:26",
+    "witness-summon-position.md:30",
+    "zstats.md:21",
+    "ztats-layout.md:242"
+   ],
+   "estrecha": [],
+   "n_amplia": 5,
+   "n_estrecha": 0
+  },
+  "ZSTATS.OVL:0x56c": {
+   "role": "find_prev_owned",
+   "amplia": [
+    "blackthorn.md:180",
+    "witness-catalejo.md:40",
+    "zstats.md:22",
+    "ztats-layout.md:158"
+   ],
+   "estrecha": [],
+   "n_amplia": 4,
+   "n_estrecha": 0
+  },
+  "ZSTATS.OVL:0x5a4": {
+   "role": "find_next_owned",
+   "amplia": [
+    "cast-input.md:117",
+    "combat-commands.md:21",
+    "combat-use-potions.md:19",
+    "witness-catalejo.md:40",
+    "zstats.md:23",
+    "ztats-layout.md:149"
+   ],
+   "estrecha": [
+    "cast-input.md:117"
+   ],
+   "n_amplia": 7,
+   "n_estrecha": 1
+  },
+  "ZSTATS.OVL:0x99a": {
+   "role": "build_extended_item_table",
+   "amplia": [
+    "asm-frontier-lote-b.md:24",
+    "asm-frontier-lote-b.md:85",
+    "top21-triage.md:98",
+    "zstats.md:26",
+    "ztats-layout.md:115"
+   ],
+   "estrecha": [],
+   "n_amplia": 5,
+   "n_estrecha": 0
+  },
+  "ZSTATS.OVL:0xc0a": {
+   "role": "hand_state",
+   "amplia": [
+    "esc-sala-derivacion.md:125",
+    "esc-sala-derivacion.md:192",
+    "zstats.md:29"
+   ],
+   "estrecha": [],
+   "n_amplia": 3,
+   "n_estrecha": 0
+  }
+ }
+}

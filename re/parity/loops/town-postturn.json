@@ -1,0 +1,1 @@
+{"name":"town-postturn","kind":"town","seed":4660,"hour":12,"members":[{"dex":10,"status":"S"},{"dex":6,"status":"G"},{"dex":12,"status":"S"}],"ticks":20,"confused":true,"onSwampTile":true,"damageTile":true}

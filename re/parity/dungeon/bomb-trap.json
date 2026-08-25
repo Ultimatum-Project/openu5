@@ -1,0 +1,36 @@
+{
+ "name": "bomb-trap",
+ "note": "Trampa de bomba 0x62: rand(1,8) a cada miembro + limpia tile.",
+ "spec": {
+  "seed": 16962,
+  "roster": [
+   {
+    "dex": 15,
+    "hp": 30,
+    "maxHp": 30
+   },
+   {
+    "dex": 15,
+    "hp": 30,
+    "maxHp": 30
+   }
+  ],
+  "pos": {
+   "dungeon": 33,
+   "floor": 0,
+   "x": 2,
+   "y": 2,
+   "facing": "east"
+  },
+  "cells": [
+   {
+    "floor": 0,
+    "x": 3,
+    "y": 2,
+    "type": 6,
+    "sub": 2
+   }
+  ],
+  "action": "forward"
+ }
+}

@@ -1,0 +1,30 @@
+{
+  "chapter": "ch05",
+  "coveredIds": [
+    "command-e",
+    "command-k",
+    "command-l",
+    "command-s",
+    "command-t",
+    "floor-5-z0",
+    "floor-5-z1",
+    "location-5-minoc",
+    "npc-towne-26-fiona",
+    "npc-towne-27-rew",
+    "npc-towne-28-fenelon",
+    "npc-towne-29-lady-sahra",
+    "npc-towne-30-delwyn",
+    "search-14-loc5-2-2",
+    "search-51-loc5-8-21",
+    "search-52-loc5-8-23",
+    "search-53-loc5-7-23",
+    "shop-3-darkwatch-armoury",
+    "sign-5-14-28",
+    "sign-5-16-28",
+    "sign-5-20-14",
+    "word-avidus"
+  ],
+  "notes": [
+    "Minoc (loc 5): location+z0/z1, 6 NPCs towne (25/26/27/28/29/30 = Tactus/Fiona/Rew/Fenelon/Lady Sahra/Delwyn). TESTIGOS byte-exactos: contenido (Tactus 'job'→Darkwatch Armoury, Rew 'moth'→Fiona, Lady Sahra 'sick'→'have returned'); WORD OF POWER (Fiona → AVIDUS/Covetous, word-avidus, con recoverPartition a reloj fresco); KARMA (Fenelon +5, delta byte-exacto, ripple karma 75→80). Señales, search z0 + z1 (cluster 51/52/53 vía goToFloor component-aware reachTarget, robusto al coste de reloj). ECONOMÍA VÍA A: venta real de 1 Flaming Oil (+4) + compra byte-exacta del Short Sword (−53); saldo de salida DOCUMENTADO = 1 oro. Comandos e/t/s/l/k. DIFERIDO (declarado): la PISTA PAGADA de Delwyn (Shenstone) — su TLK la puerta tras name-gate → cuesta 2 visitas / 6 oro (no 3), exige vaciar Flaming Oil y sube el coste de reloj; decisión económica del lead. Delwyn se cubre por enganche."
+  ]
+}

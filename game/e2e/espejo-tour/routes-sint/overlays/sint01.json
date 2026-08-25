@@ -1,0 +1,36 @@
+{
+  "entry": {
+    "boot": "fresh",
+    "normalizeAvatarName": "Sinta",
+    "entryClock": {
+      "hour": 10,
+      "minute": 0
+    },
+    "note": "Arranque fresco del corpus sintetico. Hora canonica de arneses 10:00."
+  },
+  "segments": {
+    "sint01-g03": {
+      "note": "Vela se une; el arnes de oro entra por overlay.",
+      "insertOps": [
+        {
+          "afterOcrLn": 44,
+          "ops": [
+            {
+              "seedGold": 900
+            },
+            {
+              "recruit": "Vela"
+            }
+          ]
+        }
+      ]
+    },
+    "sint01-g05": {
+      "skipReason": "este post-combat no es de interior: la costura de salida de sint01-g02 lo deja FUERA"
+    }
+  },
+  "ledger": {
+    "note": "Corpus sintetico: sin anclas numericas del LP.",
+    "assert": {}
+  }
+}

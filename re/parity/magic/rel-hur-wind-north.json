@@ -1,0 +1,30 @@
+{
+ "name": "rel-hur-wind-north",
+ "note": "Rel Hur con flecha Norte(3) \u2192 g_wind=1 (remap {0,4,3,1,2}).",
+ "spec": {
+  "seed": 1,
+  "spell": "Rel_Hur",
+  "casterIndex": 0,
+  "ctx": {
+   "location": 0,
+   "inCombat": false,
+   "windArrow": 3
+  },
+  "roster": [
+   {
+    "class": "M",
+    "mp": 22,
+    "level": 8
+   }
+  ],
+  "spellQuantities": {
+   "8": 1
+  }
+ },
+ "expect": {
+  "wind": 1
+ },
+ "compareFields": [
+  "wind"
+ ]
+}

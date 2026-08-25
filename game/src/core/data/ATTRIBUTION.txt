@@ -1,0 +1,3 @@
+Los JSON de este directorio (TileData.json, TileOverrides.json y otros que se incorporen)
+provienen de Ultima5Redux (c) 2020 Brad Hannah, licencia MIT.
+https://github.com/bradhannah/Ultima5Redux

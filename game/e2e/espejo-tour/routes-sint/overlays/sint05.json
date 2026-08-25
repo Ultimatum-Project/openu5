@@ -1,0 +1,29 @@
+{
+  "entry": {
+    "checkpoint": "sint04",
+    "note": "Encadena del checkpoint de sint04."
+  },
+  "segments": {
+    "sint05-g02": {
+      "note": "Swap de compania: Torbin sale, Quilla entra.",
+      "insertOps": [
+        {
+          "afterOcrLn": 20,
+          "ops": [
+            {
+              "recruit": "Quilla"
+            }
+          ]
+        },
+        {
+          "afterOcrLn": 12,
+          "ops": [
+            {
+              "dismiss": "Torbin"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

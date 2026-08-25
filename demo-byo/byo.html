@@ -1,0 +1,1061 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-es="OpenU5 — trae tus propios ficheros del juego" data-en="OpenU5 — bring your own game files">OpenU5 — bring your own game files</title>
+  <!-- §CANONICA · Ver la nota larga en docs/publicacion/web/home-fase1.html: absoluta y
+       con host, y SIN hreflang porque /byo es UNA URL que sirve los dos idiomas.
+       El <link> del design system NO puede ir aquí (vite lo resolvería contra publicDir y
+       rompería el build, ver abajo); éste sí, porque es una URL externa absoluta y vite
+       no intenta resolverla. Comprobado en el sitio construido, no supuesto. -->
+  <link rel="canonical" href="https://openu5.org/byo">
+  <style>
+    /* Consume el DESIGN SYSTEM. 🔴 EL <link> NO VA AQUI, LO INYECTA EL
+       ENSAMBLADOR (build-demo-publica.sh, §DS-BYO), y la razon es concreta:
+       `demo-byo/public/` solo contiene `sw.js`, asi que un
+       `<link href="/ds/openu5.css">` en este fichero haria que VITE intentara
+       resolverlo contra publicDir, no lo encontrara y ROMPIERA EL BUILD. El
+       enlace se pone tras el rsync, cuando /ds ya existe en el sitio.
+       Consecuencia buena: el CSS de esta pagina NO depende de reconstruir el
+       bundle; solo estos tokens de aqui abajo lo hacen.
+       Los `var(--x, fallback)` llevan el valor viejo como respaldo A PROPOSITO:
+       si algun dia el enlace no llegara, la pagina se degrada a lo que era en
+       vez de quedarse sin estilos. */
+    :root { color-scheme: dark; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center;
+      background: var(--u5-surface-base, #10101c); color: var(--u5-text-primary, #d8d8e8);
+      font-family: var(--u5-font-sans, ui-monospace, Menlo, Consolas, monospace);
+      font-size: var(--u5-size-body, 16px); line-height: var(--u5-lh-body, 1.5);
+    }
+    main { max-width: 40rem; padding: 2rem; }
+    h1 { font-size: var(--u5-size-h2, 1.4rem); color: var(--u5-text-primary, #fff); }
+    a { color: var(--u5-accent, #8ab4ff); }
+    /* El dropzone es EL control central de la pagina: borde de control del DS y
+       estado de arrastre en accent — uno de los 21 estados que el handoff nunca
+       definio, y el mas caro segun su propia auditoria. */
+    #drop {
+      border: 2px dashed var(--u5-border-control, #555a80);
+      border-radius: var(--u5-radius-8, 8px); padding: 2.5rem 1.5rem;
+      text-align: center; cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
+    #drop.hover { border-color: var(--u5-accent, #8ab4ff); background: var(--u5-surface-well, #181830); }
+    #drop:focus-visible {
+      outline: var(--u5-focus-width, 2px) solid var(--u5-focus-color, #8ab4ff);
+      outline-offset: var(--u5-focus-offset, 2px);
+    }
+    #log {
+      white-space: pre-wrap; font-family: var(--u5-font-mono, ui-monospace, Menlo, monospace);
+      font-size: var(--u5-size-tag, .85rem); color: var(--u5-text-quiet, #9a9ab4);
+      max-height: 14rem; overflow-y: auto; margin-top: 1rem;
+    }
+    /* ── LOS CINCO ESTADOS DE CARGA ──────────────────────────────────────────
+       🔴 ESTE PANEL LO PINTA JS ENTERO, y va FUERA de todo nodo con
+       `data-es`/`data-en` A PROPOSITO: el aplicador de idioma reescribe
+       `innerHTML` y destruiria los botones que el panel monta (la misma trampa
+       que saco al `<input id="picker">` de su rotulo). El idioma se sigue por
+       el evento `openu5:lang`, que repinta el estado vigente. */
+    /* La via del zip: un renglon discreto BAJO la zona de soltar. Discreto porque en
+       escritorio la carpeta es el camino bueno; imprescindible porque en un telefono
+       es el UNICO. Lo pinta `main.ts`, asi que va fuera de todo nodo bilingue. */
+    .via-zip { margin: .6rem 0 0; font-size: var(--u5-size-tag, .85rem); }
+    .via-zip:empty { display: none; }
+    .via-zip button {
+      font: inherit; font-size: inherit; padding: 0; border: 0; background: none;
+      color: var(--u5-accent, #8ab4ff); text-decoration: underline; cursor: pointer;
+    }
+    .via-zip button:focus-visible {
+      outline: var(--u5-focus-width, 2px) solid var(--u5-focus-color, #8ab4ff);
+      outline-offset: var(--u5-focus-offset, 2px);
+    }
+    /* 🔴 MEDIDO EN NAVEGADOR (iPhone SE 320px y iPhone 13 390px): este boton salia de
+       156x20 px. Veinte pixeles de alto es una diana inclicable con el dedo — y es EL
+       control del telefono, el unico camino que un movil tiene para entregar su copia.
+       O sea que la via del zip existia, compilaba, se probaba verde... y en el
+       dispositivo para el que se hizo era dificil de pulsar. En puntero GRUESO pasa a
+       caja de 44 px (el suelo que ya usa la piel movil del juego); en raton se queda
+       como enlace discreto, que es lo que quiere el escritorio. */
+    @media (pointer: coarse) {
+      .via-zip button {
+        display: inline-block; min-height: 44px; padding: .6rem .9rem;
+        border: 1px solid var(--u5-border-control, #555a80);
+        border-radius: var(--u5-radius-6, 6px); text-decoration: none;
+      }
+      /* Mismo suelo para los otros dos controles que se pulsan con el dedo. */
+      .tus-datos button, .est__acciones button { min-height: 44px; }
+    }
+    .via-zip small { color: var(--u5-text-quiet, #9a9ab4); }
+    /* Los pasos numerados y las tarjetas de procedencia (bloque 2a del rediseno). */
+    .paso {
+      font-size: var(--u5-size-tag, .8rem); letter-spacing: .08em; text-transform: uppercase;
+      color: var(--u5-text-quiet, #9a9ab4); margin: 2.2rem 0 .6rem;
+    }
+    .tarjetas { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+    /* Una columna en movil y dos donde quepa: las tarjetas son texto, no rejilla fija. */
+    @media (min-width: 34rem) { .tarjetas { grid-template-columns: 1fr 1fr; } }
+    .tarjetas li {
+      border: 1px solid var(--u5-border-control, #555a80);
+      border-radius: var(--u5-radius-8, 8px); padding: .8rem .9rem;
+      font-size: var(--u5-size-tag, .9rem);
+    }
+    .tarjetas b { color: var(--u5-text-primary, #fff); }
+    .tarjetas small { display: block; margin-top: .4rem; color: var(--u5-text-quiet, #9a9ab4); }
+    /* Divulgación progresiva (auditoría 08-2026): los cuatro casos van plegados en
+       <details> nativos — sin JS nuevo, y el aplicador de idioma los repinta sin
+       perder nada porque no llevan listeners. Selectores por ELEMENTO dentro de
+       .tarjetas a propósito: el censo de clases huérfanas cruza clases, no etiquetas. */
+    .tarjetas summary { cursor: pointer; }
+    .tarjetas summary:hover b { color: var(--u5-accent, #8ab4ff); }
+    .tarjetas details p { margin: .5rem 0 0; }
+    .nota-no-incluido { font-size: var(--u5-size-tag, .85rem); margin-top: .8rem; }
+    /* ── TUS PARTIDAS Y REPETICIONES (bloque 2d) ─────────────────────────────
+       🔴 LO PINTA JS ENTERO y va FUERA de todo nodo `data-es`/`data-en`, por la
+       misma razón que el panel de estados: el aplicador de idioma reescribe
+       `innerHTML` y se llevaría por delante los enlaces «Continuar». El idioma
+       se sigue por el evento `openu5:lang`, que repinta la lista. */
+    #partidas:empty { display: none; }
+    .guardados { margin-top: 1.4rem; }
+    .guardados__titulo {
+      font-size: var(--u5-size-tag, .8rem); letter-spacing: .08em; text-transform: uppercase;
+      color: var(--u5-text-quiet, #9a9ab4); margin: 0 0 .5rem; font-weight: normal;
+    }
+    .guardados__vacio, .guardados__que, .guardados__nota {
+      margin: .4rem 0; font-size: var(--u5-size-tag, .85rem); color: var(--u5-text-quiet, #9a9ab4);
+    }
+    .guardados__lista { list-style: none; margin: .5rem 0 0; padding: 0; display: grid; gap: .4rem; }
+    .guardado {
+      display: flex; gap: .8rem; align-items: center; justify-content: space-between;
+      flex-wrap: wrap;
+      border: 1px solid var(--u5-border-control, #555a80);
+      border-radius: var(--u5-radius-6, 6px); padding: .55rem .8rem;
+    }
+    .guardado__info { min-width: 0; }
+
+    /* ── MINIATURA DE UNA REPETICIÓN ────────────────────────────────────────────────
+       La fila de `.guardado` es un flex con `justify-content: space-between`, así que
+       el `.guardado__info` se lleva el hueco sobrante: la miniatura sólo necesita
+       negarse a encoger (`flex: 0 0 auto`) y quedarse la primera.
+       112x70 mantiene la proporción 320x200 EXACTA (×0,35), o sea sin deformar el
+       pixel art; `pixelated` por lo mismo que las capturas de partida de arriba.
+       El HUECO mide igual que la foto para que las filas con y sin captura no bailen
+       una respecto de otra — una lista mixta descuadrada se lee peor que una sin fotos. */
+    .guardado__replayshot {
+      flex: 0 0 auto; width: 112px; height: 70px; display: block;
+      border-radius: var(--u5-radius-6, 6px);
+      border: 1px solid var(--u5-border-control, #2A2E36);
+      /* 🔴 `contain` Y NO `cover` (ficha #174, reporte del usuario: «el thumbnail de
+         replay sale cortado porque se muestra como portrait»). La CAJA sigue fija en los
+         dos ejes —eso lo pide la alineación de la lista mixta, ver el párrafo de arriba—,
+         así que quien decide qué se ve de la imagen es el FIT, y `cover` recorta EN
+         SILENCIO todo lo que no sea 16:10.
+         Para la miniatura que produce el juego HOY el cambio es un NO-OP EXACTO, y no de
+         palabra: 112/70 y 320/200 son la misma proporción (1,6), y con proporciones
+         iguales `contain` y `cover` dan el mismo rectángulo pintado. Medido con las dos
+         a la vez (`replay-crop`, testigo nativo como CONTROL): fracción de letterbox
+         0,026 antes y después en el nativo — el borde y nada más.
+         Lo que cambia es SÓLO el parque legado: las repeticiones grabadas antes de #153
+         desde un móvil partido guardaron el teléfono entero (1170×1696, proporción 0,69)
+         y para ellas NO hay re-captura —`ui/shot-refresh.ts` sólo toca `save-keys`, sus
+         dos llamadores están en `game/src/main.ts` y ninguno mira `replay/store`—, así
+         que no convergen solas. Con `cover` se veía el 43,1 % de la imagen, una banda
+         central del teléfono que se lee como «la miniatura está rota»; con `contain` se
+         ve entera y pequeña, que es lo que de verdad es: una captura vieja de otra forma.
+         ★★ Un fit que recorta es una decisión sobre datos que aún no existen: mientras la
+         caja sea fija, el único fit honesto es el que no tira píxeles. */
+      image-rendering: pixelated; object-fit: contain;
+      background: var(--u5-surface-card, #111318);
+      /* 🔴 EN LA REGLA BASE, no sólo en el hueco — y lo cazó la sonda MIDIENDO las dos
+         cajas: 114x72 la foto contra 112x70 el hueco. El `--vacia` traía su
+         `box-sizing: border-box` y el `<img>` no, así que su borde de 1px sumaba por
+         fuera y las dos variantes de la MISMA columna medían distinto. Dos píxeles no
+         se ven en una fila sueltos; en una lista mixta se ven como un escalón. */
+      box-sizing: border-box;
+    }
+    .guardado__replayshot--vacia {
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      padding: .2rem;
+      border-style: dashed;
+      font-size: var(--u5-size-tag, .78rem); line-height: 1.2;
+      color: var(--u5-text-tertiary, #8B9099);
+    }
+    @media (max-width: 560px) {
+      /* En vertical estrecho la fila envuelve (`flex-wrap: wrap`). La miniatura baja de
+         tamaño en vez de robarle la línea entera al nombre, que es lo que identifica
+         la grabación cuando hay varias. */
+      .guardado__replayshot { width: 88px; height: 55px; }
+    }
+    .guardado__nombre { display: block; color: var(--u5-text-primary, #fff); }
+    .guardado__meta {
+      display: block; margin-top: .15rem;
+      font-family: var(--u5-font-mono, ui-monospace, Menlo, monospace);
+      font-size: var(--u5-size-tag, .78rem); color: var(--u5-text-quiet, #9a9ab4);
+    }
+    .guardado__accion {
+      flex: none; padding: .35rem .8rem; border-radius: var(--u5-radius-6, 6px);
+      border: 1px solid var(--u5-border-control, #555a80);
+      font-size: var(--u5-size-tag, .85rem); text-decoration: none;
+    }
+    .guardado__accion:hover { border-color: var(--u5-accent, #8ab4ff); }
+    .guardado__accion:focus-visible {
+      outline: var(--u5-focus-width, 2px) solid var(--u5-focus-color, #8ab4ff);
+      outline-offset: var(--u5-focus-offset, 2px);
+    }
+    /* Mismo suelo de 44 px que el resto de dianas de esta pantalla: continuar una
+       partida es lo que más se va a pulsar con el dedo de todo el bloque. */
+    @media (pointer: coarse) {
+      .guardado__accion {
+        display: inline-flex; align-items: center; min-height: 44px; padding: .6rem .9rem;
+      }
+    }
+    /* ══ LA TARJETA DE PARTIDA — rediseño ligero (08-08) ══════════════════════
+       Misma información que antes, mejor presentada. Tres decisiones:
+
+       1. LAS MINIATURAS SON LA ILUSTRACION, no un sello de esquina. Pasan de 100px a
+          `clamp(132px, 26vw, 168px)` y van JUNTAS en su propia franja. Antes eran
+          excluyentes (captura O mapa) y el usuario perdio el mapa al ganar la foto;
+          son dos cosas distintas —que se vio y donde fue— y caben las dos.
+       2. REJILLA, no flex-wrap. `media | info | accion` en escritorio; en movil la
+          franja pasa arriba a lo ancho y el boton al final. Con flex-wrap el orden
+          dependia de cuanto ocupara cada trozo, que es como salio el layout raro de
+          hoy con dos miniaturas.
+       3. Tokens del DS, no hexes sueltos: `surface-card` para el fondo (la tarjeta se
+          separa del fondo de pagina sin necesitar borde grueso), `border-subtle` en
+          reposo y `border-strong` al pasar por encima. */
+    .guardado--tarjeta {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-areas: "media info accion";
+      align-items: start;
+      gap: .55rem .95rem;
+      padding: .7rem .8rem;
+      background: var(--u5-surface-card, #111318);
+      border-color: var(--u5-border-subtle, #1C1E23);
+      transition: border-color .15s, background .15s;
+    }
+    .guardado--tarjeta:hover { border-color: var(--u5-border-strong, #24272E); }
+    /* 🔴 `:focus-within` ademas de `:hover`: quien llega con el teclado tiene que ver
+       la MISMA tarjeta destacada que quien llega con el raton. */
+    .guardado--tarjeta:focus-within { border-color: var(--u5-border-strong, #24272E); }
+
+    .guardado__media {
+      grid-area: media; display: flex; gap: .45rem; align-items: flex-start;
+      /* 🔴 EL ANCHO DE LA FRANJA ES UNA DECISIÓN, NO UNA CONSECUENCIA. La columna del
+         grid es `auto` = se dimensiona por el CONTENIDO, así que sin una base explícita
+         la franja mide lo que midan las capturas del visitante: con una captura real de
+         320 px la franja se comió 489 de los 640 de la tarjeta, la columna del texto
+         quedó en CERO y el nombre salió a palabra por línea con «Continue» encima de un
+         chip. Con la miniatura de 1×1 del testigo, en cambio, medía 268 y todo cuadraba.
+         La miniatura es la protagonista de la tarjeta, pero el tamaño lo fija ESTA línea. */
+      --u5-thumb: clamp(112px, 17vw, 140px);
+    }
+    /* 🔴 LAS LUPAS NECESITAN BASE PROPIA, y lo cazó la medición táctil. Un `<button>` es
+       ítem flex con anchura POR CONTENIDO: con una captura estrecha (o una de 1x1, que es
+       lo que usa el testigo) el botón COLAPSA — medido en iPhone SE: 3x5 px, una diana
+       imposible, mientras la del mapa salía a 221. El `width` de la miniatura no lo
+       arreglaba porque se resolvía contra un padre ya colapsado.
+       La base propia + `min-width: 0` desacopla el tamaño de la tarjeta del contenido
+       que le toque. 🔴 Y la base es FIJA (`0 0`), no `1 1 0`: con `1 1 0` el reparto
+       interno era correcto pero el ANCHO TOTAL de la franja seguía saliendo del
+       contenido, que es el defecto de arriba. En el teléfono sí se reparte (abajo).
+
+       🔴 EL `width` NO ES REDUNDANTE CON LA BASIS, Y LA DIFERENCIA SÓLO SE VE EN WEBKIT
+       (ficha #241, reporte del usuario del 13-08 en escritorio). La `flex-basis` decide
+       cuánto MIDE el ítem —y eso los dos motores lo hacen igual: 140 px medidos en
+       Chromium y en WebKit—, pero la columna `media` de la rejilla es `auto`, o sea que
+       se dimensiona por la contribución MAX-CONTENT de la franja. Al calcularla, WebKit
+       la saca del tamaño NATURAL del `<img>`/`<canvas>` de dentro (el `width: 100%` de
+       abajo no acota nada intrínseco) en vez de acotarla a la basis fija; Chromium sí la
+       acota. Medido a 1340 px con UNA captura de 320 px y un solo hijo de 140:
+
+         motor     captura   columnas media / info / accion
+         Chromium  320x200   287,2 / 201,7 / 93,1     ← la franja mide lo que sus hijos
+         WebKit    320x200   322   / 156,8 / 103,3    ← 35 px de columna VACÍA
+         WebKit    960x600   478,8 / **0** / 103,3    ← la columna del texto DESAPARECE
+
+       Con la columna del texto a cero los chips desbordan su área y se meten debajo de la
+       de acciones: es literalmente la foto del reporte («Descargar» encima del chip de
+       oro). Y la captura ancha no es un caso raro — `esCapturaCanonica` (core/png-dims.ts)
+       acepta CUALQUIER tamaño con proporción 320/200, y la regeneración de /byo monta el
+       juego en un iframe de 960x600 (momentos-instala.ts:223).
+
+       Un `width` explícito acota la contribución intrínseca en los dos motores, y además
+       dice en el código lo que el comentario de arriba ya decía en prosa: el ancho de la
+       franja es una DECISIÓN. La basis se queda: es la que reparte cuando hay holgura. */
+    .guardado__media > * {
+      flex: 0 0 var(--u5-thumb);
+      width: var(--u5-thumb);
+      min-width: 0;
+    }
+    .guardado__media img, .guardado__media canvas { width: 100%; }
+    .guardado__info  { grid-area: info; min-width: 0; }
+    .guardado--tarjeta .guardado__accion { grid-area: accion; align-self: center; }
+
+    /* ── LA COLUMNA DE ACCIONES: «Continuar» + «Descargar» ─────────────────────
+       La rejilla tiene UN area para la accion y dos elementos en la misma area se
+       superpondrian, asi que `exporta.ts` envuelve el enlace que ya habia en esta caja
+       y le añade el boton. La caja hereda el area; los hijos dejan de tenerla (si no,
+       volverian a apilarse ellos solos sobre la rejilla del `<li>`).
+       Puede llevar UN solo hijo: sin copia del juego no hay «Continuar», y descargar
+       una partida no necesita la extraccion. */
+    .guardado__acciones {
+      grid-area: accion; align-self: center;
+      display: flex; flex-direction: column; gap: .35rem; align-items: stretch;
+    }
+    /* 🔴 `align-self: stretch` EXPLICITO, y lo cazo una MEDICION y no la suite: la regla
+       hermana `.guardado--tarjeta .guardado__accion` pone `align-self: center` y SIGUE
+       casando con estos dos, ahora que viven dentro de la caja — un `align-self` del hijo
+       gana al `align-items` del padre, asi que el `stretch` de la caja no llegaba. Medido en
+       390 px: la caja media 301 px y el boton 96, centrado. Ninguna sonda de conducta lo ve. */
+    .guardado__acciones .guardado__accion {
+      grid-area: auto; align-self: stretch; text-align: center;
+      /* 🔴 `justify-content` ADEMAS de `text-align`, y hace falta el par: en tactil la regla
+         `@media (pointer: coarse)` de arriba convierte estos controles en `inline-flex`, y
+         sobre un contenedor flex `text-align` NO centra nada — el texto pasa a ser un item
+         anonimo pegado al inicio. Medido en 390 px: caja y control a 302 px (bien) con
+         «Continue» y «Download» pegados a la izquierda (mal). En raton manda `text-align`,
+         que es lo que centra un `<a>`/`<button>` en flujo normal.
+         ⚠ El mismo par le falta a `.guardado--tarjeta .guardado__accion` FUERA de esta caja
+         (el enlace suelto de una tarjeta sin boton de descarga): es de la zona de
+         byo-shots-clean y no lo toco — queda dicho para quien pase por ahí. */
+      justify-content: center;
+    }
+    /* El boton es un `<button>` y el hermano un `<a>`: sin esto heredaria la tipografia
+       del formulario y saldria con otra letra justo al lado de su pareja. */
+    .guardado__descarga {
+      font: inherit; font-size: var(--u5-size-tag, .85rem); cursor: pointer;
+      background: transparent; color: var(--u5-text-primary, #d8d8e8);
+    }
+    .guardado__descarga:disabled { opacity: .6; cursor: default; }
+    /* El aviso de «descargada» vive en la columna ANCHA, no dentro del boton: el nombre del
+       fichero son ~34 caracteres y la columna de accion mide 93 px. `break-all` porque es un
+       nombre de fichero sin espacios — sin el, desborda en vez de partirse. */
+    .guardado__aviso {
+      display: block; margin-top: .35rem; word-break: break-all;
+      font-size: var(--u5-size-tag, .78rem); color: var(--u5-text-quiet, #9a9ab4);
+    }
+    .guardado__aviso--mal { color: #ff8a8a; }
+
+    /* ── TRAER UNA PARTIDA ─────────────────────────────────────────────────────
+       El `<input type=file>` es REAL y esta dentro del `<label>`: se oculta a la vista
+       pero NO con `display:none` — eso lo saca del orden de tabulacion y se pierde el
+       teclado, que es justo lo que el input nativo aportaba. Se aparca en 1px con
+       `clip-path`, la receta que conserva foco y lector de pantalla. */
+    .importa { margin-top: 1.4rem; }
+    .importa__zona {
+      display: block; margin-top: .5rem; padding: 1.1rem .9rem; cursor: pointer;
+      text-align: center; border-radius: var(--u5-radius-8, 8px);
+      border: 1px dashed var(--u5-border-control, #555a80);
+      color: var(--u5-text-quiet, #9a9ab4); font-size: var(--u5-size-tag, .85rem);
+      transition: border-color .15s, background .15s;
+    }
+    .importa__zona:hover,
+    .importa__zona--encima { border-color: var(--u5-accent, #8ab4ff); background: var(--u5-surface-card, #111318); }
+    /* El anillo de foco lo pide el INPUT y lo pinta la ZONA: el input es invisible. */
+    .importa__zona:focus-within {
+      outline: var(--u5-focus-width, 2px) solid var(--u5-focus-color, #8ab4ff);
+      outline-offset: var(--u5-focus-offset, 2px);
+    }
+    .importa__input {
+      position: absolute; width: 1px; height: 1px; overflow: hidden;
+      clip-path: inset(50%); white-space: nowrap;
+    }
+    .importa__rotulo { display: block; }
+    .importa__aviso {
+      margin: .5rem 0 0; font-size: var(--u5-size-tag, .85rem);
+      color: var(--u5-text-quiet, #9a9ab4);
+    }
+    .importa__aviso:empty { display: none; }
+    .importa__aviso--bien { color: var(--u5-text-primary, #d8d8e8); }
+    /* Mismo rojo que `.est--falta`, que es el que esta pantalla ya usa para «falta algo». */
+    .importa__aviso--mal { color: #ff8a8a; }
+    @media (pointer: coarse) {
+      .importa__zona { padding: 1.4rem .9rem; }
+      .guardado__descarga { min-height: 44px; }
+    }
+
+    /* Las dos miniaturas comparten tamaño: la franja se lee como una pareja, no como
+       una foto con un sello al lado. El mapa es CUADRADO (256x256) y la captura
+       conserva su proporción, así que sólo se fija el ANCHO. */
+    /* 🔴 LA FOTO SE ENCAJA EN LA PROPORCIÓN CANÓNICA (lote 2 de #174, tercer testigo del
+       usuario: «algunos sshots de saved siguen mostrándose en portrait»). Antes era
+       `height: auto` sin `object-fit`, con su razón escrita —«la captura conserva su
+       proporción, así que sólo se fija el ANCHO»—, y para una captura de 1988 eso es
+       correcto y sigue siéndolo: 320×200 dentro de una caja 320/200 da EXACTAMENTE la misma
+       imagen que antes, sin recorte ni letterbox. Es un no-op para el parque bueno.
+       Lo que arregla es el parque LEGADO: una captura del teléfono entero (1170×1696) con
+       `height:auto` se pintaba de ~200 px de alto y estiraba SU tarjeta al doble que las de
+       al lado — medido en captura, y descuadra la lista entera. Con la caja canónica se ve
+       entera y pequeña, que es lo que de verdad es.
+       ⚠️ `contain` y no `cover`: la misma razón que en `.guardado__replayshot` — mientras la
+       caja sea fija, el único fit honesto es el que no tira píxeles. */
+    .guardado__foto { aspect-ratio: 320 / 200; object-fit: contain; }
+    .guardado__foto, .guardado__mapa {
+      width: clamp(132px, 26vw, 168px); height: auto;
+      display: block; border-radius: var(--u5-radius-6, 6px);
+      border: 1px solid var(--u5-border-control, #2A2E36);
+      image-rendering: pixelated;
+    }
+    .guardado__mapa { aspect-ratio: 1; }
+
+    .guardado--tarjeta .guardado__nombre {
+      font-size: var(--u5-size-body, 15.5px); line-height: 1.3; margin-bottom: .1rem;
+    }
+    .guardado--tarjeta .guardado__meta { color: var(--u5-text-tertiary, #8B9099); }
+
+    /* ── EL BOTON-LUPA: la ilustracion de la tarjeta, clicable ─────────────────
+       Un boton NATIVO envolviendo el canvas/img. Se le quita todo el cromo de boton
+       para que se vea igual que antes de ser clicable — lo unico que ANADE es el
+       cursor, el anillo de foco y el realce al pasar por encima. `line-height:0`
+       para que no aparezca el hueco de linea base debajo del contenido.
+       ⚠️ SIN suelo de 44px explicito: la diana ES la miniatura, y su lado menor son
+       132px — tres veces el suelo. La sonda lo MIDE en movil en vez de suponerlo. */
+    .guardado__lupa {
+      display: block; padding: 0; border: 0; background: none; line-height: 0;
+      cursor: zoom-in; border-radius: var(--u5-radius-6, 6px);
+    }
+    .guardado__lupa:hover .guardado__foto,
+    .guardado__lupa:hover .guardado__mapa { border-color: var(--u5-accent, #4F8CFF); }
+    .guardado__lupa:focus-visible {
+      outline: var(--u5-focus-width, 2px) solid var(--u5-focus-color, #4F8CFF);
+      outline-offset: var(--u5-focus-offset, 2px);
+    }
+
+    /* ── EL HUECO DE LA FOTO QUE FALTA, convertido en el boton que la pide ────────
+       Ocupa EL SITIO DE LA MINIATURA (la franja ya le da la base con `flex: 0 0
+       var(--u5-thumb)`, arriba) y tiene la MISMA proporcion 320x200 que una captura:
+       asi la tarjeta no da un salto de altura cuando la foto llega y sustituye al
+       boton. Borde punteado = «aqui va algo que todavia no esta», el mismo lenguaje
+       que el dropzone de arriba.
+       ⚠️ Este SI lleva suelo tactil explicito, al reves que la lupa: la lupa hereda
+       los 132px de la miniatura y este no envuelve nada, asi que su altura sale de
+       `aspect-ratio` — y en el movil mas estrecho eso baja de 44px. */
+    .guardado__reshot {
+      display: block; width: 100%; aspect-ratio: 320 / 200; min-height: 44px;
+      font: inherit; font-size: var(--u5-size-tag, .85rem); line-height: 1.25;
+      padding: .3rem; cursor: pointer;
+      color: var(--u5-text-quiet, #9a9ab4);
+      background: var(--u5-surface-well, #181830);
+      border: 1px dashed var(--u5-border-control, #555a80);
+      border-radius: var(--u5-radius-6, 6px);
+    }
+    .guardado__reshot:hover:not(:disabled) {
+      border-color: var(--u5-accent, #4F8CFF); color: var(--u5-text-primary, #d8d8e8);
+    }
+    .guardado__reshot:disabled { opacity: .6; cursor: default; }
+    .guardado__reshot:focus-visible {
+      outline: var(--u5-focus-width, 2px) solid var(--u5-focus-color, #4F8CFF);
+      outline-offset: var(--u5-focus-offset, 2px);
+    }
+
+    /* ── EL PAR DE VISTAS DEL VISOR (interior + Britannia) ────────────────────────
+       UNA FILA SIEMPRE, y las dos vistas SE ENCOGEN hasta caber. El zoom actua sobre el
+       CONTENEDOR, asi que los dos mapas se amplian juntos y conservan su relacion.
+
+       🔴 ESTE `display: flex` NO SE APLICABA, y ESA era la causa de que el visitante viera
+       UNA sola vista — no el `flex-wrap: wrap` que habia aqui, que es lo que parecia. Las
+       dos vistas se apilaban porque el par NUNCA FUE UN CONTENEDOR FLEX: `visor.ts` le anade
+       `visor__imagen` a TODO lo que enmarca (`abreVisor`, linea 80), esa clase trae su
+       propio `display: block` —correcto para un lienzo suelto, que si no deja el hueco del
+       descendente debajo— y las dos reglas tienen LA MISMA ESPECIFICIDAD (una clase). Gana
+       la ultima del fichero, que esta 150 lineas mas abajo. Medido en el navegador:
+       `getComputedStyle(par).display` = `block` con `flex-wrap` en `nowrap`.
+       ★★ El mecanismo que se nombra al diagnosticar puede ser falso y la propiedad cierta:
+          «las dos vistas no caben» lo era; «las envuelve el wrap», no. Quitar el wrap sin
+          mirar el computado habria dejado el defecto intacto con el arreglo puesto.
+       ★ Y apilar NO tenia salida por scroll: `habilitaZoom` pone `overflow: hidden` EN LINEA
+         sobre `.visor__marco` (zoom.ts, para acotar el arrastre), que le gana a cualquier
+         regla de aqui. Lo que no cabe, no se alcanza. Por eso la solucion es CABER.
+
+       Que se encojan (y no que se recorten) es `flex: 1 1 0` + `min-width: 0`: sin el
+       `min-width` el minimo de contenido de un flex item es su tamano intrinseco —los 768
+       px del lienzo— y volveria a desbordar. */
+    .visor__par { display: flex; gap: 1rem; justify-content: center; align-items: flex-start; }
+    /* La linea que gana el empate: DOS clases contra una. Va aparte y no fundida arriba
+       porque el par es flex por si mismo —lo enmarque quien lo enmarque—, y esto es solo el
+       desempate contra el `display` generico del visor. Quien meta un tercer tipo de
+       contenido compuesto en el visor necesitara su propia linea igual que esta. */
+    .visor__par.visor__imagen { display: flex; }
+    .visor__vista {
+      margin: 0; display: flex; flex-direction: column; gap: .35rem; align-items: center;
+      flex: 1 1 0; min-width: 0;
+    }
+    /* `width`/`height` en auto con las DOS cotas: el lienzo se reduce en proporcion, lo
+       imponga el ancho (lo normal) o el alto (ventana apaisada y baja). Con `width: 100%`
+       la cota de alto lo deformaria en vez de encogerlo. */
+    .visor__mapa {
+      display: block; width: auto; height: auto;
+      max-width: 100%; max-height: calc(92vh - 8rem);
+      image-rendering: pixelated;
+      border-radius: var(--u5-radius-6, 6px);
+      border: 1px solid var(--u5-border-control, #2A2E36);
+    }
+    .visor__pie {
+      font-size: var(--u5-size-tag, .85rem); color: var(--u5-text-quiet, #9a9ab4); text-align: center;
+    }
+
+    /* 🔴 F9 (auditoría UX) — EL CHIP DE SHADOWLORDS SE VEÍA «CAÍDO» RESPECTO A SUS VECINOS,
+       y son DOS causas sumadas, ninguna suya:
+        1. Esta fila no declaraba `align-items`, así que valía el default `stretch`: cada
+           chip se estira al alto del MÁS ALTO de su línea y su texto —centrado dentro de su
+           propia caja inline-flex— deja de coincidir con el de al lado. Con `center` los
+           chips se alinean por su centro y el estirado deja de existir.
+        2. El chip de Shadowlords es el único que lleva glifos GEOMÉTRICOS (● U+25CF / ○
+           U+25CB, ver `sl-punto` abajo), cuyo alto de caja en la mayoría de fuentes supera
+           al de las mayúsculas latinas. Sin `line-height` propio inflaban la línea del chip
+           — o sea que el chip «caído» era en realidad el chip ALTO, y el desnivel lo ponía
+           él mismo. Se acota ahí, en el glifo, y no aquí: ensanchar la fila taparía el
+           síntoma dejando la causa. */
+    .guardado__chips { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .45rem; }
+    .chip {
+      font-size: var(--u5-size-tag, .72rem); padding: .15rem .5rem;
+      border: 1px solid var(--u5-border-strong, #24272E);
+      background: var(--u5-surface-pill, #14161B);
+      border-radius: 999px; color: var(--u5-text-secondary, #A5A9B1);
+      display: inline-flex; align-items: center;
+    }
+    .chip--art { color: var(--u5-text-primary, #E9EAEC); border-color: #d4af37; }
+    .chip--tenue { opacity: .75; }
+    .chip__icono {
+      width: 16px; height: 16px; margin-right: .25rem; image-rendering: pixelated;
+    }
+    /* ── MOMENTOS LEGENDARIOS ────────────────────────────────────────────────
+       La insignia de procedencia va con el color de acento y NO con el dorado
+       de los artefactos: un chip dorado dice «este objeto está en la partida», y
+       esto no habla de la partida sino de de dónde salió. Dos significados con la
+       misma pinta serían el defecto que la tarjeta ya cometió una vez. */
+    .chip--momento {
+      color: var(--u5-accent, #8ab4ff); border-color: var(--u5-accent, #8ab4ff);
+      vertical-align: 1px;
+    }
+    .momentos { margin: 1.6rem 0 0; font-size: var(--u5-size-tag, .85rem); }
+    .momentos:empty { display: none; }
+    .momentos__abrir {
+      font: inherit; font-size: var(--u5-size-tag, .9rem); padding: .5rem 1rem; cursor: pointer;
+      background: transparent; color: var(--u5-text-primary, #d8d8e8);
+      border: 1px solid var(--u5-border-control, #555a80); border-radius: var(--u5-radius-6, 6px);
+    }
+    .momentos__abrir:hover { border-color: var(--u5-accent, #8ab4ff); }
+    .momentos__abrir:focus-visible {
+      outline: var(--u5-focus-width, 2px) solid var(--u5-focus-color, #8ab4ff);
+      outline-offset: var(--u5-focus-offset, 2px);
+    }
+    @media (pointer: coarse) { .momentos__abrir { min-height: 44px; } }
+    .momentos__que { color: var(--u5-text-quiet, #9a9ab4); }
+    /* El modal: mismo `<dialog>` nativo que el popover de repetición — foco atrapado,
+       Escape y ::backdrop los da el navegador. Más estrecho que aquél porque esto es
+       una lista de texto, no un juego de 16:10. */
+    .momentos-modal {
+      width: min(94vw, 46rem); max-width: 94vw; padding: 0; border: 0;
+      max-height: 86vh; overflow: hidden; display: flex; flex-direction: column;
+      background: var(--u5-surface-base, #10101c); color: var(--u5-text-primary, #d8d8e8);
+      border: 1px solid var(--u5-border-control, #555a80);
+      border-radius: var(--u5-radius-8, 8px);
+      box-shadow: 0 18px 48px rgba(0,0,0,.6);
+    }
+    .momentos-modal::backdrop { background: rgba(0,0,0,.68); }
+    .momentos-modal__barra {
+      display: flex; gap: 1rem; align-items: center; justify-content: space-between;
+      padding: .6rem .9rem; border-bottom: 1px solid var(--u5-border-control, #555a80);
+      font-size: var(--u5-size-tag, .9rem); flex: none;
+    }
+    .momentos-modal__cerrar {
+      font: inherit; padding: .35rem .9rem; cursor: pointer; min-height: 44px;
+      background: transparent; color: var(--u5-text-primary, #d8d8e8);
+      border: 1px solid var(--u5-border-control, #555a80); border-radius: var(--u5-radius-6, 6px);
+    }
+    .momentos-modal__cerrar:hover { border-color: var(--u5-accent, #8ab4ff); }
+    /* El cuerpo scrollea y la barra no: con diez tarjetas en un móvil, un modal que
+       scrollease entero dejaría el botón de cerrar fuera de la pantalla. */
+    .momentos-modal__cuerpo { padding: .2rem .9rem 1rem; overflow-y: auto; }
+    .momentos__lista { list-style: none; margin: .6rem 0 0; padding: 0; display: grid; gap: .4rem; }
+    .momento {
+      display: flex; gap: .8rem; align-items: center; justify-content: space-between;
+      flex-wrap: wrap;
+      border: 1px solid var(--u5-border-control, #555a80);
+      border-radius: var(--u5-radius-6, 6px); padding: .6rem .8rem;
+    }
+    .momento__info { min-width: 0; flex: 1 1 18rem; }
+    .momento__acto {
+      display: block; font-size: var(--u5-size-tag, .7rem); letter-spacing: .08em;
+      text-transform: uppercase; color: var(--u5-text-quiet, #9a9ab4);
+    }
+    .momento__titulo { display: block; color: var(--u5-text-primary, #fff); margin-top: .1rem; }
+    .momento__ambiente {
+      display: block; margin-top: .25rem; font-size: var(--u5-size-tag, .82rem);
+      color: var(--u5-text-quiet, #9a9ab4);
+    }
+    .momento__anadir {
+      flex: none; font: inherit; font-size: var(--u5-size-tag, .85rem);
+      padding: .4rem .9rem; min-height: 44px; cursor: pointer;
+      background: transparent; color: var(--u5-text-primary, #d8d8e8);
+      border: 1px solid var(--u5-border-control, #555a80); border-radius: var(--u5-radius-6, 6px);
+    }
+    .momento__anadir:hover:not(:disabled) { border-color: var(--u5-accent, #8ab4ff); }
+    .momento__anadir:disabled { opacity: .6; cursor: default; }
+    .momento__estado {
+      flex: none; font-size: var(--u5-size-tag, .82rem); color: var(--u5-text-quiet, #9a9ab4);
+      max-width: 16rem; text-align: right;
+    }
+    .momento__estado--hecho { color: var(--u5-accent, #8ab4ff); }
+    /* ── INSIGNIA DE PROGRESO, ENLACE COMPARTIDO Y COPIAR ────────────────────
+       «Jugado» es una marca TENUE y en la columna de texto, no un chip de acento
+       como `.chip--momento`: aquélla identifica de dónde salió una partida (dato
+       de la partida) y ésta cuenta algo del visitante. Con el mismo peso visual
+       las dos, la tarjeta tendría dos avisos gritando y ninguno diciendo qué es
+       cada uno. */
+    .momento__insignia {
+      display: inline-block; margin-top: .3rem; padding: .05rem .4rem;
+      font-size: var(--u5-size-tag, .72rem); letter-spacing: .04em;
+      color: var(--u5-text-quiet, #9a9ab4);
+      border: 1px solid var(--u5-border-control, #555a80);
+      border-radius: var(--u5-radius-6, 6px);
+    }
+    /* Botón de texto: comparte una tarjeta con «Añadir a mis partidas», que es LA
+       acción. Con el mismo marco que aquél, las dos pedirían lo mismo al ojo. */
+    .momento__copiar {
+      flex: none; font: inherit; font-size: var(--u5-size-tag, .78rem);
+      padding: .4rem .3rem; min-height: 44px; cursor: pointer;
+      background: transparent; color: var(--u5-text-quiet, #9a9ab4);
+      border: 0; border-bottom: 1px dotted var(--u5-border-control, #555a80);
+    }
+    .momento__copiar:hover { color: var(--u5-accent, #8ab4ff); }
+    /* La tarjeta que trajo el enlace compartido. El borde de acento la señala sin
+       moverla de sitio: quien llega por el enlace ya ha hecho scroll hasta ella
+       (`scrollIntoView`) y lo que necesita es reconocerla, no que salte. */
+    .momento--destacado { border-color: var(--u5-accent, #8ab4ff); }
+    .momentos__enlace { margin: .5rem 0 0; color: var(--u5-text-quiet, #9a9ab4); }
+    /* `line-height:1` = el glifo geométrico NO decide el alto de la línea del chip (F9). */
+    .sl-punto { margin-left: .15rem; line-height: 1; }
+    .sl-punto--ciudad { color: #ff8a8a; }
+    .sl-punto--fuera { color: #e0a33e; }
+    .sl-punto--destruido { color: var(--u5-text-quiet, #7E838C); }
+
+    /* MOVIL: la franja arriba y a lo ancho, el boton al final. «Que respire». */
+    @media (max-width: 33rem) {
+      .guardado--tarjeta {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas: "media" "info" "accion";
+        gap: .6rem; padding: .7rem;
+      }
+      .guardado--tarjeta .guardado__accion { justify-self: stretch; text-align: center; }
+      /* 🔴 Y LA CAJA DE ACCIONES TAMBIEN, porque el `justify-self` de arriba ya no le llega:
+         desde que hay dos acciones, el item de la rejilla es la CAJA y el enlace es un hijo
+         suyo. Sin esta linea, en el telefono la columna se encoge al ancho del texto y las
+         dos dianas quedan a la derecha en vez de a lo ancho. */
+      .guardado--tarjeta .guardado__acciones { justify-self: stretch; }
+      /* En una columna la franja ocupa el ancho entero, así que aquí SÍ se reparte:
+         la base fija del escritorio dejaría dos sellos pequeños con un hueco al lado.
+         🔴 Y el `width: auto` VA CON el `flex: 1 1 0`, porque arriba (ficha #241) hay
+         ahora un `width: var(--u5-thumb)` explícito: sin retirarlo aquí, el ancho fijo
+         del escritorio le ganaría al reparto y el teléfono volvería a los dos sellos
+         pequeños con hueco al lado — el defecto que esta misma regla arregló. */
+      .guardado__media { gap: .5rem; }
+      .guardado__media > * { flex: 1 1 0; width: auto; }
+      .guardado__foto, .guardado__mapa { width: 100%; }
+    }
+    /* 🔴 ESTE BLOQUE SE PERDIÓ ENTERO, NINGUNA SONDA LO VIO, Y LA MITAD NO ERA MÍA.
+       Al rediseñar la tarjeta sustituí un RANGO de texto (del comentario de
+       `.guardado--tarjeta` hasta `.tus-datos`) y dentro del rango vivían, sin que yo las
+       mirara, las 11 reglas del visor Y LAS 6 DEL `.replay-modal` — que son de otro carril
+       y llegaron por main. Los dos modales siguieron abriendo, cerrando y enfocando (todo
+       lo que las sondas medían) con los estilos por defecto del navegador: la barra dejó
+       de ser flex y el «Cerrar» se montó encima del título. Sólo se vio en una CAPTURA.
+       ★ El radio de acción de un splice es TODO lo que hay entre las dos anclas, no lo que
+         crees que hay: sustituir por RANGO borra lo que no miraste, y encima borra ajeno.
+       ★ Las sondas de COMPORTAMIENTO son ciegas al ESTILO. Por eso hay ahora dos cosas en
+         `verifica-estados.mjs`: el aserto de GEOMETRÍA de la barra en los DOS modales, y
+         el censo de HUÉRFANAS, que cruza las clases que el bundle pone en el DOM con las
+         reglas de aquí — el que habría enrojecido sin saber nada del visor. */
+    /* ── EL VISOR ───────────────────────────────────────────────────────────────
+       Casi toda la pantalla en movil (el minimapa es 256px reescalado, y ahi es donde
+       mas falta hace el espacio). `image-rendering: pixelated` en el contenido: tanto
+       el mapa como la captura son pixel-art de 1988 y suavizarlos los emborrona.
+
+       El tope de ancho era 46rem y lo sube el PAR DE VISTAS: dos mapas uno al lado del
+       otro necesitan el doble que uno, y a 46rem cada uno caia por debajo de 350 px. No
+       hace falta condicionarlo al par porque `width: auto` en un `<dialog>` es
+       ajustar-al-contenido: una sola ilustracion sigue midiendo LO QUE MIDE — lo unico
+       que cambia para ella es que un lienzo de 768 px ya no se reduce a 710. */
+    .visor {
+      border: 1px solid var(--u5-border-control, #555a80);
+      border-radius: var(--u5-radius-8, 8px); padding: 0;
+      background: var(--u5-surface-base, #10101c); color: var(--u5-text-primary, #d8d8e8);
+      max-width: min(96vw, 72rem); max-height: 92vh; width: auto;
+    }
+    .visor::backdrop { background: rgba(0,0,0,.78); }
+    .visor__barra {
+      display: flex; align-items: center; justify-content: space-between; gap: .8rem;
+      padding: .5rem .8rem; border-bottom: 1px solid var(--u5-border-control, #555a80);
+    }
+    .visor__titulo { font-weight: normal; font-size: var(--u5-size-tag, .9rem); }
+    .visor__cerrar {
+      font: inherit; padding: .35rem .9rem; cursor: pointer; flex: none;
+      background: transparent; color: var(--u5-text-primary, #d8d8e8);
+      border: 1px solid var(--u5-border-control, #555a80); border-radius: var(--u5-radius-6, 6px);
+    }
+    .visor__cerrar:hover { border-color: var(--u5-accent, #8ab4ff); }
+    .visor__cerrar:focus-visible {
+      outline: var(--u5-focus-width, 2px) solid var(--u5-focus-color, #8ab4ff);
+      outline-offset: var(--u5-focus-offset, 2px);
+    }
+    .visor__marco { padding: .8rem; display: grid; place-items: center; background: #000; }
+    .visor__imagen {
+      display: block; max-width: 100%; max-height: calc(92vh - 5rem);
+      width: auto; height: auto; image-rendering: pixelated;
+    }
+    @media (pointer: coarse) { .visor__cerrar { min-height: 44px; padding: .6rem 1rem; } }
+    @media (max-width: 33rem) {
+      .visor { max-width: 98vw; }
+      .visor__marco { padding: .3rem; }
+    }
+
+    .replay-modal {
+      width: min(96vw, 1000px); max-width: 96vw; padding: 0; border: 0;
+      background: var(--u5-surface-base, #10101c); color: var(--u5-text-primary, #d8d8e8);
+      border-radius: var(--u5-radius-8, 8px);
+      box-shadow: 0 18px 48px rgba(0,0,0,.6);
+      /* Ancla de la barrita, que va ENCIMA del juego (ver `--limpia` abajo). */
+      position: relative; overflow: hidden;
+    }
+    .replay-modal::backdrop { background: rgba(0,0,0,.68); }
+    .replay-modal:focus-visible { outline: none; } /* el dialog recibe el foco inicial */
+    .replay-modal__barra {
+      display: flex; gap: 1rem; align-items: center; justify-content: space-between;
+      padding: .6rem .9rem; border-bottom: 1px solid var(--u5-border-control, #555a80);
+      font-size: var(--u5-size-tag, .9rem);
+    }
+    /* ── LA BARRITA QUE SE APARTA ──────────────────────────────────────────────
+       Hermana de `.u5-replay-bar--limpia` (game/src/ui/replay-ui.ts), que hace lo mismo
+       con la barra de transporte DENTRO del iframe, y por la misma peticion: en el
+       popover se viene a ver la partida.
+       🔴 SALE DEL FLUJO. Con `opacity:0` a secas quedaria una franja vacia permanente
+       con su borde encima del juego — apagar el texto dejando su hueco no es limpiar.
+       Va superpuesta, con degradado propio para que el titulo se lea sobre cualquier
+       cosa que el juego este pintando debajo.
+       🔴 `pointer-events:none` MIENTRAS ESTA APAGADA: una barra invisible que sigue
+       capturando clics es peor que una visible, y aqui taparia la fila de arriba del
+       juego. Vuelve a `auto` en el mismo sitio donde vuelve la opacidad.
+       El TECLADO lo resuelve `:focus-within` y no el temporizador de JS: quien llega
+       tabulando tiene que ver el boton mientras lo tenga enfocado, dure lo que dure. */
+    .replay-modal__barra--limpia {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+      border-bottom: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.72), rgba(0,0,0,0));
+      opacity: 0; pointer-events: none; transition: opacity .18s ease;
+    }
+    .replay-modal__barra--limpia.mostrada,
+    .replay-modal__barra--limpia:focus-within { opacity: 1; pointer-events: auto; }
+    @media (prefers-reduced-motion: reduce) {
+      .replay-modal__barra--limpia { transition: none; }
+    }
+    .replay-modal__cerrar {
+      font: inherit; padding: .35rem .9rem; cursor: pointer; min-height: 44px;
+      background: transparent; color: var(--u5-text-primary, #d8d8e8);
+      border: 1px solid var(--u5-border-control, #555a80); border-radius: var(--u5-radius-6, 6px);
+    }
+    .replay-modal__cerrar:hover { border-color: var(--u5-accent, #8ab4ff); }
+    /* 🔴 El aviso de carga ocupa el MISMO hueco que el juego: sin esto el modal
+       daría un salto de tamaño al llegar el iframe, tras ~1,6 s medidos. */
+    .replay-modal__cargando, .replay-modal__juego {
+      display: block; width: 100%; aspect-ratio: 16 / 10; border: 0; margin: 0;
+    }
+    .replay-modal__cargando {
+      display: grid; place-items: center; color: var(--u5-text-quiet, #9a9ab4);
+      font-size: var(--u5-size-tag, .85rem);
+    }
+    .tus-datos { margin: .6rem 0 0; font-size: var(--u5-size-tag, .85rem); }
+    .tus-datos:empty { display: none; }
+    .tus-datos button {
+      font: inherit; font-size: inherit; padding: .35rem .8rem; cursor: pointer;
+      background: transparent; color: var(--u5-text-primary, #d8d8e8);
+      border: 1px solid var(--u5-border-control, #555a80); border-radius: var(--u5-radius-6, 6px);
+    }
+    .tus-datos button:hover { border-color: var(--u5-accent, #8ab4ff); }
+    .tus-datos button:focus-visible, .tus-datos a:focus-visible {
+      outline: var(--u5-focus-width, 2px) solid var(--u5-focus-color, #8ab4ff);
+      outline-offset: var(--u5-focus-offset, 2px);
+    }
+    #estado { margin-top: 1rem; }
+    #estado:empty { display: none; }
+    .est {
+      border: 1px solid var(--u5-border-control, #555a80);
+      border-left-width: 3px;
+      border-radius: var(--u5-radius-8, 8px);
+      padding: 1rem 1.1rem;
+      background: var(--u5-surface-well, #181830);
+    }
+    /* El color del borde izquierdo es LO UNICO que distingue los estados a
+       simple vista; el texto dice el resto. Ambar = el DS si tiene
+       (--u5-status-partial); rojo = el de esta pagina, medido en .err. */
+    .est--listo { border-left-color: var(--u5-accent, #8ab4ff); }
+    .est--parcial { border-left-color: var(--u5-status-partial, #e0a33e); }
+    .est--falta { border-left-color: #ff8a8a; }
+    .est__censo {
+      font-family: var(--u5-font-mono, ui-monospace, Menlo, monospace);
+      font-size: var(--u5-size-tag, .78rem); color: var(--u5-text-quiet, #9a9ab4);
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    .est__titulo { margin: .25rem 0 .5rem; font-size: var(--u5-size-h3, 1.05rem); }
+    .est__cuerpo { margin: .5rem 0; }
+    /* La EVIDENCIA (fichero + sus dos cifras) es dato, no prosa: monoespaciada
+       y sin traducir el nombre del fichero, que es de EA y es literal. */
+    .est__evidencia {
+      font-family: var(--u5-font-mono, ui-monospace, Menlo, monospace);
+      font-size: var(--u5-size-tag, .85rem);
+      margin: .5rem 0; padding: 0; list-style: none;
+    }
+    .est__evidencia li { padding: .15rem 0; }
+    .est__alcance {
+      font-size: var(--u5-size-tag, .78rem); color: var(--u5-text-quiet, #9a9ab4);
+      margin: .6rem 0 0; border-top: 1px solid var(--u5-border-control, #555a80);
+      padding-top: .6rem;
+    }
+    .est__acciones { margin-top: .9rem; display: flex; gap: .8rem; flex-wrap: wrap; align-items: center; }
+    .est__acciones button {
+      padding: .45rem 1rem; font: inherit; font-size: var(--u5-size-tag, .85rem);
+      background: transparent; color: var(--u5-text-primary, #d8d8e8);
+      border: 1px solid var(--u5-border-control, #555a80);
+      border-radius: var(--u5-radius-6, 6px); cursor: pointer;
+    }
+    .est__acciones button:hover { border-color: var(--u5-accent, #8ab4ff); }
+    .est__acciones button:focus-visible,
+    #estado a:focus-visible {
+      outline: var(--u5-focus-width, 2px) solid var(--u5-focus-color, #8ab4ff);
+      outline-offset: var(--u5-focus-offset, 2px);
+    }
+    #play {
+      display: none; margin-top: 1rem; padding: .7rem 1.6rem; font: inherit;
+      background: var(--u5-accent, #2a6); color: var(--u5-accent-ink, #fff);
+      border: 0; border-radius: var(--u5-radius-6, 6px); cursor: pointer;
+    }
+    #play:hover  { background: var(--u5-accent-hover, #2a6); }
+    #play:active { background: var(--u5-accent-press, #2a6); }
+    /* 🔴 El rojo de error NO sale del DS porque el DS NO TIENE PALETA DE ESTADO
+       (solo --u5-status-partial, ambar). Se conserva el de esta pagina y se
+       declara MEDIDO: #ff8a8a sobre la base #0C0D10 = 8.31:1, muy por encima
+       del 4.5 de AA. Si algun dia se firma una paleta de estado, sale de aqui. */
+    .err { color: #ff8a8a; }
+    .legal { font-size: var(--u5-size-tag, .78rem); color: var(--u5-text-quiet, #77778f); margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- 🔴 LA PALABRA «DEMO» SE RETIRA (J4, ALTO de la auditoria). Decia «Esta demo no
+         incluye ningun dato del juego» DOS veces, y «demo» dice a quien llega que esto es
+         una muestra recortada de algo — cuando es el juego entero corriendo con SU copia.
+         Lo que hay que decir es lo que la frase intentaba decir y decia mal: el motor es
+         nuestro, los datos son tuyos. (`demo-byo/` sigue llamandose asi por dentro: eso es
+         el nombre del directorio, no lo que lee el visitante.) -->
+    <h1 data-es="Trae tu copia de Ultima V" data-en="Bring your own copy of Ultima V">Bring your own copy of Ultima V</h1>
+    <!-- 🔴 AUDITORÍA DE CONTENIDOS (08-2026, encargo del usuario): esta página hablaba
+         demasiado de frente. Divulgación progresiva en tres capas: capa 1 visible (qué
+         es y qué hago, en dos frases + la zona de soltar), capa 2 plegada en <details>
+         nativos (los cuatro casos de procedencia), capa 3 en /jugar y /privacidad.
+         NINGUNA afirmación se retira: se pliega o se acorta sin cambiar su alcance. -->
+    <p data-es="OpenU5 trae <strong>el motor, no el juego</strong>: los gráficos, los mapas y el texto los lee de <strong>la copia que tú tienes</strong> — aquí, en tu navegador. No se sube nada, ni a nuestros servidores ni a los de nadie."
+       data-en="OpenU5 ships <strong>the engine, not the game</strong>: it reads the tiles, maps and text from <strong>the copy you own</strong> — right here, in your browser. Nothing is uploaded, to our servers or anyone else's.">
+      OpenU5 ships <strong>the engine, not the game</strong>: it reads the tiles,
+      maps and text from <strong>the copy you own</strong> — right here, in your
+      browser. Nothing is uploaded, to our servers or anyone else's.
+    </p>
+
+    <!-- ── 1 · DE DÓNDE SALE TU COPIA (4 tarjetas de procedencia) ─────────────────
+         🔴 LA BIFURCACION ES EL PUNTO: hoy la pagina soltaba `innoextract` a TODO EL
+         MUNDO en el primer parrafo, incluida la mayoria que ya tiene la carpeta
+         desempaquetada y no necesita esa palabra para nada. Cada tarjeta dice a quien
+         le habla ANTES de decir que hacer, para que tres de cada cuatro personas puedan
+         saltarsela. -->
+    <h2 class="paso" data-es="1 · Encuentra tu copia" data-en="1 · Find your copy">1 · Find your copy</h2>
+    <!-- 🔴 LA CAPA 1 DEL PASO: una sola frase con el criterio de verdad (el CONTENIDO,
+         no el nombre). Los cuatro casos pasan a <details> plegados — quien reconoce el
+         suyo abre uno; los demás no leen nada. Cada <summary> y cada <p> lleva SU par
+         data-es/data-en, y el <details> NO lleva ninguno: un par en el ancestro
+         destruiría a los hijos al conmutar (PAR SEPULTADO, test_paridad_atributos_idioma). -->
+    <p data-es="Vale una instalación, el instalador de GOG o tus disquetes de entonces: lo que se suelta es <b>la carpeta que tenga <code>BRIT.DAT</code> dentro</b>. Abre tu caso:"
+       data-en="An install, the GOG installer or your old floppies all work: what you drop is <b>the folder with <code>BRIT.DAT</code> inside</b>. Open your case:">
+      An install, the GOG installer or your old floppies all work: what you drop
+      is <b>the folder with <code>BRIT.DAT</code> inside</b>. Open your case:
+    </p>
+    <ul class="tarjetas">
+      <li>
+        <details>
+          <summary data-es="<b>Tengo la carpeta</b>" data-en="<b>I have the folder</b>"><b>I have the folder</b></summary>
+          <p data-es="Una instalación, o algo que ya desempaquetaste. Si dentro ves <code>BRIT.DAT</code> y <code>TILES.16</code>, ya está: baja al paso 2."
+             data-en="An installed copy, or something you already unpacked. If you can see <code>BRIT.DAT</code> and <code>TILES.16</code> inside, you're done here: go to step 2.">
+            An installed copy, or something you already unpacked. If you can see
+            <code>BRIT.DAT</code> and <code>TILES.16</code> inside, you're done
+            here: go to step 2.
+          </p>
+        </details>
+      </li>
+      <!-- 🔴 «la carpeta que aparece» NO SE DEJA SIN NOMBRAR, y ésta es la mitad del
+           desajuste que arreglamos: la zona de soltar pide una carpeta «ultima5/» y quien
+           viene de GOG no tiene ninguna carpeta que se llame así. Al desempaquetar el
+           instalador los ficheros salen colgando de un directorio propio del instalador
+           (suele ser <code>app/</code>), y esa persona se queda comparando nombres en vez
+           de soltar lo que ya tiene. La otra mitad está en la zona de soltar, y las dos
+           dicen lo MISMO: el nombre da igual, lo que se mira es el CONTENIDO. -->
+      <li>
+        <details>
+          <summary data-es="<b>Tengo el instalador de GOG</b>" data-en="<b>I have the GOG installer</b>"><b>I have the GOG installer</b></summary>
+          <p data-es="Es un solo <code>.exe</code>, así que los ficheros hay que sacarlos de dentro. En Windows, ejecútalo y usa la carpeta que crea. En macOS o Linux, desempaquétalo con <code>innoextract</code>: los ficheros del juego quedan dentro de la carpeta que crea, normalmente <code>app/</code>. <small>Da igual cómo se llame — busca la que tenga <code>BRIT.DAT</code> dentro y suelta ésa.</small>"
+             data-en="It's a single <code>.exe</code>, so the files have to come out of it first. On Windows, run it and use the folder it creates. On macOS or Linux, unpack it with <code>innoextract</code>: the game files end up inside the folder it creates, usually <code>app/</code>. <small>The name doesn't matter — find the one with <code>BRIT.DAT</code> inside and drop that one.</small>">
+            It's a single <code>.exe</code>, so the files have to come out of it
+            first. On Windows, run it and use the folder it creates. On macOS or
+            Linux, unpack it with <code>innoextract</code>: the game files end up
+            inside the folder it creates, usually <code>app/</code>.
+            <small>The name doesn't matter — find the one with <code>BRIT.DAT</code>
+            inside and drop that one.</small>
+          </p>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary data-es="<b>Tengo los disquetes</b>" data-en="<b>I have the floppies</b>"><b>I have the floppies</b></summary>
+          <p data-es="Necesitarás una disquetera, y conviene saber que el soporte magnético de finales de los ochenta no siempre ha sobrevivido. Copia el contenido de <b>todos</b> los discos a una misma carpeta. Si alguno no se deja leer, volver a comprarlo es la vía práctica."
+             data-en="You'll need a drive, and it's worth knowing that magnetic media from the late eighties hasn't always survived. Copy the contents of <b>every</b> disk into a single folder. If one won't read, buying it again is the practical route.">
+            You'll need a drive, and it's worth knowing that magnetic media from
+            the late eighties hasn't always survived. Copy the contents of
+            <b>every</b> disk into a single folder. If one won't read, buying it
+            again is the practical route.
+          </p>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary data-es="<b>No tengo el juego</b>" data-en="<b>I don't have the game</b>"><b>I don't have the game</b></summary>
+          <p data-es="Se sigue vendiendo: el pack <a href=&quot;https://www.gog.com/en/game/ultima_456&quot; rel=&quot;noopener&quot;>Ultima 4+5+6 de GOG</a> incluye <em>Ultima V</em> y va sin DRM. <small>No ganamos nada con este enlace y no tenemos relación con GOG ni con Electronic Arts. Está aquí porque es la única vía que conocemos que funciona y es legítima.</small>"
+             data-en="It's still sold: the <a href=&quot;https://www.gog.com/en/game/ultima_456&quot; rel=&quot;noopener&quot;>GOG Ultima 4+5+6 pack</a> includes <em>Ultima V</em> and is DRM-free. <small>We earn nothing from this link and have no relationship with GOG or Electronic Arts. It's here because it's the only route we know of that works and is legitimate.</small>">
+            It's still sold: the
+            <a href="https://www.gog.com/en/game/ultima_456" rel="noopener">GOG Ultima 4+5+6 pack</a>
+            includes <em>Ultima V</em> and is DRM-free.
+            <small>We earn nothing from this link and have no relationship with GOG
+            or Electronic Arts. It's here because it's the only route we know of that
+            works and is legitimate.</small>
+          </p>
+        </details>
+      </li>
+    </ul>
+    <p class="nota-no-incluido"
+       data-es="<b>OpenU5 no distribuye, no aloja y no redistribuye datos del juego.</b> Podemos decirte dónde se vende; no podemos darte los ficheros."
+       data-en="<b>OpenU5 does not bundle, host or redistribute game data.</b> We can tell you where it's sold; we can't give you the files.">
+      <b>OpenU5 does not bundle, host or redistribute game data.</b> We can tell
+      you where it's sold; we can't give you the files.
+    </p>
+
+    <h2 class="paso" data-es="2 · Entrégasela al navegador" data-en="2 · Hand it to the browser">2 · Hand it to the browser</h2>
+    <!-- 🔴 El `<input id="picker">` va FUERA del nodo con data-es/data-en: el aplicador
+         reescribe `innerHTML`, y eso DESTRUIRÍA el input (y sus listeners) en cada cambio
+         de idioma. Sólo el rótulo es bilingüe. -->
+    <!-- 🔴 EL NOMBRE DE LA CARPETA NO SE EXIGE PORQUE NO SE MIRA. Esto decía «tu carpeta
+         ultima5/» a secas, y era una condición inventada por el cartel: el cargador recibe
+         una LISTA DE FICHEROS y los busca por su nombre de EA (`REQUIRED_FILES` del
+         extractor); el nombre del directorio que los contiene no se lee en ningún sitio.
+         Quien viene de GOG tiene `app/`, quien copió disquetes tiene lo que decidiera, y
+         los dos leían un requisito que no existe justo en el paso donde hay que actuar.
+         Se nombran las DOS formas frecuentes y se dice el criterio de verdad —lo de
+         dentro—, que además es el que aguanta cualquier tercera forma que aparezca. -->
+    <div id="drop" tabindex="0" role="button"
+         data-es-aria="Suelta aquí la carpeta de tu copia de Ultima V" data-en-aria="Drop the folder with your copy of Ultima V here"
+         aria-label="Drop the folder with your copy of Ultima V here">
+      <span data-es="Suelta aquí la carpeta de tu Ultima V<br /><small>se llame <code>ultima5/</code>, <code>app/</code> o como sea: la que tenga <code>BRIT.DAT</code> dentro · o pulsa para elegirla</small>"
+            data-en="Drop the folder with your Ultima V here<br /><small>be it <code>ultima5/</code>, <code>app/</code> or anything else: the one with <code>BRIT.DAT</code> inside · or click to pick it</small>">
+        Drop the folder with your Ultima V here<br />
+        <small>be it <code>ultima5/</code>, <code>app/</code> or anything else:
+        the one with <code>BRIT.DAT</code> inside · or click to pick it</small>
+      </span>
+      <input id="picker" type="file" webkitdirectory multiple hidden />
+      <!-- 🔴 SEGUNDO INPUT, Y NO ES UN DUPLICADO: `webkitdirectory` convierte al de
+           arriba en un selector de CARPETAS, y con ese atributo puesto NO se puede
+           elegir un fichero suelto. Sin este segundo input el `.zip` solo seria
+           alcanzable arrastrando — que es justo lo que un telefono no puede hacer, o
+           sea que la via del zip no serviria para el unico caso que existe para
+           resolver. Va tambien FUERA del nodo bilingue, por el aplicador de idioma. -->
+      <input id="picker-zip" type="file" accept=".zip,application/zip" hidden />
+    </div>
+    <!-- El boton del zip vive FUERA del dropzone: dentro, su clic burbujearia al
+         listener del `div` y abriria ademas el selector de carpetas. -->
+    <p id="via-zip" class="via-zip"></p>
+    <!-- 🔴 Los cinco estados de carga. `role="status"` + `aria-live="polite"`: quien usa
+         lector de pantalla se entera de que faltan ficheros SIN tener que ir a buscarlo,
+         y `polite` no interrumpe. Va vacio en el HTML servido: lo llena `main.ts`. -->
+    <div id="estado" role="status" aria-live="polite"></div>
+    <div id="log"></div>
+    <button id="play" data-es="▶ Continuar el viaje" data-en="▶ Journey Onward">▶ Journey Onward</button>
+
+    <!-- ── TUS PARTIDAS Y REPETICIONES (bloque 2d) ──────────────────────────────────
+         Lo llena `partidas.ts` con lo que el JUEGO guardó en este navegador: las
+         partidas viven en `localStorage` (`u5clone:saves`) y las repeticiones en
+         IndexedDB (`u5-replay`), los dos del MISMO origen que esta página — el
+         ensamblador deja la landing en /byo.html y el juego en /play.html.
+         🔴 Va vacío en el HTML servido y SIN rótulo propio aquí: el `<h3>` de cada
+         sección lo pinta el JS, porque si el título viviera en un nodo bilingüe y la
+         lista fuera hija suya, el aplicador de idioma destruiría los enlaces en cada
+         cambio. `aria-live="polite"`: la lista aparece después de leer el almacén.
+         🔴 Y NO se anuncia como «3 · …»: no es un paso del embudo. Quien llega por
+         primera vez no tiene partidas y no debe leer que le falta un paso. -->
+    <!-- ── MOMENTOS LEGENDARIOS ─────────────────────────────────────────────────────
+         El botón que abre la galería. Lo pinta `momentos.ts`, así que va FUERA de todo
+         nodo bilingüe por la misma razón que los demás controles de esta página: el
+         aplicador de idioma reescribe `innerHTML` y se llevaría el botón por delante.
+         🔴 Va ANTES de la lista de partidas y no después: lo que la galería hace es
+         AÑADIR a esa lista, y el orden de lectura tiene que ser el de la acción y luego
+         su efecto. Quien añade un momento ve aparecer la tarjeta justo debajo. -->
+    <p id="momentos" class="momentos"></p>
+
+    <div id="partidas" role="status" aria-live="polite"></div>
+
+    <!-- ── TABLA DE RÉCORDS ─────────────────────────────────────────────────────────
+         La pinta `records.ts`, y SÓLO si este despliegue tiene endpoints: sin ellos el
+         contenedor se queda vacío y la página es exactamente la de antes. Por eso está
+         vacío en el HTML y no lleva ni título ni texto de carga — un cartel «cargando
+         récords» que no llegara nunca sería el control muerto que esta pantalla prohíbe.
+         Va DESPUÉS de las partidas por el mismo orden de lectura que los momentos: primero
+         lo tuyo, y luego lo que se compara con lo de los demás. -->
+    <div id="records"></div>
+
+    <!-- ── TUS DATOS ────────────────────────────────────────────────────────────────
+         🔴 SOLO SE PROMETE LO QUE EL CODIGO HACE. «Se lee aquí, se queda aquí, y lo
+         puedes borrar aquí» son tres afirmaciones y las tres tienen respaldo:
+         `extractToCache` escribe en Cache Storage de este origen, nada sale por red, y
+         `clearExtraction()` borra la cache entera. La tercera es la que obliga a poner un
+         BOTON: sin el, «lo puedes borrar» seria una frase sobre una capacidad que el
+         visitante no puede ejercer — la misma clase que la pagina de privacidad que
+         existia y no enlazaba nadie.
+         🔴 Y NO SE PINTAN TOGGLES DE PERMISOS AQUI. La propuesta los dibuja en linea,
+         pero los de la portada son `disabled` (decorativos) y el control de verdad vive en
+         el panel de consentimiento. Duplicarlos daria DOS mandos para un mismo ajuste, con
+         uno de los dos mintiendo. Se enlaza el panel real, que es lo que ya hace el pie. -->
+    <h2 class="paso" data-es="Tus datos" data-en="Your data">Your data</h2>
+    <!-- 🔴 AUDITORÍA DE CONTENIDOS: de tres frases a una. Las CUATRO afirmaciones con
+         respaldo se conservan (se lee en local · se queda en el almacén del sitio · se
+         puede borrar · nada se transmite nunca); el detalle de dónde vive cada cosa está
+         en /jugar (Paso 3) y /privacidad, enlazadas en el pie. -->
+    <p data-es="Se lee aquí, se queda aquí, y lo puedes borrar aquí: ni tu copia ni tus partidas se envían nunca."
+       data-en="Read here, kept here, erasable here: neither your copy nor your saves are ever sent anywhere.">
+      Read here, kept here, erasable here: neither your copy nor your saves are
+      ever sent anywhere.
+    </p>
+    <!-- Lo pinta `main.ts`: lleva un botón, así que fuera de todo nodo bilingüe. -->
+    <p id="tus-datos" class="tus-datos"></p>
+    <!-- 🔴 El ancla `data-openu5-consent` va DENTRO de los dos atributos: el aplicador
+         reescribe `innerHTML`, así que un `<a>` hermano se perdería al cambiar de idioma
+         y nadie podría revocar el consentimiento (obligación UE). -->
+    <!-- 🔴 SON DOS ENLACES y no es cosmética: el panel deja CAMBIAR los permisos, la
+         página /privacidad deja LEER qué sale y qué no. Con sólo el panel esa página
+         quedaba publicada y sin un enlace entrante en todo el sitio salvo /jugar
+         (medido el 07-08 sobre las 7 páginas vivas). Aquí el href SÍ puede depender del
+         idioma porque viaja DENTRO de los atributos, que es lo que reescribe el aplicador. -->
+    <p class="legal" data-es="Ultima es una marca registrada de Electronic Arts. Este proyecto es una reimplementación independiente hecha por aficionados, sin afiliación ni respaldo de EA. Tus ficheros del juego nunca salen de tu máquina. <a href=&quot;/privacidad&quot;>Privacidad y datos</a> · <a href=&quot;#&quot; data-openu5-consent>Mis permisos</a>." data-en="Ultima is a registered trademark of Electronic Arts. This project is an independent fan reimplementation, not affiliated with or endorsed by EA. Your game files never leave your machine. <a href=&quot;/en/privacy&quot;>Privacy &amp;amp; data</a> · <a href=&quot;#&quot; data-openu5-consent>My permissions</a>.">
+      Ultima is a registered trademark of Electronic Arts. This project is an
+      independent fan reimplementation, not affiliated with or endorsed by EA.
+      Your game files never leave your machine.
+      <a href="/en/privacy">Privacy &amp; data</a> ·
+      <a href="#" data-openu5-consent>My permissions</a>.
+    </p>
+  </main>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

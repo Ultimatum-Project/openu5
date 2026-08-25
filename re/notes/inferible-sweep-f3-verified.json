@@ -1,0 +1,197 @@
+{
+ "task": "#39 inferible-sweep fase3 (kernel)",
+ "note": "re/notes/inferible-sweep-f3.md",
+ "verified": [
+  {
+   "file": "ULTIMA.EXE",
+   "off": 5512,
+   "role": "keyword_lookup_ci (string table, case-insensitive)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 5705,
+   "role": "dos_read_file (INT21 AH=3Fh wrapper)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 7259,
+   "role": "clamp_normalize_rect (40x25 grid, order coords)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 11220,
+   "role": "tile_flag_bit (passability bitmap)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 11310,
+   "role": "tile_classifier_water",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 11340,
+   "role": "tile_property_query_dispatch (11-case jump table)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 11926,
+   "role": "set_wind + draw_wind_status",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 14082,
+   "role": "find_actor_at / is_occupied",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 14796,
+   "role": "set_map_tile (town/keep override)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 14964,
+   "role": "set_actor_record (sprite slot 0x5C5A)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 15262,
+   "role": "read_decimal_input (signed keyboard number)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 16112,
+   "role": "add_byte_clamped_ceiling (saturating add)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 16212,
+   "role": "sub_word_clamped_floor0 (saturating sub)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 16238,
+   "role": "test_tile_opacity (LOS bitmap 0x6a14; projectile stop)",
+   "inference": "CONFIRMED",
+   "coverage": "PARCIAL"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 19946,
+   "role": "draw_char_boxed (Ztats render)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 20284,
+   "role": "box_border_painter (leaf)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 28446,
+   "role": "stristr (conversation keyword matcher)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 29098,
+   "role": "clock_driver_notify (overworld tick -> .DRV)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 29424,
+   "role": "dos_set_int_vector (thunk)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 29429,
+   "role": "dos_get_int_vector (thunk)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 29434,
+   "role": "install_int_handler (getvect+setvect)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 29461,
+   "role": "io_buffer_cache_sweep (LRU housekeeping)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 29567,
+   "role": "data_file_open (random-access .DAT)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 29658,
+   "role": "data_file_lseek (paragraph->byte, INT21 AH=42h)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 30369,
+   "role": "reset_file_io_state (helper)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  },
+  {
+   "file": "ULTIMA.EXE",
+   "off": 30380,
+   "role": "loader_farcall_trampoline (preserve-flags)",
+   "inference": "CONFIRMED",
+   "coverage": "CUBIERTA"
+  }
+ ],
+ "summary": {
+  "total": 26,
+  "confirmed": 26,
+  "refuted": 0,
+  "coverage": {
+   "CUBIERTA": 25,
+   "PARCIAL": 1
+  }
+ }
+}

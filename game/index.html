@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- ZOOM PERMITIDO (auditoría móvil 2026-07-25): se retiran `maximum-scale=1.0` y
+         `user-scalable=no`. El layout escala hasta 320 px de ancho y ahí los glifos de la
+         ficha de personaje/consola quedan a 9-11 px: sin pinch-zoom no hay forma de
+         leerlos (y bloquear el zoom es, además, una barrera de accesibilidad). Los dos
+         motivos históricos para prohibirlo ya están cubiertos por otra vía:
+         `touch-action:manipulation` en html/body mata el doble-tap-zoom accidental y el
+         retardo de 300 ms. `viewport-fit=cover` se conserva (safe-area). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Ultima V — Warriors of Destiny</title>
+    <!-- Instalable en el móvil (Añadir a inicio) en modo standalone, sin barra del navegador. -->
+    <meta name="theme-color" content="#000000" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Ultima V" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23000'/%3E%3Ctext x='8' y='12.5' font-size='12' font-family='serif' font-weight='bold' text-anchor='middle' fill='%23ffd75e'%3EV%3C/text%3E%3C/svg%3E" />
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23000'/%3E%3Ctext x='90' y='140' font-size='140' font-family='serif' font-weight='bold' text-anchor='middle' fill='%23ffd75e'%3EV%3C/text%3E%3C/svg%3E" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      /* ── LA FRANJA DE SEGURIDAD, EN DOS VARIABLES ──────────────────────────────────
+         `env(safe-area-inset-*)` sólo lo publica un teléfono de verdad: Chromium lo da
+         SIEMPRE 0, y por eso el defecto del apaisado (la muesca comiéndose el deck) vivió
+         sin que ningún arnés pudiera verlo — el propio candado de estas normas
+         (`tests/mobile-viewport-css.test.ts`) declara que del inset «sólo se puede exigir
+         que ESTÉ».
+         Pasarlo por una custom property con `env()` de valor por defecto no cambia una
+         coma de lo que hace un navegador real, y a cambio lo vuelve MEDIBLE: el arnés
+         escribe `--u5-safe-l` en el `<html>` y quien recalcula es la cascada REAL, con
+         las reglas de verdad — no una réplica que pueda derivar de ellas. El fallback
+         `0px` cubre a quien no entienda `env()`. */
+      :root {
+        --u5-safe-l: env(safe-area-inset-left, 0px);
+        --u5-safe-r: env(safe-area-inset-right, 0px);
+      }
+      html, body {
+        /* ALTO REAL DEL VIEWPORT (auditoría móvil 2026-07-25, ítem «dvh»): en Safari iOS
+           fuera del modo standalone, `100%` resuelve contra el viewport GRANDE (el de la
+           barra del navegador RETRAÍDA), así que el `bottom:0` del deck cae DEBAJO de la
+           barra y `overflow:hidden` impide alcanzarlo: la fila útil (Space/⏎/Esc) nacía
+           TAPADA en la primera carga — el caso mayoritario del enlace publicado, porque
+           la barra siempre está desplegada al abrir un enlace. `dvh` = alto DINÁMICO (el
+           que hay ahora mismo, barra incluida) y se re-resuelve cuando la barra cambia.
+           La cascada deja `100%` como fallback en navegadores sin dvh (declarar la
+           segunda línea NUNCA es peor: si no entiende la unidad, la ignora). */
+        height: 100%; height: 100dvh;
+        background: #000; overflow: hidden;
+        /* Móvil: sin rebote/pull-to-refresh; `manipulation` mata el doble-tap-zoom y el
+           delay de 300ms pero DEJA hacer scroll táctil en los paneles (diálogo/Ztats/save). */
+        overscroll-behavior: none;
+        touch-action: manipulation;
+      }
+      #app {
+        /* Mismo par que html/body (ítem dvh), y si él se pasa de alto el juego se pinta
+           parcialmente bajo la barra del navegador.
+           ⚠ CORREGIDO 03-08: aquí ponía que «#app es el contenedor que MIDE la piel
+           (`container.client*` en skin.ts)». **Ya no**: la piel monta su propio
+           `div.portrait-skin` DENTRO de #app y mide ÉSE — que, al ser `height:100%` en un
+           padre de altura indefinida, queda del tamaño de su CONTENIDO (el canvas). Ese
+           comentario rancio hizo que se midiera #app creyendo que era `container`, y con esa
+           medición se retiró —y se re-afirmó— un diagnóstico entero.
+           Lo que #app SÍ es, y por eso importa: **el único alto que NO sigue al canvas**, y
+           por tanto el ancla del tope del mapa (`skin.ts` → `opts.viewportH`). */
+        height: 100%; height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      /* El canvas del juego usa el puntero para tap-tile (no hace scroll): sin gestos del
+         navegador encima. Los paneles DOM conservan su pan-y por herencia de <body>. */
+      canvas { image-rendering: pixelated; touch-action: none; }
+      /* …salvo el PINCH en táctil (auditoría 2026-07-25, ítem del zoom): con
+         `touch-action:none` el meta liberado no serviría de nada sobre el juego, que es
+         justo donde están los glifos de 9-11 px (ficha de personaje, consola). Se pasa a
+         `pinch-zoom`, que autoriza EXCLUSIVAMENTE el gesto de dos dedos: para UN dedo el
+         navegador sigue sin quedarse el gesto (ni pan ni doble-tap), o sea que el
+         tap-a-caminar y el arrastre de scrollback de la consola siguen recibiendo sus
+         pointerevents exactamente igual. Escritorio: la clase u5-touch no existe. */
+      html.u5-touch canvas { touch-action: pinch-zoom; }
+      /* Móvil en VERTICAL: ancla el juego ARRIBA y reserva la banda de controles (alto real
+         medido por touch.ts en --u5-touch-reserve) para que la botonera no solape el panel
+         del juego. En apaisado la botonera va a los lados sobre el margen negro (sin reserva).
+         La clase la pone touch.ts (funciona también con ?touch=1 en escritorio). */
+      /* SAFE-AREA SUPERIOR (auditoría móvil 2026-07-25): `env(safe-area-inset-top)` no
+         aparecía en el repo pese a `viewport-fit=cover` + `apple-mobile-web-app-status-bar-
+         style: black-translucent` — o sea que en la PWA instalada (y en cualquier vista a
+         pantalla completa) el canvas NACÍA bajo la barra de estado: la fila superior del
+         juego quedaba debajo de la hora y la batería. El deck ya se auto-insetaba por
+         izquierda/derecha/abajo; lo que faltaba era el borde de ARRIBA, y ése es del
+         CONTENEDOR DEL JUEGO, no del deck. El inset va en #app (padding) porque es la caja
+         que mide la piel para escalar el canvas; el deck es `position:absolute` contra la
+         PADDING BOX de #app, así que su `bottom:0` / `top:0` siguen pegados al borde real
+         de la pantalla y NO hay doble conteo con sus propios insets. */
+      @media (orientation: portrait) {
+        html.u5-touch #app {
+          align-items: flex-start;
+          padding-top: env(safe-area-inset-top);
+          padding-bottom: var(--u5-touch-reserve, 0px);
+        }
+      }
+      #error {
+        color: #ff8080;
+        font: 15px "Courier New", monospace;
+        white-space: pre-wrap;
+        padding: 24px;
+      }
+      /* (Los bloques .dialogue- / .ztats- / .hud- de la piel dev DOM se barrieron al
+         jubilarla — auditoría de calidad D4. El panel de partidas conserva su título.)
+         OJO: aquí los tres prefijos iban separados por «asterisco + barra», secuencia que
+         CIERRA el comentario en la primera ocurrencia; el resto de la frase pasaba a ser
+         SELECTOR y se llevaba por delante la regla siguiente (.save-title quedaba sin
+         estilo). Es el mismo desastre que mató .touch-controls en 6f05b279 y que la nota
+         de más abajo advierte. Candado: tests/mobile-viewport-css.test.ts. */
+      .save-title {
+        font-size: 15px; color: #d8c98a; text-align: center; letter-spacing: 2px;
+        border-bottom: 1px solid #6b5a2a; padding-bottom: 6px;
+      }
+
+      /* ---- Save panel ---- */
+      .save-panel {
+        position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+        width: 420px; max-height: 82%; display: flex; flex-direction: column; gap: 10px;
+        background: rgba(12, 8, 4, 0.95); border: 2px solid #6b5a2a; border-radius: 6px;
+        padding: 14px; font: 13px "Courier New", monospace; color: #e8dcae;
+      }
+      /* F4 (auditoría UX) — HUECO VERTICAL MUERTO ENTRE LA LISTA Y EL CAMPO DE NOMBRE.
+         Eran las DOS declaraciones de esta línea tirando a la vez: `flex: 1` reparte a la
+         lista todo el alto sobrante del panel, y `min-height: 120px` le pone un suelo aunque
+         no haya nada que enseñar. Con una o dos partidas la lista medía 120 px de los que
+         sobraban 60, y el campo de nombre quedaba flotando al fondo separado de su lista.
+         Ahora la lista mide LO QUE OCUPAN SUS FILAS (`flex: 0 1 auto`, encoge si hace falta)
+         y sigue con su techo y su scroll para cuando haya muchas. El caso vacío no pierde
+         cuerpo: el padding de `.save-empty` es quien lo da, y es el único que lo necesita. */
+      .save-list { flex: 0 1 auto; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; min-height: 0; max-height: 340px; }
+      .save-empty { color: #777; font-style: italic; text-align: center; padding: 20px 0; }
+      .save-slot { display: flex; align-items: center; gap: 8px; border: 1px solid #4a3d1e; border-radius: 4px; padding: 6px 8px; background: rgba(0,0,0,0.3); }
+      .save-slot-info { flex: 1; min-width: 0; }
+      /* MINIATURA de la partida (96×60 = 320×200 exacto, sin deformar el píxel; misma
+         geometría que la lista de repeticiones). `box-sizing` EN LA BASE y no sólo en el
+         hueco: el borde de 1px sumaría POR FUERA en el <img> y las dos variantes de la
+         misma columna medirían distinto — la lista mixta bailaría según qué fila tenga foto.
+         `pixelated` porque esto es pixel art reducido: con el suavizado del navegador el
+         fotograma de 1988 sale como un borrón. */
+      /* 🔴 `flex: none` Y NO `flex: 0 0 96px`, MEDIDO: la base de `flex` va sobre el EJE
+         PRINCIPAL, y el eje principal de este slot CAMBIA con la piel — en la fiel,
+         `[data-shell-skin="faithful"] .save-slot` es `flex-direction: column` (abajo, por
+         el afinado C5 del marco #23). Con la base en 96px la miniatura salía 96×96 en la
+         piel fiel: la base ganaba al `height: 60px` por ser la del eje principal. Se midió
+         96×96 en las tres filas antes de escribir esto — el aspecto 320×200 se perdía y la
+         lista crecía tanto que activaba su propio scroll. `flex: none` no toca ningún eje y
+         deja mandar al par width/height, que sí es direccional-agnóstico. */
+      .save-shot {
+        width: 96px; height: 60px; flex: none; box-sizing: border-box;
+        border: 1px solid #6b5a2a; border-radius: 2px; background: #0b0803;
+        image-rendering: pixelated; object-fit: cover;
+      }
+      /* En la piel fiel el slot es una COLUMNA, así que la miniatura se apila ARRIBA en vez
+         de ir al lado: `flex-start` la deja en su esquina a su tamaño en vez de estirarla
+         al ancho del slot (`align-items: stretch` de la regla de la columna). */
+      [data-shell-skin="faithful"] .save-shot { align-self: flex-start; }
+      .save-shot-vacia {
+        display: flex; align-items: center; justify-content: center; text-align: center;
+        color: #7a6a3a; font-size: 9px; line-height: 1.15; padding: 2px;
+      }
+      [data-shell-skin="shader"] .save-shot { border-color: rgba(120,135,255,.45); background: #0a0c1a; }
+      [data-shell-skin="shader"] .save-shot-vacia { color: #9aa4cf; }
+      [data-shell-skin="faithful"] .save-shot { border-color: #fff; border-radius: 0; background: #000; }
+      [data-shell-skin="faithful"] .save-shot-vacia { color: #8a8ac8; }
+      .save-slot-name { color: #ffe9a8; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .save-slot-meta { color: #8a7a4a; font-size: 11px; }
+      .save-slot-actions { display: flex; gap: 4px; }
+      .save-new { display: flex; gap: 6px; }
+      .save-name { flex: 1; background: #1a1408; color: #ffe9a8; border: 1px solid #6b5a2a; border-radius: 3px; font: 13px "Courier New", monospace; padding: 4px 8px; outline: none; }
+      /* 🔴 `wrap` EN LA BASE Y NO SÓLO EN TÁCTIL (F4). Esta fila lleva CUATRO botones
+         (Exportar · Exportar .GAM · Importar · Cerrar) y con la fuente 8×8 de la piel fiel
+         cada uno pide ~118 px: 472 px + huecos contra los 364 px de ancho útil que deja el
+         marco en un panel de 420. Con `nowrap` los dos últimos se salían POR LA DERECHA —
+         medido: «Importar» acababa en x=738 y «Cerrar» en x=846, contra un filo de marco en
+         732 y un borde de panel en 760. La regla `html.u5-touch` de más abajo ya envolvía
+         estas mismas filas por esta misma razón; lo que faltaba era que el escritorio no
+         fuese la excepción. (El defecto es anterior a este carril — la auditoría lo reportó
+         con tres botones — pero el cuarto lo hace inevitable en vez de dependiente del
+         idioma.) */
+      .save-io { display: flex; flex-wrap: wrap; gap: 6px; }
+      .save-btn { background: #2c2313; color: #d8c98a; border: 1px solid #6b5a2a; border-radius: 3px; font: 12px "Courier New", monospace; padding: 4px 10px; cursor: pointer; }
+      .save-btn:hover { background: #463a1e; }
+      .save-btn-delete:hover { background: #5a2a2a; }
+
+      /* ---- Journal panel ---- */
+      .journal-panel {
+        position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+        width: 380px; max-height: 82%; display: flex; flex-direction: column; gap: 8px;
+        background: rgba(12, 8, 4, 0.94); border: 2px solid #6b5a2a; border-radius: 6px;
+        padding: 12px; font: 13px "Courier New", monospace; color: #e8dcae;
+      }
+      .journal-title { font-size: 15px; color: #d8c98a; text-align: center; letter-spacing: 2px; border-bottom: 1px solid #6b5a2a; padding-bottom: 6px; }
+      .journal-filter { background: #1a1408; color: #ffe9a8; border: 1px solid #6b5a2a; border-radius: 3px; font: 13px "Courier New", monospace; padding: 4px 8px; outline: none; }
+      .journal-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; min-height: 100px; }
+      .journal-entry { border: 1px solid #4a3d1e; border-radius: 4px; padding: 6px 8px; background: rgba(0,0,0,0.3); }
+      .journal-meta { color: #8a7a4a; font-size: 11px; margin-bottom: 3px; display: flex; gap: 8px; }
+      .journal-npc { color: #9ad; }
+      .journal-text { line-height: 1.4; }
+      .journal-empty { color: #777; font-style: italic; text-align: center; padding: 16px 0; }
+
+      /* ---- Minimap panel ---- */
+      .minimap-panel {
+        position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+        display: flex; flex-direction: column; gap: 8px; align-items: center;
+        background: rgba(12, 8, 4, 0.95); border: 2px solid #6b5a2a; border-radius: 6px;
+        padding: 14px; font: 13px "Courier New", monospace; color: #e8dcae; z-index: 30;
+      }
+      .minimap-title { font-size: 14px; color: #d8c98a; letter-spacing: 2px; }
+      .minimap-frame { border: 1px solid #4a3d1e; background: #000; }
+      .minimap-canvas { image-rendering: pixelated; display: block; }
+
+      /* ===== SHELL VECTOR (B2) — re-vestido de los paneles bajo el shell vector =====
+         Veredicto del usuario 2026-07-19: el lenguaje vector B2 (maqueta shell/save-restyle)
+         es el look GENERAL del shell. `data-shell-skin` vive en <html> (shell/theme.ts), así
+         que estos paneles (Partidas/Diario/Minimapa) keyean por él igual que el drawer. Bajo
+         las dos pieles de juego el atributo es "shader" (theme.ts SHELL_GENERAL_VECTOR); bajo
+         la piel dev cae al look base de arriba. Tokens calcados de shell/theme.ts §m5. */
+      [data-shell-skin="shader"] .save-panel,
+      [data-shell-skin="shader"] .journal-panel,
+      [data-shell-skin="shader"] .minimap-panel {
+        background: linear-gradient(180deg, #12142a 0%, #0b0d1c 100%);
+        border: 3px solid transparent; border-radius: 16px; color: #eaf0ff;
+        box-shadow: 0 0 0 2px rgba(90,90,255,.55) inset, 0 0 0 1px rgba(255,255,255,.5), 0 14px 40px #000a;
+        font-family: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      [data-shell-skin="shader"] .save-title,
+      [data-shell-skin="shader"] .journal-title,
+      [data-shell-skin="shader"] .minimap-title {
+        color: #fff; letter-spacing: .1em; border-bottom-color: rgba(120,120,255,.28);
+      }
+      [data-shell-skin="shader"] .save-slot,
+      [data-shell-skin="shader"] .journal-entry {
+        background: rgba(70,80,200,.10); border: 1px solid rgba(110,120,255,.22); border-radius: 10px;
+      }
+      [data-shell-skin="shader"] .save-slot:hover { background: rgba(80,95,235,.20); }
+      [data-shell-skin="shader"] .save-slot-name { color: #fff; }
+      [data-shell-skin="shader"] .save-slot-meta,
+      [data-shell-skin="shader"] .journal-meta { color: #9aa6e0; }
+      [data-shell-skin="shader"] .journal-npc { color: #aab8ff; }
+      [data-shell-skin="shader"] .save-empty,
+      [data-shell-skin="shader"] .journal-empty { color: #7078a8; }
+      [data-shell-skin="shader"] .save-btn {
+        background: rgba(70,80,200,.16); border: 1px solid rgba(110,120,255,.35); border-radius: 9px;
+        color: #dfe6ff; font-family: inherit;
+      }
+      [data-shell-skin="shader"] .save-btn:hover { background: rgba(80,95,235,.4); }
+      [data-shell-skin="shader"] .save-btn-delete:hover { background: rgba(200,70,90,.45); }
+      [data-shell-skin="shader"] .save-name,
+      [data-shell-skin="shader"] .journal-filter {
+        background: #0b0d1c; color: #eaf0ff; border: 1px solid rgba(110,120,255,.4); border-radius: 7px; font-family: inherit;
+      }
+      [data-shell-skin="shader"] .minimap-frame { border: 1px solid rgba(110,120,255,.4); border-radius: 6px; }
+
+      /* ===== SHELL 8×8 (maqueta #23) — panel de partidas re-vestido EGA =====
+         Bajo `?shell8x8=1` el shell cae al tema `faithful` (theme.ts setShell8x8), que
+         estampa data-shell-skin="faithful". Estas reglas calcan el chrome del menú del
+         juego (caja negra + marco doble EGA azul/blanco, sin degradados ni redondeos,
+         título reverse-video). La fuente 8×8 la aplica pixelfont.ts a título/botones/
+         nombres de slot. Inertes salvo con el flag ON (atributo nunca "faithful" si no). */
+      [data-shell-skin="faithful"] .save-panel {
+        background: #000; color: #fff;
+        border: 4px solid #0000aa; border-radius: 0;
+        box-shadow: 0 0 0 1px #fff inset, 0 0 0 100vmax rgba(0,0,0,.55);
+        font-family: ui-monospace, "Cascadia Mono", "Consolas", Menlo, monospace;
+      }
+      [data-shell-skin="faithful"] .save-title {
+        color: #000; background: #fff; text-align: center; letter-spacing: .1em;
+        text-transform: uppercase; border-bottom: 0; padding: 4px 8px; margin: -2px -2px 2px;
+      }
+      [data-shell-skin="faithful"] .save-slot {
+        background: #000; border: 1px solid #0000aa; border-radius: 0;
+        /* AFINADO C5 (veredicto #23, punto 3): con la fuente 8×8 (ancha), los botones
+           Load/Delete son grandes y el nombre largo rozaba/pisaba las acciones y la meta
+           envolvía. Producción: apilamos el nombre + meta ARRIBA (ancho completo) y las
+           acciones DEBAJO a la derecha, para que nunca colisionen. */
+        flex-direction: column; align-items: stretch; gap: 3px;
+      }
+      [data-shell-skin="faithful"] .save-slot:hover { background: #0b0b2a; }
+      /* Nombre 8×8: `.u5px` lo fuerza a display:inline (el overflow/ellipsis de la regla
+         base no clipa). Aquí lo volvemos bloque de ancho completo y lo TRUNCAMOS con gracia
+         mediante un fundido a transparente en el filo derecho (text-overflow:ellipsis no
+         aplica a los glifos inline-block; el fade sí). */
+      [data-shell-skin="faithful"] .save-slot-name {
+        color: #fff; display: block; overflow: hidden; white-space: nowrap;
+        -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 22px), transparent);
+                mask-image: linear-gradient(90deg, #000 calc(100% - 22px), transparent);
+      }
+      /* Meta (monospace, NO pixelizada): una sola línea con elipsis (antes envolvía a 3). */
+      [data-shell-skin="faithful"] .save-slot-meta {
+        color: #8a8ac8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      }
+      [data-shell-skin="faithful"] .save-slot-actions { align-self: flex-end; }
+      [data-shell-skin="faithful"] .save-empty { color: #8a8ac8; }
+      [data-shell-skin="faithful"] .save-name {
+        background: #000; color: #fff; border: 1px solid #0000aa; border-radius: 0; font-family: inherit;
+      }
+      [data-shell-skin="faithful"] .save-btn {
+        background: #000; color: #fff; border: 1px solid #0000aa; border-radius: 0; font-family: inherit;
+      }
+      [data-shell-skin="faithful"] .save-btn:hover { background: #fff; color: #000; }
+      [data-shell-skin="faithful"] .save-btn-delete:hover { background: #fff; color: #000; }
+
+      /* ===== PANELES DOM HEREDADOS EN TÁCTIL (auditoría móvil 2026-07-25) =====
+         Dos defectos medidos, un solo bloque porque comparten los tres selectores:
+
+         (a) SEPULTADOS BAJO EL DECK. `.touch-controls` lleva z-index:40 y `.save-panel`
+             (partidas + tienda + SELECTOR: mantra, Cast, Ready…) y `.journal-panel` no
+             llevaban z-index ninguno (`.minimap-panel`, 30) → el deck se pintaba ENCIMA y,
+             como sus hojas tienen pointer-events:auto, además les robaba los taps en toda
+             la banda inferior. Se suben a 60 (por encima del deck 40 y de la hoja alzada
+             del teclado apaisado 50; es el mismo z-index que ya usaba el pergamino del
+             endgame, endgame-overlay.ts).
+             NO se atenúa el deck mientras hay panel abierto (era la otra vía posible): el
+             `.save-panel` es clase COMPARTIDA con el SELECTOR, así que apagarle las hojas
+             dejaría al jugador sin poder teclear/elegir durante un picker — cambiaríamos
+             una oclusión por un bloqueo. Con el z-index basta: el hit-testing sigue al
+             orden de pintado, así que el panel ya se queda sus propios taps.
+         (b) FUERA DE PANTALLA. Los 420 px fijos del panel de partidas se salían 15 px por
+             lado en un teléfono de 390 (30 en el Galaxy S8, de 360) y sus botones
+             Load/Delete/New medían ~24 px de alto, con el input a ~24.
+
+         Y de paso el panel se centra en la REGIÓN LIBRE (no en la pantalla): así no sólo
+         queda por encima del deck — no lo pisa. En vertical el hueco está media reserva
+         más arriba; en apaisado el deck es una columna lateral, así que el hueco se
+         desplaza en X y el ancho disponible es el que deja la columna.
+         Va DESPUÉS de los bloques por piel a propósito: `[data-shell-skin=…] .save-panel`
+         tiene la misma especificidad (0,2,1) y en un empate manda el orden de fuente. */
+      html.u5-touch .save-panel,
+      html.u5-touch .journal-panel,
+      html.u5-touch .minimap-panel {
+        z-index: 60;
+        left: 50%; right: auto;
+        top: calc(50% - var(--u5-touch-reserve, 0px) / 2);
+        transform: translate(-50%, -50%);
+        max-width: min(420px, calc(100vw - 24px));
+        max-height: calc(100% - var(--u5-touch-reserve, 0px) - 16px);
+      }
+      html.u5-touch[data-orient="landscape"][data-pad-side="left"] .save-panel,
+      html.u5-touch[data-orient="landscape"][data-pad-side="left"] .journal-panel,
+      html.u5-touch[data-orient="landscape"][data-pad-side="left"] .minimap-panel {
+        left: calc(50% + var(--u5-touch-reserve-x, 0px) / 2);
+        max-width: min(420px, calc(100vw - var(--u5-touch-reserve-x, 0px) - 24px));
+      }
+      html.u5-touch[data-orient="landscape"][data-pad-side="right"] .save-panel,
+      html.u5-touch[data-orient="landscape"][data-pad-side="right"] .journal-panel,
+      html.u5-touch[data-orient="landscape"][data-pad-side="right"] .minimap-panel {
+        left: calc(50% - var(--u5-touch-reserve-x, 0px) / 2);
+        max-width: min(420px, calc(100vw - var(--u5-touch-reserve-x, 0px) - 24px));
+      }
+      /* Objetivos táctiles DENTRO de los paneles (misma norma que el deck: 44 px iOS).
+         Los botones de partidas/selector medían ~24 px de alto — la mitad del mínimo. */
+      html.u5-touch .save-btn {
+        min-height: 44px; padding: 4px 14px; font-size: 14px;
+      }
+      /* Los dos inputs (nombre de partida y filtro del diario) medían ~24. El font-size
+         16 no es estético: por debajo de 16 px iOS hace ZOOM AUTOMÁTICO al enfocar un
+         campo, y con el pinch-zoom ya liberado ese zoom no se deshace solo. */
+      html.u5-touch .save-name,
+      html.u5-touch .journal-filter {
+        min-height: 44px; font-size: 16px;
+      }
+      /* Aire entre filas de partida: con los botones a 44 px la fila crece, y 6 px de
+         padding dejaban los dos objetivos pegados al borde de su slot. */
+      html.u5-touch .save-slot { padding: 8px; gap: 10px; }
+      /* Envoltura de las filas de acción: con los objetivos a 44 px y los rótulos ES
+         («Exportar .GAM») una fila de tres puede pedir más ancho que el panel ya acotado.
+         Antes de desbordar por el lado, envuelve. */
+      html.u5-touch .save-io,
+      html.u5-touch .save-new,
+      html.u5-touch .save-slot-actions {
+        flex-wrap: wrap; row-gap: 6px;
+      }
+
+      /* (Los bloques .viewgem- y .title- de la piel dev DOM se barrieron al jubilarla —
+         auditoría de calidad D4: la vista de gema y el título viven ahora en canvas.)
+         OJO: jamás escribir asterisco+barra dentro de un comentario CSS (aquí ponía
+         «.viewgem-* / .title-*» SIN el espacio): cierra el comentario y el parser se
+         traga la SIGUIENTE regla entera — así murió .touch-controls (el layout móvil
+         completo) en 6f05b279. Ticket mobile-e2e #1.
+
+         ★★ Y NO ES UN DEFECTO DE CSS: ES DE LA FAMILIA DE COMENTARIOS DE BLOQUE. Lo mismo
+         pasa en los comentarios de bloque de .ts/.mjs — un glob que acabe en asterisco,
+         seguido de barra, cierra el bloque; y entonces la PROSA se compila como código: tsc
+         escupe veintipico errores en cascada que parecen del código nuevo y son del
+         comentario, así que se busca el fallo donde no está. Tres casos el 2026-08-02 (éste,
+         el comodín de Accept del portón de staging, y el de la puerta de sellos).
+
+         🔴 Y UN CUARTO, QUE ES EL QUE MÁS ENSEÑA: esta misma nota, al escribirse, METIÓ LA
+         SECUENCIA DENTRO DEL COMENTARIO al citar como ejemplo un bloque de JSDoc vacío. La
+         advertencia contenía la trampa. Lo cazó `tests/mobile-viewport-css.test.ts`, el
+         candado que se puso justamente después de 6f05b279 — o sea que el guarda del
+         desastre original paró su reincidencia dentro del texto que lo documenta.
+         MORALEJA DOBLE: no se puede citar la secuencia ni para explicarla (descríbela con
+         palabras: «asterisco pegado a barra»), y un candado escrito tras un desastre sigue
+         pagando años después contra alguien que creía estar teniendo cuidado.
+
+         REGLA: en cualquier comentario de bloque, un patrón que acabe en asterisco NO se
+         escribe pegado a una barra — usa «.espejo-…», o separa con un espacio. */
+
+      /* ---- Botonera táctil ---- */
+      .touch-controls {
+        position: absolute; left: 0; right: 0; bottom: 0; z-index: 40;
+        display: flex; flex-direction: column; align-items: stretch; gap: 8px;
+        /* Safe-area en los CUATRO lados: en apaisado el notch/isla cae a izq/der y se comía
+           la cruceta o los comandos (antes sólo se respetaba inset-bottom). */
+        padding:
+          10px
+          calc(12px + env(safe-area-inset-right))
+          calc(10px + env(safe-area-inset-bottom))
+          calc(12px + env(safe-area-inset-left));
+        pointer-events: none;
+      }
+      /* Fila principal: cruceta (izq) + comandos contextuales (der). */
+      .touch-main {
+        display: flex; justify-content: space-between; align-items: flex-end; gap: 8px;
+      }
+      /* Fila utilitaria: Sí/No/Espacio/Enter/Esc a lo ancho (pulgares). El padding-right
+         (medido por touch.ts en --u5-util-clear) la aparta del cúmulo de shell (idioma/
+         piel/⚙) fijado abajo-derecha, para que ⏎/Esc no queden debajo. */
+      .touch-util { display: flex; gap: 6px; pointer-events: auto; padding-right: var(--u5-util-clear, 0px); }
+      /* nowrap + overflow oculto: el rótulo jamás pisa al botón vecino (ruling #4 —
+         «Space⏎» se montaba sobre «Esc» en columnas estrechas). El clear de FABs ya es
+         0 en táctil (los FAB se ocultan, ruling #5) → la fila recupera todo el ancho. */
+      /* min-height 48: suelo ANDROID (48 dp) para la fila más gruesa de dedos —
+         medía 44-46 en las 84 capturas de la auditoría 2026-07-25. */
+      /* ★ SELECTOR DE DOS CLASES A PROPÓSITO (adjudicación #26 fase 3, 31-07). El suelo
+         de 48 px de la fila útil (suelo Android, ruling 88191460) llevaba INERTE desde el
+         día en que se escribió: `.touch-util-btn` y `.touch-btn` tienen la MISMA
+         especificidad (0,1,0), el botón lleva las dos clases, y `.touch-btn{min-height:44px}`
+         va DESPUÉS en la hoja (línea ~373) — así que ganaba el 44 general sobre el 48
+         específico. La fila medía 46 px (10+10 de padding + 2+2 de borde + 22 de contenido:
+         por encima del 44 que sí aplicaba, por debajo del 48 que el ruling declaraba), y el
+         gate de normas lo cazaba en los 4 proyectos. `.touch-util .touch-util-btn` sube a
+         (0,2,0) y gana por especificidad, no por orden: así el arreglo no depende de dónde
+         acabe el bloque si alguien reordena la hoja. */
+      /* ★ RÓTULOS CIZALLADOS EN VERTICAL (regresión de `889349c3`, 27-07, adjudicada el
+         02-08 por bisect). Aquel commit metió en la fila útil los dos botones de hoja
+         («✓/✗ Yes/No», «123 Numbers») y con `flex:1 1 0` los seis reparten el ancho A
+         PARTES IGUALES: 53 px cada uno cuando el rótulo pide 82 y 90. Con `nowrap +
+         ellipsis` el resultado no era un rótulo apretado sino uno CORTADO — en pantalla
+         se leía «123 N…», «✓/✗ S…», «Espac…», «⏎ Ent…». Peor en ES (7 rótulos contra 4).
+
+         DOS CAMBIOS, LOS DOS DE LAYOUT — no se toca NI UNA PALABRA de los rótulos (son
+         del usuario: spec de la botonera del 27-07):
+
+         1. ENVOLVER EN VEZ DE RECORTAR. Es la política que este mismo fichero ya adoptó
+            para el apaisado («el RÓTULO ENVUELVE en vez de recortarse… sin reintroducir
+            el defecto del ruling #4, porque al envolver el texto no se sale de su caja»).
+            No transfería sola: en apaisado los `.touch-sheetbtn` están OCULTOS, así que
+            allí nunca hubo que meter «123 Numbers» en 53 px.
+         2. ANCHO POR CONTENIDO (`flex: 1 1 auto`) en vez de a partes iguales. El ☰ y
+            «Esc» no necesitan 53 px; cedérselos a los dos largos es lo que hace que
+            quepan sin tocar el texto. `min-width:44px` conserva el suelo táctil.
+
+         El padding vertical baja de 10 a 6 para que DOS líneas de 12 px quepan dentro de
+         los 48 de suelo (2×13,2 + 12 + 4 de borde = 42,4 < 48) — el suelo NO se toca, es
+         el del ruling 88191460. Medido con la misma sonda que adjudicó el defecto
+         (`scrollWidth > clientWidth + 1`) en EN y ES y en el móvil más estrecho. */
+      .touch-util .touch-util-btn {
+        flex: 1 1 auto; min-width: 44px; padding: 6px 3px; font-size: 12px; min-height: 48px;
+        line-height: 1.1; white-space: normal; overflow: hidden; text-overflow: clip;
+      }
+      .touch-dpad {
+        display: grid; grid-template-columns: 64px 64px 64px; grid-template-rows: 64px 64px 64px;
+        gap: 4px; pointer-events: auto;
+      }
+      .dpad-up { grid-column: 2; grid-row: 1; }
+      .dpad-left { grid-column: 1; grid-row: 2; }
+      .dpad-right { grid-column: 3; grid-row: 2; }
+      .dpad-down { grid-column: 2; grid-row: 3; }
+      /* SUELO TÁCTIL GENERAL (auditoría móvil 2026-07-25): 44 px = mínimo iOS. Es una
+         RED por si un botón nuevo nace sin su propia altura; los que tienen norma más
+         alta la declaran encima (fila útil 48). box-sizing:border-box (reset de
+         arriba) → los 44 son la caja ENTERA, bordes incluidos. */
+      /* CONTRASTE DEL BORDE ≥3:1 (auditoría móvil 2026-07-25, ítem de accesibilidad):
+         el borde es lo ÚNICO que delimita el objetivo táctil, así que es «componente de
+         interfaz» a efectos de WCAG 1.4.11 (contraste no textual, mínimo 3:1) contra su
+         relleno adyacente. El #6b5a2a anterior daba 2,48:1 sobre el relleno
+         rgba(44,35,19,.82) compuesto sobre negro — bordes que se desvanecen a plena luz
+         del sol, que es donde se juega en un teléfono. #8a7434 = 3,68:1 (y 4,63:1 contra
+         el negro del canvas). El realce del activo sigue siendo más claro (#a88a3a).
+         La aritmética exacta la guarda tests/deck-a11y-contraste.test.ts. */
+      .touch-btn {
+        background: rgba(44, 35, 19, 0.82); color: #ffe9a8;
+        border: 2px solid #8a7434; border-radius: 10px;
+        font: bold 18px "Courier New", monospace;
+        min-height: 44px;
+        touch-action: none; user-select: none; -webkit-user-select: none;
+        cursor: pointer;
+      }
+      .touch-btn:active { background: #6b5a2a; }
+      /* FOCO VISIBLE (mismo ítem): el deck es DOM real y se puede recorrer con foco
+         (teclado Bluetooth del móvil, switch-control, TalkBack/VoiceOver con teclado).
+         Sin esto no había NINGUNA pista de dónde está el foco. `:focus-visible` (no
+         `:focus`) para que un tap con el dedo no deje el anillo pegado. */
+      .touch-btn:focus-visible {
+        outline: 2px solid #ffe9a8; outline-offset: 2px;
+      }
+      /* Wrapper POSICIONADO de la zona de comandos: ancla los chevrons de scroll
+         (.touch-scrollhint) sin ocupar celda en la rejilla (UX-2). */
+      .touch-cmdwrap { position: relative; display: flex; flex: 0 1 auto; min-width: 0; min-height: 0; }
+      .touch-commands {
+        /* Columnas FLUIDAS (minmax con mínimo 0): encogen para caber junto a la cruceta
+           en cualquier ancho de teléfono, sin salirse de pantalla (era repeat(2,92px)
+           fijo → la 2ª columna quedaba cortada fuera del viewport en portrait). */
+        /* LA FILA Y EL GAP SON VARIABLES porque el PASO (fila+gap) lo necesita también el
+           sizer de la tira (`deck-ancho.ts:instalaTiraDeMediaFila`). Escribir 44 y 6 aquí y
+           un 50 allí sería la misma enfermedad que acabamos de quitarle al suelo táctil:
+           dos sitios afirmando la misma geometría por su cuenta. Cambiar estos dos mueve la
+           fórmula sola. */
+        --u5cmd-fila: 44px;
+        --u5cmd-gap: 6px;
+        display: grid; grid-template-columns: repeat(2, minmax(0, 92px)); gap: var(--u5cmd-gap);
+        /* FILAS con suelo de 44 px (auditoría 2026-07-25): sin esto, un botón con
+           `overflow:hidden` (el caso apaisado) no aporta ALTO a su fila auto y la
+           rejilla las dimensionaba a 28 px = padding+borde con el rótulo cizallado. */
+        grid-auto-rows: minmax(var(--u5cmd-fila), auto);
+        flex: 0 1 auto; min-width: 0;
+        /* 46dvh (ítem dvh): con `vh` la rejilla se dimensionaba contra el viewport GRANDE
+           — hasta ~46 px más alta que el hueco real con la barra desplegada, que es
+           justo lo que empujaba la fila útil fuera de la pantalla. Cascada = fallback. */
+        max-height: 46vh; max-height: 46dvh; overflow-y: auto; overflow-x: hidden; pointer-events: auto;
+        /* SCROLL TÁCTIL (UX-2): pan vertical nativo sobre la rejilla; los botones
+           disparan en pointerup con TapGate (ui/tap-or-drag.ts) para que el arrastre
+           no dispare el comando bajo el dedo. contain = el pan no arrastra la página. */
+        touch-action: pan-y; overscroll-behavior: contain;
+      }
+      /* Override del touch-action:none de .touch-btn: sobre un comando el gesto
+         vertical debe SCROLLEAR la rejilla (el tap sigue siendo tap vía TapGate). */
+      /* nowrap + ellipsis: en la columna más estrecha medida (61 px, Galaxy S8 vertical)
+         «Journal» se cizallaba a media letra; con elipsis degrada legible. */
+      .touch-cmd {
+        padding: 12px 4px; font-size: 14px; touch-action: pan-y;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      }
+      /* Chevrons "hay más" (ui/scroll-hint.ts): overlays sutiles con degradado en los
+         bordes de la zona de comandos; pointer-events:none (jamás roban un tap). */
+      .touch-scrollhint {
+        position: absolute; left: 0; right: 0; height: 16px; z-index: 1;
+        display: flex; align-items: center; justify-content: center;
+        font: 9px "Courier New", monospace; color: #ffe9a8;
+        pointer-events: none; opacity: 0; transition: opacity .18s ease;
+      }
+      .touch-scrollhint-up { top: 0; background: linear-gradient(rgba(10, 8, 4, 0.85), transparent); }
+      .touch-scrollhint-down { bottom: 0; background: linear-gradient(transparent, rgba(10, 8, 4, 0.85)); }
+      .touch-scrollhint.on { opacity: .95; }
+      /* Botón ⛶ fullscreen: compacto al final de la barra de modo (no se monta si la
+         API no existe — Safari iPhone; ver ui/fullscreen.ts).
+         🔴 ESTA REGLA ERA CÓDIGO MUERTO Y POR ESO EXISTÍA LA FICHA #164 — no se borra
+         porque documenta la intención, pero la que MANDA está más abajo (busca «#164»).
+         El botón lleva SIEMPRE las dos clases (`touch-btn touch-mode touch-fullscreen`,
+         ui/touch.ts), `.touch-mode` está 30 líneas por debajo y las dos tienen la MISMA
+         especificidad (0,0,1,0): gana la última del fichero, o sea `.touch-mode`. Sus tres
+         declaraciones —`flex`, `min-width`, `font-size`— quedaban pisadas por
+         `flex:1 1 0`, `min-width:0` y `font-size:12px` en TODA la vida del botón. Medido:
+         computed `flex = 1 1 0px`, `min-width = 0px`, `font-size = 12px`. */
+      .touch-fullscreen { flex: 0 0 auto; min-width: 44px; font-size: 16px; }
+      /* EL GLIFO, EN UN ::before (bug 3a del informe móvil del 01-08). El rótulo visible
+         del botón pasó a ser la PALABRA («Screen» → «Pantalla», ui/touch.ts) porque era el
+         único botón mudo de su columna; el ⛶ vuelve como pseudo-elemento por dos motivos:
+         puede llevar su propio cuerpo (18 px) con el rótulo a 12, y `relabel()` reescribe
+         el textContent al cambiar de idioma —un hijo de verdad no sobreviviría—. Mismo
+         patrón que el icono del botón ABC (KB_ICON_SVG en skin/portrait/deck-ancho.ts).
+         VA AQUÍ, con el estilo BASE, y no en el CSS del prototipo: el botón existe en los
+         tres layouts (partido, original y deck canónico) y una regla colgada de la clase
+         del prototipo lo habría dejado sin icono en los otros dos. */
+      .touch-fullscreen::before {
+        content: "⛶"; font-size: 18px; line-height: 1; margin-right: 5px;
+        vertical-align: -2px;
+      }
+      .touch-wide { grid-column: span 2; }
+
+      /* ---- Deck de consola (maqueta A): barra de modo + hojas ---- */
+      /* Barra de modo segmentada: 4 pestañas a lo ancho que conmutan la hoja activa. */
+      .touch-modebar { display: flex; gap: 4px; pointer-events: auto; flex-wrap: wrap; }
+      .touch-mode {
+        /* 12px: «Mover» (ES) cabe en 6 segmentos sin desborde (lote i18n-deck).
+           min-height 44 + padding vertical 0: medían 35-38 px de alto en las 14
+           combinaciones de la auditoría 2026-07-25 (el botón centra el rótulo solo).
+           El padding horizontal se queda en 2 px: con 6 px «Yes/No» (EN) desborda los
+           52,7 px de segmento del Galaxy S8. */
+        /* ⚠ 02-08: probado y RETIRADO envolver aquí (`white-space:normal`). NO sirve para
+           el caso vivo: «Pantalla» (ES) es UNA SOLA PALABRA de 81 px en un segmento de 67,
+           y sin espacio no hay punto de corte donde envolver — medido, `whiteSpace:normal`
+           aplicado y `scrollWidth` 81 > `clientWidth` 67 igual. Lo que se ve en pantalla
+           («[ ] Pant…») engaña: el «[ ]» es el glifo ⛶ cayendo a .notdef, no parte del
+           rótulo. Este segmento sólo se arregla acortando la palabra (decisión del
+           usuario) o ensanchando la barra a costa de otra cosa. Se deja como estaba. */
+        flex: 1 1 0; min-width: 0; padding: 0 2px; min-height: 44px; font-size: 12px;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        /* border-color: era #4a3d20 = 1,79:1 sobre su propio relleno (el borde MÁS
+           flojo del deck, y encima en la barra que gobierna el modo). Mismo token que
+           el resto del cromo táctil (3,68:1 mínimo). */
+        background: rgba(28, 22, 12, 0.82); border-color: #8a7434; color: #c9b783;
+      }
+      /* ESTADO «modo activo». WCAG 1.4.11 cubre también los ESTADOS: el relleno del
+         activo tiene que separarse ≥3:1 del de los inactivos, y el #6b5a2a daba 2,77:1
+         contra rgba(28,22,12,.82). #74622e = 3,13:1 (mismo color, un punto más claro:
+         nada del lenguaje visual cambia). El rótulo sigue a 5,4:1 sobre él. */
+      .touch-mode-on { background: #74622e; color: #fff4cf; border-color: #a88a3a; }
+      /* ── #164 · EL ⛶ NO ES UN SEGMENTO MÁS: SE MIDE POR SU CONTENIDO ────────────────
+         VA AQUÍ, DESPUÉS DE `.touch-mode`, Y ESO ES EL ARREGLO. La regla de arriba
+         (`.touch-fullscreen`, ~40 líneas antes) ya decía `flex: 0 0 auto`, pero el botón
+         lleva las DOS clases y con especificidad igual gana la última: `.touch-mode` le
+         imponía `flex: 1 1 0` y el ⛶ acababa repartiéndose la barra a partes iguales con
+         los cuatro conmutadores, que es lo que NO puede hacer — su caja lleva un glifo de
+         18 px + 5 de hueco ANTES del rótulo.
+
+         MEDIDO (deck en reposo, `scrollWidth`/`clientWidth` del propio botón):
+           390×844 ES  70 px de caja → 66 de hueco para 81 de contenido  → −15 px 🔴
+           390×844 EN  70 → 66 para 67                                    → −1
+           412×915 ES  74,4 → 70 para 81                                  → −11 🔴
+           apaisado    la barra YA envuelve a 2 filas ⇒ 120-139 px         → holgura ≥0
+         O sea: es un defecto de VERTICAL, y el ES lo enseña porque «Pantalla» son 58 px
+         de rótulo contra los 44 de «Screen». La aritmética cuadra con la que ya estaba
+         escrita en `skin/portrait/deck-ancho.ts` para el layout partido (18+5+58 ≈ 81) —
+         y ese layout NO sufría el defecto justamente porque allí sí se aplica un
+         `flex: 0 0 auto` propio. El partido era el CONTROL y nadie lo leyó como tal.
+
+         POR QUÉ NO HIZO FALTA ACORTAR LA PALABRA: la nota de `.touch-mode` daba dos
+         salidas —acortar el rótulo (decisión del usuario) o ensanchar la barra «a costa de
+         otra cosa»— y descartaba envolver. Con `flex: 0 0 auto` la «otra cosa» se
+         CUANTIFICA en vez de temerse, y el coste es de sobra asumible. Medido a 390 px
+         (ancho de rótulo con `Range`, hueco con `clientWidth`):
+                        conmutador más ancho   hueco antes → después   margen que queda
+             ES         «Mover»/«Sí/No» 36,0    66 → 62                 +26
+             EN         «Yes/No»        43,2    66 → 66 (−0,2 de caja)  +23
+         O sea: los cuatro pierden 4 px en ES y prácticamente nada en EN, y ninguno se
+         acerca a su límite. No se toca ni una cadena y el rótulo ES sobrevive entero.
+
+         `min-width: 44px` es el suelo táctil por si el rótulo llegara a ser más corto que
+         el objetivo mínimo; en apaisado lo sube a 70 la regla de `[data-orient]`, que es
+         inocua porque el ancho natural del botón ya lo supera. La barra tiene
+         `flex-wrap: wrap` y los otros cuatro conservan `min-width: 0`, así que este ancho
+         fijo no puede desbordar: la fila envuelve antes. */
+      .touch-modebar .touch-fullscreen { flex: 0 0 auto; min-width: 44px; }
+      /* Pila de hojas: sólo la activa (.touch-sheet-on) se muestra. min-height estable
+         (~la altura de la cruceta) para que conmutar de modo no dé un salto brusco del
+         canvas al re-reservar. */
+      .touch-sheets { pointer-events: auto; }
+      .touch-sheet { display: none; min-height: 196px; }
+      .touch-sheet.touch-sheet-on { display: block; }
+      .touch-sheet-move.touch-sheet-on { display: block; }
+      /* Filas de teclado (QWERTY / numpad): teclas fluidas a lo ancho. */
+      .touch-kbrow { display: flex; gap: 5px; margin-bottom: 5px; justify-content: center; }
+      .touch-kb { flex: 1 1 0; min-width: 0; padding: 12px 2px; font-size: 16px; }
+      .touch-kb-space { flex: 5 1 0; }
+      .touch-numrow { max-width: 320px; margin-left: auto; margin-right: auto; }
+      .touch-num { flex: 1 1 0; min-width: 0; padding: 16px 2px; font-size: 20px; }
+      /* Hoja Sí/No: dos botones grandes lado a lado. */
+      .touch-sheet-yesno.touch-sheet-on { display: flex; gap: 10px; align-items: stretch; }
+      .touch-yn { flex: 1 1 0; padding: 28px 2px; font-size: 22px; }
+      /* Codificación por color de Sí/No. El rojo #7a4a3a daba 2,28:1 (por debajo de la
+         norma) y el verde 3,29:1 raspando: se aclaran ambos manteniendo el par
+         verde/rojo distinguible (y el color NUNCA es el único indicador: el rótulo dice
+         Sí/No y el nombre accesible lo repite). */
+      .touch-yn-yes { border-color: #5aa347; }
+      .touch-yn-no { border-color: #a35c46; }
+
+      /* Destello del tap-a-caminar (móvil): confirma el punto tocado; se auto-limpia
+         (ui/tap-feedback.ts). No toca el canvas → pureza de render de la fiel intacta. */
+      .u5-tap-ripple {
+        position: fixed; z-index: 45; width: 34px; height: 34px;
+        margin: -17px 0 0 -17px; border-radius: 50%; pointer-events: none;
+        border: 2px solid #ffe9a8; box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+        animation: u5-tap-ripple 380ms ease-out forwards;
+      }
+      @keyframes u5-tap-ripple {
+        from { opacity: 0.85; transform: scale(0.4); }
+        to { opacity: 0; transform: scale(1.15); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .u5-tap-ripple { animation-duration: 200ms; }
+      }
+
+      /* Mandos táctiles de la INTRO (móvil): menú / sexo / quiz / «tocar para continuar».
+         El deck del juego no está durante la intro, así que la creación de personaje se
+         opera con estos botones DOM sobre el canvas (faithful-intro.ts). Escritorio: no se
+         crean. */
+      .intro-touch {
+        position: absolute; left: 50%; bottom: 6%; transform: translateX(-50%);
+        z-index: 68; display: flex; gap: 8px; pointer-events: auto;
+        max-width: 92%; flex-wrap: wrap; justify-content: center;
+      }
+      /* (El modo "menu" ya no existe: el menú de portada es tappable sobre el propio
+         canvas — hit-zones de menuRowHit, carril intro-touch — sin popup de botones.) */
+      /* PALETA DE LA PIEL, NO EL PERGAMINO BASE — reporte del usuario (02-08, repetido el
+         03-08): «el tap to continue de la intro en móvil es con colores marrones, no el de
+         la botonera».
+
+         🔴 POR QUÉ ESTÁ AQUÍ Y NO EN `botonesUiCss()` CON LOS DEMÁS. La piel de botones se
+         aplica bajo `html.u5-btn-ui` (deck-ancho.ts), y MEDIDO durante la intro:
+             htmlClass = "(vacía)"   ·   tieneUiClass = false   ·   deck montado = false
+         La intro corre ANTES de que se monte la piel —su propio overlay existe justamente
+         por eso (`faithful-intro.ts:490`, «el deck del juego no está montado»)—, así que
+         añadir `.intro-touch-btn` a la enumeración de `botonesUiCss()` NO habría pintado
+         nada: la clase que la activa todavía no existe. Por eso la paleta va en el CSS base.
+
+         ★★ Y EL DEFECTO DE FONDO NO ES EL MARRÓN, ES EL MECANISMO, y ya ha mordido TRES
+         veces: el marrón es la paleta BASE de este fichero, y `botonesUiCss()` la tapa
+         mediante una ENUMERACIÓN de selectores (`.touch-btn`, `.touch-cmd`,
+         `.touch-util-btn`, `.touch-mode`). Todo lo que esa lista no alcance CAE al marrón,
+         y cae en silencio. Ya pasó con el realce del ABC (27-07), con el giro a apaisado
+         —las reglas llevaban `[data-orient="portrait"]` y al rotar no casaba ninguna,
+         reapareciendo el pergamino (28-07)— y ahora con la intro. Mismo mecanismo, tercer
+         síntoma.
+
+         QUÉ LAS ATA, para que no vuelvan a separarse: los valores de abajo NO están
+         elegidos a ojo — son `DEFAULT_FRAME_COLORS` de `skin/fiel/frame.ts` (`background`
+         #000 y `border` #fff, lecturas en vivo del DS en 0x13b0/0x13b2), los MISMOS que
+         usa `botonesUiCss()`. Como este fichero es HTML y no puede importar la constante,
+         el vínculo lo sostiene un TEST que compara ambos: si alguien cambia el chrome o
+         estos colores, se pone rojo. No se puede sincronizar por CSS; sí por aserto. */
+      .intro-touch-btn {
+        background: #000000; color: #ffffff;
+        border: 2px solid #ffffff; border-radius: 4px;
+        font: bold 17px "Courier New", monospace; padding: 12px 18px;
+        touch-action: none; user-select: none; -webkit-user-select: none; cursor: pointer;
+      }
+      /* Pulsado = el AZUL del marco translúcido sobre negro, igual que la piel del deck:
+         el botón no cambia de color, se ILUMINA (mismo criterio que `botonesUiCss()`). */
+      .intro-touch-btn:active { background: rgba(0, 0, 170, 0.55); }
+      .intro-touch[data-mode="choice"] .intro-touch-btn { min-width: 88px; padding: 18px 24px; font-size: 20px; }
+      .intro-touch-advance { opacity: 0.9; font-size: 15px; padding: 10px 20px; }
+
+      /* BOTONERA DE TECLAS DE LA INTRO (ficha #33) — ▲ ▼ ⏎ en el menú de portada, Esc
+         donde vuelve atrás (The Summoning y el prompt de sexo).
+
+         POR QUÉ EXISTE, EN PÍXELES MEDIDOS: a 390 px de ancho `integerScale` da 1
+         (⌊390/320⌋), o sea que el canvas de la portada se sirve a 320×200 CSS px
+         CLAVADOS y el renglón de UNA opción del menú mide **8 px CSS** de alto — el
+         18 % del suelo táctil de 44 px de la casa (`e2e/mobile/suelo-tactil.ts`), con
+         las SEIS filas contiguas: un dedo que yerre 8 px no falla el tap, dispara la
+         opción de al lado. Ésa es la queja del usuario, ya convertida en cifra.
+         El tap por renglón (`menuRowHit`) sigue vivo: esto es la vía gruesa.
+
+         Las cajas van declaradas con min-width/min-height y no confiadas al padding:
+         el gate `mobile-geometry.spec.ts` mide ≥44 px en LOS DOS EJES, y un glifo de
+         una sola columna (▲) con padding simétrico se queda corto de ancho. 56 px deja
+         un dedo de margen sobre la norma sin comerse el ancho del teléfono. */
+      .intro-pad { display: flex; gap: 8px; align-items: center; justify-content: center; }
+      .intro-pad-key {
+        min-width: 56px; min-height: 56px;
+        padding: 10px 14px; font-size: 20px; line-height: 1;
+        /* Sin esto «⏎ Enter» parte en DOS LÍNEAS dentro de la caja de 56 px (visto en
+           la captura de verificación a 390 px): el glifo arriba y el vocablo abajo. */
+        white-space: nowrap;
+      }
+      /* 🔴 COLISIÓN MEDIDA CON LOS FAB (390×844, censo del DOM vivo). Los switchers de
+         idioma (`.u5langsw`) y piel (`.u5skinsw`) son `position:fixed; bottom:14px;
+         height:40px` → ocupan una banda de 54 px en el filo INFERIOR DERECHO, y con
+         z-index 99990 quedan POR ENCIMA de este overlay (z 68). Con `bottom:6%`
+         (= 50,6 px a 844) la fila de la botonera cae en y 729..793 y los FAB arrancan
+         en y 790: **3 px de solape**, y en esa franja el tap se lo lleva el FAB, no el
+         botón. Afectaba YA al «Tap to continue ▸» de antes de este carril (mismo
+         `bottom`, mismo centro) — se arregla para los dos.
+         El gate va por ALTO y no por `max()`: en el apaisado corto del censo (340 px de
+         alto) subir el overlay 68 px lo metería DENTRO del canvas (que ahí ocupa
+         y 70..270). 600 px separa cualquier teléfono en vertical de cualquier apaisado. */
+      @media (min-height: 600px) {
+        .intro-touch { bottom: 68px; }
+      }
+
+      /* ---- Apaisado (maqueta 1): pad lateral + juego llenando el resto ---- */
+      /* Reserva el ANCHO de la columna de controles en el lado elegido (padding-left/right),
+         igual que en vertical se reserva el alto abajo. La piel llena la región restante. */
+      @media (orientation: landscape) {
+        /* Inset superior también en apaisado (en un iPhone rotado vale 0, pero en la PWA de
+           un iPad con barra de estado NO): declararlo es gratis y cubre el caso. El inset
+           INFERIOR se deja en 0 a propósito — el indicador de inicio es una barra
+           translúcida sobre contenido no-interactivo, y restarle 21 px al alto en apaisado
+           (~5% del canvas) costaría más juego del que salva. */
+        html.u5-touch #app { padding-top: env(safe-area-inset-top); padding-bottom: 0; }
+        /* El lado del deck lo reserva --u5-touch-reserve-x, que es el ancho MEDIDO del
+           deck (touch.ts syncReserve): desde el arreglo de la muesca ese ancho ya lleva
+           la franja SUMADA, así que la reserva del juego se ajusta sola y sigue sin haber
+           doble conteo. El lado LIBRE es el que necesita el inset por su cuenta. */
+        html.u5-touch[data-pad-side="left"] #app {
+          padding-left: var(--u5-touch-reserve-x, 0px);
+          padding-right: var(--u5-safe-r);
+        }
+        html.u5-touch[data-pad-side="right"] #app {
+          padding-right: var(--u5-touch-reserve-x, 0px);
+          padding-left: var(--u5-safe-l);
+        }
+      }
+      /* La botonera pasa de banda inferior a COLUMNA lateral de altura completa.
+         justify-content:flex-start (NO space-between): con contenido más alto que el
+         viewport, space-between + overflow recortaba el TOPE (modebar y ▲ de la
+         cruceta nacían inalcanzables — ticket mobile-e2e UX-2). El scroll vive DENTRO
+         de la zona de comandos (cadena flex de abajo); el root ya no scrollea. */
+      html[data-orient="landscape"] .touch-controls {
+        /* ANCHO ACOTADO (ruling apaisado #1): el 46vw de L4 robaba ancho hasta capar el
+           ALTO del canvas (banda negra). Con ~320px de columna, la región restante en un
+           teléfono moderno (844/812 ancho) admite el canvas 4:3 a ALTO COMPLETO. */
+        top: 0; bottom: 0; left: auto; right: auto;
+        /* Ancho DINÁMICO (--u5-deck-w, touch.ts landscapeDeckWidth): el que deja al
+           canvas llenar el ALTO según su ratio real (1.6 píxel cuadrado / 1.333 4:3),
+           acotado [260,324]. Fallback estático si el JS aún no midió. */
+        width: var(--u5-deck-w, clamp(260px, 38vw, 324px));
+        flex-direction: column; justify-content: flex-start; overflow-y: hidden;
+        /* Padding LATERAL 8 (era 12): los 8 px recuperados son exactamente los que la
+           cruceta necesita para pasar de 42 a 44 px de celda SIN robarle ancho a la
+           rejilla de comandos (auditoría 2026-07-25; la aritmética, en .touch-dpad).
+           La FRANJA de la muesca ya NO se suma aquí: ver el bloque de `data-pad-side` de
+           abajo, que es quien la pone (y sólo por el lado exterior). */
+        padding-left: 8px;
+        padding-right: 8px;
+        /* PRESUPUESTO VERTICAL de la columna (auditoría 2026-07-25): padding 6 y gap 6
+           (eran 10 y 8) liberan 12 px, que es lo que salva al apaisado CORTO — Safari
+           con barra compacta deja ~340 px útiles y el iPhone gasta 21 más en el
+           indicador de inicio. Cuentas con los suelos nuevos: 6+6 de padding + 92 de
+           barra de modo (2 filas de 44) + 12 de gaps + 48 de fila útil = 164 fijos →
+           a 320 px de alto quedan 156 para la hoja y la cruceta pide 140. Cabe TODO
+           sin scroll ni recortes. */
+        gap: 6px;
+        padding-top: 6px;
+        padding-bottom: calc(6px + env(safe-area-inset-bottom));
+      }
+      /* Cadena flex hasta la rejilla (UX-2): la hoja Move llena la altura disponible
+         y SOLO la zona de comandos scrollea (min-height:0 en cada eslabón para que
+         el overflow no propague hacia arriba). Modebar/cruceta/útil quedan SIEMPRE
+         visibles. */
+      html[data-orient="landscape"] .touch-sheets { flex: 1 1 auto; min-height: 0; }
+      /* El min-height:196px de la hoja (anti-salto en VERTICAL) era un suelo RÍGIDO en
+         apaisado: 20 de padding + 77 de modebar + 16 de gaps + 196 + 44 de útil = 353
+         px, más de lo que deja Safari con la barra compacta (~340) → con el root en
+         `overflow-y:hidden` la fila Space/⏎/Esc quedaba CORTADA por abajo (auditoría
+         2026-07-25). En apaisado la hoja la dimensiona la cadena flex (sheets flex:1),
+         así que el suelo se retira: el que manda es el de la cruceta. */
+      html[data-orient="landscape"] .touch-sheet { min-height: 0; }
+      html[data-orient="landscape"] .touch-sheet-move.touch-sheet-on {
+        display: flex; flex-direction: column; height: 100%; min-height: 0;
+      }
+      html[data-orient="landscape"] .touch-cmdwrap { flex: 1 1 auto; min-height: 0; }
+      /* TECLADO A–Z EN APAISADO: fuera de la columna (auditoría 2026-07-25: 10 teclas
+         en los ~236 px de la columna daban **19,1 px** de tecla — inusable, no es que
+         fuera incómodo). Pasa a BARRA FIJA a lo ancho de la pantalla, igual que el
+         teclado del sistema: en un iPhone apaisado (844) las teclas pasan a ~79 px, y
+         en el SE (568) a ~51. Fondo opaco + borde porque flota sobre el juego, y
+         safe-area en los tres lados que toca (en apaisado el notch cae a los lados).
+         La barra de modo (al TOPE de la columna) queda siempre por encima del teclado,
+         así que salir de la hoja sigue siendo un tap. */
+      html[data-orient="landscape"] .touch-sheet-az.touch-sheet-on {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+        background: rgba(12, 8, 4, 0.96);
+        border-top: 2px solid #6b5a2a;
+        padding:
+          6px
+          calc(6px + env(safe-area-inset-right))
+          calc(6px + env(safe-area-inset-bottom))
+          calc(6px + env(safe-area-inset-left));
+      }
+      html[data-orient="landscape"] .touch-commands {
+        max-height: none; flex: 1 1 auto; grid-auto-rows: minmax(44px, auto);
+      }
+      /* Columnas apaisadas estrechas (~96px) + rótulos ES más largos (Disparar,
+         Empujar, Z-perfil): fuente 13 y nowrap para que NINGÚN vocablo desborde
+         (lote i18n-deck; mismo criterio anti-desborde que la fila útil).
+         ALTO (auditoría 2026-07-25): medían 28 px = 12+12 de padding + 4 de borde con
+         el CONTENIDO en 0 — un <button> con `overflow:hidden` no aporta alto a su fila
+         auto de rejilla, así que los 282/282 rótulos apaisados salían CIZALLADOS (el
+         contenido pedía 39-43). Se fija el suelo en el ítem (min-height) y en la fila
+         (grid-auto-rows, abajo), y el padding vertical baja a 6 para que la línea de
+         13 px quepa holgada dentro de los 44. */
+      html[data-orient="landscape"] .touch-cmd {
+        font-size: 13px; padding: 6px 2px; line-height: 1.15; min-height: 44px;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      }
+      /* Rejilla apaisada a UNA columna (con el deck dinámico ~260-324px quedan
+         ~96-160px de rejilla: dos columnas clipearían los vocablos ES). El span 2
+         de los botones anchos vuelve a auto (en 1 columna un span 2 crearía una
+         columna fantasma). */
+      html[data-orient="landscape"] .touch-commands { grid-template-columns: minmax(0, 1fr); }
+      html[data-orient="landscape"] .touch-wide { grid-column: auto; }
+      /* FILA ÚTIL APAISADA — H2 del acta `re/notes/auditoria-landscape-20260727.md`.
+         DEFECTO MEDIDO (126 capturas, los 6 dispositivos, incluido un iPad de 1133 px):
+         los botones caían a 8-28,8 px de ancho con el rótulo recortado. La columna mide
+         244 px y la fila había ido ACUMULANDO botones sin re-derivar su aritmética.
+
+         DOS CAUSAS, las dos arregladas aquí:
+
+         (a) EL `min-width:70px` HUÉRFANO. Estaba escrito para la MODEBAR, pero apuntaba
+         a `.touch-mode` a secas; cuando el ☰ se mudó a la fila útil el 27-07 conservando
+         esa clase («para no perder el CSS que ya lo estiliza», ui/touch.ts), se llevó el
+         min-width con él y se comió 70 de los 244 px. Ahora la regla se scopea a la
+         barra que la pidió.
+
+         (b) DOS CAMINOS AL MISMO SITIO. Los activadores «✓/✗ Sí-No» y «123 Números»
+         existen porque el layout PARTIDO oculta la barra de modo (es su motivo escrito).
+         En apaisado esa barra está VIVA con sus cuatro segmentos, así que ahí duplican
+         lo que ya hay — igual que el ⇄, que además duplica el ítem «⇄ Swap pad side» del
+         menú ☰ (el acta lo llama «una astilla de 8 px»). Se ocultan: es la misma regla
+         de «un menú, un sitio» que ya se aplicó al retirar el ⇄ en vertical, no un
+         recorte de función (los segmentos conmutan las mismas hojas, y «Move» es la
+         vuelta).
+
+         ARITMÉTICA RESULTANTE (columna de 244, gap 6):
+           · piel fiel   → 4 botones (☰ · ⏎ Enter · Esc · Space)        → 56,5 px cada uno
+           · prototipo   → 5 (los 4 + ABC del teclado del sistema)      → 44,0 px exactos
+         Los dos por encima del suelo iOS, y en UNA sola fila (cero coste de alto).
+
+         Y el RÓTULO ENVUELVE en vez de recortarse: a 44 px no cabe «⏎ Enter» en una
+         línea, pero sí en dos dentro del botón — que es lo que pide la norma (nada
+         cizallado) sin reintroducir el defecto del ruling #4 (un rótulo pisando al
+         vecino), porque al envolver el texto no se sale de su caja. */
+      html[data-orient="landscape"] .touch-util-btn {
+        font-size: 11px; line-height: 1.1;
+        white-space: normal; text-overflow: clip;
+      }
+      html[data-orient="landscape"] .touch-util .touch-sheetbtn,
+      html[data-orient="landscape"] .touch-util .u5swap-btn { display: none; }
+      /* Modebar apaisada: 5 items (4 hojas + ⛶; el ☰ se mudó a la fila útil el 27-07) no
+         caben en una fila de 244 px — min-width fuerza el WRAP a 2 filas (3+2: 3×70+12 =
+         222 ≤ 244 y 4×70+18 = 298 > 244, así que nunca son 3), de 78,7×44 px cada
+         segmento. La auditoría 2026-07-25 pedía UNA sola fila; se DESCARTA con la
+         aritmética: 5 objetivos de 44 px de ancho + 4 gaps piden 244 px justos, sin
+         margen para los rótulos ES → `flex-wrap:nowrap` desbordaría la columna (botones
+         pintados sobre el canvas o fuera de la pantalla), cambiando un objetivo pequeño
+         por un overflow, que es peor. Las 2 filas cumplen la norma en los dos ejes; su
+         coste (48 px de alto extra) ya está en el presupuesto vertical de
+         .touch-controls. SCOPE a `.touch-modebar`: ver (a) de la nota de arriba. */
+      html[data-orient="landscape"] .touch-modebar .touch-mode { min-width: 70px; }
+      /* (El ajuste de top del popover ☰ en apaisado se retiró con la iteración A2: el
+         menú es un overlay fijo a pantalla completa, igual en las dos orientaciones.) */
+      /* ── LA MUESCA: SUMADA AL ANCHO, Y SÓLO POR EL LADO DE FUERA ──────────────────
+         El defecto (informe de bugs móviles del 01-08, bug 1, portado a la geometría que
+         de verdad se sirve en `main`): la franja de seguridad entraba como relleno
+         INTERIOR del deck, y por los DOS lados. Con `box-sizing:border-box` eso no
+         ensancha la columna: la VACÍA — y el lado interior, donde no hay ninguna muesca,
+         pagaba lo mismo que el exterior.
+
+         MEDIDO en esta base con la sonda `tools/mobile-fixes/medir.ts`, franja 59 px
+         (iPhone 14/15 Pro) contra el control de franja 0:
+           · 852×393 · celda de comando 84 → 25 px · rótulos cortados 2/25 → 25/25
+           · 568×320 · celda de comando 96 → 37 px · rótulos cortados 0/25 → 25/25
+           · 852×330 · celda de comando 158 → 67 px · rótulos cortados 0/25 → 7/25
+         O sea: el mínimo táctil de iOS son 44 px y la celda se quedaba en 25.
+
+         El arreglo suma la franja al ANCHO (el deck se ENSANCHA en vez de vaciarse) y la
+         gasta como relleno sólo por el borde exterior. El interior conserva sus 8 px.
+         Con la franja en 0 —Android, y cualquier emulador— la geometría es EXACTAMENTE la
+         de antes: `calc(W + 0px)` y `calc(8px + 0px)`.
+         El ⇄ (`data-pad-side`) intercambia el deck de lado, así que INTERCAMBIA TAMBIÉN
+         de qué borde es la franja: por eso son dos reglas y no una.
+         Y `--u5-touch-reserve-x` (el hueco que #app le guarda al deck) es el ancho MEDIDO
+         de esta caja, así que crece con ella sola: no hay nada más que tocar. */
+      html[data-orient="landscape"][data-pad-side="left"] .touch-controls {
+        left: 0;
+        width: calc(var(--u5-deck-w, clamp(260px, 38vw, 324px)) + var(--u5-safe-l));
+        padding-left: calc(8px + var(--u5-safe-l));
+      }
+      html[data-orient="landscape"][data-pad-side="right"] .touch-controls {
+        right: 0;
+        width: calc(var(--u5-deck-w, clamp(260px, 38vw, 324px)) + var(--u5-safe-r));
+        padding-right: calc(8px + var(--u5-safe-r));
+      }
+      /* Cruceta AL LADO de los comandos (fila, como en portrait) con celdas COMPACTAS
+         de 44px: la pila vertical de L4 (cruceta 200px SOBRE los comandos) devoraba la
+         columna de 390px y dejaba ~10px a la rejilla (medido en la verificación del
+         carril mobile-ux). 3×44+gaps=140px de cruceta + ~190px de rejilla caben en el
+         max-width 46vw (≈388px con 844 de ancho). flex:1 + min-height:0 = eslabón de
+         la cadena UX-2 (el viejo max-height:34vh queda retirado — la rejilla flexa). */
+      html[data-orient="landscape"] .touch-main {
+        flex-direction: row; align-items: stretch; gap: 8px;
+        flex: 1 1 auto; min-height: 0; align-self: stretch;
+      }
+      html[data-orient="landscape"] .touch-dpad {
+        /* 44px = suelo iOS (medía 42 en la auditoría 2026-07-25: el control MÁS usado
+           era el más pequeño). Aritmética del interior de la columna (260 − 2×8 de
+           padding = 244): 3×44 + 2×4 de gap = 140 de cruceta + 8 de gap + 96 de
+           rejilla = 244 EXACTO, o sea que los comandos conservan los 96 px que ya
+           medían (el vocablo ES más largo, «Disparar» a 13 px, pide ~70). Por eso NO
+           se sube a 56 como pedía el encargo: 3×56+12 = 180 dejaría 56 px de rejilla
+           y cizallaría lateralmente TODOS los rótulos — cambiar un defecto por otro
+           peor. Con alto de sobra sí sube a 48 (tier de abajo). */
+        grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(3, 44px);
+        gap: 4px; align-self: center; flex: 0 0 auto;
+      }
+      /* Con ALTO de sobra (≥360 px: la hoja pasa de 196 px y la cruceta de 48 pide
+         152) sube al suelo ANDROID de 48 dp. Por debajo se queda en 44 = suelo iOS,
+         que es lo único que cabe en el apaisado corto de Safari. La rejilla de
+         comandos queda en 84 px, aún por encima del vocablo ES más largo (~70). */
+      @media (orientation: landscape) and (min-height: 360px) {
+        html[data-orient="landscape"] .touch-dpad {
+          grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(3, 48px);
+        }
+      }
+      /* Fila útil AL BORDE INFERIOR de la columna (ruling #3): el margin-top:auto la
+         ancla abajo y el espacio ganado sube a la rejilla (sheets flex:1). */
+      html[data-orient="landscape"] .touch-util { margin-top: auto; }
+      /* (El botón ⇄ de la fila útil —.touch-padtoggle— se RETIRÓ el 27-07: el cambio de
+         lado del pad vive ahora como ítem del menú ☰, alcanzable en las dos
+         orientaciones. Sus reglas se limpiaron con él; el ESPEJO de abajo sigue vivo —
+         lo dispara el mismo dato `data-pad-side`, ahora escrito desde el menú.) */
+      /* ESPEJO DEL INTERIOR (mismo ítem). El ⇄ movía la COLUMNA de lado pero no espejaba
+         su contenido: con el pad a la derecha, la cruceta seguía pegada al canvas (el
+         borde INTERIOR) y los comandos al filo exterior de la pantalla — o sea que el
+         control más usado quedaba lo más lejos posible del pulgar que acaba de pedirlo.
+         `row-reverse` sobre la fila principal y la utilitaria espeja el interior entero,
+         que es lo que el gesto significa. Vale para las dos orientaciones: en vertical la
+         cruceta se va al filo derecho de la banda, en apaisado al filo exterior de la
+         columna. (El `--u5-util-clear` sigue en padding-right: en táctil los FAB están
+         ocultos y vale 0, así que el espejo no lo desplaza.) */
+      html.u5-touch[data-pad-side="right"] .touch-main,
+      html.u5-touch[data-pad-side="right"] .touch-util {
+        flex-direction: row-reverse;
+      }
+      /* ☰ shell del deck (ruling #5): en TÁCTIL los FAB fijos se ocultan (estorbaban
+         sobre la esquina del canvas en juego) y sus funciones viven en este popover.
+         La intro NO tiene la clase u5-touch → allí los FAB siguen (piel/idioma antes
+         de jugar, veredicto #71 intacto). Escritorio intacto. */
+      html.u5-touch .u5shell-gear, html.u5-touch .u5skinsw, html.u5-touch .u5langsw {
+        display: none !important;
+      }
+      .touch-shellbtn { flex: 0 0 auto; min-width: 44px; font-size: 16px; }
+      /* MENÚ ☰ = OVERLAY A PANTALLA COMPLETA (iteración A2 del usuario, 27-07): por
+         encima de TODO el UI, juego incluido (z 70 > paneles 60 > deck 40), y
+         dimensionado para que todos los ítems quepan SIN scroll (5 ítems ≈ 300 px:
+         caben en cualquier teléfono del censo). Sustituye al popover anclado bajo el ☰
+         (auditoría 2026-07-25): el anclado medido queda jubilado — un overlay a
+         viewport no depende del alto de la barra, del idioma ni de la orientación.
+         El fondo es el propio contenedor: tocarlo cierra (touch.ts). Nada de marrón:
+         el lenguaje visual del panel lo pone la piel de botones (u5-btn-ui). */
+      .touch-shellmenu {
+        position: fixed; inset: 0; z-index: 70;
+        display: none; flex-direction: column; gap: 10px;
+        align-items: center; justify-content: center;
+        padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right))
+          max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+        background: rgba(2, 2, 14, 0.88);
+        pointer-events: auto;
+      }
+      .touch-shellmenu.on { display: flex; }
+      .touch-shellitem {
+        padding: 12px 16px; font-size: 16px; text-align: center; white-space: nowrap;
+        width: min(320px, 86vw); min-height: 48px;
+      }
+      /* «✗ Cerrar» SIEMPRE el último de la lista: lo monta el constructor del deck y el
+         ▤ lo añade después (installLayoutToggleButton), así que el orden del DOM no
+         basta. Es el único ítem que no cambia nada — su sitio es el final. */
+      .touch-shellclose { order: 10; }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

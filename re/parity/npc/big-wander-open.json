@@ -1,0 +1,30 @@
+{
+ "name": "big-wander-open",
+ "kind": "wander",
+ "note": "Big-wander (aiType 2): maxdist=0 → sin límite de radio. Jugador en la MISMA planta 0 que el NPC (gate de planta 0x1251: el wander sólo corre en la planta del jugador).",
+ "spec": {
+  "seed": 48879,
+  "location": 18,
+  "floor": 0,
+  "hour": 14,
+  "npc": {
+   "slot": 7,
+   "aiType": 2,
+   "post": {
+    "x": 16,
+    "y": 16
+   },
+   "start": {
+    "x": 16,
+    "y": 16
+   },
+   "type": 112
+  },
+  "player": {
+   "floor": 0,
+   "x": 0,
+   "y": 0
+  },
+  "turns": 30
+ }
+}

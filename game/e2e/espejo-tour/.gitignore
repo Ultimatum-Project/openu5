@@ -1,0 +1,32 @@
+# ⚠ SUPERADO por #228 (17-08) y #376 (17-08): `saves/`, `routes/` y `routes-ad/` viven hoy
+# FUERA del índice (ignore en el .gitignore RAÍZ; guardas test_gam_sin_roster_ea.py y
+# test_rutas_espejo_sin_prosa_tlk_ea.py). El bloque de abajo se conserva como historia del
+# ruling de 07-26 — su premisa «NO son material de EA» cayó cuando el triaje midió el roster
+# de INIT.GAM en los .gam y la prosa TLK verbatim en los route JSON.
+#
+# CHECKPOINTS DEL ESPEJO — TRACKED desde 2026-07-26.
+#
+# La versión anterior de este fichero ignoraba `saves/` con esta nota: «checkpoints regenerables del
+# replay (se decidirá commitearlos tras la calibración de Fase B para habilitar U5_ESPEJO_FROM sin
+# re-correr)». La Fase B se cerró hace tiempo, la condición venció y la decisión quedó sin tomar —
+# así que esto no es una excepción al régimen: es ejecutar lo que quedó aplazado.
+#
+# Por qué se trackean (ruling del lead, 2026-07-26):
+#  · REGENERARLOS CUESTA HORAS EN SERIE. La cadena part01→24 se corre parte a parte, cada una
+#    importando el checkpoint de la anterior: entre 1 y 8 h según carga. Sin commit, ese trabajo
+#    vive en UNA máquina y muere con el worktree.
+#  · Habilitan `U5_ESPEJO_FROM` (bisecar desde una parte concreta) sin re-correr la cadena — que es
+#    literalmente lo que perseguía la nota original.
+#  · PRECEDENTE DIRECTO: `game/e2e/grandtour/saves/` ya está tracked, con ficheros del mismo tipo
+#    (.gam + .sidecar.json) y por el mismo motivo. No se abre categoría nueva de material.
+#  · Coste: ~488 KB el directorio entero. El churn de binarios es asumible; si algún día molesta,
+#    se revisita CON DATOS.
+#
+# Alcance: TODOS — `part*` (LP1) y `ad*` (AD), con sus sidecars.
+#
+# ⚠ NO son material de EA: son estados de partida generados por el port, no ficheros del original.
+
+# Artefactos por-corrida del espejo — incluye los VÍDEOS de la pasada U5_ESPEJO_VIDEO=1
+# (.artifacts/video-run/) y su concatenado (.artifacts/video-out/, tools/tour-video-concat.sh).
+# Frames del juego JAMÁS tracked.
+.artifacts/

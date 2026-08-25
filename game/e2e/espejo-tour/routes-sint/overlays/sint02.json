@@ -1,0 +1,16 @@
+{
+  "entry": {
+    "checkpoint": "sint01",
+    "entryClock": {
+      "hour": 10,
+      "minute": 0
+    },
+    "note": "Encadena del checkpoint de sint01."
+  },
+  "segments": {
+    "sint02-g04": {
+      "note": "sala-combate.",
+      "skip": "pendiente-runner"
+    }
+  }
+}

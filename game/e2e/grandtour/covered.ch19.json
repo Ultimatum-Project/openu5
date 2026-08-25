@@ -1,0 +1,18 @@
+{
+  "chapter": "ch19",
+  "coveredIds": [
+    "artifact-wooden-box",
+    "cell-doom-room",
+    "cell-doom-trap",
+    "command-e",
+    "command-k",
+    "command-s",
+    "command-u",
+    "dungeon-doom",
+    "endgame-doom-floor8",
+    "endgame-rescue-lb"
+  ],
+  "notes": [
+    "LA LIBERACIÓN DE LORD BRITISH — cierre de la troncal del tour. Vía FIEL #179 jugada: descenso real ch17→N7 (driver compartido doom-descent.ts), costura de posicionamiento N7→f6(4,7) (bolsillo desconectado, derivación BFS en cabecera; semilla idéntica a ch37-r15), paso ESTE real al foso f6(5,7) → cm127, absorción JUGADA por teclas (cada miembro camina a (5,2) bajo el alma 0x3c; gancho COMBAT 0x0b8b → SJOG 0x1ea4), tablero vacío → endgame completo (delays de animación a 0 bajo webdriver — main.ts; beats de texto por tecla): caja (fork 0x08c2, .GAM 0x219) → «FOLLOW!»/orbe → moongate → disolución → Homecoming → The Dream → pergamino («Be it known…») → freeze terminal. El desenlace NO escribe el .GAM (endgame_main no retorna — acta #179 §4) ⇒ sin checkpoint de salida: ch19 es el ÚLTIMO capítulo. CIERRE DE COBERTURA de la troncal (README §criterios #5): ∪ covered ≠ manifest — censo al sellar ch19 (2026-08-22, ch19 incluido): 217/742 ids cubiertos por la troncal+salas; el hueco (525) es de las familias npc(74)/search(63)/equip(48)/spell(46)/enemy(45)/sign(42)/shop(41)/floor(40)/… — contenido de capítulos de travesía/localización FUERA de la troncal (README §travesía), trackeado por el manifiesto; no se fabrica cobertura para cerrar la cifra."
+  ]
+}

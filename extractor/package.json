@@ -1,0 +1,45 @@
+{
+  "name": "extractor",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "extract": "tsx src/cli.ts",
+    "test": "vitest run"
+  },
+  "//fflate": [
+    "🔴 ESTA NOTA VA EN LA RAÍZ, NO DENTRO DE `dependencies`: npm trata TODA clave de",
+    "`dependencies` como una especificación de paquete, así que un `\"//fflate\"` ahí",
+    "dentro haría fallar el `npm install` — un comentario que rompe la instalación.",
+    "Las claves desconocidas de primer nivel sí las ignora.",
+    "",
+    "fflate = lector de .zip de `collectZip` (src/browser.ts), cargado PEREZOSAMENTE con",
+    "un import() dinámico: sólo lo descarga quien suelta un zip.",
+    "",
+    "DIRECTA a propósito: hasta el 07-08 estaba en el árbol SÓLO de forma TRANSITIVA",
+    "(posthog-js@1.412.1 declara `fflate: ^0.4.8`). Importarla así compila hoy y se rompe",
+    "el día que posthog la mueva o la retire — depender de una transitiva es depender de",
+    "la decisión de otro paquete.",
+    "",
+    "FIJADA a 0.4.9, ni rango ni la última, por una razón de VERIFICACIÓN: 0.4.9 es lo",
+    "que hay en disco vía posthog y por tanto lo único contra lo que se ha podido medir",
+    "en navegador sin correr un `npm install` (que en esta flota toca el árbol compartido",
+    "y es del orquestador). Pinear una versión que NO se ha ejecutado sería verificar un",
+    "artefacto distinto del que se publica. Subirla es decisión legítima del orquestador,",
+    "pero exige RE-CORRER la sonda, no sólo recompilar.",
+    "",
+    "El código usa `unzipSync(data)` con UN argumento: la forma común a 0.4.x y 0.8.x (el",
+    "segundo parámetro, el filtro, no existe en la 0.4)."
+  ],
+  "dependencies": {
+    "fflate": "0.4.9",
+    "pngjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/pngjs": "^6.0.5",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

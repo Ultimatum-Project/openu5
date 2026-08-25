@@ -1,0 +1,29 @@
+{
+ "name": "level-gate-silent",
+ "note": "Nivel 3 < c\u00edrculo 8 \u2192 falla silenciosa; g_time_spell no se toca (pero man\u00e1+hechizo s\u00ed se gastan).",
+ "spec": {
+  "seed": 1,
+  "spell": "An_Tym",
+  "casterIndex": 0,
+  "ctx": {
+   "location": 0,
+   "inCombat": false
+  },
+  "roster": [
+   {
+    "class": "M",
+    "mp": 8,
+    "level": 3
+   }
+  ],
+  "spellQuantities": {
+   "47": 1
+  }
+ },
+ "expect": {
+  "time_spell": 0
+ },
+ "compareFields": [
+  "time_spell"
+ ]
+}

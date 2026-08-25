@@ -1,0 +1,604 @@
+{
+  "version": 1,
+  "note": "Procedencia POR ORIGEN del corpus de datos extraídos (i18n F0). Cada superficie = fichero/pool fuente con su cadena de extracción + hash de contenido (deriva). Regenera: node tools/gen-data-strings-manifest.mjs. Valida: tests/data-strings-manifest.test.ts. Normalización del hash: strings con ≥1 letra → NFC → sin recortar → dedup+orden (code-unit) → JSON.stringify → sha256. Ver docs/i18n/data-strings-manifest.md.",
+  "cubes": {
+    "L": "traducible libre (texto de juego)",
+    "M": "mecánica (INPUT del jugador: keyword/sílaba/mantra — alias, no traducir a ciegas)",
+    "X": "técnico (nombre de fichero/código/basura binaria — NO traducir)",
+    "L+M": "mixto (texto libre + una elección mecánica)"
+  },
+  "totals": {
+    "L": {
+      "surfaces": 26,
+      "strings": 4217,
+      "words": 27015
+    },
+    "M": {
+      "surfaces": 7,
+      "strings": 1008,
+      "words": 1009
+    },
+    "L+M": {
+      "surfaces": 1,
+      "strings": 30,
+      "words": 1403
+    },
+    "X": {
+      "surfaces": 9,
+      "strings": 441,
+      "words": 652
+    }
+  },
+  "surfaces": [
+    {
+      "id": "talk/towne.json#text",
+      "cube": "L",
+      "source": [
+        "TOWNE.TLK",
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/tlk.ts",
+      "chain": "TOWNE.TLK (bloques comprimidos) → parseTlkFile + diccionario talkCompressedWords (DATA.OVL) → NPCs {name/description/greeting/job/bye + qa[keywords,answer]}",
+      "cite": "extractor/src/parsers/tlk.ts · re/notes/dataovl-strings.md (talkCompressedWords)",
+      "strings": 834,
+      "words": 5658,
+      "hash": "sha256:f8971d5e322b204c966dbbe6478c946f6dd7d6349c69333f364a95e8bff43cf6"
+    },
+    {
+      "id": "talk/towne.json#keywords",
+      "cube": "M",
+      "source": [
+        "TOWNE.TLK",
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/tlk.ts",
+      "chain": "TOWNE.TLK (bloques comprimidos) → parseTlkFile + diccionario talkCompressedWords (DATA.OVL) → NPCs {name/description/greeting/job/bye + qa[keywords,answer]}",
+      "cite": "extractor/src/parsers/tlk.ts · re/notes/dataovl-strings.md (talkCompressedWords)",
+      "strings": 360,
+      "words": 360,
+      "hash": "sha256:103a889523b0ebafa91679b2dc6f0f67c6c64a0bf140477401c08e34ee5f48f8"
+    },
+    {
+      "id": "talk/castle.json#text",
+      "cube": "L",
+      "source": [
+        "CASTLE.TLK",
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/tlk.ts",
+      "chain": "CASTLE.TLK (bloques comprimidos) → parseTlkFile + diccionario talkCompressedWords (DATA.OVL) → NPCs {name/description/greeting/job/bye + qa[keywords,answer]}",
+      "cite": "extractor/src/parsers/tlk.ts · re/notes/dataovl-strings.md (talkCompressedWords)",
+      "strings": 651,
+      "words": 4350,
+      "hash": "sha256:95c78a9be5612b8fa10813a459a7d3c2cd81677c34644f887bb2a8cff0d222ab"
+    },
+    {
+      "id": "talk/castle.json#keywords",
+      "cube": "M",
+      "source": [
+        "CASTLE.TLK",
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/tlk.ts",
+      "chain": "CASTLE.TLK (bloques comprimidos) → parseTlkFile + diccionario talkCompressedWords (DATA.OVL) → NPCs {name/description/greeting/job/bye + qa[keywords,answer]}",
+      "cite": "extractor/src/parsers/tlk.ts · re/notes/dataovl-strings.md (talkCompressedWords)",
+      "strings": 291,
+      "words": 291,
+      "hash": "sha256:d6a7c9eae750d4226298566420086dca6c991f518cbbf9e55191711df85485bb"
+    },
+    {
+      "id": "talk/keep.json#text",
+      "cube": "L",
+      "source": [
+        "KEEP.TLK",
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/tlk.ts",
+      "chain": "KEEP.TLK (bloques comprimidos) → parseTlkFile + diccionario talkCompressedWords (DATA.OVL) → NPCs {name/description/greeting/job/bye + qa[keywords,answer]}",
+      "cite": "extractor/src/parsers/tlk.ts · re/notes/dataovl-strings.md (talkCompressedWords)",
+      "strings": 447,
+      "words": 3819,
+      "hash": "sha256:898c7642366d394f6e73b9cafe76063d74eb4acc94edf32db7f917342906c130"
+    },
+    {
+      "id": "talk/keep.json#keywords",
+      "cube": "M",
+      "source": [
+        "KEEP.TLK",
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/tlk.ts",
+      "chain": "KEEP.TLK (bloques comprimidos) → parseTlkFile + diccionario talkCompressedWords (DATA.OVL) → NPCs {name/description/greeting/job/bye + qa[keywords,answer]}",
+      "cite": "extractor/src/parsers/tlk.ts · re/notes/dataovl-strings.md (talkCompressedWords)",
+      "strings": 199,
+      "words": 200,
+      "hash": "sha256:9aeea3a47a5f241bdd58d93075732c03e10e3159cb8ffb6db03e830caf30e021"
+    },
+    {
+      "id": "talk/dwelling.json#text",
+      "cube": "L",
+      "source": [
+        "DWELLING.TLK",
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/tlk.ts",
+      "chain": "DWELLING.TLK (bloques comprimidos) → parseTlkFile + diccionario talkCompressedWords (DATA.OVL) → NPCs {name/description/greeting/job/bye + qa[keywords,answer]}",
+      "cite": "extractor/src/parsers/tlk.ts · re/notes/dataovl-strings.md (talkCompressedWords)",
+      "strings": 232,
+      "words": 1690,
+      "hash": "sha256:225a34f4141eb3350a644a6111d6f707d1a3f74dec306964a3f3b3950cec6d60"
+    },
+    {
+      "id": "talk/dwelling.json#keywords",
+      "cube": "M",
+      "source": [
+        "DWELLING.TLK",
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/tlk.ts",
+      "chain": "DWELLING.TLK (bloques comprimidos) → parseTlkFile + diccionario talkCompressedWords (DATA.OVL) → NPCs {name/description/greeting/job/bye + qa[keywords,answer]}",
+      "cite": "extractor/src/parsers/tlk.ts · re/notes/dataovl-strings.md (talkCompressedWords)",
+      "strings": 118,
+      "words": 118,
+      "hash": "sha256:e1f3dceb21094ad17eac83a080c0af40b0acf6da543b4a72fa37cf2864b6419b"
+    },
+    {
+      "id": "story.json",
+      "cube": "L",
+      "source": [
+        "STORY.DAT"
+      ],
+      "parser": "extractor/src/parsers/story.ts",
+      "chain": "STORY.DAT → story.ts → story.json",
+      "cite": "extractor/src/parsers/story.ts",
+      "strings": 20,
+      "words": 1921,
+      "hash": "sha256:cb7e66915f214461ebcca54e02c9db1625063b4c08619e886cbc0cc20489da8d"
+    },
+    {
+      "id": "signs.json",
+      "cube": "L",
+      "source": [
+        "SIGNS.DAT",
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/signs.ts",
+      "chain": "SIGNS.DAT → signs.ts → signs.json",
+      "cite": "extractor/src/parsers/signs.ts",
+      "strings": 73,
+      "words": 603,
+      "hash": "sha256:caec051613280bf4d019c73c3fb52c0090607f505891a991c3619fddf84941f9"
+    },
+    {
+      "id": "shoppe.json",
+      "cube": "L",
+      "source": [
+        "SHOPPE.DAT",
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/shoppe.ts",
+      "chain": "SHOPPE.DAT → shoppe.ts → shoppe.json",
+      "cite": "extractor/src/parsers/shoppe.ts (dict talkCompressedWords)",
+      "strings": 190,
+      "words": 2549,
+      "hash": "sha256:495d9111417e3c1bfc06b1e89e9dcd80b043e125b8bdf8578cfa1f5353494767"
+    },
+    {
+      "id": "look2.json",
+      "cube": "L",
+      "source": [
+        "LOOK2.DAT"
+      ],
+      "parser": "extractor/src/parsers/look2.ts",
+      "chain": "LOOK2.DAT → look2.ts → look2.json",
+      "cite": "extractor/src/parsers/look2.ts · re/notes/lookobj.md",
+      "strings": 196,
+      "words": 503,
+      "hash": "sha256:4310cd7e9a48f112d894603f3b7aed02b0cea9814047886c37d9b4507ed9d9b0"
+    },
+    {
+      "id": "intro-scenes.json",
+      "cube": "L",
+      "source": [
+        "DATA.OVL",
+        "STORY.DAT"
+      ],
+      "parser": "extractor/src/parsers/intro-scenes.ts",
+      "chain": "DATA.OVL → intro-scenes.ts → intro-scenes.json",
+      "cite": "extractor/src/parsers/intro-scenes.ts",
+      "strings": 21,
+      "words": 1936,
+      "hash": "sha256:5d0cc80163eb58beb0fbd4090e9e2793f20761e534c3ae40cfc29b1a72fb5390"
+    },
+    {
+      "id": "questions.json",
+      "cube": "L+M",
+      "source": [
+        "QUESTION.DAT"
+      ],
+      "parser": "extractor/src/parsers/questions.ts",
+      "chain": "QUESTION.DAT → questions.ts → questions.json",
+      "cite": "extractor/src/parsers/questions.ts (gitana: narración L + elección de virtud M)",
+      "strings": 30,
+      "words": 1403,
+      "hash": "sha256:ee8e279e12261e311fb7840a86643a684710041503973eccba90c4f40b05c59d"
+    },
+    {
+      "id": "endgame.json",
+      "cube": "L",
+      "source": [
+        "ENDMSG.DAT"
+      ],
+      "parser": "extractor/src/parsers/endgame-msg.ts",
+      "chain": "ENDMSG.DAT → endgame-msg.ts → endgame.json",
+      "cite": "extractor/src/parsers/endgame-msg.ts · re/notes/endgame-derivation.md",
+      "strings": 20,
+      "words": 790,
+      "hash": "sha256:d289ca538c642b7cafec3829acd94c36473e57a0378f5349d67a0e47691a0a3f"
+    },
+    {
+      "id": "demo-scene.json#titles",
+      "cube": "L",
+      "source": [
+        "MISCMAPS.DAT"
+      ],
+      "parser": "extractor/src/parsers/demo-scene.ts",
+      "chain": "MISCMAPS.DAT → demo-scene.ts → titles («The Summoning»/«The Journey»/«The Arrival»/«The Welcoming»)",
+      "cite": "extractor/src/parsers/demo-scene.ts · re/notes/demo-scene-data.md",
+      "strings": 4,
+      "words": 8,
+      "hash": "sha256:e8371cac68dfe3bbdf7dbf58a49ea1d02c4aac95117593681dfed2fab1a83278"
+    },
+    {
+      "id": "data.json#display-nouns",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → display-nouns",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 340,
+      "words": 567,
+      "hash": "sha256:65a02fb3fc4aff2a6334e6c4377f46f986acc8c11fcaa1448cf97a938f7f424c"
+    },
+    {
+      "id": "data.json#spellRunes",
+      "cube": "M",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → spellRunes",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 24,
+      "words": 24,
+      "hash": "sha256:7f3b48a4bb3e516c1f2f3d9585d8c46184a1611429c06ab982e3e715fbcfe2ac"
+    },
+    {
+      "id": "data.json#mantras",
+      "cube": "M",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → mantras",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 8,
+      "words": 8,
+      "hash": "sha256:e0d92a94affa57f0b7b902f756ace36c6af2a434f4c9504d92d15699eb5aa16c"
+    },
+    {
+      "id": "data.json#wordsOfPower",
+      "cube": "M",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → wordsOfPower",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 8,
+      "words": 8,
+      "hash": "sha256:cd9f74db0953c1137d5829fad17382b6b845231ee3ed42c45307921654beef92"
+    },
+    {
+      "id": "data.json#talkCompressedWords",
+      "cube": "X",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → talkCompressedWords",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 118,
+      "words": 118,
+      "hash": "sha256:b4832a4072a80c3d0aabba70f8b6530b7ba6040969e04ab5195f6d3c5726e82b"
+    },
+    {
+      "id": "data.json#pool/scrollSpellCodes",
+      "cube": "X",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/scrollSpellCodes",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 8,
+      "words": 8,
+      "hash": "sha256:23a2a09964ed747f18f65eca5b7eed19e464afb2fd0ce99eaa0acc31dcb39cac"
+    },
+    {
+      "id": "data.json#pool/parenDigitStrings",
+      "cube": "X",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/parenDigitStrings",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 0,
+      "words": 0,
+      "hash": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "id": "data.json#pool/weaponNamesShort",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/weaponNamesShort",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 15,
+      "words": 29,
+      "hash": "sha256:4ddd659634d8bddaa8f7209c31d91cbe4ba5bccf8730b77927d86422fd005752"
+    },
+    {
+      "id": "data.json#pool/classAndStatusNames",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/classAndStatusNames",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 16,
+      "words": 19,
+      "hash": "sha256:fb4c0af64fa55b598b85c57896601e53dd2a80ff6554d73bcd4b0800e7a21031"
+    },
+    {
+      "id": "data.json#pool/spellMnemonicCodes",
+      "cube": "X",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/spellMnemonicCodes",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 48,
+      "words": 48,
+      "hash": "sha256:fe39493a258b6f884a279d43d1a2bc6f78a7a0188199d422e45bded34e99ae70"
+    },
+    {
+      "id": "data.json#pool/assetFilenames1",
+      "cube": "X",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/assetFilenames1",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 31,
+      "words": 31,
+      "hash": "sha256:6fbac6133f6db218b0ca721385c3fa92146eca4ea944eabbcc950bd7378f66c2"
+    },
+    {
+      "id": "data.json#pool/equipmentNames",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/equipmentNames",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 20,
+      "words": 29,
+      "hash": "sha256:3cac91d60f6715fb87520d22079d63f026fbc42f47596e6225d27be047bb0daa"
+    },
+    {
+      "id": "data.json#pool/mapFilesDungeonNames",
+      "cube": "X",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/mapFilesDungeonNames",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 137,
+      "words": 249,
+      "hash": "sha256:638d82873cfbc467d68f0f0e9ee84b724cb567d5f7109bd0048ba93af21b5457"
+    },
+    {
+      "id": "data.json#pool/introMenuU4Transfer",
+      "cube": "X",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/introMenuU4Transfer",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 84,
+      "words": 180,
+      "hash": "sha256:7e21f4838ca5faae0cf7f7c1a7c0bfccd396422e50f951c02aaed09d3fbca7fe"
+    },
+    {
+      "id": "data.json#pool/mapDataFilenames",
+      "cube": "X",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/mapDataFilenames",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 7,
+      "words": 10,
+      "hash": "sha256:944886624bd49cbb62fa0d1667952df32c805252065b28b4405caf65eb8d61f7"
+    },
+    {
+      "id": "data.json#pool/statusBurningPoisoned",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/statusBurningPoisoned",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 2,
+      "words": 2,
+      "hash": "sha256:3fb6c64d4baea979a48e2804d6cfe88485f75e1ea103c6140fe94538ea840dae"
+    },
+    {
+      "id": "data.json#pool/campRestTransportMsgs",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/campRestTransportMsgs",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 41,
+      "words": 82,
+      "hash": "sha256:14aa00e545ee4e955f575b5a464390297f7c402975f3c247d4ddacd18f05c084"
+    },
+    {
+      "id": "data.json#pool/spellPushEffectMsgs",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/spellPushEffectMsgs",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 107,
+      "words": 209,
+      "hash": "sha256:a3b53ea5ec888aef14499184e2a581e73a09e7d18f9a414d57affaaae876be43"
+    },
+    {
+      "id": "data.json#pool/innNoRoomMsgs",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/innNoRoomMsgs",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 13,
+      "words": 37,
+      "hash": "sha256:90d1d41cc51d1d451cf8d97aa53d51b265c2a1c91d488c3371e0f33c65e92fa1"
+    },
+    {
+      "id": "data.json#pool/innGuestRegisterDialog",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/innGuestRegisterDialog",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 23,
+      "words": 113,
+      "hash": "sha256:11f7dcba598d2595560d6130fd19e778e5a7524d13fde594e16a249b52203b65"
+    },
+    {
+      "id": "data.json#pool/textWorldCombatDungeon",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/textWorldCombatDungeon",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 406,
+      "words": 927,
+      "hash": "sha256:c314974d4a6ddfff2bd6cabdc4de3e533e1b4893fa2a949bf601373795e03a7b"
+    },
+    {
+      "id": "data.json#pool/yesNoResponses84bd",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/yesNoResponses84bd",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 2,
+      "words": 2,
+      "hash": "sha256:e16cfa71b38a897914b0252363f3358e0706b45c993bb7a4fc11131852da4ed1"
+    },
+    {
+      "id": "data.json#pool/textShopLookGather",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/textShopLookGather",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 115,
+      "words": 284,
+      "hash": "sha256:cc254b858e08b59d5b08c1d1f8eeaa4bfecdd8d5c646c8fed623a84f447085b2"
+    },
+    {
+      "id": "data.json#pool/scrollShortforms",
+      "cube": "X",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/scrollShortforms",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 8,
+      "words": 8,
+      "hash": "sha256:a2e274bc3905b43bcf248b57e251b8ec14c42759a61b5de1e85beccac8cbe79c"
+    },
+    {
+      "id": "data.json#pool/textItemsWearUse",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/textItemsWearUse",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 337,
+      "words": 700,
+      "hash": "sha256:5f56382031e8abc45d7fca45f27f76911c0e12c4961561b32f7f397971984cb5"
+    },
+    {
+      "id": "data.json#pool/barKeepYesNo9fe2",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/barKeepYesNo9fe2",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 6,
+      "words": 6,
+      "hash": "sha256:24d4a3d95b3ba9963f77b7c9628a60d0bd44d654acd2dae3be5a2c1131a6628b"
+    },
+    {
+      "id": "data.json#pool/textCreateCharCmdsCrt",
+      "cube": "L",
+      "source": [
+        "DATA.OVL"
+      ],
+      "parser": "extractor/src/parsers/dataovl.ts",
+      "chain": "DATA.OVL → parseDataOvl → pool/textCreateCharCmdsCrt",
+      "cite": "extractor/src/parsers/dataovl.ts · re/notes/dataovl-strings.md · re/notes/dataovl-tables.md",
+      "strings": 86,
+      "words": 182,
+      "hash": "sha256:9ade8df6fea301dc5031e8f5e30f32a4b6aa74fc3923b5bd1f1fea4f274173ec"
+    }
+  ]
+}

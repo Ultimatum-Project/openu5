@@ -1,0 +1,152 @@
+# GUION DE TECLAS de la partida «blackthorn» (momento-06) — La cámara de Blackthorn
+#
+# LA ESCENA ES LA LLAVE. Este momento es el que el usuario reportó como «habitación sellada
+# sin skull key» (§1-sexies del arnés nació de ahí): bolsa de 14 celdas y UNA salida, la
+# puerta MÁGICA (tile 0x97) de (15,16) — que sólo abre la skull key, y el save trae tres.
+# Enseñar eso ES el momento: el cuarto cerrado y la llave que lo abre.
+#
+# Rumbos MEDIDOS desde (15,14): N 2 · S 1 · E 1 · O 1. La puerta queda dos al sur.
+#
+# 🔴 EL ÍNDICE 16 DEL SKULL KEY ESTÁ DERIVADO Y EL PREFIJO ESTÁ COMPROBADO EN CAPTURA — y
+# hacen falta LAS DOS COSAS. La primera versión de este prefijo llevaba QUINCE flechas
+# donde van dieciséis (un miscount a mano), y quince es «White» — una POCIÓN, que abre un
+# prompt «On who:» que se traga TODAS las teclas restantes. El vídeo habría salido con 100
+# teclas contra un prompt invisible, sin error, sin log y sin que nada fallara. Lo cazó
+# MIRAR LA CAPTURA. Por eso las repeticiones de este fichero se GENERAN, no se cuentan.
+#
+# 🔴 Y el (U)se de la llave es DIRECCIONAL con getdir DESPUÉS de elegir el ítem
+# (main.ts:4567-4572, CAST.OVL 0x18dd): la llave se descuenta al SELECCIONAR, así que un
+# Enter sin flecha detrás gasta una llave y no abre nada.
+#
+# 🔴🔴 LA LLAVE NO ABRE LA PUERTA: LA DESMAGIFICA. Y SIN EL (O)PEN NO SE PASA — ficha #232.
+# Este guión salió a vídeo sin el (o) de abajo, y el resultado fue exactamente lo que se ve
+# en la grabación del 13-08: «Which way? / Skull Key / South / Blocked! ×3». Se leyó como
+# defecto del port («la llave se gasta 3→2 y el mapa no cambia») y NO LO ERA — el mapa SÍ
+# cambia. `useSkullKey` hace 0x97 → **0xB8**, que es la puerta CERRADA, y el bitmap de
+# pasabilidad del binario (DATA.OVL fileoff 0x54e4, consumidor kernel 0x2bd4) tiene el bit
+# 184 PUESTO = bloquea, igual que el 151 de partida. Andar contra ella da «Blocked!» en el
+# original y en el clon; el tile pisable (0x44 BrickFloor) sólo llega con (O)pen.
+# ⇒ la secuencia COMPLETA de la cámara son TRES comandos, no dos: (U)se+llave+dir · (O)pen+dir
+# · andar. Quien recorte el (o) vuelve a comprar el mismo falso positivo.
+l
+ArrowUp
+ArrowUp
+ArrowUp
+ArrowDown
+ArrowDown
+l
+ArrowLeft
+ArrowLeft
+ArrowRight
+l
+ArrowRight
+ArrowRight
+ArrowLeft
+l
+ArrowDown
+ArrowDown
+u
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+Enter
+ArrowDown
+o
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+l
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+l
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+l
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+l
+ArrowDown
+ArrowUp
+ArrowUp
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowDown
+ArrowDown
+ArrowDown
+l
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowUp
+ArrowUp
+l
+ArrowLeft
+l
+ArrowUp
+l
+ArrowDown
+l
+ArrowRight
+ArrowLeft
+ArrowRight
+ArrowLeft
+ArrowRight
+ArrowUp
+ArrowDown
+ArrowUp
+ArrowDown
+ArrowLeft
+ArrowRight
+ArrowUp
+ArrowDown
+ArrowLeft
+ArrowRight
+ArrowUp
+ArrowDown
+ArrowUp
+ArrowUp
+ArrowDown

@@ -1,0 +1,20 @@
+{
+  "name": "gypsy-to-endgame-seed0",
+  "seed": 0,
+  "gypsy": {
+    "base": { "strength": 15, "dexterity": 15, "intelligence": 15 },
+    "answers": ["A", "B", "A", "B", "A", "B", "A"]
+  },
+  "members": [
+    { "str": 15, "dex": 15, "status": "G" },
+    { "str": 12, "dex": 18, "status": "G" },
+    { "str": 20, "dex": 10, "status": "G" }
+  ],
+  "phases": [
+    { "kind": "outdoor", "tile": 5, "floor": 0, "hour": 12, "ticks": 8 },
+    { "kind": "bridge", "hour": 12 },
+    { "kind": "town", "hour": 12, "ticks": 6 },
+    { "kind": "outdoor", "tile": 5, "floor": 0, "hour": 13, "ticks": 4 }
+  ],
+  "endgameTime": { "year": 141, "month": 7, "day": 20 }
+}

@@ -1,0 +1,10 @@
+{
+  "chapter": "ch22-salas-destard",
+  "coveredIds": [
+    "cell-destard-room",
+    "dungeon-destard"
+  ],
+  "notes": [
+    "PASADA 1 (cima) de las 16 salas de Destard (loc 35, combatmap=32+roomNo). Arnés conquerRoomAt (deep-link + Des Por + placas + flee-tras-DEADEND), seed-0, ×2 determinista. RESULTADO: 10 VICTORY [2,3,4,6,9,11,12,13,14,15] + 3 DEADEND-fiel [5,7,8] = 13 conquistadas/selladas; 3 PENDIENTE-entrada [0,1,10] (Fase 2b). r3 (combatmap 35, cámara abierta floor3) = VICTORIA EN TRÁNSITO (el pather cruza la celda y gana el combate de paso; step explícito no halla combate pero la sala queda despejada 0xA). DEADEND-fiel r5/r7/r8 = combatmaps 37/39/40: censados \"entrada-SUR-N/A\" (reach 0, TODOS los enemigos sellados, 0 triggers) → jugados con entrada P0a como sellados INGANABLES (enemigos inalcanzables, 0 bajas, party se retira; patrón dead-end #29). REFINA el censo: esas 3 filas pasan de \"entrada-SUR-N/A\" a \"DEADEND-fiel jugado\". PENDIENTE-entrada: r0/r1 (combatmaps 32/33) MURADAS por 4 lados en floor0 → foso/bottom-up; r10 (combatmap 42, ÚNICO candidato-dead-end del censo en Destard) = bolsillo de floor6 aislado por escalera/foso, el pather de descenso NO le halla plan desde la cima (MEDIDO: \"sin plan\" desde (6,3,1) y (6,7,3), Dijkstra completo con klimbup/down/despor) → su veredicto espera Fase 2b + P0b. Coverage sin ids room-<n> (no existen en manifest.json): marca dungeon-destard + cell-destard-room."
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "entry": {
+    "checkpoint": "sint03",
+    "note": "Encadena del checkpoint de sint03."
+  },
+  "segments": {
+    "sint04-g03": {
+      "note": "Costura de SALIDA al Underworld: emerger es SALIR del interior (#32).",
+      "insertOps": [
+        {
+          "afterOcrLn": 44,
+          "ops": [
+            {
+              "enterLoc": 32
+            }
+          ]
+        }
+      ]
+    },
+    "sint04-g04": {
+      "note": "Segunda costura consecutiva: la superficie de siempre.",
+      "insertOps": [
+        {
+          "afterOcrLn": 64,
+          "ops": [
+            {
+              "enterLoc": 1
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

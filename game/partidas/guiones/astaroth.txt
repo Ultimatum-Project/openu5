@@ -1,0 +1,136 @@
+# GUION DE TECLAS de la partida «astaroth» (momento-04) — Ante Astaroth
+#
+# ES EL RITUAL, y es el HERMANO EXACTO de «faulinei»: mismo parche (`shadowlordConvocado`),
+# misma colocación. MEDIDO, no supuesto por analogía: el objeto está en (15,2) con el grupo
+# en (15,3) — o sea (x, y−1), la celda al NORTE — y `shadowlordSummoned` vale 1 (Astaroth).
+#
+# 🔴 EL «N 0/25» DE LA SONDA DE RUMBOS NO ES UN MURO, ES EL SHADOWLORD. La misma trampa que
+# confesó el guión de faulinei: una sonda que sólo cuenta pasos no distingue pared de
+# ocupante. Aquí el discriminante NO es el número de pasos — es el objeto de mundo leído
+# en (x, y−1). Rumbos medidos: N 0 · S 1 · E 3 · O 3 (bolsa de 14 celdas, la más pequeña
+# de los momentos de interior).
+#
+# El índice 17 del shard está DERIVADO de `core/usePicker.buildUseRows` sobre el estado
+# real del momento (8 pergaminos + 8 pociones + skull key = 17, y el shard en la 17).
+# Se comprobó el instrumento contra un valor conocido: para momento-03 devuelve 17, que es
+# el que el guión de faulinei tiene MEDIDO y publicado. Si cambia la mochila, cambia.
+l
+ArrowUp
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowLeft
+ArrowLeft
+ArrowLeft
+l
+ArrowRight
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+l
+ArrowUp
+u
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+Enter
+ArrowDown
+l
+ArrowUp
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowDown
+ArrowUp
+l
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+l
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowDown
+ArrowUp
+l
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowDown
+ArrowUp
+l
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowDown
+ArrowUp
+l
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowDown
+ArrowUp
+l
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowLeft
+ArrowLeft
+ArrowLeft

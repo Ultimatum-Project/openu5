@@ -1,0 +1,14 @@
+{
+  "chapter": "ch17",
+  "coveredIds": [
+    "command-e",
+    "command-y",
+    "dungeon-doom",
+    "endgame-doom-floor8",
+    "endgame-rescue-lb",
+    "endgame-veramocor"
+  ],
+  "notes": [
+    "DOOM + ENDGAME (loc 40, Underworld 128,128 — isla de 3 tiles). VERAMOCOR abre el sello (derrumbe 0xDF→CaveEntrance 0x16, questFlags['word-spoken:40']; yellWord game.ts:3044 + quake). GUARDA doomEntranceAmbush (game.ts:5151, MAINOUT 0x7d8-0x812): SL vivo → 'Attacked at entrance!' + combate Psychedelic, NO desciende; 3 SL muertos → descenso directo por la CIMA (floor 0, entry default (1,1)=SALA, Doom no tiene escalera-up). ENDGAME (#179): caída por el foso de la planta 6 ((4,7)→(5,7)/0x61) a la celda cm127 + absorción total (Combat.maybeAbsorb, SJOG 0x1ea4) → endCombat desvía (fireAbsorptionEndgame) y rescueLordBritish(viaAbsorption) BIFURCA por specialItems.woodenBox: CON caja → victoria ('Our worlds await!' + pergamino questScroll 'THE QUEST OF THE AVATAR IS FOREVER' + informe de tiempo); SIN caja → varado ('pull up a chair'). Ambas → game-won. COSTURAS #47: posición a pie en la isla (party de ch16 en barco, desembarca) + kit de endgame (3 SL muertos via questFlags['shadowlord-dead:*'] — fuente de verdad, NO shadowlordLocs; 3 regalías; Sandalwood Box; skull keys). SELLA en el UMBRAL de Doom (128,128 Underworld, sello abierto); el endgame es TERMINAL → tests aparte sin sello. HUECOS BANCADOS (§PROBE): (a) descenso completo por las 8 plantas (Des Por falla en silencio en Doom game.ts:5422; sólo escaleras/fosos físicos; salas 0xF/0xA + trampas 0x6) — no cableado extremo-a-extremo. RESUELTO (fiel/sceptre-wire, CAST 0x1966): (U)se Cetro cableado por MECANISMO — barrido 3×3 overworld (mudo) + dissolveFacingField en mazmorra ('Field dissolved!'); campos SÓLO en Wrong/Covetous, Doom NO tiene barreras (nib8=0 loc 0x28) → su 'No effect!' es FIEL, no hueco. HORA 10:00, encadenado sobre ch16.gam."
+  ]
+}

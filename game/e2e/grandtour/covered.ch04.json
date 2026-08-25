@@ -1,0 +1,26 @@
+{
+  "chapter": "ch04",
+  "coveredIds": [
+    "command-e",
+    "command-k",
+    "command-l",
+    "command-s",
+    "command-t",
+    "floor-6-z0",
+    "floor-6-z1",
+    "location-6-trinsic",
+    "npc-towne-31-woolfe",
+    "npc-towne-32-sindar-i-think",
+    "npc-towne-33-jimmy",
+    "npc-towne-34-gruman",
+    "search-54-loc6-24-6",
+    "shop-18-horse-rider",
+    "shop-34-wounds-of-honour",
+    "shop-4-the-paladin-s-protectorate",
+    "sign-6-15-28",
+    "word-infama"
+  ],
+  "notes": [
+    "Trinsic (loc 6): pueblo amurallado pequeño con poco contenido enumerable. Cubre 18 ítems REALES: location-6 + floor z0/z1 + npc-towne 31/32/33/34 + sign-6-15-28 + search-54 + shop-4/18/34 (VISITA real; la compra byte-exacta se ejerce en ch03, y Trinsic con 50 oro post-Britain no tiene ítem asequible) + word-infama (Sindar, keyword 'word'→INFAMA, corpus wop-shame) + comandos e/t/l/s/k. NOTA topología: la planta 1 está partida en componentes por escalera; el HorseSeller es un stall aislado (escalera 6,6). Reportado al owner como hueco de infra (goToFloor ambiguo en plantas partidas)."
+  ]
+}

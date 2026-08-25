@@ -1,0 +1,36 @@
+{
+ "name": "border-wrap",
+ "note": "Bordes: WRAP toroidal (x=0 oeste \u2192 x=7), + fuego tras el wrap.",
+ "spec": {
+  "seed": 4660,
+  "roster": [
+   {
+    "dex": 15,
+    "hp": 30,
+    "maxHp": 30
+   },
+   {
+    "dex": 15,
+    "hp": 30,
+    "maxHp": 30
+   }
+  ],
+  "pos": {
+   "dungeon": 33,
+   "floor": 0,
+   "x": 0,
+   "y": 2,
+   "facing": "west"
+  },
+  "cells": [
+   {
+    "floor": 0,
+    "x": 7,
+    "y": 2,
+    "type": 8,
+    "sub": 2
+   }
+  ],
+  "action": "forward"
+ }
+}

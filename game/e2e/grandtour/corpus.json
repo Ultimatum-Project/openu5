@@ -1,0 +1,1204 @@
+{
+  "_doc": "F3-T1 corpus de contenido del Grand Tour. Hechos FALSABLES minados de walkthroughs/cluebook (docs/superpowers/specs/2026-07-11-walkthrough-corpus.md §4), NO autoridad de reglas (el asm manda) sino de CONTENIDO: dónde está cada objeto, qué NPC enseña qué Word, qué se teclea, qué texto sale. Cada hecho declara `checks[]` estáticos que `verify-corpus.mjs` cruza contra los assets extraídos; los `verify:[\"e2e\"]` los prueba el capítulo del tour que los juega. CAMPOS: `authority` ∈ {asm (re/notes/*, derivado byte-a-byte, máxima), cluebook, walkthrough}; `primary` = procedencia primaria exacta (fichero TLK + nº registro / DATA.OVL / stringPool / re-note + offset); `claim.deliverySequence` = teclas EXACTAS que el capítulo debe teclear para disparar el hecho jugando; `claim.deliveryLine`/`useMessage` = texto byte-exacto esperado. Reconciliación de nombres: `teacher` = grafía EXTRAÍDA del juego; `teacherWalkthrough` = grafía del walkthrough cuando difiere. PREDICADOS de checks: ver cabecera de verify-corpus.mjs (dataArray*, dungeon/locationExists, npcTeachesWord/AnswerContains/HasKeyword, stringPoolContains).",
+  "facts": [
+    {
+      "id": "wop-deceit",
+      "kind": "word-of-power",
+      "claim": { "dungeon": "Deceit", "word": "FALLAX", "teacher": "Malifora", "teacherWalkthrough": "Malfora", "town": "Moonglow", "deliveryKeyword": "word", "deliverySequence": ["word"], "deliveryLine": "I see the runes FALLAX inscribed upon the entrance of the dungeon Deceit!" },
+      "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "TOWNE.TLK reg #2 (Malifora, Moonglow) — qa keyword 'word'; entrega libre (el pago de 15 oro es un label aparte y opcional)",
+      "authority": "cluebook",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "wordsOfPower", "value": "FALLAX" },
+        { "type": "dungeonExists", "name": "Deceit" },
+        { "type": "locationExists", "name": "Moonglow" },
+        { "type": "npcTeachesWord", "teacher": "Malifora", "word": "FALLAX" },
+        { "type": "npcHasKeyword", "npc": "Malifora", "keyword": "word" },
+        { "type": "npcAnswerContains", "npc": "Malifora", "contains": "inscribed upon the entrance of the dungeon Deceit" }
+      ]
+    },
+    {
+      "id": "wop-despise",
+      "kind": "word-of-power",
+      "claim": { "dungeon": "Despise", "word": "VILIS", "teacher": "Annon", "town": "Britain", "deliveryKeyword": "word", "deliverySequence": ["word", "yes"], "deliveryLine": "The Word is VILIS, and remember, it can be used to open the dungeon Despise!", "referral": "Tras entregar VILIS, Annon apunta a la hija de otro consejero, que trabaja de velera (sailmaker): 'Ask the child about her mother' — cadena hacia otra Word of Power." },
+      "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "TOWNE.TLK reg #12 (Annon, Britain) — qa 'word'/'powe' encadena a Label 4 ('Dost thou wish to know it?'); la línea sale al responder 'yes'",
+      "authority": "cluebook",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "wordsOfPower", "value": "VILIS" },
+        { "type": "dungeonExists", "name": "Despise" },
+        { "type": "locationExists", "name": "Britain" },
+        { "type": "npcTeachesWord", "teacher": "Annon", "word": "VILIS" },
+        { "type": "npcHasKeyword", "npc": "Annon", "keyword": "word" },
+        { "type": "npcAnswerContains", "npc": "Annon", "contains": "it can be used to open the dungeon Despise" }
+      ]
+    },
+    {
+      "id": "wop-shame",
+      "kind": "word-of-power",
+      "claim": { "dungeon": "Shame", "word": "INFAMA", "teacher": "Sindar", "town": "Trinsic", "deliveryKeyword": "word", "deliverySequence": ["word", "which"], "deliveryLine": "INFAMA! … Dungeon? … SHAME!", "note": "Sindar es un anciano senil (su NOMBRE extraído es literalmente 'Sindar... ...I think.'). Habla telegráfico: teclea 'word'/'powe' → suelta la runa 'INFAMA!'; teclea 'which'/'dung' → 'Dungeon? … SHAME!'. Tanto INFAMA como SHAME son nodos de TEXTO tras un op Rune." },
+      "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "TOWNE.TLK reg #32 (Sindar, Trinsic) — qa 'word'/'powe' → 'INFAMA!'; qa 'whic'/'dung' → 'SHAME!'",
+      "authority": "cluebook",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "wordsOfPower", "value": "INFAMA" },
+        { "type": "dungeonExists", "name": "Shame" },
+        { "type": "locationExists", "name": "Trinsic" },
+        { "type": "npcTeachesWord", "teacher": "Sindar", "word": "INFAMA" },
+        { "type": "npcHasKeyword", "npc": "Sindar", "keyword": "word" },
+        { "type": "npcAnswerContains", "npc": "Sindar", "contains": "INFAMA" }
+      ]
+    },
+    {
+      "id": "wop-wrong",
+      "kind": "word-of-power",
+      "claim": { "dungeon": "Wrong", "word": "MALUM", "teacher": "Felespar", "teacherWalkthrough": "Felspar", "town": "Yew", "deliveryKeyword": "word", "deliverySequence": ["word", "yes", "yes", "dawn"], "deliveryLine": "Very well, the Word of Power for the dungeon Wrong is MALUM! Use it wisely!", "password": "dawn", "note": "Felespar es preso en la cárcel de Yew y exige la CONTRASEÑA de la Resistencia. Cadena: 'word'/'powe' → Label 2 ('inquiring about the Words of Power, yes?') → 'yes' → Label 3 ('art thou with the Resistance?') → 'yes' → Label 4 ('And, their password is?') → teclear 'dawn' → MALUM. Sin 'dawn' no entrega la palabra." },
+      "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "TOWNE.TLK reg #22 (Felespar, Yew) — Labels 2→3→4; keyword terminal 'dawn' (contraseña de la Resistencia)",
+      "authority": "cluebook",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "wordsOfPower", "value": "MALUM" },
+        { "type": "dungeonExists", "name": "Wrong" },
+        { "type": "locationExists", "name": "Yew" },
+        { "type": "npcTeachesWord", "teacher": "Felespar", "word": "MALUM" },
+        { "type": "npcHasKeyword", "npc": "Felespar", "keyword": "dawn" },
+        { "type": "npcAnswerContains", "npc": "Felespar", "contains": "the Word of Power for the dungeon Wrong is" }
+      ]
+    },
+    {
+      "id": "wop-covetous",
+      "kind": "word-of-power",
+      "claim": { "dungeon": "Covetous", "word": "AVIDUS", "teacher": "Fiona", "town": "Minoc", "deliveryKeyword": "word", "deliverySequence": ["council", "annon", "word"], "deliveryLine": "The Word of Power to open the dungeon of Covetous is AVIDUS!", "note": "Fiona regenta la Poor House de Minoc y sólo se abre si se la aborda por el CONSEJO con una pista de referido: 'council'/'great' → Label 5 ('What makes thee think that I know?') cuyos keywords de desbloqueo son 'anno'(Annon)/'rew'(reward)/'dawn'/'daug'(daughter) → pregunta el nombre → Label 7 → 'word'/'powe'/'cove' → AVIDUS. Cierra el hilo que abre Annon (la hija velera)." },
+      "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "TOWNE.TLK reg #26 (Fiona, Minoc) — Label 5 gate keywords 'anno'/'rew'/'dawn'/'daug'; Label 7 qa 'word'/'powe'/'cove' → AVIDUS",
+      "authority": "cluebook",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "wordsOfPower", "value": "AVIDUS" },
+        { "type": "dungeonExists", "name": "Covetous" },
+        { "type": "locationExists", "name": "Minoc" },
+        { "type": "npcTeachesWord", "teacher": "Fiona", "word": "AVIDUS" },
+        { "type": "npcHasKeyword", "npc": "Fiona", "keyword": "dawn" },
+        { "type": "npcAnswerContains", "npc": "Fiona", "contains": "to open the dungeon of Covetous is" }
+      ]
+    },
+    {
+      "id": "wop-destard",
+      "kind": "word-of-power",
+      "claim": { "dungeon": "Destard", "word": "INOPIA", "teacher": "Goeth", "town": "Jhelom", "deliveryKeyword": "drow", "deliverySequence": ["drow", "drat"], "deliveryLine": "Drow of Rewop thou seeketh; remember AIPONI htod I.", "runeAsSpoken": "AIPONI", "note": "CORRECCIÓN de la nota previa: Goeth habla LITERALMENTE al revés y la runa aparece como TEXTO literal invertido en el TLK: 'AIPONI' = INOPIA leído al derecho. Sus keywords también van invertidos: teclear 'drow'/'rewo' (word) → Label 0 ('Drow which, that was?') → teclear 'drat' → entrega 'AIPONI'. Las keywords rectas ('word'/'moon'/'ston'/'powe') las esquiva ('Remember ton I; but know it I should!')." },
+      "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "TOWNE.TLK reg #15 (Goeth, Jhelom) — qa 'drow'/'rewo' → Label 0; qa 'drat' → texto 'AIPONI' (INOPIA invertido)",
+      "authority": "cluebook",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "wordsOfPower", "value": "INOPIA" },
+        { "type": "dungeonExists", "name": "Destard" },
+        { "type": "locationExists", "name": "Jhelom" },
+        { "type": "npcTeachesWord", "teacher": "Goeth", "word": "INOPIA" },
+        { "type": "npcHasKeyword", "npc": "Goeth", "keyword": "drat" },
+        { "type": "npcAnswerContains", "npc": "Goeth", "contains": "Drow of Rewop thou seeketh" },
+        { "type": "npcAnswerContains", "npc": "Goeth", "contains": "AIPONI" }
+      ]
+    },
+    {
+      "id": "wop-hythloth",
+      "kind": "word-of-power",
+      "claim": { "dungeon": "Hythloth", "word": "IGNAVUS", "teacher": "Hassad", "town": "New Magincia", "deliveryKeyword": "word", "deliverySequence": ["word", "dawn", "yes"], "deliveryLine": "The Word thou seeketh is IGNAVUS!", "note": "El diálogo de Hassad está en CASTLE.TLK reg #17 (es PRESO en las mazmorras del castillo de Blackthorn), NO en TOWNE.TLK, pese a que su hogar es el pueblo de New Magincia. Está name-gated: hay que haberse presentado (AskName). Cadena: 'word'/'powe'/'coun' → Label 2 → keyword 'dawn' (o 'kaik', referido de otra NPC) → Label 3 ('Are we where I may speak freely?') → 'yes' → IGNAVUS." },
+      "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "CASTLE.TLK reg #17 (Hassad, preso) — Label 2 gate 'dawn'/'kaik'; Label 3 'yes' → IGNAVUS",
+      "authority": "cluebook",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "wordsOfPower", "value": "IGNAVUS" },
+        { "type": "dungeonExists", "name": "Hythloth" },
+        { "type": "locationExists", "name": "New_Magincia" },
+        { "type": "npcTeachesWord", "teacher": "Hassad", "word": "IGNAVUS" },
+        { "type": "npcHasKeyword", "npc": "Hassad", "keyword": "dawn" },
+        { "type": "npcAnswerContains", "npc": "Hassad", "contains": "The Word thou seeketh is" }
+      ]
+    },
+    {
+      "id": "wop-doom",
+      "kind": "word-of-power",
+      "claim": { "dungeon": "Doom", "word": "VERAMOCOR", "teacher": null, "note": "No lo enseña ningún NPC (ausente del texto TLK por diseño): se aprende en el Codex, en el Shrine of the Codex al fondo del Underworld. Es la palabra que abre Doom, la mazmorra donde está preso Lord British." },
+      "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "data.json:wordsOfPower + stringPools 'mapFilesDungeonNames' ('the Shrine of the Codex!')",
+      "authority": "cluebook",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "wordsOfPower", "value": "VERAMOCOR" },
+        { "type": "dungeonExists", "name": "Doom" },
+        { "type": "stringPoolContains", "pool": "mapFilesDungeonNames", "value": "Shrine of the Codex" }
+      ]
+    },
+    {
+      "id": "quest-resistance-password",
+      "kind": "quest-chain",
+      "claim": { "password": "dawn", "note": "Contraseña de la Resistencia. Es la llave de teclado compartida que desbloquea a los ex-consejeros presos/ocultos antes de que entreguen su Word of Power: Felespar (Yew, Label 4 'their password is?'), Fiona (Minoc, gate de Label 5) y Hassad (New Magincia, preso en el castillo, Label 2). Un capítulo del tour que juegue estos tramos DEBE teclear 'dawn' o la palabra no se entrega.", "gates": ["Felespar/Wrong", "Fiona/Covetous", "Hassad/Hythloth"] },
+      "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "TOWNE.TLK reg #22 (Felespar) · reg #26 (Fiona) · CASTLE.TLK reg #17 (Hassad) — keyword 'dawn' en las tres cadenas",
+      "authority": "cluebook",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Felespar", "keyword": "dawn" },
+        { "type": "npcHasKeyword", "npc": "Fiona", "keyword": "dawn" },
+        { "type": "npcHasKeyword", "npc": "Hassad", "keyword": "dawn" }
+      ]
+    },
+    {
+      "id": "npc-minoc-tactus",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Minoc", "dialogNumber": 25, "npc": "Tactus", "job": "armourer de Darkwatch Armoury (chainmail + coifs)", "joinable": false, "keywords": { "dark|chai|armo|coif": "job", "blac|sale|powe|incr": "→ Label pro-Blackthorn" }, "referral": "Pro-Blackthorn; tras dos 'yes' remite a Judge Dryden en la corte de Yew — 'Ask him of the Oppression and tell him Tactus sent thee'." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #25 (Tactus, Minoc) — job + Labels 0/1 (referral a Judge Dryden/Yew)",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Tactus", "keyword": "chai" },
+        { "type": "npcAnswerContains", "npc": "Tactus", "contains": "Darkwatch Armoury" },
+        { "type": "npcAnswerContains", "npc": "Tactus", "contains": "Judge Dryden" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 25, "location": 5 }
+      ]
+    },
+    {
+      "id": "npc-minoc-rew",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Minoc", "dialogNumber": 27, "npc": "Rew", "job": "niña costurera de velas (indentured)", "joinable": false, "keywords": { "moth": "'Her name is Fiona. She works at the poor house.'", "fion": "'My mom works at the poor house.'", "cah": "'I'm told it's a mantra' (mantra de Sacrifice)", "wish|well": "rumor del wishing well (un caballo)" }, "note": "Rew ES la 'hija de la velera' que Annon (Britain, wop-despise) manda buscar: 'Ask the child about her mother'. Su madre es Fiona, que enseña AVIDUS (wop-covetous). Cadena cross-town Annon→Rew→Fiona verificada." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #27 (Rew, Minoc) — qa 'moth'→Fiona, qa 'cah'→mantra, qa 'wish'/'well'→wishing well",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Rew", "keyword": "moth" },
+        { "type": "npcAnswerContains", "npc": "Rew", "contains": "Her name is Fiona" },
+        { "type": "npcAnswerContains", "npc": "Rew", "contains": "mantra" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 27, "location": 5 }
+      ]
+    },
+    {
+      "id": "npc-minoc-fenelon",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Minoc", "dialogNumber": 28, "npc": "Fenelon", "job": "cose velas para Captain Blythe (dueño de The Crow's Nest)", "joinable": false, "keywords": { "capt|blyt": "Captain Blythe, dueño de Crow's Nest, 'a real nasty soul'", "ind|serv": "él y Rew en servidumbre por deudas" }, "karmaGain": "+5 karma (KarmaPlusOne ×5) al mostrarle bondad con el nombre ya dado (Label 1) — witness e2e falsable" },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #28 (Fenelon, Minoc) — job + qa 'capt'/'blyt', 'ind'/'serv'; Label 1 op KarmaPlusOne×5",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Fenelon", "contains": "Captain Blythe" },
+        { "type": "npcAnswerContains", "npc": "Fenelon", "contains": "indentured servitude" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 28, "location": 5 }
+      ]
+    },
+    {
+      "id": "npc-minoc-lady-sahra",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Minoc", "dialogNumber": 29, "npc": "Lady Sahra", "job": "atiende a enfermos y heridos", "joinable": false, "keywords": { "sick": "'The plagues, once thought gone, have returned!'", "rat|rode": "las plagas las llevan ratas y roedores", "fact|skir": "heridos de escaramuzas faccionales, menguadas con la ley marcial" }, "note": "Pro-Blackthorn ('he'd straighten out a lot of this mess')." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #29 (Lady Sahra, Minoc) — qa 'sick'→plagues, 'rat'/'rode'→rodents",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Lady Sahra", "contains": "plagues" },
+        { "type": "npcAnswerContains", "npc": "Lady Sahra", "contains": "rats" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 29, "location": 5 }
+      ]
+    },
+    {
+      "id": "npc-minoc-delwyn",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Minoc", "dialogNumber": 30, "npc": "Delwyn", "job": "mendigo", "joinable": false, "note": "Al darle oro (Gold:3) y aceptar ('yes') suelta una PISTA: 'Shenstone the armourer's ben sneakin' 'bout town 'round noontime'. Shenstone es el armero (shoppeKeeperNames idx 3, tienda Darkwatch Armoury). Delwyn recuerda al Avatar entre visitas (IfElseKnowsName)." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #30 (Delwyn, Minoc) — Labels 0/1/2 (pista de Shenstone al pagar), description 'beggar'",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Delwyn", "contains": "Shenstone" },
+        { "type": "npcAnswerContains", "npc": "Delwyn", "contains": "beggar" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 30, "location": 5 }
+      ]
+    },
+    {
+      "id": "npc-moonglow-zachariah",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Moonglow", "dialogNumber": 1, "npc": "Zachariah", "job": "astrónomo (estudia las estrellas)", "joinable": false, "keywords": { "shad": "los 3 cometas = los 3 Shadowlords; cuando un cometa se alinea con un planeta, la ciudad de esa virtud es atacada", "avat|retu": "→ Label; con 'dawn' remite a Goeth (Jhelom) que conoce un poder nuevo de los moongates ('some say he has gone insane')" }, "note": "Sistema astronómico: 3 cometas ↔ 3 Shadowlords. Password 'dawn' abre un referral a Goeth/Jhelom (cross wop-destard)." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #1 (Zachariah, Moonglow) — qa 'shad', 'avat'/'retu'; Label 1 qa 'dawn' → referral Goeth",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Zachariah", "keyword": "shad" },
+        { "type": "npcAnswerContains", "npc": "Zachariah", "contains": "three comets" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 1, "location": 1 }
+      ]
+    },
+    {
+      "id": "npc-moonglow-lord-stuart",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Moonglow", "dialogNumber": 5, "npc": "Lord Stuart the Hungry", "job": "glotón; trabaja en un hechizo de crear comida", "joinable": false, "teachesSpell": { "spell": "IN XEN MANI", "circle": 2, "effect": "crea poca comida de alta calidad", "reagents": ["ginseng", "garlic", "mandrake root"] }, "keywords": { "magi|spel": "el hechizo aún no perfeccionado", "perf": "→ enseña IN XEN MANI" } },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #5 (Lord Stuart, Moonglow) — Label 1 → Rune 'IN XEN MANI' + reactivos",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Lord Stuart", "contains": "IN XEN MANI" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 5, "location": 1 }
+      ]
+    },
+    {
+      "id": "npc-moonglow-malik",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Moonglow", "dialogNumber": 3, "npc": "Malik", "job": "juega a juegos", "joinable": false, "keywords": { "she|moth|gyps|fort|tell": "→ remite a la gitana/adivina del edificio NW ('knows lots of chants and powerful words'), cobra Gold:4", "glas|swor": "el que hacía armas de vidrio se hizo pirata; vive en Buccaneer's Den", "powe|reag|mand": "el de los reactivos vive en Skara Brae" } },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #3 (Malik, Moonglow) — qa 'glas'/'swor' → Buccaneer's Den; qa gitana Label 2 (Gold:4)",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Malik", "keyword": "glas" },
+        { "type": "npcAnswerContains", "npc": "Malik", "contains": "Buccaneer's Den" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 3, "location": 1 }
+      ]
+    },
+    {
+      "id": "npc-moonglow-donn-piatt",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Moonglow", "dialogNumber": 4, "npc": "Donn Piatt", "job": "Head Counsel de Moonglow", "joinable": false, "keywords": { "man|towe": "'The man in the tower is a seed of discontent and will bring thee ill fortune!'", "pub": "edificio SE", "herb": "edificio SW" }, "note": "Advierte de 'the man in the tower' (el mago de la torre, camino oscuro)." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #4 (Donn Piatt, Moonglow) — qa 'man'/'towe'",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Donn Piatt", "keyword": "towe" },
+        { "type": "npcAnswerContains", "npc": "Donn Piatt", "contains": "man in the tower" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 4, "location": 1 }
+      ]
+    },
+    {
+      "id": "npc-jhelom-trian",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Jhelom", "dialogNumber": 14, "npc": "Trian", "job": "juglar (canta canciones de valor)", "joinable": false, "keywords": { "figh|thor": "remite a Thorne (frecuenta el pub, visita santuarios)", "dest|word|powe": "→ hint sobre el que conoce la Word of Power" }, "note": "CONFIRMA el hallazgo de Goeth: 'There is one in this towne who doth search for that which is not there. He knows the Word of Power. But, he has gone quite insane, so if he doth have trouble remembering, saying each word backwards oft is of some help!' — corrobora que Goeth habla al revés (cross wop-destard, AIPONI)." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #14 (Trian, Jhelom) — Label 0 qa 'y' (hint 'saying each word backwards')",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Trian", "contains": "saying each word backwards" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 14, "location": 3 }
+      ]
+    },
+    {
+      "id": "npc-jhelom-thorne",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Jhelom", "dialogNumber": 16, "npc": "Thorne", "job": "luchador que descansa entre batallas", "joinable": false, "teachesMantra": { "virtue": "Valour", "mantra": "RA" }, "keywords": { "mant|shri": "→ Label 'brit' → Mantra de Valor RA + secretos de dungeon rooms (paneles que se empujan, antorchas que se disparan)" }, "note": "Enseña el Mantra de Valor 'RA'. Además da pistas de mazmorra (trips/paneles/antorchas)." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #16 (Thorne, Jhelom) — Label 1 qa 'brit' → Rune RA",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Thorne", "keyword": "mant" },
+        { "type": "npcAnswerContains", "npc": "Thorne", "contains": "Mantra for Valor is" },
+        { "type": "dataArrayContains", "array": "mantras", "value": "Ra" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 16, "location": 3 }
+      ]
+    },
+    {
+      "id": "npc-yew-chamfort",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Yew", "dialogNumber": 17, "npc": "Chamfort", "job": "dueño de la herrería (forja)", "joinable": false, "teachesMantra": { "virtue": "Justice", "mantra": "BEH" }, "keywords": { "resi": "es de la Resistencia; gate 'terr' (Terrance)", "loca|lead": "'secret passage through my fireplace' lleva a Landon (líder local de la Resistencia)", "mant": "→ Label 'jere' → Mantra de Justicia BEH" }, "note": "UBICACIÓN corregida contra npcs.json loc 4: Chamfort está en YEW, no Jhelom — lo confirma Jeremy (Yew) 'Chamfort knows a Mantra'. Enseña BEH (Justicia = virtud de Yew). Pasadizo por su chimenea → Landon (también Yew)." },
+      "sources": ["talk/towne.json", "npcs.json"],
+      "primary": "TOWNE.TLK reg #17 (Chamfort) — qa 'loca'/'lead' (fireplace→Landon); Label 3 qa 'jere' → Rune BEH. Town: npcs.json loc 4 (Yew).",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Chamfort", "contains": "secret passage through my fireplace" },
+        { "type": "npcAnswerContains", "npc": "Chamfort", "contains": "Justice is" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 17, "location": 4 }
+      ]
+    },
+    {
+      "id": "npc-yew-landon",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Yew", "dialogNumber": 18, "npc": "Landon", "job": "líder local de la Resistencia", "joinable": false, "keywords": { "resi": "gate 'dawn'", "blac|brit|crow": "Blackthorn usa el poder de la Crown para su tiranía; la guarda en una salita en lo alto de su castillo; impide la magia dentro" }, "note": "Cross item-crown: confirma que la Crown está 'atop his terrible castle' (Palace of Blackthorn). Remite a Sir Simon en una isla montañosa al oeste de Spiritwood. UBICACIÓN corregida contra npcs.json loc 4: Landon está en YEW, no Jhelom (se llega por la chimenea de Chamfort, también Yew)." },
+      "sources": ["talk/towne.json", "npcs.json"],
+      "primary": "TOWNE.TLK reg #18 (Landon) — qa 'blac'/'brit'/'crow' → Sir Simon/Spiritwood. Town: npcs.json loc 4 (Yew).",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Landon", "keyword": "resi" },
+        { "type": "npcAnswerContains", "npc": "Landon", "contains": "Sir Simon" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 18, "location": 4 }
+      ]
+    },
+    {
+      "id": "npc-jhelom-bullwier",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Jhelom", "dialogNumber": 13, "npc": "Bullwier", "job": "armero (iron swords/shields/helms), muy grosero", "joinable": false, "keywords": { "pati|fool": "llama a los GUARDS (op CallGuards) si le hartas", "myst": "rumor del Mystic: un hombre llamado Ambrose buscaba las armas Místicas", "ambr|weap|rumo": "Ambrose quedó malherido, sólo consciente ~1h cerca de medianoche, sanando en la towne de Cove" }, "note": "Rumor de las armas Místicas: Ambrose en Cove, consciente cerca de medianoche. CUIDADO: 'pati'/'fool' dispara CallGuards (combate)." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #13 (Bullwier, Jhelom) — qa 'myst', 'ambr'/'weap'/'rumo' (Ambrose/Cove/medianoche); 'pati'/'fool' → op CallGuards",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Bullwier", "contains": "Ambrose" },
+        { "type": "npcAnswerContains", "npc": "Bullwier", "contains": "towne of Cove" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 13, "location": 3 }
+      ]
+    },
+    {
+      "id": "npc-trinsic-gruman",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Trinsic", "dialogNumber": 34, "npc": "Gruman", "job": "caballero que patrulla las murallas de Trinsic", "joinable": false, "teachesMantra": { "virtue": "Honor", "mantra": "SUMM" }, "keywords": { "mant|hono": "→ Label 2 'Dost thou seek the Mantra for the Virtue of Honor?'", "walk|trin": "espera una señal para ir en busca de Lord British" }, "note": "Enseña el MANTRA de Honor 'SUMM' (gateado por karma honorable, Unknown:50). Cruza con shrine-mantras (Honor→Summ). Leal a Lord British." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #34 (Gruman, Trinsic) — Labels 2/3, qa 'mant'/'hono' → Rune SUMM",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Gruman", "keyword": "mant" },
+        { "type": "npcAnswerContains", "npc": "Gruman", "contains": "SUMM" },
+        { "type": "dataArrayContains", "array": "mantras", "value": "Summ" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 34, "location": 6 }
+      ]
+    },
+    {
+      "id": "npc-yew-jaana",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Yew", "dialogNumber": 35, "npc": "Jaana", "job": "trabaja para la Resistencia desde que Blackthorn tomó el poder", "joinable": true, "keywords": { "join": "→ Label 3 'Is it time I joined thee on thy quest?' → 'yes' → JoinParty" }, "note": "COMPAÑERA RECLUTABLE. Gate previo (Label 0): 'hast thou returned to set things right?' — responder 'no' la ofende ('Leave my sight!'). El cierre de diálogo debe manejar el op JoinParty. UBICACIÓN corregida contra npcs.json loc 4: Jaana está en YEW, no Trinsic (encaja con la Resistencia de Yew)." },
+      "sources": ["talk/towne.json", "npcs.json"],
+      "primary": "TOWNE.TLK reg #35 (Jaana) — qa 'join' → Label 3 → op JoinParty. Town: npcs.json loc 4 (Yew).",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Jaana", "keyword": "join" },
+        { "type": "npcAnswerContains", "npc": "Jaana", "contains": "Resistance" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 35, "location": 4 }
+      ]
+    },
+    {
+      "id": "npc-trinsic-jimmy",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Trinsic", "dialogNumber": 33, "npc": "Jimmy", "job": "niño que se sienta junto al lago (convaleciente en el healer)", "joinable": false, "keywords": { "hms|cape": "habla del H.M.S. Cape (doble casco y velocidad)", "mast|hawk|oak|oar": "'designed by Master Hawkins of the Oaken Oar'", "shop|plan": "los planos del aparejo los guarda Hawkins en su shoppe" }, "note": "FUENTE de información del quest del HMS Cape Plan (ver quest-hmscape): apunta a Master Hawkins en The Oaken Oar (astillero). Hijo de Woolfe (npc-trinsic-woolfe)." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #33 (Jimmy, Trinsic) — qa 'hms'/'cape', 'mast'/'hawk'/'oak'/'oar', 'shop'/'plan'",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Jimmy", "contains": "Master Hawkins of the Oaken Oar" },
+        { "type": "npcAnswerContains", "npc": "Jimmy", "contains": "twice the speed" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 33, "location": 6 }
+      ]
+    },
+    {
+      "id": "npc-trinsic-woolfe",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Trinsic", "dialogNumber": 31, "npc": "Woolfe", "job": "blacksmith de The Paladin's Protectorate", "joinable": false, "keywords": { "weap": "spiked helms, shields, morning stars", "jim": "su hijo Jimmy está en el healer; 'ask him about ships'", "fun|room|slee": "el compañero de cuarto de Jimmy es sonámbulo y camina las murallas de noche (= Sindar)" }, "note": "Cross-links: su hijo es Jimmy (npc-trinsic-jimmy); el 'roommate sleepwalker' que anda las murallas es Sindar (wop-shame, INFAMA)." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #31 (Woolfe, Trinsic) — job + qa 'jim', 'fun'/'room'/'slee'",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Woolfe", "contains": "The Paladin's Protectorate" },
+        { "type": "npcHasKeyword", "npc": "Woolfe", "keyword": "jim" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 31, "location": 6 }
+      ]
+    },
+    {
+      "id": "npc-skarabrae-flain",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Skara Brae", "dialogNumber": 38, "npc": "Flain", "job": "Archmage oscuro en la torre de Skara Brae, informante de la Oppression", "joinable": false, "trap": true, "keywords": { "oppr": "→ Label 1", "judg|dryd": "'Who sent thee?' (Judge Dryden es la referencia)", "hass|mali|anno|goet|fele|fion|sind": "nombrar un consejero" }, "password": "Impera", "warning": "TRAMPA/camino oscuro: si nombras a un consejero VIVO (Malifora/Annon/Goeth/Felespar/Fiona/Sindar), Flain lo marca para MUERTE ('That one will soon perish!') y te envía con Elistaria en la isla más al NE con el password 'Impera'. Hassad ya lo conocen. Un tour VIRTUOSO NO debe delatar consejeros.", "referralChain": "Tactus (Minoc) → Judge Dryden (Yew) → Flain (torre de Skara Brae). Judge Dryden lo confirma: 'See him in the tower of Skara Brae'." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #38 (Flain) — Labels 0-3, keyword terminal de consejero → Elistaria/'Impera'. Ubicación (torre de Skara Brae) confirmada por Judge Dryden (reg #19, Yew).",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Flain", "contains": "Impera" },
+        { "type": "npcAnswerContains", "npc": "Flain", "contains": "Elistaria" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 38, "location": 7 }
+      ]
+    },
+    {
+      "id": "npc-yew-judge-dryden",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Yew", "dialogNumber": 19, "npc": "Judge Dryden", "job": "Head Inquisitor de la Court of Inquisition de Blackthorn", "joinable": false, "trap": true, "keywords": { "judg|cour|inqu": "'This is the Court of Inquisition of His Majesty Blackthorn!'", "oppr": "con 'tact' (Tactus) → remite a Archmage Flain 'in the tower of Skara Brae'" }, "warning": "Nombrar a un preso (jero/fele/grey/mari/aley) → 'That one deserves no pity!'; presionar → GUARDS (op CallGuards). Nodo del camino oscuro: Tactus(Minoc)→Dryden(Yew)→Flain(Skara Brae)." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #19 (Judge Dryden, Yew) — qa 'judg'/'cour'/'inqu'; Label 6 qa 'tact' → Flain/Skara Brae; Label 4 → CallGuards",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Judge Dryden", "contains": "Court of Inquisition" },
+        { "type": "npcAnswerContains", "npc": "Judge Dryden", "contains": "tower of Skara Brae" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 19, "location": 4 }
+      ]
+    },
+    {
+      "id": "npc-yew-jeremy",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Yew", "dialogNumber": 20, "npc": "Jeremy", "job": "chef de The Slaughtered Lamb", "joinable": false, "keywords": { "jail|brot": "ahorra 500 gold crowns para sacar a su hermano (Jerone) de la cárcel", "key": "da 5 SKULL KEYS (op Change:67 ×5, 'Have five!')", "info": "'Chamfort knows a Mantra!'" }, "note": "FUENTE de las Skull Keys (specialItemNames). Cross: su hermano es Jerone (npc-yew-jerone); apunta a Chamfort (Mantra de Justicia)." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #20 (Jeremy, Yew) — qa 'key' → Change:67 ×5 (Skull Keys); Label 1 qa 'info' → Chamfort",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Jeremy", "contains": "Slaughtered Lamb" },
+        { "type": "npcHasKeyword", "npc": "Jeremy", "keyword": "key" },
+        { "type": "dataArrayContains", "array": "specialItemNames", "value": "Skull Keys" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 20, "location": 4 }
+      ]
+    },
+    {
+      "id": "npc-yew-jerone",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Yew", "dialogNumber": 21, "npc": "Jerone", "job": "ex-aventurero, ahora prisionero", "joinable": false, "keywords": { "conv|here": "convicto de HEREJÍA por afirmar que Lord British vive", "camp|moor": "vio una aparición ('a strange apparition arose before my fire!') acampando en los páramos — era ÉL (LB)", "key|caug": "Jeremy le pasa keys ~10 de la mañana y de la tarde" }, "note": "Cross: hermano de Jeremy (npc-yew-jeremy). Su 'apparition' junto al fuego acampando ata con el evento de aparición/level-up de acampada del port." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #21 (Jerone, Yew) — qa 'conv'/'here', 'camp'/'moor', 'fire'/'aros'/'appa'",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Jerone", "contains": "heresy" },
+        { "type": "npcAnswerContains", "npc": "Jerone", "contains": "apparition" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 21, "location": 4 }
+      ]
+    },
+    {
+      "id": "npc-yew-mario",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Yew", "dialogNumber": 23, "npc": "Mario", "job": "condenado a morir en el cepo (stocks)", "joinable": false, "keywords": { "puni": "sentenciado a morir despacio en el cepo por un delito menor", "mino|crim": "sólo pudo dar el 40% de sus ganancias a caridad; convicto por Ye Court of Inquisition", "jimm|lock": "pide que le abras el cepo con una key" }, "note": "Cross: padre de Aleyn (npc-yew-aleyn). Sátira de la Inquisición (donar 'poco' a caridad = crimen)." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #23 (Mario, Yew) — qa 'puni', 'mino'/'crim', 'jimm'/'lock'",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Mario", "contains": "stocks" },
+        { "type": "npcHasKeyword", "npc": "Mario", "keyword": "lock" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 23, "location": 4 }
+      ]
+    },
+    {
+      "id": "npc-yew-aleyn",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Yew", "dialogNumber": 24, "npc": "Aleyn", "job": "reo por incumplir una ley", "joinable": false, "keywords": { "brok|law": "incumplió la Seventh Law of Virtue", "seve|7|virt": "no delató a su padre por donar muy poco a caridad", "fath": "Mario" }, "note": "Cross: hijo de Mario (npc-yew-mario). La 'Seventh Law of Virtue' = obligación de delatar (distopía de Blackthorn)." },
+      "sources": ["talk/towne.json"],
+      "primary": "TOWNE.TLK reg #24 (Aleyn, Yew) — qa 'brok'/'law', 'seve'/'7'/'virt', 'fath'→Mario",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Aleyn", "contains": "Seventh Law of Virtue" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 24, "location": 4 }
+      ]
+    },
+    {
+      "id": "npc-skarabrae-froed",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Skara Brae", "dialogNumber": 37, "npc": "Froed", "job": "niño escondido", "joinable": false, "keywords": { "fath": "su padre es Greymarch; 'He spoke out against Blackthorn and they took him away'", "jail|pris|yew": "está en la cárcel (Yew)" }, "note": "Cross: su padre Greymarch (dialog 36, Yew) fue encarcelado por hablar contra Blackthorn." },
+      "sources": ["talk/towne.json", "npcs.json"],
+      "primary": "TOWNE.TLK reg #37 (Froed) — qa 'fath'→Greymarch; npcs.json loc 7 (Skara Brae)",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Froed", "contains": "Greymarch" },
+        { "type": "npcAnswerContains", "npc": "Froed", "contains": "spoke out against Blackthorn" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 37, "location": 7 }
+      ]
+    },
+    {
+      "id": "npc-skarabrae-kindor",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Skara Brae", "dialogNumber": 39, "npc": "Kindor", "job": "convaleciente, malherido", "joinable": false, "keywords": { "woun|heal": "'struck by a Shadowlord's magical arrow!'", "die": "teme morir" }, "note": "Resistió la toma de su pueblo por un Shadowlord y quedó herido de muerte. Cross: su amigo Saul (dialog 40) lo cuida." },
+      "sources": ["talk/towne.json", "npcs.json"],
+      "primary": "TOWNE.TLK reg #39 (Kindor) — qa 'woun'/'heal', 'shad'/'arro'; npcs.json loc 7",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Kindor", "contains": "Shadowlord" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 39, "location": 7 }
+      ]
+    },
+    {
+      "id": "npc-skarabrae-saul",
+      "kind": "npc-dialogue",
+      "claim": { "town": "Skara Brae", "dialogNumber": 40, "npc": "Saul", "job": "visitante", "joinable": false, "keywords": { "frie": "su amigo es Kindor, herido por un Shadowlord", "take|resi": "Kindor resistió la toma del pueblo por el Shadowlord; Saul lo halló casi muerto y lo trajo aquí" }, "note": "Cross: cuida a Kindor (dialog 39)." },
+      "sources": ["talk/towne.json", "npcs.json"],
+      "primary": "TOWNE.TLK reg #40 (Saul) — qa 'frie'→Kindor, 'take'/'resi'; npcs.json loc 7",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Saul", "contains": "Kindor" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 40, "location": 7 }
+      ]
+    },
+    {
+      "id": "npc-newmagincia-shirita",
+      "kind": "npc-dialogue",
+      "claim": { "town": "New Magincia", "dialogNumber": 42, "npc": "Shirita", "job": "cuida las tumbas de los antiguos habitantes de Magincia", "joinable": false, "keywords": { "magi|soul|form|inha": "'Magincia was destroyed for its sins of pride and arrogance'", "daem|demo|flam": "daemons brotaron de la tierra y la engulleron en llamas; sus almas quedaron como no-muertos" }, "note": "Backstory de la humildad: Magincia (soberbia) fue destruida; los no-muertos advierten del camino de la Pride. New Magincia = virtud de Humildad." },
+      "sources": ["talk/towne.json", "npcs.json"],
+      "primary": "TOWNE.TLK reg #42 (Shirita) — qa 'sins'/'prid'/'arro', 'daem'/'flam'; npcs.json loc 8",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Shirita", "contains": "pride and arrogance" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 42, "location": 8 }
+      ]
+    },
+    {
+      "id": "npc-newmagincia-yasuda",
+      "kind": "npc-dialogue",
+      "claim": { "town": "New Magincia", "dialogNumber": 43, "npc": "Yasuda", "job": "granjero reconstruyendo Magincia", "joinable": false, "keywords": { "comp": "los 'black devils' se llevan la mitad de la cosecha", "shad|blac|devi": "'The Shadowlords are Blackthorn's enforcers of his self-righteous regime!'" }, "note": "Declara la relación Shadowlords = ejecutores de Blackthorn." },
+      "sources": ["talk/towne.json", "npcs.json"],
+      "primary": "TOWNE.TLK reg #43 (Yasuda) — qa 'shad'/'blac'/'devi'; npcs.json loc 8",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Yasuda", "contains": "Shadowlords are Blackthorn's enforcers" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 43, "location": 8 }
+      ]
+    },
+    {
+      "id": "npc-newmagincia-fumiko",
+      "kind": "npc-dialogue",
+      "claim": { "town": "New Magincia", "dialogNumber": 45, "npc": "Fumiko", "job": "comparte la carga en los campos comunales", "joinable": false, "keywords": { "choi|free": "'Devoid of freedom, what would virtue be...'", "virt": "'None are more hopelessly enslaved than those who falsely believe they are free!'" }, "note": "Tema de la Humildad/libre albedrío: la virtud forzada no es virtud." },
+      "sources": ["talk/towne.json", "npcs.json"],
+      "primary": "TOWNE.TLK reg #45 (Fumiko) — qa 'virt', 'hope'/'ensl'/'fals'/'beli'; npcs.json loc 8",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Fumiko", "contains": "falsely believe they are free" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 45, "location": 8 }
+      ]
+    },
+    {
+      "id": "npc-newmagincia-kaiko",
+      "kind": "npc-dialogue",
+      "claim": { "town": "New Magincia", "dialogNumber": 46, "npc": "Kaiko", "job": "cultiva los campos de New Magincia", "joinable": false, "keywords": { "town": "'New Magincia!'", "king|usur|blac": "Blackthorn el usurpador; se lleva media cosecha y encarcela a los que tienen el saber de los ancianos" }, "note": "CROSS: Kaiko es la mujer de New Magincia que le habló a Hassad del Avatar — Hassad (wop-hythloth, IGNAVUS) tiene el keyword 'kaik' que responde 'She is a fine woman. If she has told thee of me, she must have great faith in thee.' Kaiko → referral a Hassad." },
+      "sources": ["talk/towne.json", "npcs.json"],
+      "primary": "TOWNE.TLK reg #46 (Kaiko) — qa 'town'→'New Magincia!'; cross Hassad CASTLE.TLK #17 keyword 'kaik'; npcs.json loc 8",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Kaiko", "contains": "New Magincia" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 46, "location": 8 }
+      ]
+    },
+    {
+      "id": "npc-newmagincia-katrina",
+      "kind": "npc-dialogue",
+      "claim": { "town": "New Magincia", "dialogNumber": 47, "npc": "Katrina", "job": "espera para reanudar la batalla de la Virtud", "joinable": true, "keywords": { "wait|batt": "'The battle of Virtue!'", "virt": "reconoce al Avatar ('knows the virtues better than all others')", "join": "→ Label → JoinParty" }, "note": "COMPAÑERA RECLUTABLE (segunda joinable del barrido, junto a Jaana/Yew). Katrina, la pastora de Magincia (herencia de U4)." },
+      "sources": ["talk/towne.json", "npcs.json"],
+      "primary": "TOWNE.TLK reg #47 (Katrina) — qa 'join' → Label → JoinParty; npcs.json loc 8",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Katrina", "keyword": "join" },
+        { "type": "npcAnswerContains", "npc": "Katrina", "contains": "battle of Virtue" },
+        { "type": "npcPlacedInLocation", "dialogNumber": 47, "location": 8 }
+      ]
+    },
+    {
+      "id": "shop-formula-int",
+      "kind": "shop",
+      "claim": { "note": "Fórmula de COMPRA regateada por INTELIGENCIA del comprador (SHOPPES.OVL 0x02D8, derivada en core/shops/shops.ts): compra = base + ⌊base·(100 − 3·INT)/100⌋ (trunc hacia 0, término interno). Punto neutro INT≈33. El Avatar de la cadena del tour tiene INT=22 → factor (100−66)/100 = 0.34, es decir compra = base + ⌊0.34·base⌋. Ejemplos: Bow 75→100, Short Sword 40→53, Plate Mail 700→938. Los precios BASE están en data.json:equipmentBasePrices (index = id de equipo). Autoridad de la fórmula = asm; el corpus sólo ancla los precios base." },
+      "sources": ["core/shops/shops.ts", "re/notes/shops.md"],
+      "primary": "SHOPPES.OVL 0x02D8 (regateo por INT, record+0x0E) — replicado en core/shops/shops.ts shopBuyPrice()",
+      "authority": "asm",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayLength", "array": "equipmentBasePrices", "length": 48 }
+      ]
+    },
+    {
+      "id": "shop-britain-blacksmith",
+      "kind": "shop",
+      "claim": { "town": "Britain", "store": "Iolo's Bows", "merchantIndex": 0, "keeper": "Gwenneth", "type": "blacksmith (arquería)", "stock": { "Dagger": 1, "Sling": 10, "Bow": 75, "Arrows": 10, "Crossbow": 150, "Quarrels": 15, "MagicBow": 800 }, "exampleBuyINT22": { "Bow": 100 }, "note": "El blacksmith de Britain (ch03 ya compra un Bow byte-exacto: base 75 → 100 a INT 22)." },
+      "sources": ["data.json:weaponsSoldByMerchants", "data.json:equipmentBasePrices", "data.json:storeNames"],
+      "primary": "weaponsSoldByMerchants[0] (SHOP_TOWNES.Blacksmith[0]=loc2 Britain) + equipmentBasePrices",
+      "authority": "data",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "storeNames", "value": "Iolo's Bows" },
+        { "type": "locationExists", "name": "Britain" },
+        { "type": "dataArrayIndexEquals", "array": "equipmentBasePrices", "index": 26, "value": 75 }
+      ]
+    },
+    {
+      "id": "shop-minoc-blacksmith",
+      "kind": "shop",
+      "claim": { "town": "Minoc", "store": "Darkwatch Armoury", "merchantIndex": 3, "keeper": "Shenstone", "type": "blacksmith (armadura)", "stock": { "IronHelm": 120, "SmallShield": 40, "Ringmail": 100, "ShortSword": 40, "LongSword": 70, "Mace": 50, "TwoHHammer": 85 }, "exampleBuyINT22": { "ShortSword": 53, "LongSword": 93 }, "note": "Cross: Tactus (npc-minoc-tactus) fabrica la chainmail aquí; el keeper Shenstone es el armero del que Delwyn (npc-minoc-delwyn) da la pista. ch05 compra un Short Sword byte-exacto (base 40 → 53 a INT 22)." },
+      "sources": ["data.json:weaponsSoldByMerchants", "data.json:equipmentBasePrices", "data.json:shoppeKeeperNames"],
+      "primary": "weaponsSoldByMerchants[3] (SHOP_TOWNES.Blacksmith[3]=loc5 Minoc) + equipmentBasePrices; keeper shoppeKeeperNames[3]",
+      "authority": "data",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "storeNames", "value": "Darkwatch Armoury" },
+        { "type": "dataArrayContains", "array": "shoppeKeeperNames", "value": "Shenstone" },
+        { "type": "locationExists", "name": "Minoc" },
+        { "type": "dataArrayIndexEquals", "array": "equipmentBasePrices", "index": 23, "value": 40 },
+        { "type": "dataArrayIndexEquals", "array": "equipmentBasePrices", "index": 30, "value": 70 }
+      ]
+    },
+    {
+      "id": "shop-trinsic-blacksmith",
+      "kind": "shop",
+      "claim": { "town": "Trinsic", "store": "The Paladin's Protectorate!", "merchantIndex": 4, "keeper": "Paul", "type": "blacksmith (armas pesadas + armadura)", "stock": { "TwoHAxe": 150, "TwoHSword": 200, "Halberd": 250, "IronHelm": 120, "LargeShield": 70, "ScaleMail": 150, "PlateMail": 700 }, "exampleBuyINT22": { "LargeShield": 93, "PlateMail": 938 }, "note": "Cross: Woolfe (npc-trinsic-woolfe) es el smith conversable de esta tienda ('I'm the blacksmith here at The Paladin's Protectorate'); menciona la Plate Mail (base 700 → 938 a INT 22)." },
+      "sources": ["data.json:weaponsSoldByMerchants", "data.json:equipmentBasePrices", "data.json:storeNames"],
+      "primary": "weaponsSoldByMerchants[4] (SHOP_TOWNES.Blacksmith[4]=loc6 Trinsic) + equipmentBasePrices",
+      "authority": "data",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "storeNames", "value": "The Paladin's Protectorate!" },
+        { "type": "locationExists", "name": "Trinsic" },
+        { "type": "dataArrayIndexEquals", "array": "equipmentBasePrices", "index": 14, "value": 700 },
+        { "type": "dataArrayIndexEquals", "array": "equipmentBasePrices", "index": 5, "value": 70 }
+      ]
+    },
+    {
+      "id": "shop-jhelom-blacksmith",
+      "kind": "shop",
+      "claim": { "town": "Jhelom", "store": "Naughty Nomaan's", "merchantIndex": 1, "keeper": "Nomaan", "type": "blacksmith (armas)", "stock": { "FlamingOil": 5, "Mace": 50, "SpikedCollar": 240, "ThrowingAxe": 3, "SpikedHelm": 150, "SpikedShield": 120, "MorningStar": 60 }, "exampleBuyINT22": { "MorningStar": 80, "Mace": 67 }, "note": "Cross: Bullwier (npc-jhelom-bullwier) es el smith grosero de Jhelom (iron swords/shields/helms)." },
+      "sources": ["data.json:weaponsSoldByMerchants", "data.json:equipmentBasePrices", "data.json:storeNames"],
+      "primary": "weaponsSoldByMerchants[1] (SHOP_TOWNES.Blacksmith[1]=loc3 Jhelom) + equipmentBasePrices",
+      "authority": "data",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "storeNames", "value": "Naughty Nomaan's" },
+        { "type": "locationExists", "name": "Jhelom" },
+        { "type": "dataArrayIndexEquals", "array": "equipmentBasePrices", "index": 25, "value": 60 }
+      ]
+    },
+    {
+      "id": "shop-yew-blacksmith",
+      "kind": "shop",
+      "claim": { "town": "Yew", "store": "Arms of Justice", "merchantIndex": 2, "keeper": "Ronan", "type": "blacksmith (armadura ligera + armas)", "stock": { "LeatherHelm": 15, "ClothArmour": 20, "LeatherArmour": 50, "Club": 5, "Spear": 7, "SilverSword": 250, "MagicAxe": 1000 }, "exampleBuyINT22": { "LeatherArmour": 67, "SilverSword": 335 } },
+      "sources": ["data.json:weaponsSoldByMerchants", "data.json:equipmentBasePrices", "data.json:storeNames"],
+      "primary": "weaponsSoldByMerchants[2] (SHOP_TOWNES.Blacksmith[2]=loc4 Yew) + equipmentBasePrices",
+      "authority": "data",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "storeNames", "value": "Arms of Justice" },
+        { "type": "locationExists", "name": "Yew" },
+        { "type": "dataArrayIndexEquals", "array": "equipmentBasePrices", "index": 37, "value": 250 }
+      ]
+    },
+    {
+      "id": "shop-moonglow-reagents",
+      "kind": "shop",
+      "claim": { "town": "Moonglow", "store": "The Herbalist", "type": "MagicSeller (reactivos)", "magicTownIndex": 0, "note": "Moonglow NO tiene blacksmith; su tienda de compra es la de reactivos (ch06 comprará reactivos aquí). Precios por-ciudad: reagentBasePrices[town*8+slot], Moonglow = town 0. Vende Ginseng 20, Garlic 18, Sp.Silk 12, Nightshade 12, Mandrake 13. NO vende Sulfur Ash / Blood Moss / Blk.Pearl (base 0). Precio final regateado por INT (misma fórmula, reagentPrice).", "sells": { "Ginseng": 20, "Garlic": 18, "Sp. Silk": 12, "Nightshade": 12, "Mandrake": 13 } },
+      "sources": ["data.json:reagentBasePrices", "core/shops/shops.ts"],
+      "primary": "reagentBasePrices[0..7] (SHOP_TOWNES.MagicSeller[0]=loc1 Moonglow) — shops.ts reagentPriceAt(town*8+slot)",
+      "authority": "data",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "locationExists", "name": "Moonglow" },
+        { "type": "dataArrayContains", "array": "reagents", "value": "Ginseng" },
+        { "type": "dataArrayIndexEquals", "array": "reagentBasePrices", "index": 1, "value": 20 },
+        { "type": "dataArrayIndexEquals", "array": "reagentBasePrices", "index": 2, "value": 18 },
+        { "type": "dataArrayIndexEquals", "array": "reagentBasePrices", "index": 7, "value": 13 }
+      ]
+    },
+    {
+      "id": "shop-minoc-healer",
+      "kind": "shop",
+      "claim": { "town": "Minoc", "type": "Healer", "healingTownIndex": 0, "prices": { "heal": 35, "cure": 20, "resurrect": 200 }, "note": "Precios de curación por posición en HEALING_TOWNES=[5,6,7,21,23,30,31]; Minoc=loc5=posición 0. SIN karma-dependencia (shops.ts). ch05 usa el healer de Minoc." },
+      "sources": ["data.json:healPrices", "data.json:curePrices", "data.json:resurrectPrices", "core/shops/shops.ts"],
+      "primary": "healPrices/curePrices/resurrectPrices[0] (HEALING_TOWNES[0]=loc5 Minoc)",
+      "authority": "data",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "locationExists", "name": "Minoc" },
+        { "type": "dataArrayIndexEquals", "array": "healPrices", "index": 0, "value": 35 },
+        { "type": "dataArrayIndexEquals", "array": "curePrices", "index": 0, "value": 20 },
+        { "type": "dataArrayIndexEquals", "array": "resurrectPrices", "index": 0, "value": 200 }
+      ]
+    },
+    {
+      "id": "shop-trinsic-healer",
+      "kind": "shop",
+      "claim": { "town": "Trinsic", "type": "Healer", "healingTownIndex": 1, "prices": { "heal": 40, "cure": 25, "resurrect": 215 }, "note": "Trinsic=loc6=posición 1 en HEALING_TOWNES. ch04 puede usar este healer." },
+      "sources": ["data.json:healPrices", "data.json:curePrices", "data.json:resurrectPrices", "core/shops/shops.ts"],
+      "primary": "healPrices/curePrices/resurrectPrices[1] (HEALING_TOWNES[1]=loc6 Trinsic)",
+      "authority": "data",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "locationExists", "name": "Trinsic" },
+        { "type": "dataArrayIndexEquals", "array": "healPrices", "index": 1, "value": 40 },
+        { "type": "dataArrayIndexEquals", "array": "curePrices", "index": 1, "value": 25 },
+        { "type": "dataArrayIndexEquals", "array": "resurrectPrices", "index": 1, "value": 215 }
+      ]
+    },
+    {
+      "id": "npc-keep-lord-michael",
+      "kind": "npc-dialogue",
+      "claim": { "location": "Empath Abbey (keep del Amor/Compasión)", "tlk": "KEEP.TLK #16", "npc": "Lord Michael", "joinable": false, "keywords": { "cast": "protege el Principio del Amor en Empath Abbey", "moun|clim|grap": "'I have the grapple used to climb mountains' — ENTREGA el grapple (op Change:70)", "shad|hate": "remite al daemon del gran desierto del este (Sin'Vraal), que sabe del Lord of Hatred (Astaroth)" }, "note": "GIVER del grapple (cierra quest-grapple). Cross: Empath Abbey = keep de Astaroth/Hate en sl-keeps; remite a Sin'Vraal (DWELLING.TLK #11)." },
+      "sources": ["talk/keep.json"],
+      "primary": "KEEP.TLK reg #16 (Lord Michael, Empath Abbey) — qa 'grap' → entrega grapple (Change:70); qa 'shad'/'hate' → Sin'Vraal",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Lord Michael", "contains": "grapple" },
+        { "type": "npcAnswerContains", "npc": "Lord Michael", "contains": "Empath Abbey" }
+      ]
+    },
+    {
+      "id": "npc-keep-sir-simon",
+      "kind": "npc-dialogue",
+      "claim": { "location": "keep (isla montañosa al oeste de Spiritwood)", "tlk": "KEEP.TLK #2", "npc": "Sir Simon", "joinable": false, "keywords": { "brit|help": "las joyas de la corona — Crown, Sceptre y Amulet — deben recuperarse", "crow": "la Crown absorbe TODA forma de ataque mágico", "scep": "el Sceptre dispersa TODAS las barreras mágicas, incluso en el plano etéreo", "amul": "de eso sabe más su esposa (Lady Tessa, KEEP.TLK #3)" }, "note": "Cross: Landon (npc-yew-landon) remite a Sir Simon por la Crown. Explica los poderes de las 3 regalías (item-crown/scepter/amulet)." },
+      "sources": ["talk/keep.json"],
+      "primary": "KEEP.TLK reg #2 (Sir Simon) — qa 'brit'/'help', 'crow', 'scep', 'amul'",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Sir Simon", "contains": "the Crown, the Sceptre and the Amulet" },
+        { "type": "npcAnswerContains", "npc": "Sir Simon", "contains": "absorbs all magical" }
+      ]
+    },
+    {
+      "id": "npc-castle-ambrose",
+      "kind": "npc-dialogue",
+      "claim": { "location": "Cove (o castle-map; CASTLE.TLK)", "tlk": "CASTLE.TLK #33", "npc": "Ambrose", "joinable": false, "keywords": { "myst|weap|avat": "buscó las fabuladas Mystic weapons del Avatar", "sear|mine|hyth": "descendió por las minas de Hythloth; están en el Underworld, donde estaba el Great Abyss, con lava, al NORTE de la entrada subterránea de Hythloth" }, "note": "PAYOFF del rumor de Bullwier (npc-jhelom-bullwier). Ubicación de las Mystic arms. Clave: 'only the Mystic arms work near great evil. Only such evil could hold our lord!' → hacen falta para Doom." },
+      "sources": ["talk/castle.json"],
+      "primary": "CASTLE.TLK reg #33 (Ambrose) — qa 'myst'/'weap', 'sear'/'mine'/'hyth' (Underworld N de Hythloth)",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Ambrose", "contains": "mystic weapons" },
+        { "type": "npcAnswerContains", "npc": "Ambrose", "contains": "Hythloth" }
+      ]
+    },
+    {
+      "id": "npc-castle-blackthorn",
+      "kind": "npc-dialogue",
+      "claim": { "location": "Palace of Blackthorn", "tlk": "CASTLE.TLK #10", "npc": "Blackthorn", "joinable": false, "trap": true, "keywords": { "impe": "el password 'Impera' → 'With thee on our side, we shall be invincible! ... feel free to roam my castle'" }, "note": "El USURPADOR. Con el password 'Impera' (obtenido de Flain→Elistaria) finge aceptarte y te deja recorrer el palacio (camino oscuro / infiltración). Cross: item-crown (guarda la Crown en lo alto del palacio, npc-yew-landon)." },
+      "sources": ["talk/castle.json"],
+      "primary": "CASTLE.TLK reg #10 (Blackthorn) — Label 3 qa 'impe' → 'invincible'/'roam my castle'",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Blackthorn", "contains": "invincible" }
+      ]
+    },
+    {
+      "id": "npc-keep-elistaria",
+      "kind": "npc-dialogue",
+      "claim": { "location": "keep (isla más al NE de Britannia)", "tlk": "KEEP.TLK #9", "npc": "Elistaria", "joinable": false, "trap": true, "keywords": { "dabb|arts|dark": "juega con las artes oscuras; invoca daemons", "impera": "el password de la Oppression → Label 3", "miss|item": "'The Jeweled Weapons of course! Ask Thrud for them!' (Thrud KEEP.TLK #8)" }, "note": "Objetivo del referral de Flain (npc-skarabrae-flain) con el password 'Impera'. Da acceso a las Jeweled Weapons vía Thrud (camino de la Oppression)." },
+      "sources": ["talk/keep.json"],
+      "primary": "KEEP.TLK reg #9 (Elistaria) — qa 'impera' → Label 3; qa 'miss'/'item' → Jeweled Weapons/Thrud",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Elistaria", "keyword": "impera" },
+        { "type": "npcAnswerContains", "npc": "Elistaria", "contains": "Jeweled Weapons" }
+      ]
+    },
+    {
+      "id": "npc-castle-chuckles",
+      "kind": "npc-dialogue",
+      "claim": { "location": "Lord British's Castle", "tlk": "CASTLE.TLK #9", "npc": "Chuckles", "joinable": false, "keywords": { "welc": "'Welcome to the castle of His Royal Majesty...'", "ente": "→ entretiene", "drud": "'Who?' (esquiva la pregunta por Drudgeworth, CASTLE.TLK #6)" }, "note": "El bufón del castillo. En U5 esquiva preguntas incómodas (Drudgeworth = el interrogador/villano del castillo)." },
+      "sources": ["talk/castle.json"],
+      "primary": "CASTLE.TLK reg #9 (Chuckles) — qa 'welc', 'drud'→'Who?'",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Chuckles", "contains": "Welcome to the castle" }
+      ]
+    },
+    {
+      "id": "party-companions",
+      "kind": "party",
+      "claim": {
+        "note": "Roster de COMPAÑEROS reclutables (op JoinParty). Todos se reclutan igual: teclear 'join' → responder 'yes'. El motor de diálogo debe manejar el op JoinParty al cerrar. La party máx = 6.",
+        "companions": [
+          { "npc": "Gwenno", "tlk": "TOWNE.TLK #11", "location": "Britain", "note": "esposa de Iolo; repara arcos" },
+          { "npc": "Jaana", "tlk": "TOWNE.TLK #35", "location": "Yew", "note": "Resistencia; ver npc-yew-jaana" },
+          { "npc": "Katrina", "tlk": "TOWNE.TLK #47", "location": "New Magincia", "note": "pastora; ver npc-newmagincia-katrina" },
+          { "npc": "Geoffrey", "tlk": "CASTLE.TLK #40", "location": "Lord British's Castle", "note": "guerrero (compañero clásico U4)" },
+          { "npc": "Gorn", "tlk": "CASTLE.TLK #11", "location": "mazmorra del Palacio de Blackthorn (preso)", "note": "pide recoger las keys que escondió en el brasero" },
+          { "npc": "Saduj", "tlk": "CASTLE.TLK #7", "location": "Lord British's Castle", "note": "TRAMPA — espía de Blackthorn (ver npc-castle-saduj)" },
+          { "npc": "Johne", "tlk": "KEEP.TLK #1", "location": "Serpent's Hold", "note": "capitán; teme a los Shadowlords" },
+          { "npc": "Mariah", "tlk": "KEEP.TLK #27", "location": "keep", "note": "maga (U4)" },
+          { "npc": "Toshi", "tlk": "KEEP.TLK #28", "location": "keep" },
+          { "npc": "Maxwell", "tlk": "KEEP.TLK #29", "location": "keep" },
+          { "npc": "Dupre", "tlk": "KEEP.TLK #30", "location": "Bordermarch", "note": "paladín (U4)" },
+          { "npc": "Sentri", "tlk": "KEEP.TLK #31", "location": "Bordermarch", "note": "guerrero (U4)" },
+          { "npc": "Julia", "tlk": "KEEP.TLK #32", "location": "Empath Abbey", "note": "tinker (U4)" }
+        ]
+      },
+      "sources": ["talk/towne.json", "talk/castle.json", "talk/keep.json"],
+      "primary": "Todos los registros con op JoinParty en TOWNE/CASTLE/KEEP.TLK; keyword de reclutamiento 'join' → 'yes'",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Dupre", "keyword": "join" },
+        { "type": "npcHasKeyword", "npc": "Sentri", "keyword": "join" },
+        { "type": "npcHasKeyword", "npc": "Julia", "keyword": "join" },
+        { "type": "npcHasKeyword", "npc": "Mariah", "keyword": "join" },
+        { "type": "npcHasKeyword", "npc": "Geoffrey", "keyword": "join" },
+        { "type": "npcHasKeyword", "npc": "Gwenno", "keyword": "join" },
+        { "type": "npcHasKeyword", "npc": "Katrina", "keyword": "join" }
+      ]
+    },
+    {
+      "id": "npc-castle-saduj",
+      "kind": "npc-dialogue",
+      "claim": { "location": "Lord British's Castle", "tlk": "CASTLE.TLK #7", "npc": "Saduj", "joinable": true, "trap": true, "keywords": { "gard": "finge ser el jardinero", "sand|box": "sabe de la sandalwood box; 'If destroyed, there shall be no chance for that scourge British to return!'", "impe": "gate 'impe' (Impera) → confiesa: 'Blackthorn himself sent me here to find an object hidden in Lord British's chambers'", "join": "→ se ofrece a unirse" }, "note": "TRAMPA CRÍTICA. 'Saduj' = 'Judas' al revés. Es un ESPÍA de Blackthorn infiltrado como jardinero para DESTRUIR la Wooden Box (caja de sándalo) — el ítem que gatea el FINAL VERDADERO (endgame-true-ending). Reclutarlo mete a un traidor en la party. Un tour NO debe reclutar a Saduj." },
+      "sources": ["talk/castle.json"],
+      "primary": "CASTLE.TLK reg #7 (Saduj) — Label 4 confesión ('Blackthorn himself sent me'); qa 'sand'/'box' (destruir la caja); op JoinParty",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Saduj", "keyword": "join" },
+        { "type": "npcHasKeyword", "npc": "Saduj", "keyword": "impe" },
+        { "type": "npcAnswerContains", "npc": "Saduj", "contains": "sandalwood box" }
+      ]
+    },
+    {
+      "id": "npc-dwelling-sinvraal",
+      "kind": "npc-dialogue",
+      "claim": { "location": "cabaña del gran desierto del este (DWELLING.TLK #11)", "tlk": "DWELLING.TLK #11", "npc": "Sin'Vraal", "joinable": false, "keywords": { "asta": "'Speak not that name... lest thou summon the Shadowlord of Hatred!' — sirvió a Astaroth", "summ|shad|hat": "MECÁNICA: 'they who yell their Names, oft die at the will of the foul wraiths!'", "shar": "revela la ubicación del Shard of Hatred en el Underworld (coordenada vía op Rune)" }, "note": "El gárgola del desierto al que Lord Michael (npc-keep-lord-michael) remite por el Lord of Hatred. Reformado por el 'Once and True King' (LB). Cross: Astaroth/Hate (sl-identities), Shard of Hatred (sl-ritual). AVISO de mecánica: gritar el Nombre de un Shadowlord puede MATAR miembros de la party." },
+      "sources": ["talk/dwelling.json"],
+      "primary": "DWELLING.TLK reg #11 (Sin'Vraal) — job 'served Astaroth'; qa 'summ'/'shad'/'hat', 'shar' (Shard of Hatred)",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Sin'Vraal", "contains": "Astaroth" },
+        { "type": "npcAnswerContains", "npc": "Sin'Vraal", "contains": "Shard of Hatred" }
+      ]
+    },
+    {
+      "id": "npc-dwelling-windmire",
+      "kind": "npc-dialogue",
+      "claim": { "location": "faro (DWELLING.TLK #3)", "tlk": "DWELLING.TLK #3", "npc": "Windmire", "joinable": false, "keywords": { "ligh": "guía a los barcos al puerto de noche/tormenta", "mino": "'Minoc is the City of Sacrifice!'", "ship": "Captain Blythe regenta el Crow's Nest", "armo": "'Shenstone of the Darkwatch Armoury is famous for his fine leather work!'" }, "note": "Farero. Cross: confirma que Shenstone = keeper de la Darkwatch Armoury de Minoc (shop-minoc-blacksmith, npc-minoc-delwyn) y que Captain Blythe = Crow's Nest (npc-minoc-fenelon)." },
+      "sources": ["talk/dwelling.json"],
+      "primary": "DWELLING.TLK reg #3 (Windmire) — qa 'armo'→Shenstone/Darkwatch, 'ship'→Blythe/Crow's Nest",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Windmire", "contains": "Shenstone" },
+        { "type": "npcAnswerContains", "npc": "Windmire", "contains": "City of Sacrifice" }
+      ]
+    },
+    {
+      "id": "npc-dwelling-grendel",
+      "kind": "npc-dialogue",
+      "claim": { "location": "cabaña (DWELLING.TLK #12)", "tlk": "DWELLING.TLK #12", "npc": "Grendel", "joinable": false, "teachesSpell": { "spell": "REL XEN BET", "circle": 6, "effect": "convierte a un ser en rata por un tiempo" }, "keywords": { "alch": "fue un gran alquimista antes de su accidente", "spel|vas": "su hechizo fallido VAS REL XEN BET lo convirtió A ÉL en rata", "less|vers|perf": "enseña la versión menor REL XEN BET" }, "note": "Alquimista transformado en rata por su propio hechizo. Enseña REL XEN BET (6º círculo)." },
+      "sources": ["talk/dwelling.json"],
+      "primary": "DWELLING.TLK reg #12 (Grendel) — qa 'less'/'vers'/'perf' → Rune 'REL XEN BET'",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Grendel", "contains": "REL XEN BET" }
+      ]
+    },
+    {
+      "id": "shop-shipwrights",
+      "kind": "shop",
+      "claim": { "type": "Shipwright (astilleros)", "towns": ["Jhelom", "Minoc", "Cove", "Buccaneer's Den"], "stores": ["Island Shipwrights", "The Crow's Nest", "The Oaken Oar", "The Rusty Bucket"], "frigatePrices": [600, 753, 650, 700], "skiffPrices": [200, 175, 125, 100], "replacementPrice": 10000, "note": "Precios por-ciudad (SHOP_TOWNES.Shipwright=[3,5,21,24]). The Oaken Oar (Cove) es donde Master Hawkins guarda los planos del HMS Cape (cross npc-trinsic-jimmy / quest-hmscape). Nave de reemplazo si ya tienes fragata: 10000. Coords de muelle en data.json:docksX/Y." },
+      "sources": ["core/shops/shop-tables.ts (SHOPPES2.OVL)", "data.json:storeNames", "data.json:docksX"],
+      "primary": "shop-tables.ts FRIGATE_PRICES/SKIFF_PRICES (DS 0x4D66/0x4D6E) + docksX/Y (data.json)",
+      "authority": "asm",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "storeNames", "value": "The Oaken Oar" },
+        { "type": "dataArrayContains", "array": "storeNames", "value": "Island Shipwrights" },
+        { "type": "dataArrayLength", "array": "docksX", "length": 4 }
+      ]
+    },
+    {
+      "id": "shop-taverns",
+      "kind": "shop",
+      "claim": { "type": "Barkeeper (tabernas)", "towns": ["Moonglow", "Britain", "Jhelom", "Yew", "New Magincia", "Britanny(?)", "Paws", "Buccaneer's Den", "Wrong(?)"], "roundPricePerHead": [3, 4, 5, 3, 2, 5, 3, 4, 5], "wines": { "Rose": 18, "Claret": 192, "Sauterne": 79, "Muscatel": 30, "Moselle": 275, "Chablis": 98 }, "note": "SHOP_TOWNES.Barkeeper=[1,2,3,4,8,19,22,24,30]. Venden 1 RUMOR por visita (26 rumores con precio, RUMOR_PRICES), comida (round) por cabeza, vino, y raciones (haggle por INT). The Slaughtered Lamb (Yew) es donde curra Jeremy (npc-yew-jeremy). Gate de borrachera a la 3ª copa." },
+      "sources": ["core/shops/shop-tables.ts (SHOPPES2.OVL)", "data.json:storeNames"],
+      "primary": "shop-tables.ts TAVERN_ROUND_PRICE (DS 0x4C36) / WINE_PRICES (0x4C48) / RUMOR_PRICES (0x4D10)",
+      "authority": "asm",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "storeNames", "value": "The Slaughtered Lamb" }
+      ]
+    },
+    {
+      "id": "shop-inns",
+      "kind": "shop",
+      "claim": { "type": "InnKeeper (posadas)", "towns": ["Britain", "Jhelom", "Skara Brae", "Paws", "Paws?", "Buccaneer's Den"], "stores": ["The Wayfarer Inn", "The Warrior's Stead", "The Haunting Inn", "Hotel Brittany", "The Smugglers' Inn", "The King's Ransom Inn"], "rate": [2, 3, 2, 3, 2, 3], "capacity": [3, 4, 3, 2, 2, 2], "note": "SHOP_TOWNES.InnKeeper=[2,3,7,20,22,24]. Rest = rate·party; Leave/Pickup = rate·10. Coords de cama en data.json:innBedsX/Y (=INN_ROOM_X/Y). El descanso teletransporta a la cama de la posada." },
+      "sources": ["core/shops/shop-tables.ts (SHOPPES3.OVL)", "data.json:innBedsX", "data.json:storeNames"],
+      "primary": "shop-tables.ts INN_RATE (DS 0x4D7E) / INN_CAPACITY (0x4DC4) + innBedsX/Y (data.json)",
+      "authority": "asm",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayLength", "array": "innBedsX", "length": 6 },
+        { "type": "dataArrayLength", "array": "innBedsY", "length": 6 },
+        { "type": "dataArrayContains", "array": "storeNames", "value": "The King's Ransom Inn" }
+      ]
+    },
+    {
+      "id": "shop-guilds",
+      "kind": "shop",
+      "claim": { "type": "GuildMaster (gremios, mercado negro)", "towns": ["New Magincia", "Paws", "Buccaneer's Den"], "stores": ["The Den", "The Guild"], "prices": [[190, 255, 12], [160, 200, 11], [185, 225, 25]], "columns": ["Skull Keys", "Gems", "Torches"], "grant": [3, 4, 5], "note": "SHOP_TOWNES.GuildMaster=[8,22,24]. Vende por LOTE fijo: +3 keys / +4 gems / +5 torches (cap 99). Precios por-ciudad (GUILD_PRICES). El gremio es la vía legítima de Skull Keys además de Jeremy (npc-yew-jeremy)." },
+      "sources": ["core/shops/shop-tables.ts", "data.json:storeNames"],
+      "primary": "shop-tables.ts GUILD_PRICES (DS 0x3BEA) / GUILD_GRANT",
+      "authority": "asm",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "storeNames", "value": "The Guild" }
+      ]
+    },
+    {
+      "id": "npc-castle-gorn",
+      "kind": "npc-dialogue",
+      "claim": { "location": "mazmorra del Palacio de Blackthorn", "tlk": "CASTLE.TLK #11", "npc": "Gorn", "joinable": true, "keywords": { "y": "acepta ayudarte y unirse; conoce una puerta secreta para escapar de noche" }, "note": "Compañero de celda si el Avatar cae preso en el Palacio de Blackthorn. Sabe una puerta secreta de escape ('In the dead of night we must go out through a secret door') y pide las keys que escondió en el brasero. Se une (JoinParty)." },
+      "sources": ["talk/castle.json"],
+      "primary": "CASTLE.TLK reg #11 (Gorn) — Labels 0-3, op JoinParty (escape de la cárcel de Blackthorn)",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcHasKeyword", "npc": "Gorn", "keyword": "y" }
+      ]
+    },
+    {
+      "id": "npc-castle-drudgeworth",
+      "kind": "npc-dialogue",
+      "claim": { "location": "mazmorra (CASTLE.TLK #6)", "tlk": "CASTLE.TLK #6", "npc": "Drudgeworth", "joinable": false, "keywords": { "faul|comm|crim": "'I didn't mean to kill 'er! Honest!'", "chuc": "culpa a Chuckles ('Twer his fault really!')", "it|wher|hidd": "si lo sueltas te muestra dónde está 'it' escondido" }, "note": "Preso turbio que clama inocencia y culpa a Chuckles (npc-castle-chuckles). Si NO lo sueltas te insulta ('PIGDOG'). Camino dudoso: soltarlo es de karma cuestionable." },
+      "sources": ["talk/castle.json"],
+      "primary": "CASTLE.TLK reg #6 (Drudgeworth) — qa 'chuc'→culpa a Chuckles, 'faul'/'comm'/'crim'",
+      "authority": "tlk",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Drudgeworth", "contains": "his fault really" }
+      ]
+    },
+    {
+      "id": "item-scepter",
+      "kind": "unique-item",
+      "claim": { "item": "Sceptre", "where": "Stonegate", "useMessage": "Sceptre // Wielding the Sceptre", "effect": "disuelve campos de fuerza (Force Field dissolved)" },
+      "sources": ["wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "data.json:specialItemNames + stringPools 'spellPushEffectMsgs' ('Sceptre','Wielding the Sceptre','Field dissolved!')",
+      "authority": "walkthrough",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "specialItemNames", "value": "Sceptre" },
+        { "type": "locationExists", "name": "Stonegate" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Wielding the Sceptre" }
+      ]
+    },
+    {
+      "id": "item-crown",
+      "kind": "unique-item",
+      "claim": { "item": "Crown", "where": "tejado del Palacio de Blackthorn", "useMessage": "Crown // Thou dost don the Crown" },
+      "sources": ["wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "data.json:specialItemNames + stringPools 'spellPushEffectMsgs' ('Crown','Thou dost don the Crown')",
+      "authority": "walkthrough",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "specialItemNames", "value": "Crown" },
+        { "type": "locationExists", "name": "Palace_of_Blackthorn" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Thou dost don the Crown" }
+      ]
+    },
+    {
+      "id": "item-amulet",
+      "kind": "unique-item",
+      "claim": { "item": "Amulet", "where": "Underworld bajo Destard", "useMessage": "Amulet // Wearing the Amulet" },
+      "sources": ["wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "data.json:specialItemNames + stringPools 'spellPushEffectMsgs' ('Amulet','Wearing the Amulet')",
+      "authority": "walkthrough",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "specialItemNames", "value": "Amulet" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Wearing the Amulet" }
+      ]
+    },
+    {
+      "id": "item-sandalwood",
+      "kind": "unique-item",
+      "claim": { "item": "Wooden Box", "where": "tocar 'Stones' en el clavicémbalo del estudio de Lord British" },
+      "sources": ["wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "authority": "walkthrough",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "specialItemNames2", "value": "Wooden Box" }
+      ]
+    },
+    {
+      "id": "item-carpet",
+      "kind": "unique-item",
+      "claim": { "item": "Magic Crpt", "where": "aposentos privados de Lord British" },
+      "sources": ["wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "authority": "walkthrough",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "specialItemNames", "value": "Magic Crpt" }
+      ]
+    },
+    {
+      "id": "tools-navigation",
+      "kind": "unique-item",
+      "claim": {
+        "note": "Herramientas del final de partida (specialItemNames2) con su mensaje de uso byte-exacto. Spyglass y Sextant se guardan en el estudio de Lord British; el Sextant sólo funciona de noche y al aire libre; el Spyglass mira las estrellas. El Black Badge deja pasar por hombre de Blackthorn. La Wooden Box (caja de sándalo) pide una combinación ('How?').",
+        "items": {
+          "Spyglass": "Spyglass // Looking... (No stars! si de día)",
+          "Sextant": "Sextant // Position: (Only outdoors! / Only at night!)",
+          "Pocket Watch": "Watch // The pocket watch reads <hora> AM/PM.",
+          "Black Badge": "Badge // Badge worn!",
+          "Wooden Box": "Box // How? (pide combinación)"
+        }
+      },
+      "sources": ["wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "data.json:specialItemNames2 + stringPools 'spellPushEffectMsgs' (Spyglass/Looking…, Sextant/Position:, 'The pocket watch reads', 'Badge worn!', 'Box\\n\\nHow?')",
+      "authority": "walkthrough",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "specialItemNames2", "value": "Spyglass" },
+        { "type": "dataArrayContains", "array": "specialItemNames2", "value": "Sextant" },
+        { "type": "dataArrayContains", "array": "specialItemNames2", "value": "Pocket Watch" },
+        { "type": "dataArrayContains", "array": "specialItemNames2", "value": "Black Badge" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Looking..." },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "The pocket watch reads" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Badge worn!" }
+      ]
+    },
+    {
+      "id": "quest-grapple",
+      "kind": "quest-chain",
+      "claim": { "item": "grapple", "giver": "Lord Michael", "location": "Empath Abbey (KEEP.TLK #16)", "how": "teclear 'grapple'/'mountain'/'climb' — entrega vía op Change:70", "note": "CONFIRMADO en TLK (ver npc-keep-lord-michael): Lord Michael de Empath Abbey entrega el grapple. El grapple es un campo de inventario del SAVED.GAM (roster_off+0x206..0x20b), sin entrada en las tablas de nombres de objeto; el DELTA se verifica jugando (e2e), pero el diálogo del giver ya es falsable estáticamente." },
+      "sources": ["wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough", "talk/keep.json"],
+      "primary": "KEEP.TLK reg #16 (Lord Michael, Empath Abbey) — qa 'grap' → op Change:70",
+      "authority": "walkthrough",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "npcAnswerContains", "npc": "Lord Michael", "contains": "grapple used to climb mountains" }
+      ]
+    },
+    {
+      "id": "quest-hmscape",
+      "kind": "quest-chain",
+      "claim": { "item": "HMS Cape Plan", "effect": "duplica la velocidad de la fragata", "useMessage": "Plans // Ship rigged for double speed!", "note": "Sólo usable a bordo ('Only usable on shipboard!').", "questSource": "Jimmy en Trinsic (npc-trinsic-jimmy) cuenta la historia del H.M.S. Cape y apunta a Master Hawkins de The Oaken Oar; los planos del aparejo los guarda Hawkins en su shoppe (astillero)." },
+      "sources": ["wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "data.json:specialItemNames2 + stringPools 'spellPushEffectMsgs' ('Plans','Ship rigged for double speed!')",
+      "authority": "walkthrough",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "specialItemNames2", "value": "HMS Cape Plan" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Ship rigged for double speed!" }
+      ]
+    },
+    {
+      "id": "shrine-mantras",
+      "kind": "shrine",
+      "claim": { "note": "Mantras y localización de santuarios = los de Ultima IV; sin runas de entrada. CONFIRMADO contra DATA.OVL: los 8 mantras coinciden byte a byte con U4, en el mismo orden de virtud.", "count": 8, "pairs": { "Honesty": "Ahm", "Compassion": "Mu", "Valour": "Ra", "Justice": "Beh", "Sacrifice": "Cah", "Honor": "Summ", "Spirituality": "Om", "Humility": "Lum" } },
+      "sources": ["wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough", "DATA.OVL"],
+      "primary": "data.json:mantras (DATA.OVL) — orden alineado con data.json:virtues",
+      "authority": "walkthrough",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayLength", "array": "mantras", "length": 8 },
+        { "type": "dataArrayLength", "array": "virtues", "length": 8 },
+        { "type": "dataArrayLength", "array": "shrineX", "length": 8 },
+        { "type": "dataArrayLength", "array": "shrineY", "length": 8 },
+        { "type": "dataArrayContains", "array": "mantras", "value": "Ahm" },
+        { "type": "dataArrayContains", "array": "mantras", "value": "Mu" },
+        { "type": "dataArrayContains", "array": "mantras", "value": "Ra" },
+        { "type": "dataArrayContains", "array": "mantras", "value": "Beh" },
+        { "type": "dataArrayContains", "array": "mantras", "value": "Cah" },
+        { "type": "dataArrayContains", "array": "mantras", "value": "Summ" },
+        { "type": "dataArrayContains", "array": "mantras", "value": "Om" },
+        { "type": "dataArrayContains", "array": "mantras", "value": "Lum" }
+      ]
+    },
+    {
+      "id": "sl-identities",
+      "kind": "shadowlord",
+      "claim": {
+        "note": "Los 3 Shadowlords, cada uno encarnación de un anti-principio, con su Shard y la Flame (virtud opuesta) donde se arroja el shard para 'wrought' su doom. Triada verificada byte a byte en el pool de runtime del ritual.",
+        "triples": [
+          { "shadowlord": "Faulinei", "principle": "Falsehood", "shard": "Shard of Falsehood", "flame": "Flame of Truth" },
+          { "shadowlord": "Astaroth", "principle": "Hatred", "shard": "Shard of Hatred", "flame": "Flame of Love" },
+          { "shadowlord": "Nosfentor", "principle": "Cowardice", "shard": "Shard of Cowardice", "flame": "Flame of Courage" }
+        ],
+        "ritualText": "Gem Shard // Thou dost hold above thee the evil Shard of <principio>... // ...and cast it into the Flame of <virtud>! // The doom of the Shadowlord <nombre> is wrought!"
+      },
+      "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "primary": "data.json:stringPools 'spellPushEffectMsgs' (SHOPPES/OVL runtime): 'Thou dost hold above thee the evil Shard of' + {Falsehood…/Hatred…/Cowardice…} + '…and cast it into the Flame of' + {Truth!/Love!/Courage!} + 'The doom of the Shadowlord' + {Faulinei/Astaroth/Nosfentor}",
+      "authority": "cluebook",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayLength", "array": "shards", "length": 3 },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Faulinei" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Astaroth" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Nosfentor" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Falsehood" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Hatred" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Cowardice" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "cast it into the Flame of" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Truth!" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Love!" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "Courage!" },
+        { "type": "stringPoolContains", "pool": "spellPushEffectMsgs", "value": "is wrought!" }
+      ]
+    },
+    {
+      "id": "sl-keeps",
+      "kind": "shadowlord",
+      "claim": {
+        "note": "Las 3 salas del ritual son KEEPS (mapas 32×32), no mazmorras. En cada una: (Y)ell el nombre del Shadowlord (gate g_location ∈ {0x1e,0x1f,0x20}) lo convoca; (U)se el shard en la posición del ritual lo arroja a la Llama. La posición del ritual mira la casilla al NORTE (party_y-1), donde arde la Llama (tile 0xDE).",
+        "sites": [
+          { "idx": 0, "location": "The Lycaeum", "locId": 30, "flame": "Flame of Truth", "yell": "FAULINEI", "ritualPos": { "x": 15, "y": 9, "floor": 2 } },
+          { "idx": 1, "location": "Empath Abbey", "locId": 31, "flame": "Flame of Love", "yell": "ASTAROTH", "ritualPos": { "x": 15, "y": 3, "floor": 1 } },
+          { "idx": 2, "location": "Serpent's Hold", "locId": 32, "flame": "Flame of Courage", "yell": "NOSFENTOR", "ritualPos": { "x": 15, "y": 16, "floor": -1 } }
+        ]
+      },
+      "sources": ["re/notes/shadowlord-ritual.md", "cluebook Paths of Destiny"],
+      "primary": "re/notes/shadowlord-ritual.md (CMDS.OVL 0x1030 convocatoria + CAST.OVL 0x15b4 ritual, tablas DS 0x4882/0x4886/0x488a/0x488e). Serpent's Hold floor 0xFF=-1 (sótano) — smallmaps Serpents_Hold floors [-1,0,1]. Yell names DS 0x444a.",
+      "authority": "asm",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "locationExists", "name": "Lycaeum" },
+        { "type": "locationExists", "name": "Empath_Abbey" },
+        { "type": "locationExists", "name": "Serpents_Hold" },
+        { "type": "stringPoolContains", "pool": "campRestTransportMsgs", "value": "FAULINEI" },
+        { "type": "stringPoolContains", "pool": "campRestTransportMsgs", "value": "ASTAROTH" },
+        { "type": "stringPoolContains", "pool": "campRestTransportMsgs", "value": "NOSFENTOR" }
+      ]
+    },
+    {
+      "id": "sl-ritual",
+      "kind": "shadowlord",
+      "claim": { "note": "Invocar al Shadowlord por su nombre en la llama del keep opuesto a su principio y arrojar su shard. El shard se ARROJA a la Flame (op del pool 'spellPushEffectMsgs'), NO se usa como arma. Los 3 shards yacen en el Underworld (shardSpawns z=240/241/242).", "shardCount": 3 },
+      "sources": ["cluebook Paths of Destiny"],
+      "primary": "data.json:shards (3) + data.json:shardSpawns (z=240,241,242, Underworld)",
+      "authority": "cluebook",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayLength", "array": "shards", "length": 3 },
+        { "type": "dataArrayLength", "array": "shardSpawns", "length": 3 }
+      ]
+    },
+    {
+      "id": "sl-combat",
+      "kind": "shadowlord",
+      "claim": { "note": "Los Shadowlords SÍ mueren en combate normal; la Glass Sword funciona.", "weapon": "Glass Sword" },
+      "sources": ["wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
+      "authority": "walkthrough",
+      "verify": ["e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "weaponNames", "value": "Glass Sword" }
+      ]
+    },
+    {
+      "id": "endgame-true-ending",
+      "kind": "endgame",
+      "claim": {
+        "note": "El FINAL VERDADERO está gateado por la Wooden Box (caja de sándalo). En endgame_main (ENDGAME.OVL 0x0648): answer=='Y' AND g_wooden_box(0xbf57)!=0 → rama buena (sacrificio animado + escena del trono + pergamino de cierre). 'N' o SIN caja → secuencia alterna corta. Por tanto item-sandalwood es OBLIGATORIO para el buen final.",
+        "startDate": { "year": 139, "month": 4, "day": 5, "calendar": "britanniano 13 meses × 28 días" },
+        "reportLine": "Report now, thy Quest compleat in <Y> year(s), <M> month(s), <D> day(s) to Lord British at Origin Systems!",
+        "scrollFinale": "THE QUEST OF THE AVATAR IS FOREVER"
+      },
+      "sources": ["re/notes/endgame.md"],
+      "primary": "re/notes/endgame.md (ENDGAME.OVL 0x0648 endgame_main gate g_wooden_box 0xbf57; 0x0326 datestamp, start Year139/Mon4/Day5). Strings en stringPools 'textWorldCombatDungeon'.",
+      "authority": "asm",
+      "verify": ["data", "e2e"],
+      "checks": [
+        { "type": "dataArrayContains", "array": "specialItemNames2", "value": "Wooden Box" },
+        { "type": "stringPoolContains", "pool": "textWorldCombatDungeon", "value": "Report now, thy Quest compleat in" },
+        { "type": "stringPoolContains", "pool": "textWorldCombatDungeon", "value": "to Lord British at Origin Systems!" },
+        { "type": "stringPoolContains", "pool": "textWorldCombatDungeon", "value": "IS@FOREVER" }
+      ]
+    }
+  ]
+}

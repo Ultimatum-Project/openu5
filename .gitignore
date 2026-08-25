@@ -1,0 +1,143 @@
+# 🔴 UN COMENTARIO AL FINAL DE LÍNEA NO ES UN COMENTARIO — ANULA EL PATRÓN.
+# git sólo trata como comentario la línea que EMPIEZA por `#`; en cualquier otro sitio la
+# almohadilla y los espacios que la preceden son parte del patrón. El 10-08-2026 se anotaron
+# NUEVE entradas con «   # SUPERADA (10-08): …» pegado detrás, y las nueve dejaron de casar
+# con nada: `git check-ignore -v .vite-cache/` daba rc=1 pese a estar escrita ahí. La caché
+# de vite volvió a ensuciar el árbol de todo carril que construyera, y el sello de la batería
+# salía DIRTY=true con la batería en verde — un rojo que no habla del trabajo que juzga.
+# Las anotaciones se conservan ENTERAS; sólo se han movido a su propia línea, encima.
+# Si vas a anotar un patrón: el comentario va ARRIBA, nunca al lado.
+
+original/
+reference/
+logs/
+research/raw/
+# Sin barra final: los worktrees usan SYMLINKS con estos nombres (régimen R2) y el
+# patrón dir-only (`x/`) no matchea symlinks — un `git add -A` los colaba al árbol.
+game/assets
+# #228: los saves del espejo-tour alimentan al ULTIMA.EXE original (mirror_runner) y no
+# se pueden anonimizar — material EA UNTRACKED, como game/assets (guarda de árbol:
+# re/tools/test_gam_sin_roster_ea.py). Sin barra final por el mismo motivo de arriba.
+game/e2e/espejo-tour/saves
+# #376: los route/overlay JSON del espejo llevan la prosa TLK de EA verbatim en sus
+# esperados OCR (medido: 17.030 palabras en rachas n>=8, máx 28 — vs techo companion 61)
+# y el careo la necesita en claro — material EA UNTRACKED, como los saves de arriba
+# (guarda de árbol: re/tools/test_rutas_espejo_sin_prosa_tlk_ea.py). Sin barra final
+# por el mismo motivo; las herramientas de curación ESCRIBEN ahí ⇒ en worktrees va
+# por COPIA (receta R2).
+game/e2e/espejo-tour/routes
+game/e2e/espejo-tour/routes-ad
+game/e2e/espejo-tour/routes-lf
+node_modules
+.DS_Store
+extractor/vendor/*.sf2
+game/playwright-report/
+game/test-results/
+.superpowers/soak/
+capture/
+game/dist/
+game/coverage/
+# Bytecode Python de los tools (game/tools/pixeldiff, re/tools): un `git add -A`
+# desde cualquier carril los colaba a main (auditoría de calidad D8).
+__pycache__/
+*.pyc
+# Capturas de depuración de specs e2e (nadie las lee; un frame del juego jamás tracked).
+game/e2e/__screens__/
+# Caché de vite del carril mobile-e2e (webServer de playwright.mobile.config.ts;
+# cacheDir PROPIO para no pisar el .vite del dev-server del usuario en worktrees).
+# SUPERADA (10-08): el cacheDir lo elige solo game/tools/vite-cache-dir.ts — NO copies esta costumbre
+game/.vite-mobile-e2e/
+demo-byo/dist/
+demo-byo/.vite/
+# Sitio ENSAMBLADO para desplegar Pages desde `demo-byo/` (pages_build_output_dir de
+# wrangler.toml). Lo escribe build-demo-publica.sh; es artefacto, nunca fuente.
+demo-byo/dist-sitio/
+# Caché de vite del carril mobile-ux (dev server de verificación propio).
+# SUPERADA (10-08): el cacheDir lo elige solo game/tools/vite-cache-dir.ts — NO copies esta costumbre
+game/.vite-mobile-ux/
+# Carril WALKTHROUGH-ESPEJO: material DERIVADO de una corrida (reportes por parte,
+# transcripts del volcado ESPEJO_DUMP=1, capturas de fallo) y caché de vite del dev
+# server PROPIO del carril. Los `route.json` SÍ son artefacto tracked; esto no.
+# Patrón GENÉRICO: cada ventana usa su propio dir de salida (.espejo-reports, .espejo-r3b,
+# .espejo-probe2, .espejo-lp1b…) para no pisar la medición anterior — todos derivados.
+.espejo-*/
+# SUPERADA (10-08): el cacheDir lo elige solo game/tools/vite-cache-dir.ts — NO copies esta costumbre
+.vite-espejo/
+# 🔴 Y el patrón GENÉRICO, que faltaba (medido el 22-08 por espejo-ad-salud): la línea de
+# arriba ignora `.vite-espejo/` EXACTO, así que cada carril que le pone sufijo a su caché
+# (`U5_VITE_CACHE_DIR=.vite-espejo-B`, `.vite-ci-p04`…) deja un directorio NO ignorado que se
+# cuela con un `git add -A`. Ya hay **28 ficheros en 14 directorios así** dentro del índice
+# (`git ls-files | grep '^\.vite'`), y el modo de fallo es de los mudos: el `_metadata.json`
+# de otro carril sale como MODIFICADO en tu `git status` en cuanto corres el espejo, y se
+# commitea como si fuera trabajo tuyo. Esta línea impide los NUEVOS; los 14 ya trackeados
+# NO los borro yo (28 borrados en main no son de mi encargo) — queda avisado el lead.
+.vite-*/
+
+# Cachés de vite POR CARRIL (régimen de worktrees: cacheDir propio) + salidas de e2e.
+# SUPERADA (10-08): el cacheDir lo elige solo game/tools/vite-cache-dir.ts — NO copies esta costumbre
+game/.vite-portrait/
+# SUPERADA (10-08): el cacheDir lo elige solo game/tools/vite-cache-dir.ts — NO copies esta costumbre
+game/.vite-movil/
+game/test-results/
+
+# Carril SKIN-REMASTER: material DERIVADO del EGA (EA) y salidas del banco de
+# métodos — la biblia sí es tracked, esto no (regla declarada en hd/README.md).
+docs/skin-remaster/jury/shots/
+docs/skin-remaster/probes/
+# banco de métodos de skin: salidas y herramientas derivan del EGA (EA) — no trackear
+docs/skin-remaster/banco/out/
+docs/skin-remaster/banco/tools/
+docs/skin-remaster/banco/work/
+.espejo/
+
+# Caché de vite propia del carril landscape-28 (régimen de worktrees: cacheDir propio).
+# SUPERADA (10-08): el cacheDir lo elige solo game/tools/vite-cache-dir.ts — NO copies esta costumbre
+game/.vite-landscape28/
+# SUPERADA (10-08): el cacheDir lo elige solo game/tools/vite-cache-dir.ts — NO copies esta costumbre
+game/.vite-landhomog/
+# SUPERADA (10-08): el cacheDir lo elige solo game/tools/vite-cache-dir.ts — NO copies esta costumbre
+.vite-sonda-*/
+.espejo-sonda-*/
+/.claude/CONTENCION
+# El sello que escribe re/tools/bateria_aterrizaje.sh en cada corrida. Es EVIDENCIA DE UNA
+# MEDICION, no fuente: vale para el arbol donde se produjo y caduca al commit siguiente.
+# Trackearlo seria publicar el veredicto de un arbol dentro de otro — y ademas cualquier
+# `git add -A` tras una corrida lo colaria en el commit.
+/.claude/bateria-sello.txt
+# Volcado del censo del goal. Vivía en `re/notes/` y ahí lo gobierna REGLA 4-bis:
+# correr el censo dejaba una nota SIN CLASIFICAR y ponía roja la batería del siguiente.
+/.claude/censo-cuerpo-pendientes.json
+
+# Instantánea del sitio openu5.org (site/legacy/): el HTML SÍ se trackea; el arte NO.
+# /medios/ (capturas + clip de la portada) y /mejoras-img/ (capturas antes/después) son
+# arte de Electronic Arts renderizado por el juego. Mismo régimen que el despliegue:
+# build-demo-publica.sh los copia en el deploy y nunca los mete en git. Su único rastro
+# trackeado es site/legacy/MEDIOS-INVENTARIO.md.
+site/legacy/medios/
+site/legacy/mejoras-img/
+
+# Caché de vite AISLADA POR ÁRBOL. La elige sola `game/tools/vite-cache-dir.ts`
+# cuando `node_modules` es un symlink (worktree) — sustituye a la costumbre de
+# que cada carril añadiera aquí su propio `.vite-loquesea/` (había NUEVE).
+# SUPERADA (10-08): el cacheDir lo elige solo game/tools/vite-cache-dir.ts — NO copies esta costumbre
+.vite-cache/
+
+# Estado local de `wrangler pages dev`. Lo crea EN EL CWD cualquiera que corra la
+# verificación de enrutado de #63 (matriz de rutas contra el sitio ensamblado, receta en
+# la cabecera de `docs/publicacion/web/_redirects`). Es caché de la plataforma, no del
+# proyecto: sin esta línea se cuela en el commit del siguiente que la corra con `add -A`.
+.wrangler/
+
+# Staging de los vídeos de «Ver una partida» (#158). 🔴 NO puede vivir en game/dist:
+# vite no fija `outDir` ni `emptyOutDir`, así que el default VACÍA game/dist en cada
+# `vite build` — y la batería construye. Medido el 11-08: la batería se llevó por
+# delante los tres .webm recién renderizados, en silencio.
+/.partidas-staging/
+
+# VISTA DE TRABAJO del traductor (#380). `game/tools/i18n-huella.mjs decode` la
+# reconstruye desde el corpus del PROPIO USUARIO para poder traducir con las frases
+# a la vista; lo que se commitea es `es.json`, con las claves ya plegadas a huellas.
+# 🔴 Este fichero LLEVA EL TEXTO INGLÉS DE EA en claro — es exactamente el material
+# que #380 saca del índice (REGLA 4: material EA jamás tracked). Se regenera en un
+# segundo, así que perderlo no cuesta nada y commitearlo lo cuesta todo.
+game/src/i18n/*.claro.json

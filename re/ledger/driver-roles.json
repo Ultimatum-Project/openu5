@@ -1,0 +1,674 @@
+{
+ "generated_from": "autoría LOTE C (derivación de 4 subagentes sobre re/disasm/*.DRV.asm); dato autoritativo, no regenerado por script",
+ "summary": {
+  "total": 163,
+  "by_file": {
+   "CGA.DRV": 40,
+   "EGA.DRV": 44,
+   "HER.DRV": 40,
+   "T1K.DRV": 39
+  }
+ },
+ "roles": {
+  "EGA.DRV": {
+   "0": {
+    "name": "jump_table_and_mask_tables",
+    "role": "tabla de salto de 38 entradas E9 (0x0-0x71) + pad + LUTs residentes (bit-reverse 0x314, máscaras de plano/borde 0x246/0x252/0x25a); fn0/fn1 viven en 0x862/0x868 dentro de 0x772 [ev: E9 vector, 0x314, 0x252/0x25a]"
+   },
+   "1044": {
+    "name": "dos_mem_probe_alloc",
+    "role": "reserva/libera bloque DOS (int21h AH=48/49/58, AH=30 versión) [ev: int21h AH=30/48/49/58]"
+   },
+   "1116": {
+    "name": "span_edge_mask_setup",
+    "role": "de x0/x1 arma máscara de borde izq cs:[0x210], der cs:[0x211], byte-count medio cs:[0x216] con tablas 0x252/0x25a [ev: cs:[0x210/0x211/0x216]]"
+   },
+   "1270": {
+    "name": "hline_render_screen",
+    "role": "run horizontal a A000 con máscaras L/M/R vía GC bitmask (out 0x3ce,8) + Seq map-mask (out 0x3c4,2) [ev: out 0x3c4/0x3ce, cs:[0x72]]"
+   },
+   "1570": {
+    "name": "hline_render_buffer_4plane",
+    "role": "mismo run al buffer offscreen de 4 planos (es+=0x1f4) con color por-plano cs:[0x266/0x26a/0x262] [ev: es+=0x1f4, cs:[0x24e]]"
+   },
+   "1788": {
+    "name": "copy_screen_to_buffer_planes",
+    "role": "lee los 4 planos EGA de A000 (read-map out 0x3ce,4) y rep-movsw 0xfa0 words a seg cs:[0x202] [ev: out 0x3ce r4, 0xfa0×4]"
+   },
+   "1906": {
+    "name": "blit_planes_plus_small_handlers",
+    "role": "blit A000<->offscreen por plano (tile 16-filas @0x79f, página @0x814); aloja fn0 caps, fn1 set-mode 0Dh+paleta, fn2/4/5 buffer, fn8/9/10 copias, fn12 read-pixel, fn13 flash/blit-ext, fn15 set_color [ev: int10h 0Dh @0x874, cs:[0x72]/[0x314]]"
+   },
+   "3822": {
+    "name": "plot_pixel_and_line_prims",
+    "role": "fn16 plot-pixel núcleo (dir de plano = scanline cs:[0x72] + máscara cs:[0x246], xor cs:[0x204]) + fn17 Bresenham diag, fn19 hline, fn20 vline [ev: cs:[0x72/0x246/0x312]]"
+   },
+   "4480": {
+    "name": "fill_rect",
+    "role": "fn21 (sel 0x3f) rellena filas llamando span-setup 0x45c + hline 0x4f6/0x622, filas cs:[0x222] [ev: call 0x45c/0x4f6/0x622]"
+   },
+   "4671": {
+    "name": "shape_record_iterator",
+    "role": "lee registro vectorial (count+coords), escala ancho y estadia por elemento vía 0x17be/0x1271 [ev: call 0x17be/0x1271]"
+   },
+   "4721": {
+    "name": "sprite_planarize_and_blit",
+    "role": "deinterleava fuente a work-buf 0x272; fn25 (sel 0x4b) blit de bitmap enmascarado de tamaño variable con clip de viewport cs:[0x226/0x22a], mirror por xlatb 0x314; fn33 pone cl|=2 y salta a fn25 [ev: cs:[0x226/0x22a], 0x314]"
+   },
+   "5687": {
+    "name": "blit_tile_16x16",
+    "role": "fn27 (sel 0x51) blit fijo 16×16 desde seg cs:[0x206]; asserta si==di==0x10; planos a A000 o buffer +0x1f40/0x3e80/0x5dc0 [ev: cmp si,0x10; cs:[0x206]]"
+   },
+   "6078": {
+    "name": "planar_pack_plus_handlers",
+    "role": "0x17be empaqueta run de píxel en 4 bytes de plano; fn24 set-src-seg, fn30 free-DOS, fn26 sprite transparente +0x1f40, fn31 blit enmascarado por nibbles [ev: cs:[0x206], int21h 49h]"
+   },
+   "7037": {
+    "name": "clear_flag_array",
+    "role": "rep-stosb 0 en array de flags de transición @0x1b2f, len cs:[0x1b2b] [ev: cs:[0x1b2b], al=0]"
+   },
+   "7052": {
+    "name": "set_flag_array",
+    "role": "rep-stosb 1 en el mismo array @0x1b2f [ev: cs:[0x1b2b], al=1]"
+   },
+   "7067": {
+    "name": "count_flag_array",
+    "role": "cuenta entradas set→cs:[0x1b75] y clear→cs:[0x1b73] [ev: cs:[0x1b75/0x1b73]]"
+   },
+   "7111": {
+    "name": "next_marked_index",
+    "role": "avanza cursor cs:[0x1b77] al siguiente flag no-cero [ev: cs:[0x1b77]]"
+   },
+   "7130": {
+    "name": "clear_screen_row",
+    "role": "cero de una fila de 40 bytes de A000 vía scanline cs:[0x72] índice cs:[0x1b2d] [ev: es=A000, 0x14 stosw]"
+   },
+   "7155": {
+    "name": "copy_buffer_row_to_screen",
+    "role": "copia una fila de 0x14 words de buffer cs:[0x202] a A000 [ev: cs:[0x1b29/0x1b2d]]"
+   },
+   "7204": {
+    "name": "delay_loop",
+    "role": "busy-wait anidado, cuentas cs:[0x1c1e/0x1c20/0x1c22] [ev: cs:[0x1c1e]]"
+   },
+   "7235": {
+    "name": "calc_row_target",
+    "role": "fija fila objetivo cs:[0x1b2d] de base cs:[0x1b27]±altura según dir cs:[0x1b1d] [ev: cs:[0x1b1d]]"
+   },
+   "7263": {
+    "name": "advance_row_and_check_key",
+    "role": "inc/dec fila por dir + poll teclado (int21h AH=6), flag de aborto cs:[0x1b7b] [ev: int21h AH=6]"
+   },
+   "7315": {
+    "name": "transition_step",
+    "role": "un paso de wipe — cuenta flags, revela/limpia filas en 2 mitades con delay, encadena 0x1b9b/0x1c24/0x1c43/0x1bda/0x1c5f [ev: call 0x1b9b/0x1bda]"
+   },
+   "7443": {
+    "name": "dissolve_pass_down",
+    "role": "recorre tabla de orden cs:[0x1b6f] descendente (0xFF→transition_step), flag=1 [ev: cs:[0x1b6f], call 0x1c93]"
+   },
+   "7508": {
+    "name": "dissolve_pass_up",
+    "role": "igual ascendente, flag=0 [ev: cs:[0x1b21], call 0x1c93]"
+   },
+   "7568": {
+    "name": "read_order_byte",
+    "role": "siguiente byte del stream de orden cs:[0x1b71], zero-extend [ev: cs:[0x1b71]]"
+   },
+   "7584": {
+    "name": "read_geometry",
+    "role": "lee 3 bytes de orden a cs:[0x1b29/0x1b27/0x1b2b] (offset/base/altura) [ev: 3× call 0x1d90]"
+   },
+   "7606": {
+    "name": "read_order_header",
+    "role": "lee byte count cs:[0x1b1f] y fija punteros de orden cs:[0x1b6f/0x1b71] [ev: cs:[0x1b1f]]"
+   },
+   "7641": {
+    "name": "read_effect_params",
+    "role": "wrapper de read_geometry(0x1da0)+read_order_header(0x1db6) [ev: call 0x1da0/0x1db6]"
+   },
+   "7648": {
+    "name": "init_order_ptr_and_fn37",
+    "role": "fn37 (sel 0x6f) transición animada top-level: out 0x3c4,9, loop read_effect_params + dissolve passes hasta fin/tecla [ev: out 0x3c4,9, cs:[0x1b71]=0x1e8c]"
+   },
+   "7784": {
+    "name": "big_planar_reveal_fn32",
+    "role": "fn32 (sel 0x60) reveal/scale de pantalla completa con LFSR 0x9248 permutando 0x20 columnas de plano en seg 0xf400, combina planos AND/OR entre segs [ev: LFSR cs:[0x1f94]=0x9248]"
+   },
+   "9396": {
+    "name": "swap_word_quad",
+    "role": "intercambia dos registros de 4 words en [si] y [si+0x10] (mirror para fn32) [ev: [si]<->[si+0x10]]"
+   },
+   "9419": {
+    "name": "swap_word_quad_off4",
+    "role": "thunk: si+=4; jmp 0x24b4 [ev: add si,4]"
+   },
+   "9424": {
+    "name": "tilescroll_and_fizzle_fn34",
+    "role": "fn34 (sel 0x66) fizzle-fade por LFSR sembrando cs:[0x2541] de tabla polinómica 0x254d, llama 0x263a por píxel; + scroll de columna de tile [ev: fn34@0x256b, LFSR 0x2541]"
+   },
+   "9786": {
+    "name": "fizzle_pixel_xfer_and_poll",
+    "role": "copia una columna de plano de 16 filas de buffer a A000 para el fizzle, togglea PC-speaker (0x61) y polla int16h [ev: out 0x61, int 0x16]"
+   },
+   "10065": {
+    "name": "planecol_copy_and_speaker",
+    "role": "copia columna de tile de 16 scanlines + programa PIT ch2 (0x42) + speaker (0x61) con frecuencia LFSR [ev: out 0x42/0x61, LFSR 0x27a5]"
+   },
+   "10290": {
+    "name": "animated_effect_fn35",
+    "role": "fn35 (sel 0x69): modo 0 = blit de banda animada 4-fases; modo≠0 = aloca buffer DOS, guarda A000, LFSR whirl/fizzle con beeps [ev: call 0x414, LFSR 0x28c2]"
+   },
+   "10802": {
+    "name": "dissolve_pixel_writer_plus_fn36",
+    "role": "escribe color (máscara cs:[0x246]) en buffers alojados + pantalla en 4 planos (+0x1f40) para el fizzle de fn35 [ev: cs:[0x246], +0x1f40]"
+   },
+   "10961": {
+    "name": "state_block_copy",
+    "role": "rep-movsw de bloques de estado de 4 words entre seg fuente y saves CS-locales [ev: rep movsw cx=4]"
+   },
+   "11051": {
+    "name": "mask_tile_lowbits_wrapper",
+    "role": "enmascara low-bits de bloques 0x7d10/0x7d90 vía 0x2b34 [ev: si=0x7d10/0x7d90]"
+   },
+   "11060": {
+    "name": "mask_plane_bits_block",
+    "role": "AND de bytes de un bloque con 0xfe/0x3f/0xbf para limpiar bits de plano [ev: and [si],0xfe]"
+   },
+   "11095": {
+    "name": "reduce_mod5",
+    "role": "bl/5→bh, devuelve cociente en bl [ev: cmp bl,5]"
+   },
+   "11112": {
+    "name": "reduce_mod12_and_draw_marker",
+    "role": "clampa bl 0..0xb + ORea bit de color en buffer 0x7d00 (dibuja marcador posicionado) [ev: cs:[0x2b76/0x2b8e/0x2ba6]]"
+   },
+   "11309": {
+    "name": "tile_transpose_and_expand",
+    "role": "byte-swap de planos + transpone tile 8×8 a bit-planos + nibble-expand vía tablas 0x2d3d/0x2d4d, llama bit-reverse blit 0x17be [ev: call 0x17be]"
+   }
+  },
+  "CGA.DRV": {
+   "0": {
+    "name": "jump_table_and_static_data",
+    "role": "tabla de salto de 38 E9 (0x0-0x71) + LUTs runtime (scanline cs:[0x72], pixel-expand 256B cs:[0x26c]) + máscaras 2bpp/xlat estáticas [ev: cs:[0x72], cs:[0x23e/0x242/0x24e]]"
+   },
+   "876": {
+    "name": "dos_mem_alloc_helper",
+    "role": "alocador DOS de fn2 (int21 AH=30/48/49/58), devuelve seg en ax, CF en fallo [ev: int21 AH=48/49/58]"
+   },
+   "948": {
+    "name": "compute_hspan_masks",
+    "role": "de x0/x1 calcula máscaras de byte parcial izq/der cs:[0x210/0x211] + byte-count medio cs:[0x216], casos ≤4px vía tablas cs:[bx+0x246/0x24a] [ev: cs:[0x210/0x211/0x216]]"
+   },
+   "1108": {
+    "name": "hline_fill_masked",
+    "role": "run horizontal en fila si con máscaras — borde RMW con fill cs:[0x214], rep-stosb medio; cs:[0x204]=overwrite/XOR [ev: cs:[si+0x72], cs:[0x214]]"
+   },
+   "1268": {
+    "name": "screen_to_buffer_copy_masked",
+    "role": "ES=buffer cs:[0x202], DS=B800; copia filas cs:[0x226..0x22a] con máscaras; jb=copia plana de 0x2000 words [ev: cs:[0x202], DS=B800]"
+   },
+   "1388": {
+    "name": "buffer_to_screen_copy_head_plus_low_selector_cluster",
+    "role": "entrada alterna a copia-de-fila (buffer→B800) + aloja fn0 caps, fn1 set-mode4, fn2 alloc, fn4/5, fn8/9/10 swap, fn12 read-pixel, fn13 línea, fn15 set_color [ev: SEL 0x57a-0x807]"
+   },
+   "2128": {
+    "name": "plot_pixel_2bpp_and_sprite_blitter_cluster",
+    "role": "plotter de 1 píxel 2bpp (fila cs:[y·2+0x72], píxel-en-byte x&3, clr-máscara cs:[si+0x23e], set-máscara cs:[si+0x242]) + fn17 Bresenham, fn19 hline, fn20 vline, fn21 fill, y **fn25 (0xa26) el blitter gigante de imagen W×H 2bpp con 3 modos** [ev: fn25@0xa26, cs:[0xa20/0x222/0xa22]]"
+   },
+   "3481": {
+    "name": "blit_tile_16x16_plus_glyph_cluster",
+    "role": "fn27 (sel 0x51) blit fijo 16×16 (si=di=0x10, 16 filas×2 words de seg cs:[0x206]) + fn30 free, fn26 blit escalado, fn31 glyph 8-filas [ev: cs:[0x206], cx=0x10 movsw]"
+   },
+   "4124": {
+    "name": "clear_work_flags",
+    "role": "rep-stosb 0 sobre array de flags de fn37 cs:[0xfce], len cs:[0xfca] [ev: cs:[0xfca], al=0]"
+   },
+   "4139": {
+    "name": "set_work_flags",
+    "role": "mismo array con 1 [ev: di=0xfce, al=1]"
+   },
+   "4154": {
+    "name": "count_work_flags",
+    "role": "cuenta no-cero→cs:[0x1014], cero→cs:[0x1012] [ev: cs:[0x1012/0x1014]]"
+   },
+   "4198": {
+    "name": "find_next_set_flag",
+    "role": "avanza índice cs:[0x1016] al siguiente byte no-cero [ev: cs:[0x1016]]"
+   },
+   "4217": {
+    "name": "clear_screen_row",
+    "role": "cero de una scanline de 40 words en B800, fila cs:[0xfcc] [ev: es=B800, cx=0x28]"
+   },
+   "4242": {
+    "name": "copy_buffer_row_to_screen_plane",
+    "role": "copia una fila de 40 words de buffer cs:[0x202] a pantalla, and 0x5555 (un plano de color CGA) — primitiva de wipe [ev: and 0x5555, cs:[0xfc8/0xfcc]]"
+   },
+   "4296": {
+    "name": "busy_wait_delay",
+    "role": "loop dec/jne, outer=0xC, inner cs:[0x10c2] — pacing de anim [ev: cs:[0x10c4/0x10c6]]"
+   },
+   "4327": {
+    "name": "select_reveal_row",
+    "role": "fija fila objetivo cs:[0xfcc]=cs:[0xfc6](+cs:[0xfca] si dir cs:[0xfbc]) [ev: cs:[0xfbc]]"
+   },
+   "4355": {
+    "name": "advance_row_and_poll_abort",
+    "role": "inc/dec fila por dir + poll DOS AH=6, flag de aborto cs:[0x101a] [ev: int21 AH=6]"
+   },
+   "4407": {
+    "name": "reveal_frame_driver",
+    "role": "un frame de wipe — count/delay/select + 2 pasadas set-then-clear vía 0x1079/0x1092/0x1103 [ev: call 0x103a/0x1079/0x1092]"
+   },
+   "4535": {
+    "name": "mark_flags_backward",
+    "role": "recorre 6 entradas de forma hacia atrás; 0xFF→reveal_frame, si no cs:[bx+0xfce]=1 [ev: cmp bl,0xff]"
+   },
+   "4600": {
+    "name": "mark_flags_forward",
+    "role": "espejo hacia adelante; 0xFF→reveal_frame, si no cs:[bx+0xfce]=0 [ev: cs:[di+0x100e]]"
+   },
+   "4660": {
+    "name": "read_script_byte",
+    "role": "siguiente byte del script cs:[0x1010], post-incr, zero-extend [ev: cs:[0x1010]]"
+   },
+   "4676": {
+    "name": "read_three_script_params",
+    "role": "3 read_script_byte a cs:[0xfc8/0xfc6/0xfca] (fila/col/count) [ev: 3× call 0x1234]"
+   },
+   "4698": {
+    "name": "read_shape_header",
+    "role": "lee count byte→cs:[0xfbe], fija base cs:[0x100e] y avanza cs:[0x1010] [ev: cs:[0xfbe]]"
+   },
+   "4733": {
+    "name": "read_block_header",
+    "role": "thunk = read_three_params + read_shape_header [ev: call 0x1244/0x125a]"
+   },
+   "4740": {
+    "name": "init_script_and_fn37_driver",
+    "role": "fija script ptr cs:[0x1010]=0x1300 (tabla de datos de anim/puzzle) + fn37 (sel 0x6f) driver que lee bloques, corre reveal fw/bw, polla teclas [ev: cs:[0x1010]=0x1300, cs:[0x101b]]"
+   },
+   "4828": {
+    "name": "solver_reset_and_water_anim_block",
+    "role": "reset/redraw de fn37 + tabla de datos de puzzle (0x1300-0x140b) + fn32 (sel 0x60) shimmer de agua/fuente por LFSR 0x9248 permutando columnas de tile [ev: fn32@0x144c, LFSR 0x9248]"
+   },
+   "6276": {
+    "name": "swap_byte_pair",
+    "role": "intercambia byte [si+1]<->[si+9] para el efecto de agua [ev: [si+1]<->[si+9]]"
+   },
+   "6289": {
+    "name": "swap_byte_pair_off1",
+    "role": "inc si; jmp 0x1884 [ev: inc si]"
+   },
+   "6292": {
+    "name": "swap_two_pairs_plus_colcopy",
+    "role": "dos swaps adyacentes + column-scroll de bandas de 0x20 words en cs:[0x206] (llama blit 0xd99) + entrada fn34 (sel 0x66) [ev: fn34@0x1929]"
+   },
+   "6574": {
+    "name": "dissolve_plot_pixel_solid",
+    "role": "plotea un píxel 2bpp con set-máscara cs:[bx+0x242]; paridad cs:[0x1901], flag PC-speaker cs:[0x18ff], poll int16h [ev: int 0x16, cs:[0x18ff]]"
+   },
+   "6667": {
+    "name": "dissolve_blit_pixel_from_buffer_plus_speaker",
+    "role": "copia píxel fuente de buffer a pantalla + tono PC-speaker (LFSR, out 0x42/0x61) [ev: out 0x42/0x61, LFSR 0x9248]"
+   },
+   "6988": {
+    "name": "scroll_rows_plus_alloc_dissolve_transition",
+    "role": "fn35 (sel 0x69) scroll vertical 4-fases (0x31 filas de buffer cs:[0x202] offset por fase cs:[0x1b48]) + crossfade con buffer alojado (AH=48/49) [ev: cs:[0x1b48], int21 AH=48/49]"
+   },
+   "7410": {
+    "name": "dissolve_plot_cell_plus_fn36_head",
+    "role": "dibuja celda de 4-scanlines del crossfade (máscara cs:[0x1ba0], color cs:[bx+0x242], dither cs:[bx+0x262]) + inicio fn36 (sel 0x6c) [ev: fn36@0x1d71]"
+   },
+   "7567": {
+    "name": "fn36_save_restore_record",
+    "role": "rep-movsw de registro tile/paleta de 4 words entre seg cs:[0x206] (0x3238/0x45f8) y store CS-local [ev: cs:[0x206]+0x3238/0x45f8]"
+   },
+   "7657": {
+    "name": "recolor_setup_two_records",
+    "role": "patch_color_attrs para si=0x3e88 y 0x3ec8 (recolorea 2 registros tile/gem) [ev: si=0x3e88/0x3ec8]"
+   },
+   "7666": {
+    "name": "patch_color_attrs",
+    "role": "AND/OR reescribe los campos de color CGA en offsets del registro a valores fijos [ev: [si+1]&0xfc|2, [si+2]=0xa0]"
+   },
+   "7715": {
+    "name": "reduce_mod5",
+    "role": "bh=floor(bl/5) por restas, bl=bh — índice de sector [ev: cmp bl,5]"
+   },
+   "7732": {
+    "name": "reduce_mod12_plus_indicator_plot",
+    "role": "reduce bl mod 12 + tablas offset/color + ORea píxeles en tile CS-local 0x3e80 (indicador de mano de reloj/gema) [ev: cs:[bx+0x1e42/0x1e5a]]"
+   },
+   "7941": {
+    "name": "mirror_tile_bits",
+    "role": "por cx bandas de 0x20 words intercambia los 2 bits de plano de color por píxel (mirror horizontal 2bpp) — fn36 ax=4 [ev: and 0x5555/0xaaaa]"
+   },
+   "8110": {
+    "name": "swap_bit_planes_row",
+    "role": "una pasada de 0x20 words intercambiando bits de plano por píxel — recolorea una fila de tile [ev: cx=0x20, and 0x5555/0xaaaa]"
+   }
+  },
+  "HER.DRV": {
+   "0": {
+    "name": "jump_table",
+    "role": "tabla de salto de 38 E9 (sel=3·idx, kernel entra por lcall [0x5350]) + pad de ceros a 0x436 [ev: 0x00 jmp 0x6fa, 0x72-0x435 fill]"
+   },
+   "1078": {
+    "name": "dos_alloc_para",
+    "role": "helper de memoria DOS (int21 30/48/49/58), alocador de fn2 [ev: int21 AH=30/48/49/58]"
+   },
+   "1150": {
+    "name": "calc_span_masks",
+    "role": "de 2 x-coords calcula máscara borde izq [0x2da]/der [0x2db] + byte-count medio [0x2e0] (2bpp 4px/byte) [ev: cs:[0x2da/0x2db/0x2e0]]"
+   },
+   "1310": {
+    "name": "draw_hspan",
+    "role": "run horizontal enmascarado al framebuffer (borde+rep-stosb medio con fill [0x2de]); path XOR en 0x5d3 según [0x2cc] [ev: cs:[0x2de], [si+0x72] banco]"
+   },
+   "1632": {
+    "name": "copy_rect_to_fb",
+    "role": "copia rectangular de seg fuente al framebuffer por fila con máscaras; cola 0x6dc = copia de página de 0x4000 words [ev: cs:[0x2f0/0x2f4], 0x6dc]"
+   },
+   "1766": {
+    "name": "core_selector_bodies",
+    "role": "bloque de fn bajos — fn0 caps (ax=0xc8), fn1 set-mode (programa HGC out 0x3bf/0x3b8/0x3b4-5 + build scanline 0x72), fn2/4/5 buffer, fn8/9/10 blit/swap, fn12 read-pixel, fn13 sweep-fill, fn15 set_color→dither 0x318, fn16 plot [ev: out 0x3bf/0x3b8/0x3b4]"
+   },
+   "2620": {
+    "name": "draw_primitives_and_image_blitter",
+    "role": "plot-pixel núcleo (2 scanlines interlazadas [bx+0x72]/[bx+2+0x72], máscaras cs:[si+0x308/0x30c]) + fn17 línea, fn19 hline, fn20 vline, fn21 fill, y **fn25 (sel 0x4b) el BLITTER DE IMAGEN gigante** + fn33 variante dither; 3 modos (recto/transparente/medio-tono) [ev: fn25@0xc66, es:[2+4·idx] dir, [0x31c] tramas]"
+   },
+   "4259": {
+    "name": "blit_tile_16x16",
+    "role": "blit rápido 16×16 (sel 0x51, w=h=0x10) desde seg [0x2ce], 8 dobles-filas por el interlace [di·2+0x72] con OR-merge; fn24 set-src-seg, fn28/33 stubs [ev: [0x2ce], cmp si/di,0x10]"
+   },
+   "4976": {
+    "name": "clear_state_buf",
+    "role": "cero del buffer de estado por-columna [0x1322], len [0x131e] (soporte wipe) [ev: cs:[0x1322]]"
+   },
+   "4991": {
+    "name": "set_state_buf_ones",
+    "role": "mismo buffer con 0x01 (todas columnas activas) [ev: cs:[0x1322], al=1]"
+   },
+   "5006": {
+    "name": "count_state_bytes",
+    "role": "cuenta columnas set/clear a [0x1368]/[0x1366] [ev: cs:[0x1366/0x1368]]"
+   },
+   "5050": {
+    "name": "next_active_column",
+    "role": "avanza índice [0x136a] al siguiente byte no-cero [ev: cs:[0x136a]]"
+   },
+   "5069": {
+    "name": "clear_fb_row",
+    "role": "cero de una scanline (0x28 words) fila [0x1320] vía interlace [ev: es=B000, 0x28w]"
+   },
+   "5094": {
+    "name": "copy_fb_row_halftone",
+    "role": "copia fila de offscreen [0x2ca] a fb aplicando AND 0x5555 (medio-tono) [ev: and 0x5555]"
+   },
+   "5154": {
+    "name": "delay_loop",
+    "role": "busy-wait, 12×[0x141c] decrementos (pacing) [ev: cs:[0x141c]]"
+   },
+   "5185": {
+    "name": "calc_row_target",
+    "role": "fija fila [0x1320]=[0x131a](+[0x131e] si dir [0x1310]) [ev: cs:[0x1310]]"
+   },
+   "5213": {
+    "name": "step_row_and_poll",
+    "role": "inc/dec fila por dir + poll DOS 06 → flag aborto [0x136e] [ev: int21 AH=6]"
+   },
+   "5265": {
+    "name": "dissolve_pass",
+    "role": "una pasada de wipe — count, delay, clear-row/halftone-copy-row con stepping y aborto [ev: call 0x138e/0x1422/0x13cd]"
+   },
+   "5393": {
+    "name": "decode_run_rev",
+    "role": "recorre stream [0x1362] hacia abajo en grupos de 6; 0xFF→dissolve_pass, si no state[byte]=1 [ev: cs:[0x1362], 0xff]"
+   },
+   "5458": {
+    "name": "decode_run_fwd",
+    "role": "igual hacia adelante, state[byte]=0 [ev: cs:[0x1362]]"
+   },
+   "5518": {
+    "name": "read_stream_byte",
+    "role": "siguiente byte del stream [0x1364], zero-extend, avanza [ev: cs:[0x1364]]"
+   },
+   "5534": {
+    "name": "read_pos_header",
+    "role": "lee 3 bytes → x-start [0x131c], y [0x131a], width [0x131e] [ev: cs:[0x131c]]"
+   },
+   "5556": {
+    "name": "read_frame_header",
+    "role": "lee count → [0x1312], fija ptrs [0x1362]/[0x1364] [ev: cs:[0x1312]]"
+   },
+   "5591": {
+    "name": "read_all_headers",
+    "role": "thunk read_pos_header + read_frame_header [ev: call 0x159e/0x15b4]"
+   },
+   "5598": {
+    "name": "init_stream_ptr",
+    "role": "apunta [0x1364] a tabla de datos 0x165a [ev: cs:[0x1364]=0x165a]"
+   },
+   "5686": {
+    "name": "final_reveal_and_scroll_blit",
+    "role": "fn37 pasada de reveal final + DATA de dissolve 0x165a-0x17a5 + fn32 (sel 0x60) fine-scroll/shimmer por LFSR 0x9248 con interlace AND 0x5555/0xAAAA [ev: fn32@0x17a6, [0x1762] LFSR]"
+   },
+   "7134": {
+    "name": "swap_byte_pair",
+    "role": "mirror de fila doblada [si+1]<->[si+9] [ev: [si+1],[si+9]]"
+   },
+   "7147": {
+    "name": "flip_step",
+    "role": "inc si; jmp 0x1bde [ev: thunk]"
+   },
+   "7150": {
+    "name": "mirror_and_moongate_setup",
+    "role": "tile 16×16 h-flip + blit compuesto sprite-sobre-tile + fn34 (sel 0x66) moongate/random-pixel dissolve (área=cx·dx, LFSR [0x1c5d], polinomio maximal de [0x1c65]) [ev: fn34 [0x1c5d], call 0x10a3]"
+   },
+   "7432": {
+    "name": "dissolve_plot_solid",
+    "role": "plotea un píxel-par del dissolve en ambos bancos ([di+0x72]/[di+0x74]) con máscaras [0x308/0x30c], sonido [0x1c59] + int16 aborto [ev: [di+0x72/0x74], int 16]"
+   },
+   "7561": {
+    "name": "dissolve_plot_image_and_sfx",
+    "role": "plotter de dissolve con fuente de imagen (seg [0x2ce]) + driver fn34 variante + tono PC-speaker (PIT ch2 out 0x42, gate 0x61, LFSR xor 0xb8) [ev: out 0x42, in/out 0x61]"
+   },
+   "7910": {
+    "name": "flag_anim_and_screen_melt",
+    "role": "fn35 (sel 0x69): CF-clear = scroll de banda 4-fases (shimmer bandera/agua); CF-set = screen-melt de pantalla completa (aloca buffer, LFSR melt + SFX) [ev: [0x1ee2] fase, int21 AH=48/49]"
+   },
+   "8332": {
+    "name": "melt_plot_helper",
+    "role": "plotter del screen-melt de fn35 (máscara de buffer alt [0x1f3a], escribe 4 sub-columnas a bancos de [0x1f38]) + inicio fn36 [ev: [0x1f38/0x1f3a], fn36@0x212a]"
+   },
+   "8520": {
+    "name": "crtc_regs_save_restore",
+    "role": "copia pares de registros CRTC entre tabla viva y scratch (save/restore para sel 0x6c) [ev: rep movsw cx=2]"
+   },
+   "8610": {
+    "name": "crtc_startaddr_patch2",
+    "role": "parchea 2 registros CRTC (0x3e88, 0x3ec8) vía 0x21ab [ev: si=0x3e88/0x3ec8]"
+   },
+   "8619": {
+    "name": "crtc_startaddr_patch",
+    "role": "reescribe bytes de start-address/pan CRTC en un registro a valores fijos (page/split de hardware) [ev: and/or [si+1..0xa]]"
+   },
+   "8668": {
+    "name": "divmod5",
+    "role": "reduce bl mod 5 (bh=cociente→bl) — índice de fila de celda [ev: cmp bl,5]"
+   },
+   "8685": {
+    "name": "divmod12_and_offset",
+    "role": "reductor bl mod 12 + tablas offset + cálculo de dir de buffer (si=0x3e80+table[bx]) para el scroll/split blit [ev: cs:[bx+0x21fa/0x2212]]"
+   },
+   "8893": {
+    "name": "swap_pixel_columns_multi",
+    "role": "intercambia columnas de píxel adyacentes sobre bx×0x20 words (shift de imagen 1 píxel 2bpp) — ax=4 región [0x2252] [ev: and 0x5555/0xaaaa]"
+   },
+   "9062": {
+    "name": "swap_pixel_columns_row",
+    "role": "forma de una fila del swap de columnas adyacentes (sel 0x6c fn36 copy-from-seg-buffer / pan suave) [ev: and 0x5555/0xaaaa]"
+   }
+  },
+  "T1K.DRV": {
+   "0": {
+    "name": "jump_table_and_luts",
+    "role": "tabla de 38 E9 (0x0-0x71) + pad + LUTs (máscaras nibble AND/OR 0x240/0x241, xlat set_color 0x24f {n·0x11}, máscaras 2bpp→nibble 0x25f, palette-expand 0x263) [ev: 0x0 jmp, 0x24f xlat]"
+   },
+   "644": {
+    "name": "dos_alloc_seg",
+    "role": "aloca párrafo real-mode probando mayor libre (int21 48/49/58, 30 versión) [ev: int21 AH=30/48/58/49]"
+   },
+   "716": {
+    "name": "compute_hspan_masks",
+    "role": "de 2 x-endpoints deriva máscara izq parcial + byte-count medio + der parcial (2px/byte) [ev: cs:[0x212/0x213/0x218]]"
+   },
+   "870": {
+    "name": "draw_hspan_masked",
+    "role": "run horizontal a ES:[di] con máscaras de 0x2cc — fill [0x216], borde + rep-stosb medio; path XOR si [0x204] [ev: cs:[0x212/0x216], XOR [0x204]]"
+   },
+   "1018": {
+    "name": "save_region_vid_to_buf",
+    "role": "copia rango de scanlines de vídeo 0xB800 a buffer offscreen ES=[0x202] con máscaras; cola de fast-copy 0x4000 words [ev: [0x202], 0x468]"
+   },
+   "1138": {
+    "name": "blit_bufvid_and_selector_cluster",
+    "role": "restaurador buffer→vídeo + head del bloque de selectores — fn0 caps, fn1 modo9+paleta, fn2 alloc, fn4/5, fn8/10 swap, fn12 read-pixel, fn13 border/moongate sweep, fn15 set_color, fn16 plot [ev: 0x488 int10 modo9+AH=10 paleta, 0x6c2 xlatb→[0x283]]"
+   },
+   "1816": {
+    "name": "plot_pixel_and_sprite_blitter",
+    "role": "plot-pixel núcleo (4-bit 2px/byte vía scanline 0x72, máscaras 0x240/0x241, color 0x283) + fn17 diag, fn19 hline, fn20 vline, fn21 fill, y **fn25 (0x8fa) el BLITTER de sprite gigante W×H con flip/mirror/transparencia** [ev: fn25@0x8fa, 0x8f4 bytes/fila]"
+   },
+   "3129": {
+    "name": "blit_tile16_and_glyph",
+    "role": "fn27 (sel 0x51) blit fijo 16×16 (idx bx·128 de banco [0x206], 16 filas×8 words) + fn30 free, fn26 blit 2bpp variable, fn31 glyph 8×8 bicolor [ev: bx<<7, xlat 0x24f→glyph]"
+   },
+   "3681": {
+    "name": "clear_particle_flags",
+    "role": "cero del array de flags de partícula-activa [0xe13], len [0xe0f] [ev: cs:[0xe0f], di=0xe13]"
+   },
+   "3696": {
+    "name": "set_particle_flags",
+    "role": "mismo array con 1 (todas partículas activas) [ev: al=1]"
+   },
+   "3711": {
+    "name": "count_particles",
+    "role": "cuenta activas→[0xe59], inactivas→[0xe57] [ev: cs:[0xe59/0xe57]]"
+   },
+   "3755": {
+    "name": "next_active_particle",
+    "role": "avanza cursor [0xe5b] a la siguiente flag set [ev: cs:[0xe5b]]"
+   },
+   "3774": {
+    "name": "clear_scanline",
+    "role": "blanquea una scanline (fila [0xe11]) — 0x50 words de 0 a 0xB800 [ev: es=B800, cx=0x50]"
+   },
+   "3799": {
+    "name": "blit_scanline_masked",
+    "role": "copia scanline de buffer [0x202] a vídeo, AND 0x9999 (restaura bits de fondo) [ev: and 0x9999]"
+   },
+   "3852": {
+    "name": "delay_spin",
+    "role": "busy-wait tight (cx=0x700) [ev: mov cx,0x700]"
+   },
+   "3858": {
+    "name": "calc_particle_row",
+    "role": "fija fila [0xe11]=[0xe0b](+[0xe0f] si dir [0xe01]) [ev: cs:[0xe01]]"
+   },
+   "3886": {
+    "name": "step_row_check_key",
+    "role": "inc/dec fila por dir + poll consola (int21 AH=6) → flag aborto [0xe5f] [ev: int21 AH=6]"
+   },
+   "3938": {
+    "name": "render_fountain_frame",
+    "role": "un frame de la fuente/fuegos — cuenta partículas, delay, fila, y por partícula activa limpia+restaura scanlines con aborto [ev: call 0xe7f/0xebe/0xed7]"
+   },
+   "4066": {
+    "name": "particles_ascend_pass",
+    "role": "recorre script de partícula hacia atrás desde [0xe53]; 0xFF→render frame (0xf62), si no flag[bx]=1 [ev: cmp bl,0xff, call 0xf62]"
+   },
+   "4131": {
+    "name": "particles_descend_pass",
+    "role": "espejo hacia adelante limpiando flags — la pasada de extinción/caída [ev: [bx+0xe13]=0]"
+   },
+   "4191": {
+    "name": "script_read_byte",
+    "role": "siguiente byte del script [0xe55], zero-extend, avanza [ev: cs:[0xe55]]"
+   },
+   "4207": {
+    "name": "script_read_geometry",
+    "role": "3 bytes → row-offset [0xe0d], base-row [0xe0b], count [0xe0f] [ev: 3× call 0x105f]"
+   },
+   "4229": {
+    "name": "script_setup_frames",
+    "role": "lee frame-count [0xe03] y fija ptrs de datos [0xe53]/[0xe55] [ev: cs:[0xe03]]"
+   },
+   "4264": {
+    "name": "script_read_header",
+    "role": "lee geometría + setup (0x106f + 0x1085) [ev: call 0x106f/0x1085]"
+   },
+   "4271": {
+    "name": "fireworks_show_main",
+    "role": "fn37 (sel 0x6f) driver top-level de la fuente — script a tabla 0x112c, loop ascend/descend hasta tecla, devuelve frame-count [0xe60] [ev: cs:[0xe55]=0x112c]"
+   },
+   "4359": {
+    "name": "fireworks_phase2_and_sound",
+    "role": "fase 2 (tabla 0x11eb) + DATA de coreografía (0x112c-0x1234) + motor de tono/ruido PC-speaker (gate 0x61, PIT ch2 0x42, LFSR 0x9248) [ev: out 0x61/0x42, LFSR 0x9248]"
+   },
+   "4798": {
+    "name": "scroll_and_finale_driver",
+    "role": "fn35 (sel 0x69) shift vertical 4-fases (0x31 filas de [0x202]→0xB800) + controlador de finale de fuegos (aloca scratch, spark loop por LFSR, poll int16) [ev: [0x12ba] fase, LFSR 0x9248]"
+   },
+   "5220": {
+    "name": "spark_plot_and_scene_compositor",
+    "role": "plotea un spark 4-bit al doble-buffer [0x1310]/[0x202] + head de fn32 (sel 0x60) generador de escena intro/attract (ciclo de paleta a 0xF400, merges de región) [ev: fn32@0x1562, LFSR 0x14de]"
+   },
+   "6476": {
+    "name": "swap_cell_pair",
+    "role": "intercambia dos celdas de imagen de 16px adyacentes (words [si],[si+2]<->[si+0x10],[si+0x12]) para la intro [ev: [si]<->[si+0x10]]"
+   },
+   "6499": {
+    "name": "swap_cell_pair_off4",
+    "role": "thunk: si+=4; cae a swap_cell_pair [ev: add si,4]"
+   },
+   "6504": {
+    "name": "compositor_body_and_dissolve_entry",
+    "role": "doble-swap + dispatch del compositor de fn32 (merges AND/OR/XOR + blit 0xc39 + LFSR de paleta) + entrada fn34 (sel 0x66) fizzlefade de rect CX×DX ordenado por LFSR [ev: 0x196e compositor, 0x19ff fn34]"
+   },
+   "6786": {
+    "name": "dissolve_plot_and_key",
+    "role": "plotea un nibble en la celda LFSR (fila [0x19df]+dx vía 0x72, col [0x19dd]+x/2) copiando vídeo→buffer, tick speaker (0x123e), poll int16, CF en tecla [ev: [di+0x72], call 0x123e, int 16]"
+   },
+   "6883": {
+    "name": "point_plot_and_radial_body",
+    "role": "plotea un píxel 4-bit (paridad cx&1) al buffer + setup mode-B de fn34 (centro de bx<<4/dx, LFSR [0x19d9]) + entrada fn36 (sel 0x6c) @0x1bb0 [ev: 0x1b27 LFSR [0x19d9], 0x1bb0 fn36]"
+   },
+   "7118": {
+    "name": "menu_cursor_save_restore",
+    "role": "helper de fn36 — save/restore de bloques de celda de 4 words (esquinas 0x7d10/0x7d90/0x8bf0/0x6470) + dispatch (ax=0 save,1 restore,2 redraw cursor) de la barra de menú [ev: rep movsw 4w, ax==1/2]"
+   },
+   "7208": {
+    "name": "cursor_cells_setup",
+    "role": "apunta si a los 2 bloques de celda de la barra (0x7d10, 0x7d90) e invoca draw_cursor_highlight [ev: si=0x7d10, call 0x1c31]"
+   },
+   "7217": {
+    "name": "draw_cursor_highlight",
+    "role": "estampa el patrón de highlight color-4 en un bloque de celda (AND 0xf0/OR 4/=0x44) [ev: and [si+3],0xf0; or 4]"
+   },
+   "7258": {
+    "name": "div_by_5",
+    "role": "mapea índice lineal de menú a fila (bl/5→bh→bl) para posición del cursor [ev: cmp bl,5]"
+   },
+   "7275": {
+    "name": "menu_index_and_repack_dispatch",
+    "role": "wrap de índice (bl-=0xC si ≥0xC) + tablas offset X + plot de cursor + dispatch fn36 mode-4 que repacka regiones vía 0x1d3c [ev: 0x1cd1 call 0x1d3c]"
+   },
+   "7484": {
+    "name": "bitplane_repack_recolor",
+    "role": "convierte datos de imagen entre codificaciones de bit (swap planos 0x2222/0x4444 re-merge 0x9999 sobre 0x40 words) + recolor de región por LUTs nibble 0x1dec/0x1dfc [ev: and 0x2222/0x4444, xlat 0x1dec]"
+   }
+  }
+ }
+}

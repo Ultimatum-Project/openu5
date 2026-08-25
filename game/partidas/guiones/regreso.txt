@@ -1,0 +1,164 @@
+# GUION DE TECLAS de la partida «regreso» (momento-01) — El regreso a Britannia
+#
+# LA ESCENA ES SALIR DE LA CABAÑA. El momento arranca DENTRO de la cabaña de Iolo
+# (loc 13, z0, en (15,15)) y su bolsa a pie mide 27 celdas con UNA salida: la puerta
+# normal (tile 0xB8) de (15,19) — medido con el flood-fill del port en
+# demo-byo/verificacion/verifica-momentos.mjs §1-sexies, no supuesto.
+#
+# 🔴 (O)pen es DIRECCIONAL (DIR_ECHO_COMMANDS, main.ts:232): flecha pegada detrás. Y (L)ook
+# TAMBIÉN lo es: la flecha de un Look NO mueve. Quien simule este guion contando toda flecha
+# como un paso se desplaza SEIS casillas respecto al recorrido real — hay seis Looks.
+#
+# ── 🔴 POR QUÉ ESTE GUION NO ENTRA EN EL BOSQUE, Y LA VERSIÓN DEL 13-08 SÍ ─────────────
+# El guion anterior salía de la cabaña y tiraba al ESTE, y su vídeo se retiró («el póster
+# sale casi negro», MANIFIESTO §los-dos-que-no-se-publican). La causa NO es que aquello
+# fuera «zona sin pintar»: el mapa está pintado entero. Es que **Forest3 (0x09) es OPACO a
+# la vista** — está en `ALWAYS_OPAQUE` (visibility.ts:128, DATA.OVL 0x6A86, Clase A) — y
+# 572 de las 1024 celdas de este mapa son bosque. Metido en la espesura, la ventana 11×11
+# se queda en **9 celdas encendidas de 121 (7,4 %)**: eso es el negro del póster. El port
+# hace lo correcto; lo que estaba mal era el itinerario.
+#
+# ⚠️ Y NO es oscuridad de reloj: el momento son las 8:35 y `lightLevel` da 0x32 = 50, el
+# radio máximo (survival.ts:518). Quien busque la causa en la hora no la encontrará.
+#
+# RÉGIMEN DE LA MEDICIÓN de las cifras de abajo: `computeVisibleWindow(50, …)` —el MISMO
+# módulo que pinta el juego— sobre las 32×32 celdas de `smallmaps.json` id 13, z0.
+#   · guion del 13-08 (el retirado): mínimo 9 · media 55,8 · 33 pasos por debajo de 40
+#   · este guion:                    mínimo 57 · media 91,9 · 0 pasos por debajo de 40
+#     (la media publicó 94,3 hasta el 14-08 — RETIRADA: productor desconocido y régimen
+#      sin declarar; la vigente sale de game/tools/guion-visibilidad.mjs con el relleno
+#      real de la vista, edgeFillTile=0x09 Forest3 OPACO — ver MANIFIESTO.md §careo)
+#   · «Blocked!» en los dos: 3 y 0.
+#
+# EL ITINERARIO, y qué enseña cada tramo:
+#   1-21   la cabaña por dentro (suelo de ladrillo 0x44, cama, mesa, antorchas).
+#   22-25  (O)pen sobre la puerta y salir al patio. La casilla del umbral (15,19) es la más
+#          abierta del mapa: 120 celdas visibles de 121.
+#   28-45  al OESTE por el camino hasta el CAMPO DE TRIGO (0x2d/0x2c, rejas 0xca/0xcb).
+#   46-58  de vuelta al este y entrada al CAMINO del sur (0x32/0x31).
+#   59-75  el camino hacia el sur hasta la linde (fila 30) y regreso.
+#   76-99  el claro del sureste y vuelta por la fila 22.
+#   100-120 el flanco oeste de la cabaña y regreso al patio, frente a la puerta abierta.
+#
+# ⚠ El picker de (U)se de este momento tiene TRES filas (acto I, sin pergaminos ni
+# pociones): aquí no hay ritual que enseñar, y por eso no lleva ninguna (U).
+l
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+l
+ArrowLeft
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowUp
+ArrowUp
+ArrowUp
+l
+ArrowUp
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+o
+ArrowDown
+ArrowDown
+ArrowDown
+l
+ArrowUp
+ArrowDown
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+l
+ArrowLeft
+ArrowDown
+ArrowDown
+l
+ArrowDown
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowUp
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+l
+ArrowRight
+ArrowDown
+ArrowRight
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+l
+ArrowDown
+ArrowUp
+ArrowUp
+ArrowUp
+ArrowUp
+ArrowUp
+ArrowUp
+l
+ArrowUp
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+l
+ArrowRight
+ArrowUp
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+l
+ArrowLeft
+ArrowUp
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowUp
+l
+ArrowLeft
+ArrowUp
+ArrowUp
+ArrowUp
+l
+ArrowRight
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowDown

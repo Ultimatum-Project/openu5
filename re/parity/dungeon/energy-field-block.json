@@ -1,0 +1,36 @@
+{
+ "name": "energy-field-block",
+ "note": "Campo de energ\u00eda 0x83: bloquea (no entra) + rand(1,8) a cada miembro.",
+ "spec": {
+  "seed": 4660,
+  "roster": [
+   {
+    "dex": 15,
+    "hp": 30,
+    "maxHp": 30
+   },
+   {
+    "dex": 15,
+    "hp": 30,
+    "maxHp": 30
+   }
+  ],
+  "pos": {
+   "dungeon": 33,
+   "floor": 0,
+   "x": 2,
+   "y": 2,
+   "facing": "east"
+  },
+  "cells": [
+   {
+    "floor": 0,
+    "x": 3,
+    "y": 2,
+    "type": 8,
+    "sub": 3
+   }
+  ],
+  "action": "forward"
+ }
+}

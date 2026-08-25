@@ -1,0 +1,18 @@
+{
+  "cases": [
+    {"op": "buy", "base": 70, "int": 0},
+    {"op": "buy", "base": 70, "int": 10},
+    {"op": "buy", "base": 70, "int": 23},
+    {"op": "buy", "base": 70, "int": 33},
+    {"op": "buy", "base": 70, "int": 43},
+    {"op": "buy", "base": 700, "int": 0},
+    {"op": "buy", "base": 700, "int": 20},
+    {"op": "buy", "base": 2000, "int": 15},
+    {"op": "buy", "base": 1, "int": 30},
+    {"op": "sell", "base": 70, "int": 0},
+    {"op": "sell", "base": 70, "int": 23},
+    {"op": "sell", "base": 70, "int": 33},
+    {"op": "sell", "base": 700, "int": 25},
+    {"op": "sell", "base": 2000, "int": 10}
+  ]
+}

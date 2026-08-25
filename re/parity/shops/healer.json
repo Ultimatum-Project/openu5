@@ -1,0 +1,12 @@
+{
+  "cases": [
+    {"op": "healer", "location": 5},
+    {"op": "healer", "location": 6},
+    {"op": "healer", "location": 7},
+    {"op": "healer", "location": 21},
+    {"op": "healer", "location": 23},
+    {"op": "healer", "location": 30},
+    {"op": "healer", "location": 31},
+    {"op": "healer", "location": 2}
+  ]
+}

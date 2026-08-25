@@ -1,0 +1,31 @@
+{
+  "chapter": "ch10",
+  "coveredIds": [
+    "command-e",
+    "command-k",
+    "command-l",
+    "command-s",
+    "command-t",
+    "floor-30-z0",
+    "floor-30-z1",
+    "floor-30-z2",
+    "location-30-lycaeum",
+    "npc-keep-11-lady-janell",
+    "npc-keep-12-lord-shalineth",
+    "npc-keep-13-rollo",
+    "npc-keep-14-lady-hayden",
+    "npc-keep-15-lord-r-hien",
+    "npc-keep-26-sir-sean",
+    "npc-keep-27-mariah",
+    "search-101-loc30-23-9",
+    "search-102-loc30-23-7",
+    "search-103-loc30-20-7",
+    "search-104-loc30-22-19",
+    "search-105-loc30-22-17",
+    "sign-30-10-12",
+    "sign-30-15-11"
+  ],
+  "notes": [
+    "Lycaeum (loc 30) — PRIMER KEEP del tour: location + z0/z1/z2 (3 plantas, nav component-aware), 7 NPCs keep. TESTIGOS byte-exactos: Shalineth → NOMBRE del Shadowlord de la Falsedad 'FAULINEI' (rama SEGURA ['merc','y']; ⚠'n'→\"Thou fool.\"+EndConv, SIN karma); Janell → 'Shard of Falsehood' (gancho a Cove); Mariah → 'escape with my life' (TALK-ONLY por decisión del lead, sin JoinParty → roster/.gam intactos); Rollo → 'Book of Lore'; Hayden → 'Lord R'hien' (greeting <AvatarsName> SIN AskName); R'hien → 'Truth is in great peril'; Sir Sean → 'Shadowlords'. HORA CANÓNICA 10:00 (reparto por planta vía scheduleIndex: z0 Hayden, z1 Mariah, z2 los 5). GEMAS 0→0 (#65). LLAVES 1→1 (CERO (J)immy: único cerrojo (24,21) z0 gatea un cuarto lateral vacío — flood-fill del scout; searches en z1/z2). Oro 200→200 y karma 80→80 INALTERADOS (tiendas DIFERIDAS Pub/Healer/GuildMaster, pero YA NO por pobreza: su razón vieja («inasequibles con oro 1», task #51) caducó con el pin entryGold de #52 y se contradecía con el «Oro 200→200» de cuatro palabras antes — hoy son alcanzables y se difieren por DECISIÓN de la spec (no se visitan), no por el saldo. Misma corrección que ya hizo ch08; la auditoría final (01-08) la extendió a los hermanos que se la dejaron). Señales 2/2, searches 5/5 (best-effort, subconjunto determinista). Comandos e/t/s/l/k. Estrena la familia keep con nav component-aware (patrón ch05/06). NPCs de lore best-effort (partición R1)."
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "town-blocked-move",
+  "_doc": "En Iolo's Hut (loc 13, start 15,15) hay una mesa al este (tile 148). El movimiento BLOQUEADO en pueblo consume 1 minuto sin mover (TOWN 0x600 'Blocked!' + bucle 0x15D4; kernel-survival.md §5.1). Cierra el ⚠️ 'movimiento bloqueado consume turno' de FIDELITY.",
+  "initial": "saved-gam",
+  "actions": [{ "op": "move", "dir": "east" }],
+  "fields": ["x", "y", "minute", "hour"]
+}

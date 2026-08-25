@@ -1,0 +1,28 @@
+{
+  "chapter": "ch03",
+  "coveredIds": [
+    "command-e",
+    "command-k",
+    "command-l",
+    "command-s",
+    "command-t",
+    "floor-2-z0",
+    "floor-2-z1",
+    "location-2-britain",
+    "npc-towne-10-telila",
+    "npc-towne-11-gwenno",
+    "npc-towne-12-annon",
+    "npc-towne-6-greyson",
+    "npc-towne-7-justin",
+    "npc-towne-8-eb",
+    "npc-towne-9-terrance",
+    "search-29-loc2-2-1",
+    "search-30-loc2-6-26",
+    "shop-0-iolo-s-bows",
+    "sign-2-14-27",
+    "sign-2-16-27"
+  ],
+  "notes": [
+    "Britain: buy-first (reloj 16:24), Annon(12) temprano en comp0 (z1 sin puerta, recoverPartition), z0 towne (6-10) en su franja, Gwenno(11) en comp6 (sin llave, recoverPartition), search(2,1)/(6,26) y señales (16,27)/(14,27) en z0. search-31 (Box 24,6, comp1 tras LockedDoor 25,3) DIFERIDO: el trek costaba ~6.7h de reloj + 1 llave — hostil a la cadena (entrada nocturna aguas abajo); el reloj es presupuesto de cadena (oro/karma/llaves/RELOJ)."
+  ]
+}

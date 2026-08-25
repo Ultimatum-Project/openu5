@@ -1,0 +1,57 @@
+{
+ "name": "pit-fall-chain",
+ "note": "Foso encadenado 0x61: cae varios niveles, rand(1,8) por ca\u00edda.",
+ "spec": {
+  "seed": 43981,
+  "roster": [
+   {
+    "dex": 15,
+    "hp": 30,
+    "maxHp": 30
+   },
+   {
+    "dex": 15,
+    "hp": 30,
+    "maxHp": 30
+   }
+  ],
+  "pos": {
+   "dungeon": 33,
+   "floor": 0,
+   "x": 2,
+   "y": 2,
+   "facing": "east"
+  },
+  "cells": [
+   {
+    "floor": 0,
+    "x": 3,
+    "y": 2,
+    "type": 6,
+    "sub": 1
+   },
+   {
+    "floor": 1,
+    "x": 3,
+    "y": 2,
+    "type": 6,
+    "sub": 1
+   },
+   {
+    "floor": 2,
+    "x": 3,
+    "y": 2,
+    "type": 6,
+    "sub": 9
+   },
+   {
+    "floor": 3,
+    "x": 3,
+    "y": 2,
+    "type": 0,
+    "sub": 0
+   }
+  ],
+  "action": "forward"
+ }
+}

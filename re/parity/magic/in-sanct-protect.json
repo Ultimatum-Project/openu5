@@ -1,0 +1,31 @@
+{
+ "name": "in-sanct-protect",
+ "note": "In Sanct \u2192 g_time_spell='P'(0x50), turns=20 en el global \u00fanico.",
+ "spec": {
+  "seed": 1,
+  "spell": "In_Sanct",
+  "casterIndex": 0,
+  "ctx": {
+   "location": 0,
+   "inCombat": false
+  },
+  "roster": [
+   {
+    "class": "M",
+    "mp": 22,
+    "level": 8
+   }
+  ],
+  "spellQuantities": {
+   "19": 1
+  }
+ },
+ "expect": {
+  "time_spell": 80,
+  "time_spell_turns": 20
+ },
+ "compareFields": [
+  "time_spell",
+  "time_spell_turns"
+ ]
+}

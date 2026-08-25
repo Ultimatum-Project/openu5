@@ -1,0 +1,30 @@
+{
+ "name": "wake-sleeper",
+ "note": "Despertar: PJ dormido, rand(0,63)<4 -> 'G' al pisar suelo.",
+ "spec": {
+  "seed": 3,
+  "roster": [
+   {
+    "dex": 15,
+    "hp": 30,
+    "maxHp": 30,
+    "status": "S"
+   },
+   {
+    "dex": 15,
+    "hp": 30,
+    "maxHp": 30,
+    "status": "S"
+   }
+  ],
+  "pos": {
+   "dungeon": 33,
+   "floor": 0,
+   "x": 2,
+   "y": 2,
+   "facing": "east"
+  },
+  "cells": [],
+  "action": "forward"
+ }
+}

@@ -1,0 +1,46 @@
+{
+ "name": "poison-field-dex-contest",
+ "note": "Campo de veneno 0x81: rand(1,30)>=DEX -> 'P' (no limpia tile).",
+ "spec": {
+  "seed": 1911,
+  "roster": [
+   {
+    "dex": 5,
+    "hp": 40,
+    "maxHp": 40
+   },
+   {
+    "dex": 15,
+    "hp": 40,
+    "maxHp": 40
+   },
+   {
+    "dex": 25,
+    "hp": 40,
+    "maxHp": 40
+   },
+   {
+    "dex": 30,
+    "hp": 40,
+    "maxHp": 40
+   }
+  ],
+  "pos": {
+   "dungeon": 33,
+   "floor": 0,
+   "x": 2,
+   "y": 2,
+   "facing": "east"
+  },
+  "cells": [
+   {
+    "floor": 0,
+    "x": 3,
+    "y": 2,
+    "type": 8,
+    "sub": 1
+   }
+  ],
+  "action": "forward"
+ }
+}

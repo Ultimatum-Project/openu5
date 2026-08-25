@@ -1,0 +1,212 @@
+{
+  "completa": true,
+  "fecha": "2026-08-25",
+  "sha": "0baa17a0",
+  "dirty": false,
+  "instrumento": {
+    "playwright": "Version 1.61.1",
+    "node": "v22.23.1",
+    "plataforma": "darwin-arm64"
+  },
+  "total": 807,
+  "ok": 685,
+  "rojos": 24,
+  "inestables": 0,
+  "saltados": 98,
+  "ms": 1344719,
+  "configs": [
+    {
+      "id": "escritorio",
+      "cfg": "playwright.config.ts",
+      "es": "Escritorio",
+      "en": "Desktop",
+      "total": 317,
+      "ok": 297,
+      "rojos": 3,
+      "inestables": 0,
+      "saltados": 17,
+      "ms": 304174,
+      "fallos": [
+        {
+          "proyecto": "",
+          "titulo": "T → conversación EN CONSOLA → keyword tecleada → respuesta → bye",
+          "fichero": "grandtour/talk-console.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "",
+          "titulo": "#367 · shader: el endgame monta, avanza de fase y el viewport pinta",
+          "fichero": "shader-escenas-351.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "",
+          "titulo": "(U)se fiel: el eco NO repite el nombre del ítem — 'Item: Scroll', no 'Item: Vas Lor'",
+          "fichero": "use-item.spec.ts",
+          "estado": "unexpected"
+        }
+      ]
+    },
+    {
+      "id": "movil",
+      "cfg": "playwright.mobile.config.ts",
+      "es": "Móvil",
+      "en": "Mobile",
+      "total": 488,
+      "ok": 386,
+      "rojos": 21,
+      "inestables": 0,
+      "saltados": 81,
+      "ms": 1031673,
+      "fallos": [
+        {
+          "proyecto": "iphone-partido",
+          "titulo": "los 9 botones de combate son pulsables en vertical (no sólo presentes)",
+          "fichero": "combate-botonera.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone-partido",
+          "titulo": "control: re-introducir el span 2 vuelve a romper tres botones",
+          "fichero": "combate-botonera.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "android",
+          "titulo": "② al alzarse la hoja A–Z el UI SUBE ya —sin teclear— y la banda de log queda sobre el teclado",
+          "fichero": "deck-modos.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "android",
+          "titulo": "② al cerrarse el teclado el UI vuelve a su sitio (el lift no se queda pegado)",
+          "fichero": "deck-modos.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone",
+          "titulo": "🌐 re-rotula el deck ENTERO en caliente (modo, fila útil, comandos, hojas)",
+          "fichero": "mobile-a11y.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone-partido",
+          "titulo": "🌐 re-rotula el deck ENTERO en caliente (modo, fila útil, comandos, hojas)",
+          "fichero": "mobile-a11y.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone-webkit",
+          "titulo": "🌐 re-rotula el deck ENTERO en caliente (modo, fila útil, comandos, hojas)",
+          "fichero": "mobile-a11y.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "android",
+          "titulo": "🌐 re-rotula el deck ENTERO en caliente (modo, fila útil, comandos, hojas)",
+          "fichero": "mobile-a11y.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone-partido",
+          "titulo": "vertical 393 px: 1 columna(s) de comandos y CERO rótulos cortados — iPhone 15",
+          "fichero": "mobile-geometry.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone-partido",
+          "titulo": "vertical 412 px: 1 columna(s) de comandos y CERO rótulos cortados — Pixel 7 (el del informe: 2 columnas y 13 cortados)",
+          "fichero": "mobile-geometry.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone-partido",
+          "titulo": "vertical 430 px: 1 columna(s) de comandos y CERO rótulos cortados — iPhone 15 Pro Max (no estaba en el informe, mismo defecto)",
+          "fichero": "mobile-geometry.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone-partido",
+          "titulo": "vertical 500 px: 1 columna(s) de comandos y CERO rótulos cortados — tableta pequeña (aún no caben dos)",
+          "fichero": "mobile-geometry.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "se-landscape",
+          "titulo": "norma ≥44 px [en]: NINGÚN objetivo del deck es pequeño (vertical, hojas del layout)",
+          "fichero": "mobile-geometry.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "se-landscape",
+          "titulo": "norma ≥44 px [es]: NINGÚN objetivo del deck es pequeño (vertical, hojas del layout)",
+          "fichero": "mobile-geometry.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone",
+          "titulo": "el deck táctil aparece por detección de producción (pointer:coarse), sin ?touch=1",
+          "fichero": "mobile-intensive.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone-webkit",
+          "titulo": "el deck táctil aparece por detección de producción (pointer:coarse), sin ?touch=1",
+          "fichero": "mobile-intensive.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "android",
+          "titulo": "el deck táctil aparece por detección de producción (pointer:coarse), sin ?touch=1",
+          "fichero": "mobile-intensive.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone",
+          "titulo": "combate completo por toque: tap al enemigo entra, la hoja de combate lucha y se sale",
+          "fichero": "mobile-intensive.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone-partido",
+          "titulo": "combate completo por toque: tap al enemigo entra, la hoja de combate lucha y se sale",
+          "fichero": "mobile-intensive.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "iphone-webkit",
+          "titulo": "combate completo por toque: tap al enemigo entra, la hoja de combate lucha y se sale",
+          "fichero": "mobile-intensive.spec.ts",
+          "estado": "unexpected"
+        },
+        {
+          "proyecto": "android",
+          "titulo": "combate completo por toque: tap al enemigo entra, la hoja de combate lucha y se sale",
+          "fichero": "mobile-intensive.spec.ts",
+          "estado": "unexpected"
+        }
+      ]
+    },
+    {
+      "id": "prod",
+      "cfg": "playwright.prod.config.ts",
+      "es": "Sitio en producción",
+      "en": "Production site",
+      "total": 2,
+      "ok": 2,
+      "rojos": 0,
+      "inestables": 0,
+      "saltados": 0,
+      "ms": 8872,
+      "fallos": []
+    }
+  ],
+  "excluidas": [
+    {
+      "id": "espejo",
+      "cfg": "playwright.espejo.config.ts",
+      "razon_es": "Arnés de CONFORMIDAD contra los let's-play, no de regresión: su umbral por defecto (0,5) está por encima de la conformidad medida del corpus (4,7 %–25,6 %), así que sin la palanca U5_ESPEJO_SOFT falla siempre por instrumento. Su resultado no es comparable con el de las otras tres y no entra en el total.",
+      "razon_en": "A CONFORMANCE harness against the let's-plays, not a regression suite: its default threshold (0.5) sits above the corpus's measured conformance (4.7%–25.6%), so without the U5_ESPEJO_SOFT lever it always fails by instrument. Its result is not comparable with the other three and does not enter the total."
+    }
+  ]
+}

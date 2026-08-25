@@ -1,0 +1,37 @@
+{
+ "name": "fountain-heal-full",
+ "note": "Fuente 0x51: HP del PJ activo -> maxHP.",
+ "spec": {
+  "seed": 1,
+  "roster": [
+   {
+    "dex": 15,
+    "hp": 3,
+    "maxHp": 40
+   },
+   {
+    "dex": 15,
+    "hp": 40,
+    "maxHp": 40
+   }
+  ],
+  "activeCharacter": 0,
+  "pos": {
+   "dungeon": 33,
+   "floor": 0,
+   "x": 2,
+   "y": 2,
+   "facing": "east"
+  },
+  "cells": [
+   {
+    "floor": 0,
+    "x": 2,
+    "y": 2,
+    "type": 5,
+    "sub": 1
+   }
+  ],
+  "action": "drink"
+ }
+}

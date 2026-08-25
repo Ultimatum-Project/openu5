@@ -1,0 +1,1584 @@
+{
+ "_comment": [
+  "Diccionario de globals del kernel (Task 1.2, piedra Rosetta).",
+  "Direcciones DS-relativas (game_ds). Método y evidencia: re/notes/globals.md.",
+  "Regenerable: entradas roster via globals_map.build_roster_entries(roster_off);",
+  "entradas g_unk_* del censo de refs cross-overlay (nfiles>=3)."
+ ],
+ "game_ds": "0x1788",
+ "roster_off": "0x55A6",
+ "probe_date": "2026-07-09",
+ "globals": [
+  {
+   "addr": 5038,
+   "size": 1,
+   "name": "g_unk_13ae",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 8 ficheros (13 refs: CAST.OVL,CAST2.OVL,COMSUBS.OVL,DNGLOOK.OVL,DUNGEON.OVL...); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 5040,
+   "size": 1,
+   "name": "g_unk_13b0",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 12 ficheros (52 refs: CAST2.OVL,COMSUBS.OVL,DNGLOOK.OVL,DUNGEON.OVL,ENDGAME.OVL...); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 5042,
+   "size": 1,
+   "name": "g_unk_13b2",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 8 ficheros (37 refs: CAST.OVL,COMSUBS.OVL,DNGLOOK.OVL,DUNGEON.OVL,FONT.OVL...); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 5044,
+   "size": 1,
+   "name": "g_unk_13b4",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 6 ficheros (11 refs: CAST.OVL,COMSUBS.OVL,DNGLOOK.OVL,DUNGEON.OVL,INTRO.OVL...); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 5046,
+   "size": 1,
+   "name": "g_unk_13b6",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 6 ficheros (9 refs: CAST.OVL,COMSUBS.OVL,DNGLOOK.OVL,DUNGEON.OVL,INTRO.OVL...); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 5048,
+   "size": 1,
+   "name": "g_unk_13b8",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 4 ficheros (6 refs: DNGLOOK.OVL,INTRO.OVL,LOOKOBJ.OVL,ULTIMA.EXE); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 5050,
+   "size": 1,
+   "name": "g_unk_13ba",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (8 refs: DNGLOOK.OVL,INTRO.OVL,ULTIMA.EXE); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 5628,
+   "size": 55,
+   "name": "g_attack_values",
+   "meaning": "ATTACK_VALUES: daño base por id de equipo, 55 bytes indexados desde 0. COMBAT y COMSUBS lo usan además como PUERTA: valor 0 ⇒ ese equipo no genera mensaje de arma",
+   "evidence": "COMBAT.OVL 0x05c5 `cmp byte ptr [bx + 0x15fc], 0` / `je` (puerta, bx = id de equipo, tras descartar el centinela 0xFF en 0x05bb); COMBAT.OVL 0x12f1 `mov al, byte ptr [bx + 0x15fc]` (daño); COMSUBS.OVL 0x0d49 misma puerta. EXTENSIÓN 55 B corroborada por el extractor del port: extractor/src/parsers/dataovl.ts:107 y :540 `attackValues: byteList(bytes, 0x160c, 0x37)` (0x160c = 0x15FC + 0x10, 0x37 = 55), y game/dist/assets/data.json trae 55 valores. Dominio de ids 0-based (0 = Leather Helm). Cuerpo identificado por heredados-168 tanda 3"
+  },
+  {
+   "addr": 6134,
+   "size": 96,
+   "stride": 2,
+   "name": "g_equip_name_ptrs",
+   "meaning": "tabla de 48 punteros word a los nombres de equipo, indexada por id*2. Es la tabla que resuelve el nombre del arma en el mensaje de combate y en las tiendas",
+   "evidence": "COMBAT.OVL 0x05fe-0x0600 `shl bx,1` + `mov ax, word ptr [bx + 0x17f6]` ⇒ stride 2; COMSUBS.OVL 0x0d6a y SHOPPES.OVL 0x0be0/0x0bf0/0x0ee5 `push word ptr [bx|si + 0x17f6]`. EXTENSIÓN 96 B = 48 entradas, corroborada por el extractor del port: extractor/src/parsers/dataovl.ts:119 y :544-545 `equipIndexes: u16List(bytes, 0x1806, 0x60, 0x10)` (0x1806 = 0x17F6 + 0x10, 0x60 = 96), y por re/notes/anillos-nombres-cierre.md:24-38 («DS 0x17f6, 48 entradas, decodificada entera»). Cuerpo identificado por heredados-168 tanda 3"
+  },
+  {
+   "addr": 7450,
+   "size": 256,
+   "name": "g_gem_tile_category",
+   "meaning": "TABLA ESTÁTICA de DATA.OVL (no estado): 256 B, tile -> categoría de dibujo del gem, 17 categorías (0x00..0x10). Es la que gobierna el despacho del renderizador del gem de sobremundo",
+   "evidence": "LOOKOBJ.OVL 0x0f85-0x0f88 `mov bx, word ptr [bp + 8]` (tile entero, sin máscara) / `mov al, byte ptr [bx + 0x1d1a]`; el valor cae en [bp-2] y es el índice del despacho de 0x0f9d-0x10f1 (tabla de saltos para 0..7 en 0x0fb2, cadena de comparaciones para 8..0x10). size=256 porque el índice es el byte entero sin acotar. Las 17 categorías VERIFICADAS sobre los bytes de DATA.OVL (fileoff 0x1d2a = DS + 0x10): los 256 valores son exactamente 0x00..0x10. Identificada por heredados-b tanda 1 §6"
+  },
+  {
+   "addr": 8574,
+   "size": 1,
+   "name": "g_unk_217e",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (12 refs: OUTSUBS.OVL,TOWN.OVL,ULTIMA.EXE); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 8576,
+   "size": 1,
+   "name": "g_unk_2180",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (10 refs: OUTSUBS.OVL,TOWN.OVL,ULTIMA.EXE); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 9290,
+   "size": 8,
+   "name": "g_dng_feature_glyph",
+   "meaning": "tabla de GLIFO por tipo de elemento de mazmorra: 8 ranuras indexadas por el NIBBLE ALTO de la casilla de g_dng_map bajo el jugador. Contenido leido de DATA.OVL: [0,200,201,200,220,216,0,0]. El consumidor solo escribe el glifo en g_unk_adb9 si el valor no es cero, o sea las ranuras 0, 6 y 7 son 'sin glifo'. Cabecera del bloque de tablas de DNGLOOK descrito en g_unk_2452.",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). Extension DERIVADA del gate del indice, no del hueco al vecino: en DNGLOOK.OVL:0x0cee-0x0cfc la casilla se enmascara con 0xf0, se descarta si queda cero, se descarta si es >= 0x80 y se desplaza 4 bits a la derecha, luego el indice es un nibble acotado a 0..7 y la tabla tiene 8 ranuras. Acceso unico en el corpus: DNGLOOK.OVL:0x0d02. La ranura 0 es direccionable pero inalcanzable por ese gate, que es por lo que la base es 0x244a y no 0x244b."
+  },
+  {
+   "addr": 9298,
+   "size": 6,
+   "name": "g_unk_2452",
+   "meaning": "★ #269 SEMANTICA DERIVADA (lead): los DOS bucles cortos escriben las POSICIONES DE ENTRADA de los 6 miembros en el registro .CBT sintetico — destinos 0xAD3F / 0xAD5F / 0xAD7F / 0xAD9F = filas 1..4 col 11 de g_cbt_room_record (las 4 direcciones de entrada del formato; extractor/src/parsers/combatmap.ts:107 lee x en at(fila, 11+p) e y en at(fila, 17+p)); el PRIMER bucle rellena las columnas 11..16 (las X) y el SEGUNDO las 17..22 (las Y) con los cuatro punteros ya avanzados +6. Esta tabla (con g_unk_2458 como su Y) es el par de CAMPAMENTO: bajo el bit 2 de 0x58a1 el mismo valor va a las cuatro direcciones. En emboscada las cuatro restantes se reparten TRANSPUESTAS (X: fila1=0x2464 · fila2=0x246a · fila3=0x2470 · fila4=0x245e; Y: fila1=0x2470 · fila2=0x245e · fila3=0x2464 · fila4=0x246a) — el complemento a 10 entre pares ES el espejo del tablero 11x11 entre direcciones opuestas, que la ficha de g_unk_2464 ya habia medido sin nombre. Derivado de DNGLOOK 0x0d8e-0x0e47. tabla de 6 bytes; PRIMERA del bloque de tablas de DNGLOOK.OVL:0x0d3e, que va de 0x244a a 0x24d5, embaldosa sin un solo hueco y muere EXACTAMENTE donde empieza g_facing_dx. El bloque tiene dos familias: SEIS tablas de 6 B (0x2452..0x2475) que consumen los dos bucles cortos, y SEIS de 16 B (0x2476..0x24d5) que consume el bucle largo. Rol de esta: es la tabla ESPECIAL del primer bucle corto — cuando el bit 2 del flag 0x58a1 esta puesto, su valor se copia a los CUATRO destinos a la vez en lugar de repartir cuatro tablas distintas. Contenido: [5,6,5,4,4,6]. Semantica de los valores SIN derivar.",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). Extension DERIVADA del bucle: indice en si desde 0 con cierre `cmp si,6` + `jl` (DNGLOOK.OVL:0x0dee-0x0df1), dominio 0..5, seis ranuras. Censo por los canales absoluto+indexado leyendo los .asm en Python (nunca grep -r): la region 0x244a-0x24d5 recibe 21 accesos, TODOS de DNGLOOK.OVL y todos dentro de la rutina 0x0d3e o de su cabecera 0x0d02, y las bases distintas son TRECE y solo trece, con pasos 8,6,6,6,6,6 y luego 16,16,16,16,16 — cero accesos a un offset interior de cualquiera de ellas, que es lo que sostiene que las trece son bases y no tablas mayores. Este: DNGLOOK.OVL:0x0dae."
+  },
+  {
+   "addr": 9304,
+   "size": 6,
+   "name": "g_unk_2458",
+   "meaning": "tabla de 6 bytes del bloque descrito en g_unk_2452. Rol: la tabla ESPECIAL del SEGUNDO bucle corto, con el mismo papel que g_unk_2452 tiene en el primero — bajo el bit 2 del flag 0x58a1 su valor va a los cuatro destinos a la vez. Contenido: [4,5,6,5,4,6].",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). Extension derivada del cierre `cmp si,6` del segundo bucle (DNGLOOK.OVL:0x0e48-0x0e4b) y mismo censo de bloque que g_unk_2452. Este: DNGLOOK.OVL:0x0e07."
+  },
+  {
+   "addr": 9310,
+   "size": 6,
+   "name": "g_unk_245e",
+   "meaning": "tabla de 6 bytes del bloque descrito en g_unk_2452. Rol: una de las CUATRO tablas que los dos bucles cortos reparten entre cuatro destinos cuando el bit 2 del flag 0x58a1 esta a cero; los dos bucles usan las mismas cuatro tablas pero con el reparto PERMUTADO, que es la firma de una rotacion o un espejo. Contenido: [5,4,6,3,5,7] — identico byte a byte al de g_unk_2470.",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). Extension y censo como g_unk_2452. Este: DNGLOOK.OVL:0x0dd4 y 0x0e25."
+  },
+  {
+   "addr": 9316,
+   "size": 6,
+   "name": "g_unk_2464",
+   "meaning": "tabla de 6 bytes del bloque descrito en g_unk_2452; una de las cuatro repartidas por los dos bucles cortos. Contenido: [6,7,7,8,8,8]. Cumple g_unk_2464[i]+g_unk_246a[i]=10 en los seis indices, el mismo patron de complemento a 10 que aparece en la familia de 16 B.",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). Extension y censo como g_unk_2452. Este: DNGLOOK.OVL:0x0ddd y 0x0e1c."
+  },
+  {
+   "addr": 9322,
+   "size": 6,
+   "name": "g_unk_246a",
+   "meaning": "tabla de 6 bytes del bloque descrito en g_unk_2452; una de las cuatro repartidas por los dos bucles cortos. Contenido: [4,3,3,2,2,2]. Complementaria a 10 de g_unk_2464.",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). Extension y censo como g_unk_2452. Este: DNGLOOK.OVL:0x0dcb y 0x0e2e."
+  },
+  {
+   "addr": 9328,
+   "size": 6,
+   "name": "g_unk_2470",
+   "meaning": "tabla de 6 bytes del bloque descrito en g_unk_2452; la ultima de las de 6 B, pegada a la primera de las de 16 B. Contenido: [5,4,6,3,5,7] — identico byte a byte al de g_unk_245e, que es la razon de que las dos NO se puedan distinguir por contenido y haya que separarlas por su papel en el reparto.",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). Extension y censo como g_unk_2452. Este: DNGLOOK.OVL:0x0dc2 y 0x0e37."
+  },
+  {
+   "addr": 9334,
+   "size": 16,
+   "name": "g_unk_2476",
+   "meaning": "★ #269 SEMANTICA DERIVADA (lead): la familia de 16 B son las COORDENADAS DE LAS 16 UNIDADES enemigas del registro sintetico — destinos 0xADDF (fila 6 col 11 = las X) y 0xADFF (fila 7 col 11 = las Y), exactamente el formato del .CBT (extractor/src/parsers/combatmap.ts:136 lee units con x=at(6, 11+u) e y=at(7, 11+u)). Seleccion por g_dng_facing en emboscada: facing 0 (X=0x2476, Y=0x2496) · facing 1 (X=0x2486, Y=0x24a6) · facing 2 (X=0x24a6, Y=0x2486) · facing 3 (X=0x2496, Y=0x2476) — los facings opuestos TRANSPONEN el par (complemento a 10 = espejo del tablero); en campamento (bit 2 de 0x58a1) el par es fijo: X=0x24b6, Y=0x24c6. Derivado de DNGLOOK 0x0e53-0x0edf. CAREO CON EL PORT: pendiente y declarado — el camp del port es escena de piel (buildCampScene); si la arena de emboscada de mazmorra coloca party y unidades con estas coordenadas NO esta medido aqui. tabla de 16 bytes, PRIMERA de la familia de SEIS de 16 B (0x2476..0x24d5) del bloque descrito en g_unk_2452; la familia muere exactamente donde empieza g_facing_dx. Rol dentro del bucle largo: con rumbo 0 alimenta el destino bajo y con rumbo 3 el alto, o sea la pareja con g_unk_2496 es un ESPEJO por rumbo. Contenido: [5,4,6,3,7,2,8,5,2,8,3,7,2,4,6,8]. La SEMANTICA de los valores NO esta derivada; la hipotesis con aritmetica a favor esta en el acta (pares de coordenadas de 16 puntos sobre un eje de 11 posiciones, porque g_unk_2486[i]+g_unk_2496[i]=10 para los 16 indices).",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). Extension DERIVADA del bucle largo: indice en si desde 0 con cierre `cmp si,0x10` + `jge` (DNGLOOK.OVL:0x0eaa-0x0ead), dominio 0..15, dieciseis ranuras. Mismo censo de bloque que g_unk_2452. Este: DNGLOOK.OVL:0x0e99 y 0x0edb."
+  },
+  {
+   "addr": 9350,
+   "size": 16,
+   "name": "g_unk_2486",
+   "meaning": "tabla de 16 bytes de la familia descrita en g_unk_2476. Rol: con rumbo 1 alimenta el destino bajo y con rumbo 2 el alto (espejo por rumbo con g_unk_24a6). Contenido: [8,8,8,7,7,6,6,9,8,8,9,9,10,10,10,10]. Cumple g_unk_2486[i]+g_unk_2496[i]=10 en los 16 indices, lo que apunta a un eje de 11 posiciones reflejado; SIN derivar el consumidor que lo lee.",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). Misma derivacion de extension y mismo censo de bloque que g_unk_2476. Este: DNGLOOK.OVL:0x0eb5 y 0x0ecb."
+  },
+  {
+   "addr": 9366,
+   "size": 16,
+   "name": "g_unk_2496",
+   "meaning": "tabla de 16 bytes de la familia descrita en g_unk_2476. Rol: con rumbo 0 alimenta el destino alto y con rumbo 3 el bajo (espejo por rumbo con g_unk_2476). Contenido: [2,2,2,3,3,4,4,1,2,2,1,1,0,0,0,0]. Complementaria a 10 de g_unk_2486 en los 16 indices.",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). Misma derivacion de extension y mismo censo de bloque que g_unk_2476. Este: DNGLOOK.OVL:0x0e9f y 0x0ed5."
+  },
+  {
+   "addr": 9382,
+   "size": 16,
+   "name": "g_unk_24a6",
+   "meaning": "tabla de 16 bytes de la familia descrita en g_unk_2476. Rol: con rumbo 1 alimenta el destino alto y con rumbo 2 el bajo (espejo por rumbo con g_unk_2486). Contenido: [5,4,6,3,7,2,8,5,2,8,7,3,2,4,6,8] — identica a g_unk_2476 SALVO en los indices 10 y 11, que estan permutados entre si.",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). Misma derivacion de extension y mismo censo de bloque que g_unk_2476. Este: DNGLOOK.OVL:0x0ebb y 0x0ec5."
+  },
+  {
+   "addr": 9398,
+   "size": 16,
+   "name": "g_unk_24b6",
+   "meaning": "tabla de 16 bytes de la familia descrita en g_unk_2476. Rol DISTINTO de las cuatro anteriores: no la elige el rumbo sino el bit 2 del flag 0x58a1; con ese bit puesto, esta pareja (con g_unk_24c6) sustituye a las cuatro rotadas y alimenta el destino bajo SIN depender del rumbo. Contenido: [2,2,2,3,3,3,4,5,5,6,7,7,7,8,8,8] — monotona no decreciente, la unica de las seis que lo es.",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). ADJUDICA uno de los AMBIGUOS de la clase (b) de #245: el acceso DNGLOOK.OVL:0x0e76 se marcaba como posible base ajustada a un indice 1-based de g_facing_dx (a 32 B). NO lo es: el dominio del indice es 0..15 por el cierre `cmp si,0x10` del bucle, luego el acceso barre 0x24b6-0x24c5 y no alcanza 0x24c6, ni mucho menos 0x24d6. Base LEGITIMA de una tabla que el ledger no tenia fichada."
+  },
+  {
+   "addr": 9414,
+   "size": 16,
+   "name": "g_unk_24c6",
+   "meaning": "tabla de 16 bytes, ULTIMA de la familia descrita en g_unk_2476; su ultimo byte (0x24d5) es el que hace que el bloque entero termine pegado a g_facing_dx. Rol: pareja de g_unk_24b6 bajo el bit 2 del flag 0x58a1, alimentando el destino alto. Contenido: [4,5,7,2,3,8,8,3,8,3,4,7,8,3,6,7].",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). ADJUDICA otro de los AMBIGUOS de la clase (b) de #245: el acceso DNGLOOK.OVL:0x0e6d se marcaba como posible base ajustada a un indice 1-based de g_facing_dx (a 16 B, o sea justo un stride, que es lo que disparaba el criterio geometrico). NO lo es: con el dominio 0..15 derivado del cierre `cmp si,0x10` el acceso barre 0x24c6-0x24d5 y su ultimo byte queda UNO por debajo de g_facing_dx. Base LEGITIMA. Control independiente de que no hay solape: los 8 bytes de g_facing_dx leidos de DATA.OVL dan las 4 palabras [0,+1,0,-1], que es exactamente lo que su propia ficha declaraba desde antes de esta lectura."
+  },
+  {
+   "addr": 9430,
+   "size": 8,
+   "name": "g_facing_dx",
+   "meaning": "tabla de DELTA X por rumbo, 4 palabras indexadas por rumbo*2: [0,+1,0,-1]. Fija la convencion de rumbo N=0,E=1,S=2,O=3 junto con g_facing_dy.",
+   "evidence": "CHORE 4 de frontera-25/27. Sin entrada previa en el ledger; censada por los TRES canales (hex, simbolo, complemento a dos) leyendo los .asm en Python (nunca grep -r: los .asm del worktree son symlinks y grep -r los salta en silencio). DERIVADA POR MI leyendo los bytes de DATA.OVL y tres cuerpos que la usan: DUNGEON 0x04cb (dng_electric_field, la lee como BYTE bajo para el empuje), DUNGEON 0x1d66 (dng_attack, la lee como PALABRA con signo) y DUNGEON 0x0568/0x084f/0x1afe. 12 refs (DUNGEON 6, CAST 2, CAST2 1; los hits de FONT.OVL/EGA.DRV son inmediatos coincidentes, NO accesos DS). La convencion N/E/S/O queda confirmada por TRES vias independientes: estas tablas, town_move (TOWN 0x0600) y el panel dng_draw_panel 0x01d2 ('North'/' East'/'South'/' West')."
+  },
+  {
+   "addr": 9438,
+   "size": 8,
+   "name": "g_facing_dy",
+   "meaning": "tabla de DELTA Y por rumbo, 4 palabras indexadas por rumbo*2: [-1,0,+1,0]. Hermana de g_facing_dx; el par se cuenta como UNA pieza en el enunciado del chore, pero van en DOS entradas porque son dos direcciones y el ledger indexa por direccion.",
+   "evidence": "CHORE 4 de frontera-25/27. Sin entrada previa en el ledger; censada por los TRES canales (hex, simbolo, complemento a dos) leyendo los .asm en Python (nunca grep -r: los .asm del worktree son symlinks y grep -r los salta en silencio). Misma derivacion y mismos call-sites que g_facing_dx (DUNGEON 0x04d3 byte, 0x1d78 palabra, 0x0596/0x086b/0x1b05). 11 refs."
+  },
+  {
+   "addr": 9446,
+   "size": 1,
+   "name": "g_unk_24e6",
+   "meaning": "flag de REPINTADO SUCIO del viewport. ★ ADJUDICADO POR CENSO COMPLETO (#228, 30-07): 58 accesos = **57 ESCRITURAS y UNA sola LECTURA**, y esa lectura es `cmp byte ptr [g_unk_24e6], 0` en ULTIMA.EXE 0x595e, dentro de viewport_redraw (0x5910, IDENT): si vale 0 salta el repintado (je 0x5992); si no, empuja g_light_level + (g_party_x − g_chunk_origin_x) + (g_party_y − g_chunk_origin_y) + 0x0B y redibuja. ⇒ EL SENTIDO LO PONE SU ÚNICO CONSUMIDOR: no es «turno consumido», es «la vista quedó sucia, repíntala». La descripción anterior («el dispatcher cobra el turno, Task 3.9») atribuía la lectura a un consumidor que NO EXISTE en el corpus — ningún dispatcher lee esta global. Lo que sí era correcto de la ficha vieja: los ESCRITORES son handlers de comando (Board `|=2`, Push, etc.), repartidos en 10 ficheros (SJOG 15 · TOWN 12 · CMDS 8 · ULTIMA.EXE 8 · CAST 4 · MAINOUT 3 · NPC 3 · CAST2 2 · SHOPPES3 2 · LOOKOBJ 1) — coherente: un comando que gasta turno deja la vista sucia. 🔴 TRAMPA DEL CENSO, medida aquí: buscar `0x24e6` en el disasm da **CERO** — el desensamblador sustituye la dirección por el SÍMBOLO. Los 58 salen solo con `g_unk_24e6`. Es la regla censo-global-hex-y-simbolo aplicada",
+   "evidence": "referenciada por 10 ficheros (58 refs: CAST.OVL,CAST2.OVL,CMDS.OVL,LOOKOBJ.OVL,MAINOUT.OVL...); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 9447,
+   "size": 1,
+   "name": "g_step_sfx_toggle",
+   "meaning": "biestable que hace que el zumbido del paso suene UNA DE CADA DOS llamadas.",
+   "evidence": "CHORE 4 de frontera-25/27. Sin entrada previa en el ledger; censada por los TRES canales (hex, simbolo, complemento a dos) leyendo los .asm en Python (nunca grep -r: los .asm del worktree son symlinks y grep -r los salta en silencio). DERIVADA POR MI: DUNGEON 0x1020 abre con `xor byte ptr [0x24e7], 1` + `je` que RETORNA cuando el resultado es 0 — o sea la mitad de las llamadas no hacen nada. DUNGEON 0x0699 lo pone a 0 antes de llamar (para que el xor lo suba a 1 y ESE si suene) y 0x06a1 lo vuelve a 0 despues. 3 refs, todas en DUNGEON.OVL."
+  },
+  {
+   "addr": 9706,
+   "size": 6,
+   "name": "g_unk_25ea",
+   "meaning": "array de punteros WORD a NOMBRES DE FICHERO. INTRO.OVL 0x0a35-0x0a41 lo recorre con `bx = cx; inc cx; shl bx,1; mov si,[bx+0x25ea]` y sigue mientras el primer byte del string apuntado no sea 0 ⇒ es un ARRAY indexado por un contador, no un escalar. Los 3 accesos directos (ENDGAME 0x000f, FONT 0x0b21, INTRO 0x0165) son `push word ptr [g_unk_25ea]` = el elemento 0.",
+   "evidence": "MEDIDO PARCIALMENTE por frontera-29 (chore de #68). DERIVADO: es array de WORDs (stride 2), no un byte — el size=1 era falso. ⚠ NO DERIVADO: la CARDINALIDAD exacta. El bucle de INTRO para por contenido (primer byte del string == 0), no por una cota constante, así que el asm no la da. El 6 es una COTA SUPERIOR por vecindad: la siguiente global catalogada es g_unk_25f0 (0x25F0), 6 B más allá ⇒ caben 3 entradas como máximo. Si alguien necesita el número exacto, la vía es el contenido de DATA.OVL en esos 3 punteros, no el asm.",
+   "stride": 2
+  },
+  {
+   "addr": 9712,
+   "size": 1,
+   "name": "g_unk_25f0",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (4 refs: DNGLOOK.OVL,FONT.OVL,INTRO.OVL); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 11920,
+   "size": 10,
+   "stride": 5,
+   "name": "g_dng_feature_far_tiles",
+   "meaning": "tabla de TILES de rasgo de mazmorra para el trazador FRONTAL, 2 filas x 5 ALCANZABLES (0x2E90 y 0x2E95) (fila = profundidad del argumento [bp+4], columna = los 3 bits BAJOS del codigo de celda bajo nibble alto 0xC0). El valor leido se suma +0x0E y va al dibujante DUNGEON 0x145c. ⚠ LA BASE FICHADA ES 0x2E90, NO el literal 0x2E8B de la instruccion: el compilador emite base menos 5*k_min y el llamador entra con profundidad >= 1 ⇒ el minimo real leido es 0x2E90 (clase «base ajustada a la PROPIA tabla», #268/buffer-267-acta §2.4). Los 5 B de 0x2E8B-0x2E8F NO se fichan: el programa no los lee jamas por esta via, y fichar el literal seria dar de alta bytes muertos. CONSECUENCIA ACEPTADA Y DECLARADA: el desplazamiento 0x2E8B sigue saliendo AMBIGUO en la particion (es exactamente la clase que el partidor no modela, item 2 de #270) — se prefiere un ambiguo honesto a una base inventada. ★ LIMITE DEL MEDIDOR DE STRIDE hallado al fichar (para #270/ventana de instrumento): globals_negdisp.scaled_index_refs mide el paso por el ULTIMO `shl` que precede al acceso, asi que un indice x5 emitido como `shl,shl,add` lo mide como 2 — por eso este par salia en stride_size_conflicts con un size 15 (impar). El paso REAL es 5, derivado del calculo completo del indice. ⚠ EFECTO MEDIDO DEL ALTA (la doctrina del bucket, en vivo): al fichar esta base, el acceso VECINO DUNGEON 0x1424 (`mov ax, word ptr [bx + si + 0x2e7a]`, DOS registros indice: si = [bp+6]<<3 y bx = [bp-4]<<1) ENTRA como AMBIGUO nuevo — 0x2E7A = esta base menos 17, y el partidor no deriva el paso con dos indices. El bucket paso de 2 a 1 miembro, NO a 0: es «fichar una global mete a sus vecinas en el bucket» exactamente como se predijo, y queda DECLARADO aqui en vez de sorprender al siguiente. Candidato a tabla de WORDS (shl 1) previa a esta, sin leer. Dominio de columna POR DATOS: 0 — el censo de DUNGEON.DAT da 0xC0 como unico codigo 0xCx (265 celdas, bits bajos siempre 0, #265); el gate permitiria 0..7. Rasgo: variante de muro 1 (estalactita/derrumbe, g_dng_wall_variant). || #278",
+   "evidence": "DUNGEON.OVL 0x150a forward_raytrace_column (IDENT): gate `and al,0xf0 / cmp al,0xc0` (0x1575-0x1579), columna `and ax,7` (0x157e), fila `di = [bp+4]*5` (0x158b-0x1591: shl,shl,add), lectura `mov al, byte ptr [bx + di + 0x2e8b]` (0x1596), consumo `add ax,0xe` + push + `call 0x145c` (0x159c-0x15a4). El paso 5 sale del propio calculo del indice (shl,shl,add = x5, NO el x2 que mide el medidor); la extension 10 = las 2 filas ALCANZABLES y muere EXACTA en 0x2E9A = base de g_dng_feature_side_tiles. || #278"
+  },
+  {
+   "addr": 11930,
+   "size": 10,
+   "stride": 5,
+   "name": "g_dng_feature_side_tiles",
+   "meaning": "hermana LATERAL de g_dng_feature_far_tiles: 2 filas x 5 con el mismo esquema (fila = profundidad [bp+4] ∈ {0,1} por el gate `cmp [bp+4],2 / jl`, columna = 3 bits bajos del codigo 0xCx), valor +0x0E al dibujante 0x145c. Gate adicional del llamador: `cmp [g_dng_wall_variant],1` (0x16e0) ⇒ SOLO la variante 1 (estalactita/derrumbe) dibuja este rasgo lateral. La extension 10 muere EXACTAMENTE en 0x2EA4 = base de g_unk_2ea4 (los vectores de la fuente), cerrando el teselado 0x2E8B..0x2EA3 del racimo. ★ Con esta alta y la de su hermana, los DOS AMBIGUOS que quedaban en la particion (#268) pasan a BASE declarada y el bucket AMBIGUO queda a CERO por primera vez. || #278",
+   "evidence": "DUNGEON.OVL 0x1682 side_raytrace_column (IDENT): gate de nibble `cmp ax,0xc0 / je 0x16c4` (0x16a9), gate de profundidad `cmp word ptr [bp+4],2 / jl` (0x16d7), gate de variante `cmp byte ptr [g_dng_wall_variant],1` (0x16e0), columna `and ax,7` (0x16ed), fila `di=[bp+4]*5` (0x1716-0x171f), lectura `mov al, byte ptr [bx + di + 0x2e9a]` (0x1724), consumo `add ax,0xe` + `call 0x145c` (0x172a-0x1732). Espejo horizontal en el mismo cuerpo: `mov ax,0xbe / sub ax,[bp-4]` (0x170a) — el mismo 0xBE−x del trazado simetrico del pasillo. || #278"
+  },
+  {
+   "addr": 11940,
+   "size": 48,
+   "name": "g_unk_2ea4",
+   "meaning": "★ #265 — el CHOQUE de #268 con esta ventana queda ADJUDICADO POR DATOS: el acceso vecino DUNGEON 0x1724 ([bx + di + 0x2E9A]) solo alcanza 0x2EA4-0x2EA6 con bx >= 5 bajo nibble alto 0xC, y el censo de DUNGEON.DAT (los 4096 bytes de celdas, 8 mazmorras x 8 plantas x 64) da 0xC0 como UNICO codigo 0xCx del fichero (265 celdas, bits bajos 0 SIEMPRE) — desde datos de disco NO hay solape: el vecino lee solo 0x2E9A (fila 0) y 0x2E9F (fila 1), y sus dos filas de paso 5 tampoco se pisan entre si. El solape seria alcanzable UNICAMENTE via la escritura runtime de los 3 bits bajos de g_dng_map que #134 ficho como candidata a contaminacion — si ese camino ocurre, lo que se leeria aqui es un ARTEFACTO de esa escritura, no una convivencia de diseño. Con esto la cardinalidad 48 de esta entrada NO necesita re-mirada. ★ #265 item 2 — QUE DIBUJAN, resuelto al nivel del CONSUMIDOR: el call 0x8a94 de los lectores resuelve a kernel 0x0C64 = gfx_moveto_pen (formula del propio instrumento: target + overlay_near_call_base(DUNGEON) = 0x8a94 + 0x81d0 mod 64K; rutina IDENT del frontier) ⇒ los pares (x, y) de esta tabla y sus hermanas 0x2ED4 / 0x2EF2 son VERTICES que mueven el lapiz grafico, con el espejo 0xBE − x del segundo call — el trazado SIMETRICO del pasillo 3D de mazmorra. La pareja 0x2F16 / 0x2F1E va en cambio a la LOCAL DUNGEON 0x134a = wall_segment_blit (perspective tables), tambien IDENT. ★ y el RASGO tambien estaba en el frontier (regla de los DOS catalogos, segunda instancia seguida): la rutina contenedora de los tres lectores es fountain_vector_drawer (DUNGEON 0x1786, IDENT, 460 B) ⇒ las tres tablas son los VECTORES DE LA FUENTE de mazmorra — el rasgo 3D de la fuente, trazado simetrico con gfx_moveto_pen; consistente con el nibble 3 de g_dng_feature_glyph (la rama especial que enciende g_unk_bb16). El reparto fino entre 0x2EA4 / 0x2ED4 / 0x2EF2 (que parte de la fuente traza cada una) sigue siendo de los tres bloques hermanos de esa rutina, sin adjudicar aqui. TABLA de pares (x,y) para dibujo de mazmorra, paso 16 B por entrada, 8 pares por entrada. ALTA de la tarjeta #262 (lote #258+#262). DUNGEON.OVL 0x17cc-0x18f8, tres bloques HERMANOS con la misma forma: indice en [bp+4] desplazado, la BASE SUMADA al indice (`add reg, BASE` — la septima forma, tarea #256), el puntero aparcado en un local, y `mov al, byte ptr [si]` / `[bx]` SIN prefijo de segmento (por eso la precondicion DS del kernel esta CUMPLIDA, no supuesta). Cada bloque recorre pares (x,y) entrelazados —bx por los offsets pares, si por los impares, ambos con `add ..., 2`— y llama a 0x8a94 dos veces por par: una con x y otra con el ESPEJO const-x. La cota del bucle es un TERCER puntero (base+stride) que se COMPARA, nunca se desreferencia. Aqui: `shl ax, 4` ⇒ paso 16; cota `0x2eb5 + i*16` (0x2EB5-0x2EA5 = 16 ⇒ 8 iteraciones de 2 B), y el prologo pone `[bp-2] = 8`, que CORROBORA el conteo de pares por segunda via. Espejo en x sobre 0xBE (190).",
+   "evidence": "DUNGEON.OVL 0x17e4-0x1834: `mov word ptr [bp-2], 8` / `shl ax, cl` (cl=4) / `add ax, 0x2ea4` / `mov si, [bp-4]` / `add si, 0x2ea5` / `add ax, 0x2eb5` (cota) / `mov al, byte ptr [si]` / `mov al, byte ptr [bx]` / `push di` + `push [bp-0xc]` + `call 0x8a94` / `mov ax, 0xbe` + `sub ax, di` + segundo `call 0x8a94` / `add [bp-6], 2` + `add si, 2` + `cmp si, [bp-0xa]` + `jb 0x1809`. INVISIBLE a los canales de corchete: c4 (indexado) da CERO para 0x2EA4, mientras que la CUARTA tabla hermana de la MISMA rutina (0x2F0A/0x2F10/0x2F16/0x2F1E, leida con `mov al, byte ptr [si + 0x2f10]` en 0x1843) si sale GENUINA por c4 — misma rutina, mismo tipo de dato, y el canal ve una si y otras no por como emitio el compilador el indice. ⚠ SIZE ES COTA POR VECINDAD, no derivado: 48 = 0x2ED4-0x2EA4 = 3 x 16; el numero exacto de entradas no lo da el asm (el indice viene de [bp+4] y su dominio no esta derivado). Mismo tipo de cota que g_unk_25ea."
+  },
+  {
+   "addr": 11988,
+   "size": 30,
+   "name": "g_unk_2ed4",
+   "meaning": "TABLA de pares (x,y) para dibujo de mazmorra, paso 10 B por entrada, 5 pares por entrada. Hermana de g_unk_2ea4. ALTA de la tarjeta #262. DUNGEON.OVL 0x17cc-0x18f8, tres bloques HERMANOS con la misma forma: indice en [bp+4] desplazado, la BASE SUMADA al indice (`add reg, BASE` — la septima forma, tarea #256), el puntero aparcado en un local, y `mov al, byte ptr [si]` / `[bx]` SIN prefijo de segmento (por eso la precondicion DS del kernel esta CUMPLIDA, no supuesta). Cada bloque recorre pares (x,y) entrelazados —bx por los offsets pares, si por los impares, ambos con `add ..., 2`— y llama a 0x8a94 dos veces por par: una con x y otra con el ESPEJO const-x. La cota del bucle es un TERCER puntero (base+stride) que se COMPARA, nunca se desreferencia. Aqui: `ax*5*2` ⇒ paso 10; cota `0x2edf + i*10` (0x2EDF-0x2ED5 = 10 ⇒ 5 iteraciones), y el prologo pone `[bp-2] = 5`, que CORROBORA el conteo. El valor leido por si lleva `+0x60` y el de bx `lea ax, [di+0x48]`; espejo en x sobre 0x76 (118).",
+   "evidence": "DUNGEON.OVL 0x185e-0x18bc: `mov word ptr [bp-2], 5` / `mov cx, ax` + `shl ax,1` + `shl ax,1` + `add ax, cx` + `shl ax,1` (= x10) / `add ax, 0x2ed4` / `add si, 0x2ed5` / `add ax, 0x2edf` (cota) / `mov al, byte ptr [si]` + `add ax, 0x60` / `mov al, byte ptr [bx]` / `lea ax, [di + 0x48]` + `call 0x8a94` / `mov ax, 0x76` + `sub ax, di` + segundo `call 0x8a94`. c4 (indexado) da CERO para 0x2ED4. ⚠ SIZE ES COTA POR VECINDAD: 30 = 0x2EF2-0x2ED4 = 3 x 10; el numero de entradas no lo da el asm."
+  },
+  {
+   "addr": 12018,
+   "size": 24,
+   "name": "g_unk_2ef2",
+   "meaning": "TABLA de pares (x,y) para dibujo de mazmorra, paso 8 B por entrada, 4 pares por entrada. Hermana de g_unk_2ea4 y g_unk_2ed4. ALTA de la tarjeta #262. DUNGEON.OVL 0x17cc-0x18f8, tres bloques HERMANOS con la misma forma: indice en [bp+4] desplazado, la BASE SUMADA al indice (`add reg, BASE` — la septima forma, tarea #256), el puntero aparcado en un local, y `mov al, byte ptr [si]` / `[bx]` SIN prefijo de segmento (por eso la precondicion DS del kernel esta CUMPLIDA, no supuesta). Cada bloque recorre pares (x,y) entrelazados —bx por los offsets pares, si por los impares, ambos con `add ..., 2`— y llama a 0x8a94 dos veces por par: una con x y otra con el ESPEJO const-x. La cota del bucle es un TERCER puntero (base+stride) que se COMPARA, nunca se desreferencia. Aqui: `shl ax, 3` ⇒ paso 8; cota `0x2efb + i*8` (0x2EFB-0x2EF3 = 8 ⇒ 4 iteraciones), y el prologo pone `[bp-2] = 4`, que CORROBORA el conteo. El valor leido por si lleva `+0x60`.",
+   "evidence": "DUNGEON.OVL 0x18c4-0x18f6: `mov word ptr [bp-2], 4` / `mov cl, 3` + `shl ax, cl` / `add ax, 0x2ef2` / `add si, 0x2ef3` / `add ax, 0x2efb` (cota) / `mov al, byte ptr [si]` + `add ax, 0x60` / `mov al, byte ptr [bx]`. c4 (indexado) da CERO para 0x2EF2. ★ SU LIMITE SUPERIOR ES EL MEJOR DE LAS TRES y no depende de mi propia tabla: 24 = 0x2F0A-0x2EF2 = 3 x 8, y 0x2F0A lo ve un canal INDEPENDIENTE (c4 GENUINO en DUNGEON.OVL 0x1930). Aun asi el numero de entradas sigue sin derivarse del asm."
+  },
+  {
+   "addr": 12042,
+   "size": 12,
+   "name": "g_unk_2f0a",
+   "meaning": "CUARTA tabla del racimo de dibujo de mazmorra, paso 2 B por entrada (un par x,y). ALTA de la tarjeta #265. Misma rutina y misma forma que g_unk_2ea4/g_unk_2ed4/g_unk_2ef2, pero ACCEDIDA POR CORCHETE (`[si + 0x2f0a]`) en vez de por base sumada — por eso el canal 4 SI la ve y a sus tres hermanas NO. Es la demostracion de la ceguera dentro de UNA rutina: mismo sitio, mismo tipo de dato, y lo que decide si el canal la ve es como emitio el compilador el indice.",
+   "evidence": "DUNGEON.OVL 0x1920-0x1947: `mov si, word ptr [bp + 4]` / `shl si, 1` (paso 2) / `mov al, byte ptr [si + 0x2f0b]` + `add ax, 0x60` / `mov al, byte ptr [si + 0x2f0a]` + `add ax, 0x58` / `push` + `call 0x8a94`, y el espejo `mov ax, 0x66` + `sub ax, [bp-0x10]`. Desreferencia SIN prefijo de segmento ⇒ precondicion DS del kernel CUMPLIDA. ⚠ SIZE ES COTA POR VECINDAD: 12 = 0x2F16-0x2F0A = 6 x 2. Mejor que la de sus hermanas en un punto: el vecino que la cierra (0x2F16) tiene extension DERIVADA, no supuesta."
+  },
+  {
+   "addr": 12054,
+   "size": 8,
+   "name": "g_unk_2f16",
+   "meaning": "Tabla de BYTES indexada 1..7 con CENTINELA CERO, consumida por una rutina DISTINTA a la del racimo. ALTA de la tarjeta #265. El valor leido se suma a `[bp+4]*2` y el resultado va a `call 0x134a` dos veces con banderas (1,0) y (1,1). Un valor 0 SALTA el bloque entero ⇒ el cero es centinela de «esta entrada no aplica», no un dato.",
+   "evidence": "DUNGEON.OVL 0x1952-0x19ad. ★ LA CARDINALIDAD SALE DE UN GATE, no de la vecindad — que es lo que faltaba en las tres altas de #262: `mov cl, 4` + `sar ax, cl` + `mov [bp-2], ax` / `or ax, ax` + `jle 0x19f0` (fuera si <= 0) / `cmp ax, 8` + `jge 0x19f0` (fuera si >= 8) ⇒ el indice vive en [1,7] EXACTO. Con byte por entrada y ranura 0 inalcanzable, la extension es 8 B. Y el limite esta CORROBORADO por segunda via independiente: la tabla siguiente (g_unk_2f1e) empieza exactamente en 0x2F16+8. Accesos: `cmp byte ptr [bx + 0x2f16], 0` (0x1984) y `mov al, byte ptr [bx + 0x2f16]` (0x198b), sin prefijo de segmento. Hay ademas un caso especial para indice 6: `cmp ax, 6` + `jne` + `test byte ptr [bp - 4], 7` + `jne 0x19f0`, o sea el 6 exige que los 3 bits bajos del valor pre-desplazado sean cero."
+  },
+  {
+   "addr": 12062,
+   "size": 8,
+   "name": "g_unk_2f1e",
+   "meaning": "Gemela de g_unk_2f16: tabla de BYTES indexada 1..7 con centinela cero, mismo indice y mismo consumidor. ALTA de la tarjeta #265. Difiere en las banderas que pasa a `call 0x134a`: (0,0) y (0,1) donde su gemela pasa (1,0) y (1,1) ⇒ las dos alimentan la misma rutina con un selector distinto.",
+   "evidence": "DUNGEON.OVL 0x19ae-0x19d7: `mov bx, word ptr [bp - 2]` (el mismo indice acotado a [1,7] por el gate de 0x196d-0x1979) / `cmp byte ptr [bx + 0x2f1e], 0` + `je` (centinela) / `mov al, byte ptr [bx + 0x2f1e]` / `mov si, ax` + `add si, [bp+4]*2` / `push si` + `call 0x134a` dos veces. Desreferencia sin prefijo de segmento. SIZE DERIVADO del dominio del indice [1,7] con byte por entrada, igual que su gemela; las cuatro tablas del racimo TESELAN sin huecos: 0x2EA4+48 = 0x2ED4, +30 = 0x2EF2, +24 = 0x2F0A, +12 = 0x2F16, +8 = 0x2F1E, +8 = 0x2F26."
+  },
+  {
+   "addr": 13950,
+   "size": 1,
+   "name": "g_npc_passable_bitmap",
+   "meaning": "bitmap de transitabilidad NPC (bit = 0x80>>(tile&7)); npc_tile_ok 0x0ADC",
+   "evidence": "re/notes/npc.md §0 (Task 3.5); NPC.OVL small-map runtime"
+  },
+  {
+   "addr": 14370,
+   "size": 16,
+   "name": "g_gem_coast_pattern",
+   "meaning": "TABLA ESTÁTICA de DATA.OVL (no estado): 16 B, trama de ribera indexada por el NIBBLE BAJO del tile de río/costa (categoría de gem 0x0A)",
+   "evidence": "LOOKOBJ.OVL 0x0d17-0x0d1b `and bx, 0xf` / `mov al, byte ptr [bx + 0x3822]` — la máscara acota el índice a 0..15, así que size=16 es DERIVADO, no estimado. Alcanzada desde el despacho por categoría 0x0A (LOOKOBJ.OVL 0x10c0-0x10c5 `cmp ax,0xa` / `jmp 0x100e`). Dominio comprobado sobre los datos: los 19 tiles de categoría 0x0A dan 14 nibbles distintos, todos dentro de 0x3822..0x3831. Identificada por heredados-b tanda 1 §6"
+  },
+  {
+   "addr": 14386,
+   "size": 7,
+   "name": "g_gem_path_mask",
+   "meaning": "TABLA ESTÁTICA de DATA.OVL (no estado): 7 B, máscara de conexión de camino (bits probados con `test ... ,8`) para los 7 tiles de categoría de gem 0x10, o sea los tiles 0x20..0x26. ⚠ ESTA ENTRADA CORRIGE LA COLA: heredados-b tanda 1 la apuntó como «DS 0x3812 indexada por el tile ENTERO». 0x3812 NO es el origen de ninguna tabla: es una BASE SESGADA (= 0x3832 - 0x20) y ninguna lectura la toca. Entrarla como global habría creado un objeto fantasma cuya extensión declarada se habría solapado con g_gem_coast_pattern @0x3822",
+   "evidence": "LOOKOBJ.OVL 0x0ea6-0x0eb2 `mov bx, word ptr [bp + 4]` (tile SIN enmascarar) / `mov al, byte ptr [bx + 0x3812]` / `test byte ptr [bp - 2], 8`. El dominio del índice lo fija el despachador: sólo se llega aquí con categoría 0x10 (LOOKOBJ.OVL 0x10e7-0x10ea `cmp ax,0x10` / `je 0x1096`), y en los bytes de DATA.OVL la categoría 0x10 son EXACTAMENTE los tiles 0x20..0x26 ⇒ direcciones efectivas 0x3812+0x20 .. 0x3812+0x26 = 0x3832..0x3838, 7 B. Valores leídos: 0a 05 0c 06 03 09 0f. Corroboración de que 0x3812 no es un array de máscaras: sus 16 primeros bytes son ocho WORDS de paso uniforme 0x12 (0x739a, 0x73ac, ... 0x7418), y los 16 siguientes son ya g_gem_coast_pattern"
+  },
+  {
+   "addr": 19185,
+   "size": 1,
+   "name": "g_talk_word_len",
+   "meaning": "contador de bytes del acumulador de palabra de TALK, tope 16. ⚠ CORREGIDO 2026-08-06 (asm-talk-6, adjudicado): antes figuraba con size=2 y la explicación de que «el byte de en medio absorbe el acarreo», y por eso g_talk_column quedaba a +2. NO hay byte de relleno: 0x4AF2 es una BANDERA VIVA con entrada propia. El `inc word ptr` es real, pero su segundo byte no cambia nada nunca porque el contador está topado a 16 y jamás hay acarreo — o sea que la EXTENSIÓN ESCRITA es COTA SUPERIOR del tamaño de la variable, no su tamaño. Esa enmienda al criterio de la familia #68 vale para todo este registro, no sólo para esta fila",
+   "evidence": "TALK.OVL 0x0577 `cmp byte ptr [0x4af1], 0x10` (tope 16 = tamaño de g_talk_word_buf); 0x057e `mov bl, byte ptr [0x4af1]` (índice del búfer); 0x0582 `ff06f14a inc word ptr [0x4af1]` — FF /0 = INC r/m16, escribe 2 B; 0x0563 `mov byte ptr [0x4af1], 0` (reset); 0x054b/0x059a lecturas byte. Cuerpo identificado por heredados-168 tanda 2 (talk_emit_char) | 2026-08-06: la separación se acredita por los CINCO accesos byte INDEPENDIENTES a 0x4AF2 (TALK.OVL 0x0b0f pone 0, 0x0c83 pone 0xFF, y 0x0a9c/0x0abe/0x0ae0 lo comparan con 0) más su SEMÁNTICA: con la bandera puesta, talk_reply_stock_keyword devuelve 2 y NO contesta a NAME/JOB/WORK/BYE/THANK, pero la palabrota SÍ se contesta porque su rama (idx>=5, 0x0a78) es la única que no la consulta. Un byte de relleno no tiene ramas que lo consulten"
+  },
+  {
+   "addr": 19186,
+   "size": 1,
+   "name": "g_talk_in_question",
+   "meaning": "bandera de MODO PREGUNTA del diálogo: 0xFF mientras el NPC te ha hecho una pregunta y espera tu respuesta, 0 en el prompt normal de interés. Con ella puesta, el respondedor de palabras fijas devuelve 2 SIN contestar y el bucle sigue probando la tabla ⇒ NAME/JOB/WORK/BYE/THANK quedan desactivadas para que tu respuesta a la pregunta no las dispare por accidente. ★ La palabrota SÍ se contesta: su rama es la ÚNICA de las cuatro que no consulta la bandera",
+   "evidence": "TALK.OVL 0x0c83 `c606f24aff mov byte ptr [0x4af2], 0xff` (al entrar en el bucle de respuesta a pregunta, talk_question_response_loop) y 0x0b0f `c606f24a00 mov byte ptr [0x4af2], 0` (al abrir cada vuelta del prompt de interés, talk_ask_interest); leída en 0x0a9c, 0x0abe y 0x0ae0, las tres cabeceras de rama de talk_reply_stock_keyword, con `cmp byte ptr [0x4af2],0` y salida por 0x0aa3 `mov ax,2`. CINCO accesos, todos byte. Derivada por asm-talk-6 tanda 1 leyendo el cuerpo de TALK.OVL:0x0a54; adjudicada por el lead 2026-08-06. ⚠ ANTES ESTABA CUBIERTA como mitad alta de g_talk_word_len (0x4AF1, size=2), con la explicación de que absorbía el acarreo del `inc word ptr` — el `inc` es real y el acarreo no ocurre nunca (tope 16)"
+  },
+  {
+   "addr": 19187,
+   "size": 1,
+   "name": "g_talk_column",
+   "meaning": "columna de impresión del texto de diálogo; el ajuste de línea dispara con columna >= 15",
+   "evidence": "TALK.OVL 0x051a `cmp byte ptr [0x4af3], 0xf` (umbral de ajuste); 0x0530 `mov byte ptr [0x4af3], al` con al = retorno de la rutina de columna 0x5f92; 0x0544 `mov byte ptr [0x4af3], 0` (reset al emitir 0x0a). Todos los accesos son byte ⇒ size=1. Cuerpo identificado por heredados-168 tanda 3 (talk_flush_line)"
+  },
+  {
+   "addr": 20806,
+   "size": 4,
+   "name": "g_unk_5146",
+   "meaning": "array de 2 WORDs: cota INFERIOR (izquierda/inicio) de una región de texto, en dos variantes. FONT.OVL 0x0018-0x002d elige la variante con un BOOLEANO — `cmp [g_unk_5158], [g_unk_5152] / jge` ⇒ ax ∈ {0,1} — y hace `shl si,1` ⇒ el índice sólo vale 0 ó 2. 0x0033 y 0x0045 leen `[si+0x5146]` y lo RESTAN: 0x002f-0x0037 calcula `[si+0x514c] - [si+0x5146]` = una ANCHURA. FONT 0x0c27 lo inicializa a 0.",
+   "evidence": "MEDIDO por frontera-29 (chore de #68): el índice escalado que lo marcó es FONT.OVL 0x0033 y 0x0045 `sub ax, word ptr [si + 0x5146]` con stride 2, y su registro sale de una comparación booleana ⇒ EXACTAMENTE 2 elementos. El size=1 anterior era el marcador «extensión desconocida» de la convención del censo, no una medida.",
+   "stride": 2
+  },
+  {
+   "addr": 20808,
+   "size": 1,
+   "name": "g_unk_5148",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (4 refs: ENDGAME.OVL,FONT.OVL,INTRO.OVL); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 20812,
+   "size": 4,
+   "name": "g_unk_514c",
+   "meaning": "array de 2 WORDs: cota SUPERIOR (derecha/fin) de la misma región de texto que g_unk_5146, misma variante y mismo índice booleano (FONT.OVL 0x002f `mov ax, word ptr [si+0x514c]`). FONT 0x0c2d lo inicializa a 0x140 = 320 = ANCHO DE PANTALLA, que es la corroboración de que es una coordenada X y no un contador.",
+   "evidence": "MEDIDO por frontera-29 (chore de #68): mismo sitio y mismo booleano que g_unk_5146 ⇒ 2 elementos de 2 B. El inicializador 0x140 fija la unidad (píxeles de X).",
+   "stride": 2
+  },
+  {
+   "addr": 20814,
+   "size": 1,
+   "name": "g_unk_514e",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (4 refs: ENDGAME.OVL,FONT.OVL,INTRO.OVL); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 20816,
+   "size": 1,
+   "name": "g_unk_5150",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (7 refs: ENDGAME.OVL,FONT.OVL,INTRO.OVL); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 20818,
+   "size": 1,
+   "name": "g_unk_5152",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (5 refs: ENDGAME.OVL,FONT.OVL,INTRO.OVL); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 20822,
+   "size": 1,
+   "name": "g_unk_5156",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (15 refs: ENDGAME.OVL,FONT.OVL,INTRO.OVL); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 20824,
+   "size": 1,
+   "name": "g_unk_5158",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (15 refs: ENDGAME.OVL,FONT.OVL,INTRO.OVL); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 21182,
+   "size": 1,
+   "name": "g_unk_52be",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (6 refs: FONT.OVL,INTRO.OVL,ULTIMA.EXE); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 21188,
+   "size": 2,
+   "name": "g_gfx_clip_on",
+   "meaning": "flag de recorte activo: si es 0 las primitivas de linea saltan el helper de recorte. Lo conmuta DUNGEON.OVL para su viewport 3D",
+   "evidence": "★ #68 (frontera-28). Puerta del recorte: las cuatro primitivas hacen `cmp word ptr [0x52c4], 0 / je` y solo llaman al helper de recorte si NO es cero (ULTIMA.EXE 0x0b36, 0x0c7e, 0x0caf, 0x0d0d). Quien lo conmuta es DUNGEON.OVL: lo pone a 1 en 0x166e y a 0 en 0x128c / 0x1ad0 / 0x1bd1, y lo guarda/restaura en 0x1286 / 0x133e — o sea la vista 3D de mazmorra enciende el recorte para su viewport y lo apaga al salir. 10 refs por el canal hex, 0 por simbolo, 0 por desplazamiento negativo (censado con los TRES)."
+  },
+  {
+   "addr": 21192,
+   "size": 1,
+   "name": "g_unk_52c8",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 5 ficheros (36 refs: DNGLOOK.OVL,DUNGEON.OVL,INTRO.OVL,LOOKOBJ.OVL,ULTIMA.EXE); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 21196,
+   "size": 2,
+   "name": "g_gfx_pen_x",
+   "meaning": "X del punto actual de dibujo (patron moveto/lineto)",
+   "evidence": "★ #68 (frontera-28). Par (x,y) del PUNTO ACTUAL de dibujo, en el patron clasico moveto/lineto: ULTIMA.EXE 0x0f96 LEE `ax=[0x52cc]` y `bx=[0x52ce]` como ORIGEN, toma el destino de sus args ([bp+6]=cx, [bp+4]=dx) y llama al helper 0x0b2d, que lo primero que hace (0x0b2d/0x0b31) es GUARDAR el destino `[0x52cc]=cx` y `[0x52ce]=dx` — o sea el nuevo punto actual. draw_hline_clipped (0x0cab) y draw_vline_clipped (0x0d03) tambien lo actualizan al terminar. La asignacion X/Y sale de la misma convencion (ax,bx,cx,dx)=(x0,y0,x1,y1) derivada de los helpers de recorte."
+  },
+  {
+   "addr": 21198,
+   "size": 2,
+   "name": "g_gfx_pen_y",
+   "meaning": "Y del punto actual de dibujo (patron moveto/lineto)",
+   "evidence": "★ #68 (frontera-28). Par (x,y) del PUNTO ACTUAL de dibujo, en el patron clasico moveto/lineto: ULTIMA.EXE 0x0f96 LEE `ax=[0x52cc]` y `bx=[0x52ce]` como ORIGEN, toma el destino de sus args ([bp+6]=cx, [bp+4]=dx) y llama al helper 0x0b2d, que lo primero que hace (0x0b2d/0x0b31) es GUARDAR el destino `[0x52cc]=cx` y `[0x52ce]=dx` — o sea el nuevo punto actual. draw_hline_clipped (0x0cab) y draw_vline_clipped (0x0d03) tambien lo actualizan al terminar. La asignacion X/Y sale de la misma convencion (ax,bx,cx,dx)=(x0,y0,x1,y1) derivada de los helpers de recorte."
+  },
+  {
+   "addr": 21200,
+   "size": 2,
+   "name": "g_gfx_clip_x0",
+   "meaning": "cota IZQUIERDA del rectangulo de recorte (x minima)",
+   "evidence": "★ #68 (frontera-28), subproducto de cerrar los nombres de 0x4DAA/0x4EFC. Las CUATRO cotas se escriben JUNTAS en una sola rutina, ULTIMA.EXE 0x0c40 (set-clip-rect): toma 4 args en la misma convencion de slots que gfx_fill_rect ([bp+0xa]=ax, [bp+8]=bx, [bp+6]=cx, [bp+4]=dx) y hace 0x0c4e `[0x52d0]=ax` 0x0c51 `[0x52d4]=bx` 0x0c55 `[0x52d2]=cx` 0x0c59 `[0x52d6]=dx`. Con la convencion del driver (ax,bx,cx,dx)=(x0,y0,x1,y1) —DERIVADA de los helpers de recorte, que acotan AX/CX contra 0x13F=319 (X max) y BX/DX contra 0xC7=199 (Y max)— eso fija que 0x52d0/0x52d2 son el par X y 0x52d4/0x52d6 el par Y. Los propios helpers lo confirman como MIN y MAX: draw_hline_clipped 0x0cd2 `cmp ax,[0x52d0] / jl RECHAZA` y 0x0cd8 `cmp cx,[0x52d2] / jg RECHAZA`; draw_vline_clipped 0x0d2b y 0x0d31 igual con 0x52d4/0x52d6."
+  },
+  {
+   "addr": 21202,
+   "size": 2,
+   "name": "g_gfx_clip_x1",
+   "meaning": "cota DERECHA del rectangulo de recorte (x maxima)",
+   "evidence": "★ #68 (frontera-28), subproducto de cerrar los nombres de 0x4DAA/0x4EFC. Las CUATRO cotas se escriben JUNTAS en una sola rutina, ULTIMA.EXE 0x0c40 (set-clip-rect): toma 4 args en la misma convencion de slots que gfx_fill_rect ([bp+0xa]=ax, [bp+8]=bx, [bp+6]=cx, [bp+4]=dx) y hace 0x0c4e `[0x52d0]=ax` 0x0c51 `[0x52d4]=bx` 0x0c55 `[0x52d2]=cx` 0x0c59 `[0x52d6]=dx`. Con la convencion del driver (ax,bx,cx,dx)=(x0,y0,x1,y1) —DERIVADA de los helpers de recorte, que acotan AX/CX contra 0x13F=319 (X max) y BX/DX contra 0xC7=199 (Y max)— eso fija que 0x52d0/0x52d2 son el par X y 0x52d4/0x52d6 el par Y. Los propios helpers lo confirman como MIN y MAX: draw_hline_clipped 0x0cd2 `cmp ax,[0x52d0] / jl RECHAZA` y 0x0cd8 `cmp cx,[0x52d2] / jg RECHAZA`; draw_vline_clipped 0x0d2b y 0x0d31 igual con 0x52d4/0x52d6."
+  },
+  {
+   "addr": 21204,
+   "size": 2,
+   "name": "g_gfx_clip_y0",
+   "meaning": "cota SUPERIOR del rectangulo de recorte (y minima)",
+   "evidence": "★ #68 (frontera-28), subproducto de cerrar los nombres de 0x4DAA/0x4EFC. Las CUATRO cotas se escriben JUNTAS en una sola rutina, ULTIMA.EXE 0x0c40 (set-clip-rect): toma 4 args en la misma convencion de slots que gfx_fill_rect ([bp+0xa]=ax, [bp+8]=bx, [bp+6]=cx, [bp+4]=dx) y hace 0x0c4e `[0x52d0]=ax` 0x0c51 `[0x52d4]=bx` 0x0c55 `[0x52d2]=cx` 0x0c59 `[0x52d6]=dx`. Con la convencion del driver (ax,bx,cx,dx)=(x0,y0,x1,y1) —DERIVADA de los helpers de recorte, que acotan AX/CX contra 0x13F=319 (X max) y BX/DX contra 0xC7=199 (Y max)— eso fija que 0x52d0/0x52d2 son el par X y 0x52d4/0x52d6 el par Y. Los propios helpers lo confirman como MIN y MAX: draw_hline_clipped 0x0cd2 `cmp ax,[0x52d0] / jl RECHAZA` y 0x0cd8 `cmp cx,[0x52d2] / jg RECHAZA`; draw_vline_clipped 0x0d2b y 0x0d31 igual con 0x52d4/0x52d6."
+  },
+  {
+   "addr": 21206,
+   "size": 2,
+   "name": "g_gfx_clip_y1",
+   "meaning": "cota INFERIOR del rectangulo de recorte (y maxima)",
+   "evidence": "★ #68 (frontera-28), subproducto de cerrar los nombres de 0x4DAA/0x4EFC. Las CUATRO cotas se escriben JUNTAS en una sola rutina, ULTIMA.EXE 0x0c40 (set-clip-rect): toma 4 args en la misma convencion de slots que gfx_fill_rect ([bp+0xa]=ax, [bp+8]=bx, [bp+6]=cx, [bp+4]=dx) y hace 0x0c4e `[0x52d0]=ax` 0x0c51 `[0x52d4]=bx` 0x0c55 `[0x52d2]=cx` 0x0c59 `[0x52d6]=dx`. Con la convencion del driver (ax,bx,cx,dx)=(x0,y0,x1,y1) —DERIVADA de los helpers de recorte, que acotan AX/CX contra 0x13F=319 (X max) y BX/DX contra 0xC7=199 (Y max)— eso fija que 0x52d0/0x52d2 son el par X y 0x52d4/0x52d6 el par Y. Los propios helpers lo confirman como MIN y MAX: draw_hline_clipped 0x0cd2 `cmp ax,[0x52d0] / jl RECHAZA` y 0x0cd8 `cmp cx,[0x52d2] / jg RECHAZA`; draw_vline_clipped 0x0d2b y 0x0d31 igual con 0x52d4/0x52d6."
+  },
+  {
+   "addr": 21312,
+   "size": 16,
+   "name": "g_snd_driver_names",
+   "meaning": "nombres de los drivers de sonido: 'T1K.DRV\\0HER.DRV\\0'",
+   "evidence": "DATA.OVL fileoff 0x5350 (DS+0x10) contiene los nombres; DS=base+0xF64=segmento de DATA.OVL (Task 1.4, re/notes/command-dispatch.md)"
+  },
+  {
+   "addr": 21328,
+   "size": 2,
+   "name": "g_snd_driver_fn",
+   "meaning": "offset de entrada del driver de sonido (multiplo de 3: tabla de jmp al inicio del .DRV); se escribe antes de cada lcall [0x5350]",
+   "evidence": "asm kernel: patron repetido `mov word [0x5350], N; lcall [0x5350]` (39 sitios, N=3,0x18,0x2D,0x30,0x33,0x39,0x3C,0x3F...); Task 1.4"
+  },
+  {
+   "addr": 21330,
+   "size": 2,
+   "name": "g_snd_driver_seg",
+   "meaning": "segmento del driver .DRV cargado (0 = sin driver)",
+   "evidence": "asm kernel 0x0898: `cmp word [0x5352], 0`; es el CS del lcall [0x5350]; Task 1.4"
+  },
+  {
+   "addr": 21334,
+   "size": 2,
+   "name": "g_snd_delay_calib",
+   "meaning": "contador de calibracion del bucle de retardo del sonido: iteraciones de `inc` que caben entre dos ticks de INT 1Ch, escaladas x0x12/0x2EE. Lo produce ULTIMA.EXE:0x11B4 (pone 0, engancha su handler de INT 1Ch en 0x1214, espera el primer tick con `cmp [0x535A],0/je 0x11D8`, y cuenta con `0x11E5 inc word [0x5356]` hasta el siguiente) y lo normaliza en 0x11FC-0x120B (`mul 0x12` / `div 0x2EE`). Lo consumen las primitivas del altavoz como numero de vueltas del retardo: 0x20CE lo desplaza por la tabla de shifts (`shr ax, [bx+0x5426]`) antes del doble `dec/jne` de 0x20E6-0x20F0, 0x2198 lo divide por 0x18 si es >= 0x64 (tasa del sweep), 0x2289 lo desplaza 4 (noise burst) y 0x2108 lo compara con 0xF0 como GATE de velocidad de maquina. ULTIMA.EXE:0x1DF6-0x1E29 lo salva, lo fuerza a 0x1F4 (500) y lo restaura = override temporal de temporizacion; 0x1146 lo lee justo antes del lcall al driver. INTRO.OVL escribe su propio valor 0x113 (275) en 0x006D y 0x0D6D",
+   "evidence": "censo del corpus por canal hex 0x5356: 19 accesos a MEMORIA en 2 ficheros (ULTIMA.EXE 12: 0x1146,0x11B4,0x11E5,0x11FC,0x120B,0x1DF6,0x1DFC,0x1E29,0x20CE,0x2108,0x2198,0x2289; INTRO.OVL 7: 0x0067,0x006D,0x0101,0x0140,0x09AB,0x0D6D,0x0D99) mas UNA ocurrencia que NO es acceso (ULTIMA.EXE:0x531D `jg 0x5356`, destino de salto: el mismo numero es dato aqui y offset de codigo alli). Escrituras incluidas (0x11B4 pone 0, 0x11E5 incrementa, 0x1DFC pone 0x1F4) => es variable, no destino de salto. Alta de #191 sobre el cabo declarado en re/notes/corchete-190-acta.md §2.2 (que censo 8 accesos: solo los absolutos de ULTIMA.EXE y sin INTRO.OVL); derivacion completa en re/notes/catalogo-191-acta.md §4. Consumidor portado: game/src/skin/fiel/speaker.ts (`C=[0x5356]`)"
+  },
+  {
+   "addr": 21386,
+   "size": 2,
+   "name": "g_key_shifted",
+   "meaning": "flag de kernel_getkey (0x1D5E): 1 si la tecla fue flecha del teclado (scancode traducido) o digito 1-9 con Shift/Ctrl; 0 en otro caso",
+   "evidence": "asm kernel_getkey: se pone a 0 al entrar (0x1D64), inc en 0x1DBC tras traducir scancode y en 0x1DD3 tras INT 16h AH=2 & 0x23; Task 1.4"
+  },
+  {
+   "addr": 21388,
+   "size": 2,
+   "name": "g_kbd_buffer_on",
+   "meaning": "toggle 'Buffer On/Off' (tecla 0xFC del dispatcher). 🔴 EL SENTIDO ES EL INVERSO DEL QUE SUGIERE EL NOMBRE: valor 1 = type-ahead DESCARTADO (buffer APAGADO) · valor 0 = type-ahead VIVO. El nombre se conserva por compatibilidad con las notas que ya lo citan, pero NO se lee como 'buffer habilitado'. Init del juego = 1, o sea el descarte está activo por defecto",
+   "evidence": "CORREGIDO 07-08 por asm-kernel-cmds al leer el cuerpo entero de kernel_cmd_dispatch (ULTIMA.EXE:0x3178); el texto anterior decía «habilita el buffer/repeticion de teclado», que afirma lo contrario de lo medido. TRES canales concordantes: (1) el toggle 0x31CD `cmp [0x538C],1; sbb ax,ax; neg ax` deja ax=1 si el valor era 0 y ax=0 si no, y lo re-escribe; (2) el mensaje que imprime a continuación es DS:0xA11A 'ff\\n' («Buffer Off») cuando el NUEVO valor es 1 y DS:0xA11E 'n\\n' («Buffer On») cuando es 0 — 0x31D9 `or ax,ax; je 0x31E2`; (3) kernel_getkey 0x1D77 hace `cmp [0x538C],0; je 0x1D81; call 0x1B24`, y 0x1B24 escribe head=tail=0x1E en la BDA = VACÍA el ring del teclado. Luego valor≠0 ⇒ se llama al flush ⇒ se pierde el type-ahead, que es exactamente lo que el mensaje llama «Off». Coherente con re/notes/oracle-input.md §3-4, que pone este word a 0 PRECISAMENTE para poder pre-bufferizar teclas (si 1 significara «buffer on», el arnés haría lo contrario de lo que necesita). Init en 0x00A7 `mov word [0x538C],1`. Contexto original: dispatcher 0x31C6 imprime DS:0xA110 'Buffer O' + 'n'/'ff'; Task 1.4, re/notes/command-dispatch.md"
+  },
+  {
+   "addr": 21518,
+   "size": 8,
+   "name": "g_kbd_xlat_scancodes",
+   "meaning": "tabla de 8 scancodes extendidos reconocidos: 0x4B,0x4D,0x48,0x50 (flechas), 0x47,0x4F,0x49,0x51 (Home/End/PgUp/PgDn)",
+   "evidence": "asm kernel_getkey 0x1DAA: busqueda lineal del scancode; contenido inicial en DATA.OVL fileoff 0x541E; Task 1.4"
+  },
+  {
+   "addr": 21526,
+   "size": 8,
+   "name": "g_kbd_xlat_chars",
+   "meaning": "traduccion 1:1 de g_kbd_xlat_scancodes: flechas ←→↑↓ = 0x01,0x02,0x03,0x04 (codigos de movimiento de los bucles de contexto); Home/End/PgUp/PgDn = 0xD3..0xD6",
+   "evidence": "asm kernel_getkey 0x1DB8: al = [bx+0x5416]; contenido en DATA.OVL fileoff 0x5426; los bucles TOWN/MAINOUT/DUNGEON despachan 1..4 como movimiento; Task 1.4"
+  },
+  {
+   "addr": 21536,
+   "size": 2,
+   "name": "g_rng_seed",
+   "meaning": "semilla word del RNG del kernel (generador add/ror3/xor propio, no el LCG de Borland)",
+   "evidence": "asm kernel: rand_range@0x2092 lee/escribe [0x5420] (22 call sites near), srand@0x207E la siembra; secuencia verificada en vivo contra dosbox-x (re/tools/test_rng_parity.py). Ver re/notes/rng.md"
+  },
+  {
+   "addr": 21928,
+   "size": 512,
+   "name": "g_party_records",
+   "meaning": "16 registros de personaje × 32 B (reg 0 = Avatar): name/gender/class/status/stats/HP/equip || ★ #264b — MAPA DE CAMPOS del registro de 32 B, derivado por lectura de sus consumidores en seis documentos de la cabeza del cruce y cotejado aquí contra el disasm: **+0x0A** letra de clase · **+0x0B** letra de ESTADO (`'D'` muerto, `'G'`, `'P'` envenenado, `'S'` dormido) · **+0x0C** STR · **+0x0D** DEX · **+0x0E** INT · **+0x0F** MP · **+0x10** HP (u16) · **+0x12** MaxHP (u16) · **+0x19..+0x1E** los SEIS slots de equipo, de los cuales **+0x1B** = mano izquierda (arma), **+0x1C** = mano derecha (escudo), **+0x1D** = ANILLO y **+0x1E** = amuleto. Testigo compacto de cuatro de ellos en una sola rutina, `ULTIMA.EXE 0x4022`: `mov si, 0x55b3` (estado), `mov di, 0x55c5` (anillo), `mov word ptr [bp - 8], 0x55b8` (HP) y `mov word ptr [bp - 0xa], 0x55ba` (MaxHP). Fuentes: re/notes/oracle-ring-regen.md, re/notes/kernel-sweep-4.md, re/notes/sword-of-chaos.md, re/notes/ring-expiry-derivation.md y re/notes/liston-207-t2-acta.md || ★ #264b, MISLABEL CORREGIDO POR ORÁCULO (18-07-2026) que conviene no volver a introducir: el byte **+0x1D** (`0x55c5`) es el ANILLO EQUIPADO, NO un «status secundario» — `ULTIMA.EXE 0x69f0`, `cmp byte ptr [bx + 0x55c5], 0x2a` (42, Ring of Invisibility) y `ULTIMA.EXE 0x6a02`, `cmp byte ptr [bx + 0x55c5], 0x2c` (44, Ring of Regeneration), con `bx` = miembro desplazado 5 bits. Documentado en re/notes/oracle-ring-regen.md y re/notes/kernel-sweep-4.md",
+   "evidence": "roster_off(0x55A6)+0x002 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 3 refs desde 2 ficheros || ⚠ #264b — ESAS «3 refs desde 2 ficheros» SON UNA COTA DE LA BASE, no la población de la tabla: cuentan los accesos a `0x55a8` y son ciegas a los accesos por campo INTERIOR, que es por donde entra casi todo el uso real (la familia de #240 / #242 / #247). Sólo en los seis documentos de esta cabeza se citan accesos a CATORCE direcciones interiores distintas repartidas en SEIS overlays. No publico un censo nuevo aquí porque medirlo bien exige instrumento con partición declarada; queda dicho que la cifra de arriba NO es una población || ★ #264b — CONFIRMACIÓN INDEPENDIENTE del `size` 512 y del paso 32, por aritmética de un tramo que no se propuso probarlo: `BLCKTHRN.OVL 0x04c2`, `mov di, 0x5788` es el destino de un `repne movsw` de `cx` = 0x10 palabras (32 B = un registro entero) en `BLCKTHRN.OVL 0x04cd`, y `0x55a8 + 15 * 32 = 0x5788` es exactamente el slot 15; dos instrucciones después, `BLCKTHRN.OVL 0x04cf` escribe `mov byte ptr [g_party_records+511], 0x7f`, y `0x55a8 + 511 = 0x57a7` es el ÚLTIMO byte de ese mismo slot 15. Derivación en re/notes/sueltos-174-t4-acta.md, verificada aquí contra el disasm",
+   "stride": 32
+  },
+  {
+   "addr": 22440,
+   "size": 2,
+   "name": "g_food",
+   "meaning": "comida del party (u16 LE)",
+   "evidence": "roster_off(0x55A6)+0x202 per docs/formats/tlk-npc-dataovl-gam.md §4; valor vivo en RAM = 63 = u16 del save (+0x202) en las 4 etapas de la sonda 2026-07-09; censo: 8 refs desde 5 ficheros"
+  },
+  {
+   "addr": 22442,
+   "size": 2,
+   "name": "g_gold",
+   "meaning": "oro del party (u16 LE)",
+   "evidence": "roster_off(0x55A6)+0x204 per docs/formats/tlk-npc-dataovl-gam.md §4; valor vivo en RAM = 150 = u16 del save (+0x204) en las 4 etapas de la sonda 2026-07-09; refs desde SHOPPES*.OVL coherentes con oro; censo: 43 refs desde 9 ficheros"
+  },
+  {
+   "addr": 22444,
+   "size": 1,
+   "name": "g_keys",
+   "meaning": "llaves",
+   "evidence": "roster_off(0x55A6)+0x206 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 12 refs desde 5 ficheros"
+  },
+  {
+   "addr": 22445,
+   "size": 1,
+   "name": "g_gems",
+   "meaning": "gemas",
+   "evidence": "roster_off(0x55A6)+0x207 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 5 refs desde 3 ficheros"
+  },
+  {
+   "addr": 22446,
+   "size": 1,
+   "name": "g_torches",
+   "meaning": "antorchas",
+   "evidence": "roster_off(0x55A6)+0x208 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 5 refs desde 3 ficheros"
+  },
+  {
+   "addr": 22447,
+   "size": 1,
+   "name": "g_grapple",
+   "meaning": "garfio (0/1)",
+   "evidence": "roster_off(0x55A6)+0x209 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 3 refs desde 3 ficheros"
+  },
+  {
+   "addr": 22448,
+   "size": 1,
+   "name": "g_carpets",
+   "meaning": "alfombras mágicas",
+   "evidence": "roster_off(0x55A6)+0x20A per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 10 refs desde 5 ficheros"
+  },
+  {
+   "addr": 22449,
+   "size": 1,
+   "name": "g_skull_keys",
+   "meaning": "llaves de calavera",
+   "evidence": "roster_off(0x55A6)+0x20B per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 2 refs desde 2 ficheros"
+  },
+  {
+   "addr": 22450,
+   "size": 1,
+   "name": "g_skull_keys_respawn_day",
+   "meaning": "dia de reaparicion de las skull keys.",
+   "evidence": "CHORE 4 de frontera-25/27. Sin entrada previa en el ledger; censada por los TRES canales (hex, simbolo, complemento a dos) leyendo los .asm en Python (nunca grep -r: los .asm del worktree son symlinks y grep -r los salta en silencio). Significado HEREDADO del mensaje de commit de frontera-25 (merge e30a0cc8), no derivado por mi. Verificado: SJOG 0x0579 lee y 0x05b4 escribe (escalar, sin indice) y ULTIMA.EXE 0x5067 lo inicializa en la instruccion siguiente a g_farm_harvest_day — los dos son estado de calendario y se siembran juntos. 3 refs."
+  },
+  {
+   "addr": 22451,
+   "size": 1,
+   "name": "g_amulet_lb",
+   "meaning": "amuleto de Lord British (0/1)",
+   "evidence": "roster_off(0x55A6)+0x20D per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 3 refs desde 3 ficheros"
+  },
+  {
+   "addr": 22452,
+   "size": 1,
+   "name": "g_crown",
+   "meaning": "corona de Lord British (0/1)",
+   "evidence": "roster_off(0x55A6)+0x20E per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 4 refs desde 4 ficheros"
+  },
+  {
+   "addr": 22453,
+   "size": 1,
+   "name": "g_sceptre",
+   "meaning": "cetro de Lord British (0/1)",
+   "evidence": "roster_off(0x55A6)+0x20F per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 5 refs desde 4 ficheros"
+  },
+  {
+   "addr": 22454,
+   "size": 3,
+   "name": "g_shards",
+   "meaning": "shards: Falsehood, Hatred, Cowardice",
+   "evidence": "roster_off(0x55A6)+0x210 per docs/formats/tlk-npc-dataovl-gam.md §4"
+  },
+  {
+   "addr": 22458,
+   "size": 1,
+   "name": "g_spyglass",
+   "meaning": "catalejo (0/1)",
+   "evidence": "roster_off(0x55A6)+0x214 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 2 refs desde 2 ficheros"
+  },
+  {
+   "addr": 22459,
+   "size": 1,
+   "name": "g_hms_cape",
+   "meaning": "HMS Cape plans (0/1)",
+   "evidence": "roster_off(0x55A6)+0x215 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 5 refs desde 4 ficheros"
+  },
+  {
+   "addr": 22460,
+   "size": 1,
+   "name": "g_sextant",
+   "meaning": "sextante (0/1)",
+   "evidence": "roster_off(0x55A6)+0x216 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 2 refs desde 2 ficheros"
+  },
+  {
+   "addr": 22462,
+   "size": 1,
+   "name": "g_black_badge",
+   "meaning": "black badge (0/1)",
+   "evidence": "roster_off(0x55A6)+0x218 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 2 refs desde 2 ficheros"
+  },
+  {
+   "addr": 22463,
+   "size": 1,
+   "name": "g_wooden_box",
+   "meaning": "caja de madera (0/1)",
+   "evidence": "roster_off(0x55A6)+0x219 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 3 refs desde 3 ficheros"
+  },
+  {
+   "addr": 22464,
+   "size": 48,
+   "name": "g_equip_qty",
+   "meaning": "cantidad de cada arma/armadura (48 slots, índice = enum Equipment)",
+   "evidence": "roster_off(0x55A6)+0x21A per docs/formats/tlk-npc-dataovl-gam.md §4"
+  },
+  {
+   "addr": 22512,
+   "size": 48,
+   "name": "g_spell_qty",
+   "meaning": "cantidad de cada hechizo (48, orden SpellWords)",
+   "evidence": "roster_off(0x55A6)+0x24A per docs/formats/tlk-npc-dataovl-gam.md §4"
+  },
+  {
+   "addr": 22560,
+   "size": 8,
+   "name": "g_scroll_qty",
+   "meaning": "cantidad de cada scroll (8)",
+   "evidence": "roster_off(0x55A6)+0x27A per docs/formats/tlk-npc-dataovl-gam.md §4"
+  },
+  {
+   "addr": 22568,
+   "size": 8,
+   "name": "g_potion_qty",
+   "meaning": "cantidad de cada poción (Blue..White)",
+   "evidence": "roster_off(0x55A6)+0x282 per docs/formats/tlk-npc-dataovl-gam.md §4"
+  },
+  {
+   "addr": 22576,
+   "size": 8,
+   "name": "g_moonstone_x",
+   "meaning": "X de cada moonstone (8)",
+   "evidence": "roster_off(0x55A6)+0x28A per docs/formats/tlk-npc-dataovl-gam.md §4"
+  },
+  {
+   "addr": 22584,
+   "size": 8,
+   "name": "g_moonstone_y",
+   "meaning": "Y de cada moonstone (8)",
+   "evidence": "roster_off(0x55A6)+0x292 per docs/formats/tlk-npc-dataovl-gam.md §4"
+  },
+  {
+   "addr": 22592,
+   "size": 8,
+   "name": "g_moonstone_loc",
+   "meaning": "LOCATION de destino de cada moongate (0=overworld; 0xFF=en inventario/sin puerta). kernel_moongate_teleport 0x483d la copia a g_location",
+   "evidence": "asm: kernel 0x47fd cmp [bx+0x5840],0xff (sin puerta) + 0x483d mov [g_location],[bx+0x5840]; ver re/notes/shrines.md §1. roster_off(0x55A6)+0x29A per docs/formats/tlk-npc-dataovl-gam.md §4 (el layout del save lo llama 'buried') || ★ #264b — CENSO DE ESTA GLOBAL, con la RECTIFICACIÓN de quien lo midió: **0 accesos desnudos y 7 indexados**, los siete legítimos (segmento DS, sin override). La cifra que circuló antes —«793 desnudos / 24 indexados»— es FALSA y su autor la retiró en el mismo documento: salía de una ventana de 64 B INVENTADA, no de los 8 B que declara esta entrada (0x5840..0x5847); con la ventana de 64 B se cuelan 789 accesos que son de las globales de al lado. Es el ejemplar limpio de por qué una cifra de accesos NO significa nada sin la EXTENSIÓN contra la que se midió. Medición y retractación en re/notes/idxrefs-240-acta.md"
+  },
+  {
+   "addr": 22600,
+   "size": 8,
+   "name": "g_moonstone_floor",
+   "meaning": "FLOOR de destino de cada moongate (0=Britannia, 0xFF=Underworld). kernel_moongate_teleport 0x4852 la copia a g_floor",
+   "evidence": "asm: kernel 0x4852 mov [g_floor],[bx+0x5848]; ver re/notes/shrines.md §1. roster_off(0x55A6)+0x2A2 per docs/formats/tlk-npc-dataovl-gam.md §4 (el layout del save lo llama 'z')"
+  },
+  {
+   "addr": 22608,
+   "size": 8,
+   "name": "g_reagent_qty",
+   "meaning": "cantidad de cada reagente (SulfurAsh..MandrakeRoot)",
+   "evidence": "roster_off(0x55A6)+0x2AA per docs/formats/tlk-npc-dataovl-gam.md §4"
+  },
+  {
+   "addr": 22616,
+   "size": 3,
+   "name": "g_farm_harvest_day",
+   "meaning": "dia de cosecha POR PARCELA (3 parcelas, 1 byte cada una).",
+   "evidence": "CHORE 4 de frontera-25/27. Sin entrada previa en el ledger; censada por los TRES canales (hex, simbolo, complemento a dos) leyendo los .asm en Python (nunca grep -r: los .asm del worktree son symlinks y grep -r los salta en silencio). Lo de «dia-cosecha por parcela» lo HEREDO del mensaje de commit de frontera-25 (merge e30a0cc8) y NO lo he derivado yo; lo que si verifico es la forma: SJOG 0x0489 compara y 0x048f escribe con INDICE (`[si + 0x5858]`), o sea es un ARRAY y no un escalar, y ULTIMA.EXE 0x5064 lo inicializa junto a g_skull_keys_respawn_day en instrucciones consecutivas. 3 refs."
+  },
+  {
+   "addr": 22619,
+   "size": 1,
+   "name": "g_party_size",
+   "meaning": "nº de miembros del party",
+   "evidence": "roster_off(0x55A6)+0x2B5 per docs/formats/tlk-npc-dataovl-gam.md §4; valor vivo en RAM = 3 = byte del save (+0x2B5); es la 5ª dirección más compartida del censo (bucles sobre el party); censo: 77 refs desde 16 ficheros"
+  },
+  {
+   "addr": 22620,
+   "size": 15,
+   "name": "g_searchobj_bitmap",
+   "meaning": "bitmap de search-objects aún presentes",
+   "evidence": "roster_off(0x55A6)+0x2B6 per docs/formats/tlk-npc-dataovl-gam.md §4"
+  },
+  {
+   "addr": 22644,
+   "size": 2,
+   "name": "g_year",
+   "meaning": "año del reloj del juego (u16 LE)",
+   "evidence": "roster_off(0x55A6)+0x2CE per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 6 refs desde 3 ficheros"
+  },
+  {
+   "addr": 22646,
+   "size": 2,
+   "name": "g_cmb_scratch_x",
+   "meaning": "combate: X de salida de las rutinas de celda (COMSUBS:0x07D4/0x120E/0x12DE) y contador de enemigos vivos en el bucle 0x0B94 (SJOG:0x1B6C) || #229 ROL DE DIRECCIÓN (censo 410 accesos, 96 escrituras): el par es un SCRATCH de PROPÓSITO GENERAL con >=3 roles y su CONVENCIÓN LA FIJA EL PRODUCTOR, no la ranura. Productores de dirección leídos por cuerpo: DELTA con base literal 0 = ULTIMA.EXE 0x35EC (getdir interactivo) y BLCKTHRN.OVL 0x002E dir_to_delta; ABSOLUTO con base = celda del actor = CAST2.OVL 0x0306 (g_party_x/y si g_location<=0x7f, si no la celda de g_cmb_actor) y CMDS.OVL 0x0352 (paseo aleatorio desde +6/+7 del record); DELEGADA AL CALLER = SJOG.OVL 0x002A (ret 6: la base son sus args); MUTADOR sin base = NPC.OVL 0x0632 (cursor, clamps 0..0x20). Consumidores 26/26: 24 suman una CELDA BASE (party O actor) = suponen DELTA, y 2 son el indice (y<<5)+x de arena = ABSOLUTO. Familias SEGREGADAS por overlay, CERO pares cruzados (cobertura de CENSO, no alcanzabilidad de grafo). SEPTIMO productor: COMBAT.OVL 0x0EE4 y 0x0D30 escriben la ranura solo con {-1,0,+1} y la consumen en la MISMA rutina. Ver re/notes/scratch-229-acta.md",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS) || #98 ANCHURA CORREGIDA (escrita con `mov word ptr` — 2 B, no 1): LOOKOBJ.OVL 0x0aa9 `a37658 mov word ptr [g_cmb_scratch_x], ax` y 0x0ab6 `a37858 mov word ptr [g_cmb_scratch_y], ax` (A3 = MOV moffs16, AX: escritura de 2 B), en la rutina 0x0a9c que calcula `origen = arg*4 + 32` en cada eje; también BLCKTHRN.OVL 0x00ac/0x00b2 `inc/dec word ptr` y 0x0060/0x005d `mov word ptr`. Separadas exactamente 2 B una de otra, lo que ya lo insinuaba. Anchura declarada size=1 REFUTADA por instrucción; misma familia que la tarea #68 (`size` = EXTENSIÓN EN BYTES ESCRITA, no la anchura semántica del uso). Señalada por heredados-b tanda 1 §6. Matiz: re/notes/lookobj.md:66 las llama «un BYTE de scratch de combate» y para su uso en combate es cierto; lo que falla es la anchura del slot."
+  },
+  {
+   "addr": 22648,
+   "size": 2,
+   "name": "g_cmb_scratch_y",
+   "meaning": "combate: Y de salida de las rutinas de celda; contador de jugadores vivos en el bucle 0x0B94 || #229 ROL DE DIRECCIÓN (censo 410 accesos, 96 escrituras): el par es un SCRATCH de PROPÓSITO GENERAL con >=3 roles y su CONVENCIÓN LA FIJA EL PRODUCTOR, no la ranura. Productores de dirección leídos por cuerpo: DELTA con base literal 0 = ULTIMA.EXE 0x35EC (getdir interactivo) y BLCKTHRN.OVL 0x002E dir_to_delta; ABSOLUTO con base = celda del actor = CAST2.OVL 0x0306 (g_party_x/y si g_location<=0x7f, si no la celda de g_cmb_actor) y CMDS.OVL 0x0352 (paseo aleatorio desde +6/+7 del record); DELEGADA AL CALLER = SJOG.OVL 0x002A (ret 6: la base son sus args); MUTADOR sin base = NPC.OVL 0x0632 (cursor, clamps 0..0x20). Consumidores 26/26: 24 suman una CELDA BASE (party O actor) = suponen DELTA, y 2 son el indice (y<<5)+x de arena = ABSOLUTO. Familias SEGREGADAS por overlay, CERO pares cruzados (cobertura de CENSO, no alcanzabilidad de grafo). SEPTIMO productor: COMBAT.OVL 0x0EE4 y 0x0D30 escriben la ranura solo con {-1,0,+1} y la consumen en la MISMA rutina. Ver re/notes/scratch-229-acta.md",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS) || #98 ANCHURA CORREGIDA (escrita con `mov word ptr` — 2 B, no 1): LOOKOBJ.OVL 0x0aa9 `a37658 mov word ptr [g_cmb_scratch_x], ax` y 0x0ab6 `a37858 mov word ptr [g_cmb_scratch_y], ax` (A3 = MOV moffs16, AX: escritura de 2 B), en la rutina 0x0a9c que calcula `origen = arg*4 + 32` en cada eje; también BLCKTHRN.OVL 0x00ac/0x00b2 `inc/dec word ptr` y 0x0060/0x005d `mov word ptr`. Separadas exactamente 2 B una de otra, lo que ya lo insinuaba. Anchura declarada size=1 REFUTADA por instrucción; misma familia que la tarea #68 (`size` = EXTENSIÓN EN BYTES ESCRITA, no la anchura semántica del uso). Señalada por heredados-b tanda 1 §6. Matiz: re/notes/lookobj.md:66 las llama «un BYTE de scratch de combate» y para su uso en combate es cierto; lo que falla es la anchura del slot."
+  },
+  {
+   "addr": 22650,
+   "size": 1,
+   "name": "g_time_spell",
+   "meaning": "efecto temporal GLOBAL activo (uno a la vez): 'P'roteccion/'Q'uickness/'C'onfusion/'N'egate-magic/'T'ime-stop, 0=ninguno",
+   "evidence": "asm: 0x4F8D/0x4FA6 (advance_clock), TOWN 0x1642-0x165F, MAINOUT 0x1A6D; expira en housekeeping 0x2BAE via 0x588E; re/notes/kernel-survival.md §1-§2; CAST2:0x08f8 lo escribe con {P/Q/C/N} y An Tym CAST:0x0d4c con 'T' (Task 3.3, re/notes/magic.md §4)"
+  },
+  {
+   "addr": 22651,
+   "size": 1,
+   "name": "g_active_char",
+   "meaning": "personaje activo (0-5, 0xFF=ninguno)",
+   "evidence": "roster_off(0x55A6)+0x2D5 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 49 refs desde 10 ficheros"
+  },
+  {
+   "addr": 22652,
+   "size": 1,
+   "name": "g_transport_tile",
+   "meaning": "tile/estado del transporte del party (byte = FAMILIA + rumbo en los bits bajos): 0x1C a pie; 0x12-0x13 caballo; 0x14-0x15 alfombra; 0x20-0x23 FRAGATA velas izadas; 0x24-0x27 FRAGATA velas arriadas; 0x28-0x2B ESQUIFE. CORREGIDO 2026-07-29 (carril calcados-lote, #129): la redaccion anterior decia '0x20-0x2F barco (rumbo), 0x24-0x27 skiff (censo parcial)' y era FALSA en los dos tramos — 0x24-0x27 es fragata arriada, no esquife, y el esquife empieza en 0x28. La lectura mala se propago al acta re/notes/sapo-120-acta.md 2.1 ('0x20-0x27 = barco + esquife'), que queda rectificada alli.",
+   "evidence": "asm: el ESQUIFE lo fija CMDS.OVL CS:0x0917 `and al,0xfc / cmp al,0x28` (contador de esquifes estibados al desembarcar, 0x091d inc [bp-6]) y la ALFOMBRA CS:0x090a `and al,0xfe / cmp al,0x14` (0x0910 inc g_carpets) — dos familias distintas en instrucciones consecutivas de la MISMA rutina. La FRAGATA entera es `and al,0xf8 / cmp al,0x20` = 0x20-0x27: SJOG.OVL CS:0x1bb8 (guarda 'Stay with ship!'), MAINOUT.OVL CS:0x10a7 (damage_ship), CMDS.OVL CS:0x1426 ((Y)ell izar/arriar), kernel_status_redraw ULTIMA.EXE CS:0x2959. El corte velas-izadas/arriadas es `and al,0xfc`: MAINOUT CS:0x0499 cmp 0x20 (rumbo por g_sail_dir) vs MAINOUT CS:0x0208 cmp 0x24 ('Rowing!' DS 0x2982). Corroborado por el port: game/src/core/world/transport.ts:33-87 (TILE_FOOT 0x1c, TILE_FRIGATE_SAILS_UP 0x20, TILE_FRIGATE_SAILS_DOWN 0x24, TILE_SKIFF 0x28, isFrigate = (tile & 0xf8) === 0x20). Tambien MAINOUT 0x496/0xDA/0x245, TOWN 0x607; re/notes/kernel-survival.md 5"
+  },
+  {
+   "addr": 22653,
+   "size": 1,
+   "name": "g_month",
+   "meaning": "mes",
+   "evidence": "roster_off(0x55A6)+0x2D7 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 9 refs desde 4 ficheros"
+  },
+  {
+   "addr": 22654,
+   "size": 1,
+   "name": "g_day",
+   "meaning": "día",
+   "evidence": "roster_off(0x55A6)+0x2D8 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 14 refs desde 5 ficheros"
+  },
+  {
+   "addr": 22655,
+   "size": 1,
+   "name": "g_hour",
+   "meaning": "hora (0-23)",
+   "evidence": "roster_off(0x55A6)+0x2D9 per docs/formats/tlk-npc-dataovl-gam.md §4; observed: 8→9 exactamente en el rollover del minuto 59→0 tras pasar turnos con Space; sonda DOSBox 2026-07-09; censo: 68 refs desde 12 ficheros"
+  },
+  {
+   "addr": 22656,
+   "size": 1,
+   "name": "g_prev_hour",
+   "meaning": "snapshot de g_hour para detectar cambio de hora (comidas/hambre y refresco NPC)",
+   "evidence": "asm: kernel_advance_clock 0x4FA0 lo escribe, kernel_turn_housekeeping 0x2B5D/0x2B99 compara y re-escribe; explica el byte +0x2DA observado 0x00->0x08 (hora inicial 8) en oracle.md; re/notes/kernel-survival.md §1-§2"
+  },
+  {
+   "addr": 22657,
+   "size": 1,
+   "name": "g_minute",
+   "meaning": "minuto (0-59), avanza 1 por turno",
+   "evidence": "roster_off(0x55A6)+0x2DB per docs/formats/tlk-npc-dataovl-gam.md §4; observed: 35→36→37 (+1 por turno, también en movimiento bloqueado) y rollover 59→0; sonda DOSBox 2026-07-09; censo: 9 refs desde 3 ficheros"
+  },
+  {
+   "addr": 22658,
+   "size": 1,
+   "name": "g_cmb_action_count",
+   "meaning": "combate: acciones desde el ultimo minuto; a 10 -> advance_clock(1) (COMBAT:0x0B94 0c64-0c76)",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS)"
+  },
+  {
+   "addr": 22659,
+   "size": 1,
+   "name": "g_unk_5883",
+   "meaning": "reset a 0 junto con g_wind al cambiar el viento; semantica pendiente (candidato: fase/contador de viento)",
+   "evidence": "asm: kernel 0x2E96 lo pone a 0 tras fijar g_wind; re/notes/magic.md §7 (Task 3.3)"
+  },
+  {
+   "addr": 22661,
+   "size": 1,
+   "name": "g_felucca_phase",
+   "meaning": "fase actual de Felucca (byte crudo 0x30-0x37, +0x30). kernel_time_refresh 0x4ae7 la refresca desde MOON_PHASES[g_day]; kernel_moongate_enter 0x494d la usa (-0x30) para el destino de madrugada (hour<12)",
+   "evidence": "asm: kernel 0x4ae7 mov [0x5885],MOON_PHASES[g_day*2]; enter 0x4959 fase=[0x5885]-0x30; ver re/notes/shrines.md §1"
+  },
+  {
+   "addr": 22662,
+   "size": 1,
+   "name": "g_trammel_phase",
+   "meaning": "fase actual de Trammel (byte crudo 0x30-0x37, +0x30). kernel_time_refresh 0x4b21 la refresca desde MOON_PHASES[g_day]+1; kernel_moongate_enter la usa (-0x30) para el destino de noche (hour>=12)",
+   "evidence": "asm: kernel 0x4b21 mov [0x5886],MOON_PHASES[g_day*2+1]; ver re/notes/shrines.md §1"
+  },
+  {
+   "addr": 22663,
+   "size": 1,
+   "name": "g_moongate_anim",
+   "meaning": "contador de animacion de aparicion/cierre de la moongate (0..16). kernel_moongate_render 0x4775 lo incrementa de noche (cap 16), decrementa de dia; kernel_moongate_enter 0x490d lo pone a 15 para la animacion de cierre. Cosmetico (no toca advance_clock)",
+   "evidence": "asm: kernel 0x475a/0x4902 (render/enter); ver re/notes/shrines.md §1"
+  },
+  {
+   "addr": 22664,
+   "size": 1,
+   "name": "g_karma",
+   "meaning": "karma del Avatar",
+   "evidence": "roster_off(0x55A6)+0x2E2 per docs/formats/tlk-npc-dataovl-gam.md §4; valor vivo en RAM = 75 = byte del save (+0x2E2) en las 4 etapas de la sonda 2026-07-09; censo: 27 refs desde 9 ficheros"
+  },
+  {
+   "addr": 22667,
+   "size": 1,
+   "name": "g_turn_count",
+   "meaning": "turnos desde el inicio (u8 SATURANTE a 0xFF; +1 por turno)",
+   "evidence": "asm: kernel_turn_housekeeping 0x2B9F counter_add_u8(0x588B,1,0xFF); corrige el u16 del mapeo inicial; observado +1/turno (sonda 2026-07-09); re/notes/kernel-survival.md §2"
+  },
+  {
+   "addr": 22668,
+   "size": 1,
+   "name": "g_unk_588c",
+   "meaning": "cooldown de curación de Camp/Hole-up: recarga 0x0E al curar (CMDS helper 0x0400), se decrementa 1 por HORA de juego (suelo 0); Task 3.9",
+   "evidence": "asm: kernel_advance_clock 0x4FD7 counter_sub_u8(0x588C,1) en el rollover de hora; re/notes/kernel-survival.md §1"
+  },
+  {
+   "addr": 22670,
+   "size": 1,
+   "name": "g_time_spell_turns",
+   "meaning": "turnos restantes del efecto temporal (P/Q/C/N/T); 0xFF = permanente; al llegar a 0 limpia g_time_spell",
+   "evidence": "asm: kernel_turn_housekeeping 0x2BAE-0x2BC2; re/notes/kernel-survival.md §2; lo fijan CAST2:0x08f8 y CAST:0x0d4c (Task 3.3)"
+  },
+  {
+   "addr": 22671,
+   "size": 1,
+   "name": "g_cmb_is_spell",
+   "meaning": "combate: 1 = el ataque en curso es un hechizo (Cast); cambia acierto (INT vs INT) y mensajes (Failed!)",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS)"
+  },
+  {
+   "addr": 22672,
+   "size": 1,
+   "name": "g_cmb_is_magic",
+   "meaning": "combate: 1 = arma magica (id >= 0x23) o hechizo; anula la resistencia a medio danyo (flag LE 0x20) y activa dormir/veneno de los hechizos 0x34/0x33",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS)"
+  },
+  {
+   "addr": 22674,
+   "size": 1,
+   "name": "g_wind",
+   "meaning": "direccion del viento: 0=Calm,1=North,2=South,3=East,4=West (usado por la nautica en 3.7)",
+   "evidence": "asm: kernel 0x2E96 (0x2ea2 mov [0x5892],al) invocado por Rel Hur CAST2:0x040a con remap flecha->viento {0,4,3,1,2}; re/notes/magic.md §7 (Task 3.3)"
+  },
+  {
+   "addr": 22675,
+   "size": 1,
+   "name": "g_location",
+   "meaning": "location actual (0=Britannia/Underworld) || ★ #264b — MAPA DE VALORES, que esta ficha no llevaba y que SIETE documentos de la cabeza dan entre todos (cada valor verificado aquí byte a byte contra el disasm): **0** = exterior (Britannia/Underworld, con `g_floor` de discriminador) · **0x21..0x28** = las OCHO MAZMORRAS, escritas al entrar andando por `MAINOUT.OVL 0x088c`, que es `si + 1` con `si` = 0x20..0x27 el índice de la tabla de entradas (`0887 mov al, byte ptr [bp - 2]` / `088a inc al` / `088c mov byte ptr [g_location], al`), de donde sale `dungIdx = g_location - 0x21` y el orden DECEIT · DESPISE · DESTARD · WRONG · COVETOUS · SHAME · HYTHLOTH · DOOM (re/notes/dungeon-map-buffers.md) · **0x40** = modo DEMO/attract, fijado por `INTRO.OVL 0x0ca3`, y **0x42** = ENDGAME, fijado por `FONT.OVL 0x0522`, los dos leídos como bifurcación de escena en `FONT.OVL 0x04f0` y `FONT.OVL 0x050a` (re/notes/intro-demo-scene.md) · **0xFF** = CENTINELA DE COMBATE, y es un guarda/restaura: `ULTIMA.EXE 0x5fa8` copia el valor vivo a `g_unk_5894`, `ULTIMA.EXE 0x5fb4` pone 0xFF ANTES de despachar y `ULTIMA.EXE 0x6094` lo restaura DESPUÉS (re/notes/combat-light-verdict.md y re/notes/combat-frame-adjudication.md). ⚠ Lo que NO se decide aquí: QUÉ es la banda `g_location >= 0x7f`; es la pregunta de la tarjeta #184 y sigue ABIERTA",
+   "evidence": "roster_off(0x55A6)+0x2ED per docs/formats/tlk-npc-dataovl-gam.md §4; valor vivo en RAM = 13 = byte del save (+0x2ED); la dirección MÁS compartida del censo (20/24 ficheros); censo: 268 refs desde 20 ficheros || ★ #264b — LA FRONTERA 0x7f/0x80 ES EL DISCRIMINADOR PRINCIPAL DE ESTA GLOBAL, y NO es marginal: `g_location` se compara contra 0x7f o 0x80 en **56 sitios de 6 ficheros** (CAST 18 · ULTIMA.EXE 18 · SJOG 9 · ZSTATS 5 · CMDS 4 · CAST2 2), medido en re/notes/liston-d-207-acta.md. ★★ Y HAY DOS UMBRALES, no uno: dos rutinas hermanas cortan en sitios distintos y difieren EXACTAMENTE en `g_location == 0x80` — `ULTIMA.EXE 0x4995`, `cmp byte ptr [g_location], 0x80` / `jbe`, frente a `ULTIMA.EXE 0x2d91`, `cmp byte ptr [g_location], 0x7f` / `jbe` (re/notes/resolve-command-char-178c-acta.md), y el mismo par aparece en `SJOG.OVL 0x0e22` (0x80) contra `SJOG.OVL 0x0e76` (0x7f) (re/notes/liston-c-207-acta.md y re/notes/liston-d-207-acta.md). Unificarlos sería FABRICAR. Los consumidores de render que bifurcan por esta frontera están en `ULTIMA.EXE 0x4408` (lookup de tile, umbral 0x7f), `ULTIMA.EXE 0x5954` (compositor, 0x80) y `ULTIMA.EXE 0x539c` (sprites, 0x80). Los cinco offsets citados en esta línea van cotejados byte a byte contra el disasm en #264b"
+  },
+  {
+   "addr": 22676,
+   "size": 1,
+   "name": "g_unk_5894",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 5 ficheros (13 refs: CMDS.OVL,COMBAT.OVL,DUNGEON.OVL,SJOG.OVL,ULTIMA.EXE); dentro de la ventana SAVED.GAM (roster_off+0x2EE), offset NO documentado en docs/formats"
+  },
+  {
+   "addr": 22677,
+   "size": 1,
+   "name": "g_floor",
+   "meaning": "piso actual (0xFF=Underworld) || ★ #264b — DOMINIO Y TOPES, que esta entrada no llevaba: en mazmorra el piso va de 0 a 7 y los topes son DUROS, no envolventes — con delta positivo y piso 7, o delta negativo y piso 0, la rutina de cambio de planta devuelve 1 sin tocar nada (DUNGEON.OVL 0x1c8d); si el destino pasa el test de aterrizaje, `g_floor` se suma el delta (DUNGEON.OVL 0x1c0c). El 0xFF NO es un piso: es el valor que se ESCRIBE al salir de una mazmorra hacia el Underworld, y la rama se elige por el piso en que estabas — si `g_floor` no era 0 se sale al Underworld con `g_floor = 0xFF`, y si era 0 se sale a Britannia con `g_floor = 0`. Y en la ENTRADA andando por la superficie, el piso inicial también se decide por rama: 7 (entrada por arriba, facing Oeste, en (7,7)) salvo en Doom, que entra siempre por el piso 0 en (1,1). Fuentes: re/notes/dungeon-map-buffers.md y re/notes/dungeon.md",
+   "evidence": "roster_off(0x55A6)+0x2EF per docs/formats/tlk-npc-dataovl-gam.md §4; valor vivo en RAM = 0 = byte del save (+0x2EF); censo: 190 refs desde 18 ficheros"
+  },
+  {
+   "addr": 22678,
+   "size": 1,
+   "name": "g_party_x",
+   "meaning": "coordenada X del party",
+   "evidence": "roster_off(0x55A6)+0x2F0 per docs/formats/tlk-npc-dataovl-gam.md §4; observed: 15→14 al mover al oeste (LEFT) y solo entonces (el este estaba bloqueado: turno consumido sin mover); sonda DOSBox 2026-07-09; censo: 180 refs desde 18 ficheros"
+  },
+  {
+   "addr": 22679,
+   "size": 1,
+   "name": "g_party_y",
+   "meaning": "coordenada Y del party",
+   "evidence": "roster_off(0x55A6)+0x2F1 per docs/formats/tlk-npc-dataovl-gam.md §4; observed: 15→14 al mover al norte (UP) y solo entonces; sonda DOSBox 2026-07-09; censo: 180 refs desde 18 ficheros"
+  },
+  {
+   "addr": 22680,
+   "size": 1,
+   "name": "g_cmb_aim_active",
+   "meaning": "combate: flag de modo Aim (COMSUBS:0x0504:050c)",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS)"
+  },
+  {
+   "addr": 22681,
+   "size": 1,
+   "name": "g_cmb_aim_x",
+   "meaning": "combate: X del cursor de Aim! (COMSUBS:0x0504:0578)",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS)"
+  },
+  {
+   "addr": 22682,
+   "size": 1,
+   "name": "g_cmb_aim_y",
+   "meaning": "combate: Y del cursor de Aim! (COMSUBS:0x0504:057f)",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS)"
+  },
+  {
+   "addr": 22683,
+   "size": 1,
+   "name": "g_chunk_origin_x",
+   "meaning": "X (multiplo de 16) del origen de la ventana de chunks del overworld cargada en la caché 0x6608",
+   "evidence": "asm: MAINOUT 0x0019-0x0031 (init), 0x354 (scroll); OUTSUBS 0x1B4 la usa para cargar filas; re/notes/kernel-survival.md §5.3"
+  },
+  {
+   "addr": 22684,
+   "size": 1,
+   "name": "g_chunk_origin_y",
+   "meaning": "Y (multiplo de 16) del origen de la ventana de chunks del overworld",
+   "evidence": "asm: MAINOUT 0x0034-0x004C, 0x354; OUTSUBS 0x1B4; re/notes/kernel-survival.md §5.3"
+  },
+  {
+   "addr": 22685,
+   "size": 1,
+   "name": "g_cmb_weapon",
+   "meaning": "combate: arma/hechizo del golpe en curso (0xFF = manos desnudas); COMSUBS:0x0D3C:0d7b",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS)"
+  },
+  {
+   "addr": 22686,
+   "size": 1,
+   "name": "g_cmb_actor",
+   "meaning": "combate: indice (slot 0..31) del combatiente activo en el bucle COMBAT:0x0B94",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS)"
+  },
+  {
+   "addr": 22687,
+   "size": 1,
+   "name": "g_unk_589f",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (4 refs: COMBAT.OVL,SJOG.OVL,ULTIMA.EXE); dentro de la ventana SAVED.GAM (roster_off+0x2F9), offset NO documentado en docs/formats"
+  },
+  {
+   "addr": 22688,
+   "size": 1,
+   "name": "g_unk_58a0",
+   "meaning": "codigo de RESULTADO de la incursion de combate en mazmorra. Lo limpia COMBAT 0x0BA1 y DUNGEON 0x00AD/0x0C39 (a 0), lo escribe SJOG 0x1BE2/0x1EDC (0x4D) y lo LEEN DUNGEON 0x00CB (==0x4D), DUNGEON 0x1DB8/0x1DEC y DNGLOOK 0x0FDA. Su consumo de planta esta en el LLAMADOR, no en el kernel: DUNGEON dng_attack 0x1DB8 (==5 -> g_floor-- , o dng_exit 0x1D08 si ya estaba en 0) y 0x1DEC (==6 -> g_floor++ , o dng_exit si >=7). dungeon.md",
+   "evidence": "referenciada por 5 ficheros (13 refs: COMBAT.OVL,DNGLOOK.OVL,DUNGEON.OVL,SJOG.OVL,ULTIMA.EXE); dentro de la ventana SAVED.GAM (roster_off+0x2FA), offset NO documentado en docs/formats. *** CITA CORREGIDA (frontera-26, cuerpo entero de kernel 0x5F86 leido 0x5F86-0x60E9): la redaccion anterior decia 'kernel 0x5F86 dungeon_cell_special: ==5->g_floor--, ==6->g_floor++'. En el cuerpo de 0x5F86 NO existe ninguna comparacion con 5 ni con 6 y NO toca 0x58a0 (toca 0x58a1). El codigo del 5/6 esta en el LLAMADOR, justo DESPUES del `call 0xffffddb6` (= 0xddb6+0x81D0 = 0x5F86) de DUNGEON 0x1DB5: se atribuyo al callee el codigo que sigue al call. kernel 0x5F86 es run_combat_encounter (ver frontier ULTIMA.EXE:24454); la localizacion correcta ya la tenia la cita de frontier DUNGEON.OVL:7498 (dng_attack)."
+  },
+  {
+   "addr": 22689,
+   "size": 1,
+   "name": "g_unk_58a1",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 7 ficheros (21 refs: CAST.OVL,CMDS.OVL,COMBAT.OVL,DNGLOOK.OVL,DUNGEON.OVL...); dentro de la ventana SAVED.GAM (roster_off+0x2FB), offset NO documentado en docs/formats"
+  },
+  {
+   "addr": 22690,
+   "size": 1,
+   "name": "g_cmb_result_flags",
+   "meaning": "combate: bits de resultado del golpe: 1 killed, 2 vanished, 4 slept, 8 poisoned, 0x10 escaped, 0x20 grazed",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS)"
+  },
+  {
+   "addr": 22691,
+   "size": 1,
+   "name": "g_cmb_victory_flag",
+   "meaning": "combate: 1 = VICTORY! ya anunciada (COMBAT:0x0B94 0xbb9/0xcfd)",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS)"
+  },
+  {
+   "addr": 22692,
+   "size": 1,
+   "name": "g_unk_58a4",
+   "meaning": "flag de estado de turno de pueblo: TOWN 0x121D lo pone a 1 (usado en 7 sitios de TOWN; re-arma [0x5891]); loops.md",
+   "evidence": "referenciada por 3 ficheros (4 refs: MAINOUT.OVL,TOWN.OVL,ULTIMA.EXE); dentro de la ventana SAVED.GAM (roster_off+0x2FE), offset NO documentado en docs/formats"
+  },
+  {
+   "addr": 22693,
+   "size": 1,
+   "name": "g_light_level",
+   "meaning": "radio de luz vigente 2..50 (0x32); >=0x33 = centinela \"no recalcular\" (mazmorras)",
+   "evidence": "asm: kernel_advance_clock 0x50A1-0x5145: noche 2, día 50, rampa DS 0x6A80 a las 5/19h; mínimos 18 (hechizo) y 10 (antorcha); re/notes/kernel-survival.md §4"
+  },
+  {
+   "addr": 22694,
+   "size": 1,
+   "name": "g_light_spell_mins",
+   "meaning": "minutos restantes del hechizo de luz (garantiza luz >= 18)",
+   "evidence": "asm: counter_sub_u8 en advance_clock 0x4FBE (-n minutos); mínimo de luz en 0x5115; re/notes/kernel-survival.md §1 §4"
+  },
+  {
+   "addr": 22695,
+   "size": 1,
+   "name": "g_torch_mins",
+   "meaning": "MINUTOS de antorcha restantes (u8): Ignite fija 240 fuera de mazmorra, +=112+rand(0,15) tope 255 dentro; garantiza luz >= 10",
+   "evidence": "asm: counter_sub_u8 en advance_clock 0x4FB4 (-n minutos); CMDS.OVL 0x0D98 (Ignite); mínimo de luz en 0x5128; re/notes/kernel-survival.md §1 §3 §4"
+  },
+  {
+   "addr": 22696,
+   "size": 32,
+   "name": "g_cmb_last_attacker",
+   "meaning": "combate: por combatiente, indice del ultimo que le golpeo en melee (0xFF = nadie); alimenta \"interferes!\" (COMSUBS:0x09FC)",
+   "evidence": "re/notes/combat.md (Task 3.2, asm COMBAT/COMSUBS)"
+  },
+  {
+   "addr": 22728,
+   "size": 3,
+   "name": "g_shadowlord_locs",
+   "meaning": "3 bytes: localización actual de cada Shadowlord (0=Falsehood,1=Hatred,2=Cowardice); ver re/notes/kernel-survival.md:305",
+   "evidence": "asm: kernel_advance_clock 0x4FF5-0x504F (rand_range(1,8) con reintentos); re/notes/kernel-survival.md §1 | Task 3.6 tiendas — ver re/notes/shops.md"
+  },
+  {
+   "addr": 22732,
+   "size": 2,
+   "name": "g_shrine_quest_bitmap",
+   "meaning": "bitmap de shrines con quest activa",
+   "evidence": "roster_off(0x55A6)+0x326 per docs/formats/tlk-npc-dataovl-gam.md §4; censo: 6 refs desde 2 ficheros"
+  },
+  {
+   "addr": 22734,
+   "size": 2,
+   "name": "g_shrine_visited_bitmap",
+   "meaning": "bitmap de shrines visitados",
+   "evidence": "roster_off(0x55A6)+0x328 per docs/formats/tlk-npc-dataovl-gam.md §4"
+  },
+  {
+   "addr": 22736,
+   "size": 8,
+   "name": "g_dng_seal_flags",
+   "meaning": "UN BYTE por mazmorra (8 mazmorras) con el estado del SELLO magico de su entrada. Es un array de bytes, NO un bitmap de 8 bits: el escritor conmuta el bit 7 del byte i (`xor byte ptr [si + 0x58d0], 0x80` en CMDS.OVL:0x13bd) y el lector lo compara contra 1 (OUTSUBS.OVL:0x0025), devolviendo 1 solo si el byte vale 0. El indice es el ORDEN DE LA TABLA DE PALABRAS DE PODER (DS 0x4502, 8 punteros): FALLAX, VILIS, INOPIA, MALUM, AVIDUS, INFAMA, IGNAVUS, VERAMOCOR. Valor inicial en DATA.OVL: los 8 bytes a cero. El mismo call-site que conmuta el bit tambien conmuta el TILE de la entrada (`xor` del tile de DS 0x4512 con 0xdf sobre el mapa) y cobra el turno.",
+   "evidence": "#253 (acta re/notes/ambiguos-253-acta.md). ADJUDICA dos de los AMBIGUOS de la clase (b) de #245, que sospechaban base ajustada a un indice 1-based de g_shrine_destroyed (a 8 B). NO lo es: en los DOS sitios el indice arranca a cero y el cierre del bucle es `cmp si,8` + salto (CMDS.OVL:0x13f9 y OUTSUBS.OVL:0x0039), luego el dominio es 0..7 y el acceso barre 0x58d0-0x58d7 sin tocar 0x58d8. Base LEGITIMA de una global que el ledger no tenia fichada, en el hueco exacto que quedaba entre g_shrine_visited_bitmap y g_shrine_destroyed. La rutina CMDS.OVL:0x12c8 que lo escribe es el flujo de gritar la Palabra de Poder: recorre las 8 entradas comparando la palabra tecleada contra DS 0x4502[i] y la posicion del jugador contra las coordenadas de DS 0x1eaa[i] (X) y DS 0x1ed2[i] (Y), que son las 8 entradas de mazmorra. ⚠ TRAMPA DE CONTEO MEDIDA: 0x58d0 aparece 258 veces mas en el corpus como DESTINO de call en CS (SJOG 90, CAST 68, CMDS 67, TALK 33) — es un homonimo entre segmentos, y los accesos a ESTE dato son exactamente 2. Cualquier censo por texto de 0x58d0 es 99,2 % codigo."
+  },
+  {
+   "addr": 22744,
+   "size": 8,
+   "name": "g_shrine_destroyed",
+   "meaning": "shrines destruidos (8 bytes)",
+   "evidence": "roster_off(0x55A6)+0x332 per docs/formats/tlk-npc-dataovl-gam.md §4"
+  },
+  {
+   "addr": 22752,
+   "size": 16,
+   "name": "g_dng_level_bits",
+   "meaning": "bitmap de 128 bits, UN BIT POR PAR (mazmorra, nivel): índice de bit = (idxMazmorra << 4) | nivel, byte = índice>>3, máscara = 1 << (índice&7). ⚠ heredados-168 tanda 3 lo llamó «bitmap de celdas visitadas»: la aritmética NO lo sostiene — 16 ranuras por mazmorra no dan para celdas; el par que indexa es (mazmorra, nivel). Qué SIGNIFICA el bit (visitado / mapeado) este cuerpo no lo fija",
+   "evidence": "DNGLOOK.OVL 0x088c-0x08c9 (rutina 0x0844, la del guarda DS:0x383a de la tarea #33): `mov al,[g_location]` / `sub ax,0x21` / `cmp ax,1` + `dec` / `shl ax,4` / `add ax,[bp+4]` / `sar ax,3` -> bx / `mov al,1` + `shl al,cl` con cl = índice&7 / 0x08c9 `or byte ptr [bx + 0x58e0], al` (SET). Lector simétrico en 0x08d4-0x090d `mov al, byte ptr [bx + 0x58e0]`. size=16 = 128 bits, cota por 8 mazmorras x 16 ranuras de nivel; el número de mazmorras es del corpus, no de este cuerpo"
+  },
+  {
+   "addr": 22863,
+   "size": 1,
+   "name": "g_unk_594f",
+   "meaning": "tracker de la puerta abierta previa para auto-cierre (Open SJOG 0x1374; junto con 0x5950/0x5951 coords y timer [0x5952]=4); Task 3.9",
+   "evidence": "referenciada por 5 ficheros (11 refs: CMDS.OVL,COMBAT.OVL,SHOPPES3.OVL,SJOG.OVL,TOWN.OVL); dentro de la ventana SAVED.GAM (roster_off+0x3A9), offset NO documentado en docs/formats"
+  },
+  {
+   "addr": 22864,
+   "size": 1,
+   "name": "g_unk_5950",
+   "meaning": "campo (x/coord) del tracker de puerta abierta para auto-cierre, junto con g_unk_594f/5951 (0x7a4c(594f,5950,5951)); Open SJOG 0x1374; cmds.md §7",
+   "evidence": "referenciada por 4 ficheros (6 refs: CMDS.OVL,SHOPPES3.OVL,SJOG.OVL,TOWN.OVL); dentro de la ventana SAVED.GAM (roster_off+0x3AA), offset NO documentado en docs/formats"
+  },
+  {
+   "addr": 22865,
+   "size": 1,
+   "name": "g_unk_5951",
+   "meaning": "campo (y/coord) del tracker de puerta abierta para auto-cierre, junto con g_unk_594f/5950 (0x7a4c(594f,5950,5951)); Open SJOG 0x1374; cmds.md §7",
+   "evidence": "referenciada por 4 ficheros (6 refs: CMDS.OVL,SHOPPES3.OVL,SJOG.OVL,TOWN.OVL); dentro de la ventana SAVED.GAM (roster_off+0x3AB), offset NO documentado en docs/formats"
+  },
+  {
+   "addr": 22866,
+   "size": 1,
+   "name": "g_unk_5952",
+   "meaning": "cuenta atras de 4 pasos: SJOG la fija a 4 y TOWN la decrementa. NO derivada: no he leido ninguno de los dos cuerpos, asi que no le pongo nombre semantico.",
+   "evidence": "CHORE 4 de frontera-25/27. Sin entrada previa en el ledger; censada por los TRES canales (hex, simbolo, complemento a dos) leyendo los .asm en Python (nunca grep -r: los .asm del worktree son symlinks y grep -r los salta en silencio). Deliberadamente g_unk_*: el enunciado del chore la listaba sin significado y yo solo he mirado los dos accesos (SJOG 0x1406 `mov byte ptr [0x5952], 4`; TOWN 0x15f6 `dec byte ptr [0x5952]`). Mejor sin nombre que con uno especulativo. 2 refs."
+  },
+  {
+   "addr": 22869,
+   "size": 1,
+   "name": "g_sail_dir",
+   "meaning": "última dirección de navegación (1..4; 0 = parado): el barco repite rumbo y Pass suelta velas (\"Sheets in irons!\")",
+   "evidence": "asm: MAINOUT 0x49F-0x4B3 la fija en cada tecla de rumbo, kernel Pass 0x31FB la limpia; re/notes/kernel-survival.md §5.4"
+  },
+  {
+   "addr": 22871,
+   "size": 1,
+   "name": "g_drunk_timer",
+   "meaning": "turnos de borrachera; =0x19 al insistir en la 3ª copa",
+   "evidence": "Task 3.6 tiendas — ver re/notes/shops.md"
+  },
+  {
+   "addr": 22872,
+   "size": 1,
+   "name": "g_shadowlord_here_idx",
+   "meaning": "índice (0..2) del Shadowlord presente en la ciudad (0xFF=ninguno); lo fija TOWN.OVL:0x02B6-0x0306 comparando g_shadowlord_locs (0x58C8) con g_location; también lo lee TALK.OVL:0x1187. La merma 0x019A dispara con ==0 = Falsehood en la ciudad",
+   "evidence": "referenciada por 3 ficheros (11 refs: SHOPPES.OVL,TALK.OVL,TOWN.OVL); dentro de la ventana SAVED.GAM (roster_off+0x3B2), offset NO documentado en docs/formats | Task 3.6 tiendas — ver re/notes/shops.md",
+   "old_names": [
+    "g_unk_5958"
+   ]
+  },
+  {
+   "addr": 22874,
+   "size": 512,
+   "name": "g_dng_map",
+   "meaning": "mapa de la mazmorra en RAM: 8 plantas × 8×8 tiles (512 B contiguos). tile(x,y,f)=[0x595A+(f<<6)+(y<<3)+x]; nibble alto=tipo, bajo=subtipo. Dentro de la ventana SAVED.GAM (se guarda en la partida) || ★★ #asm100 tandas 8-19 — MAPA DE BITS DEL BYTE, derivado leyendo DUNGEON.OVL y DNGLOOK.OVL ENTEROS (los dos a cero heredadas). Esta entrada decia «nibble alto=tipo, bajo=subtipo»; el bajo NO es uniformemente subtipo. (a) **BITS 0-2 = FASE DE ANIMACION DEL GOTEO**, y la ESCRIBE la rutina de DIBUJO: forward_raytrace_column (DUNGEON.OVL:0x150a) recalcula el indice y hace `and [si],0xf8` + `add [si],al` con la fase que devuelve dng_stalactite_drip_step. El array NO es dato inmutable: lleva estado de animacion por celda. (b) **BIT 3 (0x08) = BANDERA QUE SOBREVIVE AL VACIADO DE UNA CELDA CONSUMIDA.** Censo COMPLETO sobre todo el disasm (no un fichero): DOS lectores — DUNGEON.OVL:0x1a26 (feature_overlay_drawer_by_nibble) y DNGLOOK.OVL:0x0422 (dnglook_gem_draw_cell, la vista de la GEMA) — y CUATRO escritores con la forma `and [..],8`, que deja el byte en 0x00 o 0x08 borrando clase y bits bajos: dng_field_sleep (DUNGEON.OVL:0x09da), dng_on_enter_cell (DUNGEON.OVL:0x0df3), search_dungeon (SJOG.OVL:0x07fa) y get_dungeon_chest_contents (SJOG.OVL:0x181a) — o sea dormir, entrar, registrar y abrir cofre. ⚠ MEDIDO eso; que signifique «el grupo ya estuvo aqui» es INFERENCIA coherente (la gema lo lee), NO derivacion: los cuerpos de esas cinco filas no se han leido. (c) **EL NIBBLE BAJO ES POLISEMICO POR CLASE** — tres lecturas distintas medidas: clase 0xB = INDICE DE INSCRIPCION (`tile & 0x0f` -> per_location_wall_inscription, DUNGEON.OVL:0x150a); clase 0xC = FASE DE GOTEO en sus tres bits bajos (idem); clase 0xF = INDICE DE SALA (lo consume dungeon_cell_is_visited desde DNGLOOK.OVL:0x093a). Leer «el nibble bajo» sin mirar antes el ALTO adjudica mal. (d) **dng_get_tile (DUNGEON.OVL:0x10dc) ENMASCARA EL BIT 0x08 a proposito**, y solo para tiles < 0x90: existe para que los consumidores de IDENTIDAD no confundan la bandera con el tile, y el unico consumidor que la quiere la lee del array EN CRUDO saltandose la hoja. Ese mismo getter enmascara los indices con `&7` en las dos coordenadas, o sea que **ENVUELVE en vez de acotar**: pedir la celda 9 devuelve la 1, sin error. (e) **clear_consumed_markers (DNGLOOK.OVL:0x093a)** degrada la clase 0xF a 0xA con `and [si],0xaf` sobre **los 512 B enteros (las OCHO plantas de golpe)** — la mascara **preserva el nibble bajo completo**, asi que el indice de sala, la fase de goteo y el bit 0x08 sobreviven. (f) base_frame (DNGLOOK.OVL:0x0c6c) lo lee **solo por el nibble alto** (`and 0xf0`) y acotado a clases 1..7. Detalle de las citas en re/ledger/frontier-manual.json (las filas nombradas) y en re/notes/asm100-censo-acta.md §§42, 45, 49, 50.",
+   "evidence": "DUNGEON:0x05c6 bl=g_floor; shl bx,6; al=[bx+si+0x595a] (si=(y<<3)+x); repetido en ≥12 sitios. Task 3.4 (re/notes/dungeon.md §0.1) || 🔴 #264b — CENSAR ESTA GLOBAL POR UN SOLO PATRÓN DA CERO EN FALSO, y hay dos trampas distintas documentadas. (1) POR CANAL: `abs_refs` da **0 accesos desnudos y 48 indexados** — ceguera TOTAL, el cero-en-falso perfecto, porque la población entera vive en la forma `[reg + 0x595a]` (re/notes/idxrefs-240-acta.md, que es el defecto transversal de #240). (2) POR FORMA DE ESCRITURA: el censo honesto de ESCRITORES necesita TRES patrones y no uno — escritura directa por literal (6), lectura-modificación por literal con `and byte ptr` (4), y ★ escritura por PUNTERO CONSTRUIDO, que un grep del literal como destino NO VE: `DUNGEON.OVL 0x1758`, `add si, 0x595a` seguido de `and byte ptr [si], 0xf8` y `add byte ptr [si], al`, y su gemela en `DUNGEON.OVL 0x15ca` con las mismas tres instrucciones (re/notes/derivaciones-134-acta.md; las dos verificadas aquí contra el disasm) || ⚠ #264b — CUATRO ACCESOS QUE CAEN DENTRO DE ESTA VENTANA Y **NO SON DE ESTA GLOBAL**: `TOWN.OVL 0x001f`, `TOWN.OVL 0x0023`, `TOWN.OVL 0x00a1` y `TOWN.OVL 0x00a5`, con desplazamientos 0x5B56 y 0x5B58, son `[bx + (base - 4)]` con índice 1-based sobre `g_npc_dead_bitmap` (0x5B5A), la global SIGUIENTE. Quien censa 0x595A por VENTANA se los apunta y se equivoca; la partición está en re/notes/idxrefs-240-acta.md, que deja 43 genuinos de 48, de ellos 13 escrituras || ★ #264b — ESCRITOR NO NOMBRADO AQUÍ, el de campos mágicos: `CAST.OVL 0x00af`, `mov al, byte ptr [bx + di + 0x595a]` lee la celda y `CAST.OVL 0x00e6`, `mov byte ptr [bx + si + 0x595a], al` la escribe; según re/notes/derivaciones-152-acta.md es la ÚNICA escritura de mapa de todo ese manejador, y su destino es esta global — no el terreno ni la capa de objetos, que es lo que el port modela"
+  },
+  {
+   "addr": 23386,
+   "size": 128,
+   "name": "g_npc_dead_bitmap",
+   "meaning": "NPC_IS_DEAD: 32 locations × 32 npcs || ★ #252 — LEÍDO EL PAR COMPLETO, y con una CORRECCIÓN: el orden de bits NO es MSB-first. La máscara se construye desde `ax = 1` desplazando hacia ARRIBA tantas veces como el índice de NPC (`shl ax,1` / `rcl dx,1`, TOWN.OVL 0x0099-0x009f), y la palabra baja va a la dirección menor ⇒ el NPC n es el BIT n del valor de 32 bits, o sea LSB-first. Quien vuelque el .GAM byte a byte suponiendo «el primer NPC es el bit alto del primer byte» invierte los 32 bits de cada location. Acceso: 4 B por location, base_de_indexación = 0x5B56 = esta dirección − 4, índice `g_location*4` (dos `shl bx,1` sobre g_location) ⇒ el índice es 1-BASED en el eje de location, y el eje de NPC es 0-BASED y acotado a 0..0x1f (TOWN.OVL 0x0058-0x0062). Getter TOWN.OVL 0x0000 (devuelve 1/0), setter TOWN.OVL 0x0052 (`or`), y el setter está GATEADO por el tile del NPC leído de 0x659E enmascarado con `and ax, 0xfc`: sólo marca muerto si el tile enmascarado es 0x70, o si es >= 0x80 y vale exactamente 0xb4",
+   "evidence": "roster_off(0x55A6)+0x5B4 per docs/formats/tlk-npc-dataovl-gam.md §4 || ★ #252: TOWN.OVL 0x001f `mov ax, word ptr [bx + 0x5b56]` + 0x0023 `mov dx, word ptr [bx + 0x5b58]` (lectura) y 0x00a1 `or word ptr [bx + 0x5b56], ax` + 0x00a5 `or word ptr [bx + 0x5b58], dx` (escritura). El 1-based del eje de location se apoya en TRES patas y NINGUNA es un testigo: (a) 128 B / 4 B por location = 32 ranuras, y con base−4 el rango 1..32 llena la extensión fichada EXACTA, mientras que 0..31 dejaría 4 B muertos al final Y leería 4 B antes de la global; (b) las tres globales vecinas TESELAN sin huecos (g_dng_map 0x595A+512 = 0x5B5A, ésta +128 = 0x5BDA, g_npc_met_bitmap +128 = 0x5C5A), así que los límites no son de una sola ficha; (c) g_location = 0 es el EXTERIOR (DNGLOOK.OVL 0x108c pone `g_location` a 0 al salir de la mazmorra, leído en #248) y en el exterior no hay NPCs de pueblo. (d) CUARTA PATA, desde el otro lado y con procedencia AJENA: el cableado de #254 (acta re/notes/particion-245b-acta.md, main 1071ebbc) mide que en esta banda del ledger las DOS globales que reciben atribuidos —ésta y g_npc_met_bitmap— tienen CERO accesos genuinos por ventana, o sea que el 100 % de su población indexada entra por base ajustada, y por tanto la 1-based no es una rareza de dos entradas sino LA FORMA NORMAL DE ACCESO de la banda. Medición del lead, no mía; citada aquí con su acta. ⚠ NO ESTÁ CERRADO NI CON LAS CUATRO: las cuatro patas son geometría, uso y estadística de banda, y ninguna es un TESTIGO. Cerrarlo sigue pidiendo un gate que impida g_location == 0 en estas rutas, o una observación en vivo || ★ #264b, QUINTA PATA para el 1-based, y desde un TERCER overlay y sobre la global VECINA: `TALK.OVL 0x0d6c`, `or word ptr [bx + 0x5bd6], ax` y `TALK.OVL 0x0d70`, `or word ptr [bx + 0x5bd8], dx` escriben, y `TALK.OVL 0x0d9e` con `TALK.OVL 0x0da2` leen, el bitmap de NPC CONOCIDO/reclutado con `bx` = `g_location` desplazado 2 bits; y 0x5BD6 es exactamente `g_npc_met_bitmap` (0x5BDA) MENOS 4. O sea que el patrón base-menos-4 no es de esta entrada ni de TOWN: aparece en tres overlays y en las dos globales de la banda. Sigue sin ser un TESTIGO, y por tanto NO cierra nada. Documentado en re/notes/shadowlord-urban.md || 🔴 #264b, DISCREPANCIA ABIERTA DE ETIQUETA (no de dirección), que declaro sin resolver: `CAST.OVL 0x171d` hace `or word ptr [g_npc_dead_bitmap+112], ax` para marcar la ciudad arrasada por un Shadowlord, y 112 = 28*4. re/notes/shadowlord-urban.md y re/notes/shadowlord-ritual.md leen ese desplazamiento como `base 0x5B5A + 28*4`, o sea 0-BASED sobre la base real, y lo etiquetan «Windemere, location 28» citando el índice de npcs.json del port. Con el 1-based que declara esta ficha (base de indexación 0x5B56) ese MISMO byte, 0xAD14 aparte, es la ranura 29, no la 28. Las dos lecturas coinciden en la DIRECCIÓN y discrepan en la ETIQUETA, que es la firma del off-by-one silencioso entre la numeración del binario y la de npcs.json. NO se decide aquí: hace falta el testigo que esta misma entrada viene pidiendo"
+  },
+  {
+   "addr": 23514,
+   "size": 128,
+   "name": "g_npc_met_bitmap",
+   "meaning": "NPC_IS_MET: ídem (misma geometría que g_npc_dead_bitmap, incluida la corrección de #252: LSB-first, no MSB-first) || ★ #252 — el gemelo EXACTO del de TOWN, una global más allá: base_de_indexación 0x5BD6 = esta dirección − 4, índice `g_location*4`, 4 B por location. Par setter/getter en TALK.OVL: 0x0d42 marca (`or`) y 0x0d7a consulta (`and` + `or dx,ax` + `je`), los dos construyendo la máscara de 32 bits con `call 0x44f6` a partir de un 1 en `[bp-4]:[bp-2]` — la MISMA operación que TOWN hace en línea. ⚠ Sus desplazamientos (0x5BD6, 0x5BD8) caen DENTRO de g_npc_dead_bitmap, así que un censo por ventana de ESA global se los comería como propios y ésta daría cero: es el cero-en-falso que destapó #245 y por eso la ficha lo lleva escrito",
+   "evidence": "roster_off(0x55A6)+0x634 per docs/formats/tlk-npc-dataovl-gam.md §4 || ★ #252: TALK.OVL 0x0d6c `or word ptr [bx + 0x5bd6], ax` + 0x0d70 `or word ptr [bx + 0x5bd8], dx` (marcar) y 0x0d9e `mov ax, word ptr [bx + 0x5bd6]` + 0x0da2 `mov dx, word ptr [bx + 0x5bd8]` (consultar). Alimenta el gate npcMet del saludo de NPC derivado en #180. Misma reserva que su hermana sobre el 1-based: corroborado por geometría y por el uso, NO por testigo"
+  },
+  {
+   "addr": 23642,
+   "size": 256,
+   "name": "g_char_anim_states",
+   "meaning": "★ #251 — ARRAY DE 32 REGISTROS DE PASO 8 (32*8 = 256 = el size fichado), no un vector de bytes. Campos derivados por lectura de sus escritores: +2 = X y +3 = Y (los dos reciben `add byte ptr [si + 0x5c5c/0x5c5d], al`, o sea DELTA de movimiento, en CMDS.OVL 0x17cc/0x17d3), +5 = byte de BANDERAS con el bit 7 en uso (`or byte ptr [si + 0x5c5f], 0x80`, COMBAT.OVL 0x175e) — ★ #272: el MISMO campo +5 es POLISEMICO por clase y por slot: en el SLOT 0 (el transporte de la party) los consumidores absolutos lo tratan de CASCO 0..99 (liston-b-207-sub2: `cmp [0x5c5f], 0x32` y `sub [0x5c5f], al`; el port lo modela como g_hull en state.ts y saveNative.ts, solo fragata), y overworld-ai-rng.md documenta +5/+7 como contadores de fase y de viento en otros slots. DECISION #272: SIN entrada propia para 0x5C5F — cae dentro de esta ventana (ningun censo por catalogo lo pierde, a diferencia del caso 0xAC64 de #267) y una entrada llamada g_hull sobre-firmaria UN sentido de un campo cuyo sentido lo pone el PRODUCTOR segun la clase del objeto, +0 = el campo más usado (48 accesos) y el que sirve de base a los `lea` de registro. ⚠ NINGÚN campo leído corrobora «animation states»: la descripción anterior («animation states de los characters del entorno actual») describía como mucho UN byte de un registro de ocho, y se conserva aquí sólo como procedencia || ★★ #251 — DOS NOMBRES PARA LA MISMA DIRECCIÓN, y la ficha es la costura: el disasm imprime `g_char_anim_states` 142 veces (por eso el `name` NO se toca: renombrar rompe el canal de símbolo, precedente #75), mientras que el resto del proyecto la llama `g_world_objects` en 68 sitios de 38 ficheros — incluidos los comentarios del propio port, que la atan explícitamente a DS:0x5C5A con stride 8 (game/src/core/game.ts:800, :3486, :3582; game/src/core/state.ts:52, :375). Las dos formas describen la MISMA tabla; quien lea sólo una de las dos creerá que la otra es un error || ★★ #251 ADENDA — RECTIFICACIÓN DE LA ENTRADA ANTERIOR, y a favor del nombre viejo: el SLOT 0 es el registro del PROPIO party (hallazgo de cama-241, verificado aquí instrucción por instrucción), y su escritor nombra los DOS campos que la entrada de arriba dejaba sin nombrar. ULTIMA.EXE 0x53b8-0x53be copia `g_transport_tile` a +0 Y a +1, o sea que los dos primeros bytes del registro son BYTES DE TILE, no coordenadas ni banderas; y los tres ejes van justo antes, en 0x53a6-0x53b5 (`g_party_x`→+2, `g_party_y`→+3, `g_floor`→+4), con TOWN.OVL 0x160d-0x161c repitiendo los tres instrucción por instrucción. Registro completo del slot 0: +0 tile · +1 tile · +2 X · +3 Y · +4 planta. ⇒ la frase de arriba «NINGÚN campo leído corrobora animation states» queda RECTIFICADA: un par de bytes de tile por actor es exactamente donde vive un estado de animación en U5 (los tiles animados ciclan sus bits bajos), así que el nombre `g_char_anim_states` SÍ nombra los campos +0/+1 — describe DOS bytes de ocho, no cero. Lo que sigue siendo cierto es que el nombre es ESTRECHO para un registro de actor de 8 B, no que sea falso. ⚠ Lo que NO está derivado: que +1 sea el fotograma actual y +0 el tile base (los dos reciben el mismo valor en el slot 0); eso pide leer un escritor de slot >= 1 || ★ #264b — EL ESCRITOR DE SLOT >= 1 QUE PIDE LA LÍNEA ANTERIOR SÍ EXISTE, y escribe +1 SOLO: ULTIMA.EXE 0x6794 (pasivos de anillo por turno de combate) hace `67c8 mov bl, byte ptr [bx + 4]` / `67cf shl bx, cl` (cl=3) / `67d1 mov byte ptr [bx + 0x5c5b], 0x1d` — con el Ring of Invisibility (anillo 0x2a) mete el TILE 0x1D en el campo +1 del slot que le dicta el registro de actor de combate, SIN tocar +0. ⇒ que +0 y +1 lleven el mismo valor era una propiedad del SLOT 0, no del formato: +1 se comporta como el tile MOSTRADO y +0 se queda con el de base. Fuente: re/notes/kernel-sweep-3.md §11, verificado aquí byte a byte contra el disasm. Sigue SIN derivar que +1 sea un FOTOGRAMA: esto es una SUSTITUCIÓN de tile, no un ciclo de animación. Y en la otra dirección, re/notes/kernel-render-sweep.md §2 lee +0 enmascarando los dos bits bajos (`0x6936 party_anim_build`: sprite base `[bx<<3 + 0x5c5a] & 0xfc`, y escribe 0x40/0x44/0x48/0x4c por clase) — dos bits libres sobre un tile base es donde cabría el fotograma, pero ese documento NO deriva quién los avanza",
+   "evidence": "roster_off(0x55A6)+0x6B4 per docs/formats/tlk-npc-dataovl-gam.md §4 || ★ #251 CENSO CORREGIDO — la cifra anterior de esta ficha («7 refs desde 3 ficheros») estaba obsoleta en un factor de 24 y venía de un canal ciego a lo indexado (el defecto de #240). Re-medido en #251 leyendo los 28 .asm en Python, independientemente de re/tools/idx_particion.py: 172 accesos con corchete en la ventana de 256 B, repartidos en 12 overlays (MAINOUT 44, COMBAT 32, ULTIMA.EXE 31, SJOG 19, CMDS 14, NPC 10, COMSUBS 8, TOWN 6, CAST 3, BLCKTHRN 2, TALK 2, DNGLOOK 1) y en los OCHO desplazamientos +0..+7, con basura CERO — cifra que coincide exacta con la de #245 por vía independiente. ★★ Y AUN ASÍ ES UNA COTA: hay 36 accesos MÁS por la forma `add reg, 0x5C5A` (aritmética de puntero con la base sumada a un índice ya calculado; también `add ax, 0x5c5c` y `add ax, 0x5c5d`, que son punteros A CAMPO), que no lleva corchetes y por tanto es invisible a los canales de corchete Y al canal `mov reg, imm` de #242. Ejemplares: FONT.OVL 0x0540/0x0588/0x05c8, CAST.OVL 0x057d/0x0605, BLCKTHRN.OVL 0x01d9/0x01e2 || ★ #251 ADENDA, escritor del SLOT 0 con DOS testigos independientes que copian los cinco campos seguidos: ULTIMA.EXE 0x53a6 `mov al, byte ptr [g_party_x]` / 0x53a9 `mov byte ptr [g_char_anim_states+2], al` / 0x53af `+3` / 0x53b5 `+4` / 0x53bb `+0` / 0x53be `+1` (estos dos últimos desde `g_transport_tile`), y TOWN.OVL 0x160d-0x161c con los tres ejes idénticos. El slot 1 arranca en 0x5C62 (`ULTIMA.EXE 0x36a6 mov si, 0x5c62`), que es 0x5C5A+8 — o sea find_object_at_xy empieza en el slot 1 para no encontrarse al propio party. Procedencia del hallazgo: cama-241 (main 567ae5b2), que lo midió y dejó dicho que no tocaba el ledger porque era de #251; aquí está verificado de nuevo contra el disasm y fichado || ★ #264b (cruce ficha↔documento, cabeza del corte >=10 menciones): TRES documentos convergen en un escritor GENÉRICO de los seis primeros campos que esta ficha no nombraba — ULTIMA.EXE 0x3a82-0x3aa5, seis `mov byte ptr [si + 0x5c5a..0x5c5f]` alimentados por seis argumentos de pila (`[bp+0x10]`, `[bp+0xe]`, `[bp+0xc]`, `[bp+0xa]`, `[bp+8]`, `[bp+6]`): re/notes/witness-o1-0x6b4.md, re/notes/deriv-211-acta.md y re/notes/derivaciones-152-acta.md. ★ #264b, ITERACIÓN: el barrido de turno va 31→1 DESCENDENTE y EXCLUYE el slot 0 (MAINOUT.OVL 0x1AB6, `di = 0x5d52` bajando de 8 en 8), re/notes/overworld-ai-rng.md — coherente con que el slot 0 sea el propio party; y un SEGUNDO iterador recorre 23 registros desde 0x5c62 (re/notes/kernel-sweep-3.md, rutina 0x3868). ★ #264b, DECISIÓN ABIERTA sobre el campo +5 (0x5c5f), que NO se decide aquí: el port lo llama `g_hull` y lo deriva POR CONSUMIDOR (MAINOUT.OVL 0x01b6 `cmp byte ptr [0x5c5f], 0x32`, MAINOUT.OVL 0x10cb `sub byte ptr [0x5c5f], al`), el ledger no tiene entrada propia para 0x5c5f y el disasm lo imprime como `[g_char_anim_states+5]`; re/notes/liston-b-207-sub2-acta.md §4.3 lo deja dicho y declara «no digo que el ledger esté mal», y re/notes/catalogo-191-acta.md lo deja expresamente sin resolver. ★ #264b, CAVEAT DE CENSO: el literal `5c5c` es DOS cosas en este corpus — la global absoluta `g_char_anim_states+2`, que el disasm imprime por SÍMBOLO, y los accesos INDEXADOS `[si + 0x5c5c]` a la tabla; un censo que no distinga el MODO DE DIRECCIONAMIENTO los mezcla (re/notes/deriv-211-acta.md)"
+  },
+  {
+   "addr": 23902,
+   "size": 512,
+   "name": "g_npc_sched",
+   "meaning": "horarios de los 32 NPC (16 B/NPC: aiType[3],x[3],y[3],z[3],times[4]); .NPC cargado",
+   "evidence": "re/notes/npc.md §0 (Task 3.5); NPC.OVL small-map runtime"
+  },
+  {
+   "addr": 24414,
+   "size": 512,
+   "name": "g_npc_rt",
+   "meaning": "structs runtime de los 32 NPC (16 B/NPC: +0x00 state, +0x02 x, +0x04 y, +0x06 z, +0x08 type, +0x0A dialogNum, +0x0C objIdx, +0x0E schedIdx)",
+   "evidence": "re/notes/npc.md §0.4 (Task 3.5); NPC.OVL small-map runtime. CORRECCIÓN (pase #23/#24, lote 2): esta línea listaba 7 campos seguidos y colocaba schedIdx en +0x0C, comiéndose objIdx; el layout bueno es el de npc.md §0.4. +0x0C es el ÍNDICE DE g_char_anim_states (0x5C5A), no un índice de horario — tres citas: npc_place TOWN 0x1753-0x1760 libera el slot escribiendo 0 en 0x5C5A+[rt+0xC]*8; town_place_shadowlord TOWN 0x035B guarda ahí el retorno de alloc_actor_slot (ULTIMA.EXE 0x38E4); town_attack_engine_commit TOWN 0x09CC se lo pasa a ULTIMA.EXE 0x6150, que lo usa para leer el tile del actor en 0x5C5A+idx*8"
+  },
+  {
+   "addr": 24926,
+   "size": 1024,
+   "name": "g_npc_pathbuf",
+   "meaning": "buffer de ruta pre-computada (32×16×2 B, hasta 16 pasos (x,y)/NPC)",
+   "evidence": "re/notes/npc.md §0 (Task 3.5); NPC.OVL small-map runtime",
+   "old_names": [
+    "g_npc_move_lists"
+   ]
+  },
+  {
+   "addr": 25950,
+   "size": 64,
+   "name": "g_npc_path",
+   "meaning": "puntero de ruta por NPC (word/NPC, 0xFFFF = sin ruta)",
+   "evidence": "re/notes/npc.md §0 (Task 3.5); NPC.OVL small-map runtime"
+  },
+  {
+   "addr": 26014,
+   "size": 32,
+   "name": "g_npc_type_tbl",
+   "meaning": "tipo de sprite por NPC (0 = slot vacío; sprite = type+0x100)",
+   "evidence": "re/notes/npc.md §0 (Task 3.5); NPC.OVL small-map runtime"
+  },
+  {
+   "addr": 26046,
+   "size": 1,
+   "name": "g_npc_attack_tile",
+   "meaning": "tile de proyectil/ataque del NPC hostil (0x74/0x61); [0x65BF]=npcIdx",
+   "evidence": "re/notes/npc.md §0 (Task 3.5); NPC.OVL small-map runtime",
+   "old_names": [
+    "g_unk_65be"
+   ]
+  },
+  {
+   "addr": 26050,
+   "size": 64,
+   "name": "g_npc_stuck",
+   "meaning": "contador de \"atascado\" por NPC (word/NPC); resetea la ruta al pasar 0xC8/0xCC",
+   "evidence": "re/notes/npc.md §0 (Task 3.5); NPC.OVL small-map runtime"
+  },
+  {
+   "addr": 26114,
+   "size": 1,
+   "name": "g_dng_anim_dir",
+   "meaning": "dirección de la última animación/ataque en mazmorra (0..5); se traduce a facing con la tabla DS:0x2C76=[0,1,2,3,0,2]",
+   "evidence": "DUNGEON:0x000f bl=[6602]; al=[bx+0x2c76]; [6603]=al. Task 3.4 (re/notes/dungeon.md §0.3)"
+  },
+  {
+   "addr": 26115,
+   "size": 1,
+   "name": "g_dng_facing",
+   "meaning": "orientación de la party en mazmorra: 0=Norte,1=Este,2=Sur,3=Oeste (tablas dx@0x24D6/dy@0x24DE)",
+   "evidence": "DUNGEON:0x01D2 imprime North/East/South/West según 0..3; movimiento 0x0502. Task 3.4"
+  },
+  {
+   "addr": 26116,
+   "size": 1,
+   "name": "g_dng_wall_variant",
+   "meaning": "variante cosmética del muro especial 0xC0 por mazmorra (1=estalactita,2=derrumbe,…); fijada en el init 0x0E2E, leída en Look",
+   "evidence": "DNGLOOK:0x00C1 según (g_unk_6604&0xF). Task 3.4"
+  },
+  {
+   "addr": 26117,
+   "size": 1,
+   "name": "g_ship_flags",
+   "meaning": "BUZON DE ENTREGA de una compra de nave PAGADA Y SIN RECOGER — no es un inventario de flota. CICLO COMPLETO derivado (#276, censo de 11 accesos en 2 overlays): SHOPPES2 ESCRIBE al cobrar (0x09bd pone 0x82 = fragata con 2 skiffs a bordo tras pagar la fragata; 0x0a60 pone 0x40 = primer skiff sin flota; 0x0a78 `inc` = segundo skiff cuando ya hay fragata pendiente, 0x82 -> 0x83) y MAINOUT 0x0d22 CONSUME Y BORRA al colocar la nave en el muelle (obj+7 = flags AND 0x3F = skiffs a bordo, obj+5 = 0x63 casco 99, tile 0x25 fragata / 0x29 skiff segun el gate 0x7F; y 0x0d7f `mov byte ptr [0x6605], 0`). ⇒ el gate del dialogo `test [0x6605], 0xC0` (SHOPPES2 0x08fa / 0x0a59) NO pregunta si tienes flota sino si tienes una compra SIN RECOGER: por eso el reemplazo cuesta 10000 y por eso existe la rama de sumar un skiff. La lectura «bits de compra» de la ficha anterior se queda corta y la de «flota existente» del comentario del port es plausible pero NO derivada",
+   "evidence": "Task 3.6 tiendas — ver re/notes/shops.md"
+  },
+  {
+   "addr": 21342,
+   "size": 32,
+   "stride": 8,
+   "name": "g_text_windows",
+   "meaning": "tabla de 4 REGISTROS de 8 B del kernel de texto — ESTRUCTURA derivada por dos gates de indice (ULTIMA.EXE 0x1b9d `cmp bx, 3` mas ja y 0x1c2b `cmp bx, 4` mas jae; indice = [0x5386] << 3), por el init de la ranura 0 (0x1184-0x119d: bytes +0 / +1 / +4 a cero, +2 = 0x27, +3 = 0x18) y por el setter 0x1c28-0x1c4b, que rellena el registro desde CUATRO argumentos de pila via el helper 0x1c5b. SEMANTICA CONFIRMADA POR CRUCE CON EL FRONTIER (mismo cierre, minutos despues): las siete rutinas que la tocan estan IDENT con nombres que la adjudican solas — init_text_windows (0x1184) · text_select_window (0x1b94) · text_set_window_rect (0x1c22) · print_string (0x1850) · text_backspace_n (0x1fa0) · draw_box_edge_left / right (0x4c2a / 0x4cce). Son VENTANAS DE TEXTO: 0x27 / 0x18 = 39 / 24 = los limites col / fila de la pantalla 40x25. Caso-canonico-ya-compensado en la capa del CATALOGO: el frontier lo sabia y el ledger no lo cruzaba — la derivacion de cero de arriba queda como verificacion independiente que CONVERGE con los nombres. El registro ACTIVO se selecciona por [0x5386] (indice 0..3) y su PUNTERO se aparca en [0x539a] — ejemplar vivo de la familia DESTINO_GLOBAL del sexto canal (#258); el byte +6 lleva DOS NIBBLES que 0x1bb7-0x1bbf desempaqueta hacia [0x53aa] y su companera. ★ #265 (alta del lead): el racimo entero 0x535E / 0x5386 / 0x538E / 0x539A / 0x53AA estaba SIN fichar; se ficha LA TABLA, cuya estructura esta derivada; los escalares quedan nombrados AQUI como candidatos sin entrada — quien los derive fino los ficha con su propia procedencia.",
+   "evidence": "ULTIMA.EXE 0x1184 (`mov si, 0x535e` + init de la ranura 0 y aparcado del puntero en [0x539a]); 0x1b9a-0x1bbf (gate `cmp bx, 3` + `shl bx, 3` + `lea si, [0x535e]` + puntero a [0x539a] + desempaquetado de nibbles del byte +6); 0x1c28-0x1c4b (gate `cmp bx, 4` + setter de 4 argumentos, escribe [si] y [si+1]); lectores por indice activo con `shl ax, 3` + `add ax, 0x535e` en 0x1879 (lee +7 con and 2, y +2) · 0x1fc9 (lee +2) · 0x4c38 · 0x4cdd (leen +0 y escalan). Censo: 8 accesos, TODOS en ULTIMA.EXE, por las formas quinto canal (mov si, imm) + lea + septima (add ax, imm) — invisible entero a los canales de corchete. || #265"
+  },
+  {
+   "addr": 26120,
+   "size": 1024,
+   "stride": 32,
+   "name": "g_terrain_map",
+   "meaning": "el BUFER DE TERRENO VIVO del mapa activo — la rejilla 32x32 de tiles que tile_addr (ULTIMA.EXE 0x4402) direcciona como 0x6608 + (y<<5) + x cuando g_location < 0x80 (el terreno de mazmorra va por 0xAD14, ver g_cbt_room_record). Es UN SOLO bufer para pueblo Y chunk de overworld (adjudicado en re/notes/terreno-119-acta.md: «el bufer es UNO SOLO»). Cae FUERA de la ventana del save [0x55A6, 0x6606) ⇒ NO persiste: el cargador TOWN 0x0408 relee 1 KiB del .DAT en cada entrada y cada cambio de planta — la base de la mecanica de TERRENO VOLATIL (#119, sonda de recarga #121: byte a byte del disco, y (O)pen escribe aqui y la puerta se RE-CIERRA al re-entrar). ★ #265 (alta del lead): estaba DERIVADO en varios docs (terreno-119, intro-summoning, demo-scene) y SIN ficha — la familia de #267: todo censo por catalogo era ciego a sus 28 accesos en 5 overlays. El pase de DECAIMIENTO de puertas de TOWN 0x0242-0x028b lee cada celda de la fila (bucle cmp si,0x20 = 32 columnas), y con rand(0,7)==0 reescribe 0x2D/0x2E (cerrada/magica) a 0x2B/0x2C — puertas re-cerrandose con el tiempo. La INTRO usa la MISMA region con layout propio para la escena demo (doble rejilla 0x6608/0x6708 a paso 0x20, intro-summoning-scene-engine.md §1; escritura entera INTRO 0x1dfd, lectura 0x0eb4) — declarado SIN adjudicar aqui la geometria de la demo.",
+   "evidence": "tile_addr ULTIMA.EXE 0x4402 (rama g_location < 0x80); cargador TOWN.OVL 0x0408 (bloque de 1 KiB = 0x400 sobre DS 0x6608 por entrada, terreno-119-acta.md); decaimiento de puertas TOWN 0x0242-0x028b (lee [bx + si + 0x6608], compara 0x2D / 0x2E, escribe 0x2B en 0x0266 y 0x2C en 0x0286, bucle de 32 columnas en 0x026c); censo de accesos: 28 sitios en FONT (10) + NPC (3) + OUTSUBS (9) + TOWN (5) + ULTIMA.EXE (2, add ax + 0x6608 en 0x4478 / 0x44a8), formas indexada + lea + inmediato-a-registro + add-base (canales c4 / c5 / c7). Extension 1024 = la carga exacta de TOWN 0x0408 y el direccionamiento (y<<5)+x con ambos ejes 0..31; el paso 32 es el <<5 del propio tile_addr. Fuera-de-save adjudicado en terreno-119-acta.md (la hierba no debe ir a mapOverrides). || #265"
+  },
+  {
+   "addr": 28064,
+   "size": 3,
+   "name": "g_str_comma_space",
+   "meaning": "cadena constante \", \" (bytes 2c 20 00): el SEPARADOR que armed_with_weapon_msg antepone al nombre del arma, y sólo cuando el segundo argumento no es cero (o sea, entre armas de una lista, no como cabecera). El \", armed with \" que da nombre al mensaje es la cadena VECINA en 0x6DA4, distinta de ésta",
+   "evidence": "COMBAT.OVL 0x05d2 `mov di, 0x6da0` = origen del primer strcat, bajo la guarda 0x05cc `cmp word ptr [bp+4],0` / `je 0x5fb` que lo SALTA cuando el arg es 0. Bytes leídos de DATA.OVL en fileoff 0x6db0 (= DS + 0x10): `2c 20 00` ⇒ 3 B con el NUL. ⚠ heredados-168 tanda 3 la llamó «cadena de prefijo fija»; es un separador condicional"
+  },
+  {
+   "addr": 43453,
+   "size": 1,
+   "name": "g_unk_a9bd",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 5 ficheros (25 refs: CAST2.OVL,INTRO.OVL,MAINOUT.OVL,OUTSUBS.OVL,ULTIMA.EXE); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 43454,
+   "size": 1,
+   "name": "g_unk_a9be",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 4 ficheros (14 refs: ENDGAME.OVL,FONT.OVL,INTRO.OVL,ULTIMA.EXE); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 43467,
+   "size": 1,
+   "name": "g_unk_a9cb",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (4 refs: FONT.OVL,INTRO.OVL,ULTIMA.EXE); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 43470,
+   "size": 1,
+   "name": "g_unk_a9ce",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 8 ficheros (20 refs: BLCKTHRN.OVL,CMDS.OVL,COMBAT.OVL,DUNGEON.OVL,INTRO.OVL...); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 43514,
+   "size": 1,
+   "name": "g_unk_a9fa",
+   "meaning": "flag de redraw del panel/roster (New Order, Board, etc. lo ponen a 1; Task 3.9). CONSUMIDOR derivado (frontera-73, #74): el bucle de entrada de CADA MODO lo prueba, repinta y lo limpia — COMBAT 0x06e2, DUNGEON 0x03de (cabeza de dng_getkey), MAINOUT 0x05a3 y TOWN 0x0dd3, los cuatro con el patron IDENTICO `cmp [g_unk_a9fa],0 / je / call -> kernel 0x2900 draw_status_panel / mov [g_unk_a9fa],0`.",
+   "evidence": "referenciada por 9 ficheros (31 refs: CAST.OVL,CAST2.OVL,CMDS.OVL,COMBAT.OVL,DUNGEON.OVL...); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel). AMPLIADO (frontera-73, #74): censo por los TRES canales (hex 0xa9fa, SIMBOLO g_unk_a9fa y complemento a dos) = 31 accesos en 9 ficheros; ~24 son escrituras de 1 (CAST, CAST2, CMDS, COMBAT, DUNGEON, MAINOUT, SJOG, ULTIMA.EXE — entre ellas la plaga de search_remains_outcome en SJOG 0x0246) y EXACTAMENTE 4 son el par test-and-clear de arriba. La lectura previa ('flag de redraw del panel/roster') queda CONFIRMADA, no sustituida. OJO: un censo que busque solo el hex devuelve CERO — el disasm imprime el simbolo."
+  },
+  {
+   "addr": 43515,
+   "size": 1,
+   "name": "g_step_sfx_duration",
+   "meaning": "DURACION del zumbido del paso en mazmorra, que DECAE: se siembra a 0x0F y cada disparo la baja 4 con clamp a 0. No es un contador suelto: es literalmente el argumento de duracion que se le pasa a noise_burst.",
+   "evidence": "CHORE 4 de frontera-25/27. Sin entrada previa en el ledger; censada por los TRES canales (hex, simbolo, complemento a dos) leyendo los .asm en Python (nunca grep -r: los .asm del worktree son symlinks y grep -r los salta en silencio). DERIVADA POR MI, y CORRIGE en un punto la descripcion heredada («contador del beep»): DUNGEON 0x0694 la siembra a 0x0F; DUNGEON 0x1020-0x1047 es quien la consume, y ahi se ve que se empuja como SEGUNDO argumento de noise_burst (pushes 1, [0xa9fb], 0x4e20 = paso 1, duracion=ella, techo de frecuencia 20000) y que el decaimiento lo hace el kernel 0x3F36, cuyo cuerpo lei: decay_byte_clamped(ptr,delta) con [bp+6]=ptr y [bp+4]=delta, «si [ptr]<=delta entonces 0, si no [ptr]-=delta», invocado con delta=4. Si vale 0 no suena nada (guarda 0x1027). 4 refs, todas en DUNGEON.OVL."
+  },
+  {
+   "addr": 43774,
+   "size": 1,
+   "name": "g_unk_aafe",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (7 refs: SHOPPES.OVL,SHOPPES2.OVL,TALK.OVL); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 43778,
+   "size": 352,
+   "name": "g_vis_buffer",
+   "meaning": "buffer de la ventana de vista. EXTENSION DECLARADA 352 B = 11 filas x stride 32 (0xAB02..0xAC61). OCUPADO 331 B: cada fila escribe solo 11 columnas, asi que el ultimo byte escrito es 0xAB02+10*32+10 = 0xAC4C; los 21 B de cola de cada fila y el tramo final 0xAC4D..0xAC61 son PASO NO ESCRITO. La celda (5,5) = 0xABA7 es la de la PARTY. X-Ray (Wis An Ylem) entra por kernel 0x5D0A con radio -1, y eso NO lo deja en 0xFF: la cabecera siembra 0xFF (5d12-5d31) y luego cae en la rama 5d95-5df3, que reescribe las 121 celdas con el terreno CRUDO via tile_addr (ULTIMA.EXE 0x4402) ⇒ revela la ventana entera, muros incluidos (★ #219). El radio de 0x5D0A es TRI-ESTADO: > 0 flood por LOS (5d45), == 0 sólo la siembra (todo negro), < 0 copia cruda.",
+   "evidence": "asm: CAST2:0x046c -> kernel 0x5D0A con primer arg -1 (CAST2 0x0473 `mov ax, 0xffff`, primer push = el radio) hace repne stosb 0xFF (5d12-5d31) saltando el raycast y A CONTINUACION la copia cruda de 5d95-5df3 (★ #219: la lectura anterior se paraba en el stosb y daba a entender ventana en negro; re/notes/deriv-219-acta.md §4); re/notes/magic.md §7 (Task 3.3) ★ #68 (frontera-28): el size era 121 = CELDAS UTILES (11x11), no extension. compose_world_view (ULTIMA.EXE 0x5394) lo indexa con `mov cl,5; shl bx,cl` = stride 32 (0x553b-0x5542), en paralelo con 0xAC64 que usa `shl bx,4` = stride 16. Tres comprobaciones independientes de la geometria: (1) las fronteras cuadran al byte, 0xAC64-0xAB02 = 354 = 11*32+2 y 0xAD14-0xAC64 = 0xB0 = 11*16; (2) BLCKTHRN 0x070e carga exactamente 0xB0 B en 0xAC64 y 0x073d-0x074b copia `repne movsw` cx=5 + `movsb` = 11 bytes por fila en bucle de [bp-6]=0xB = 11 filas; (3) town_move (TOWN 0x0600) direcciona la rejilla con desplazamientos RELATIVOS CON SIGNO desde el CENTRO 0xABA7 = fila 5 col 5 (indices a 0 en 0x061a-0x0622, `dec [bp-0xc]` para la direccion 3, identificada por su eco DS 0x2676 = 'North'), o sea si=-32 = una fila arriba. Instrumento: re/tools/globals_negdisp.py scaled_index_refs(). ★ ENMIENDA #68 (adjudicacion del lead sobre el dato de renombres-59): OCUPADO != EXTENSION, y la ficha no debe sobre-afirmar. El cuerpo de vis_buffer_build (ULTIMA.EXE 0x5d0a) lo deja explicito y lo he releido yo: 0x5d17 `mov si, 0xab02` (base), 0x5d1a `mov di, 0xb` (11 FILAS), 0x5d1d `mov cx, 0xb` (11 BYTES por fila), 0x5d21-0x5d2a `di=si; es=ds; ax=0xFF; repne stosb` (escribe 11 B), 0x5d2d `add si, 0x20` (avanza UNA fila = stride 32), 0x5d30 `dec di / jne` (11 vueltas). ⇒ ULTIMO BYTE ESCRITO 0xAC4C y OCUPADO 331 B; las colas de 21 B/fila y el tramo 0xAC4D..0xAC61 NO se escriben nunca. El `size` sigue siendo 352 porque es EXTENSION DE DIRECCIONES con geometria de stride declarada (y la guarda size%stride==0 lo exige: 331 la violaria, con razon — 331 es una MEDICION de escritura, no una declaracion de geometria). TERCERA confirmacion independiente del stride, y ademas COPIABLE en vez de inferida: 0x5d59 `mov ax, 0x20` empuja el propio 32 como ARGUMENTO, junto a 0x5d5d `mov ax, 0xab02` con la base. || ★ #264b — ESTE BÚFER NO ES EL ÚNICO DESTINO DE SU PRODUCTOR: el flood-fill `ULTIMA.EXE 0x5a28` recibe la BASE DE DESTINO como argumento (`[bp+4]`) y tiene DOS llamadores con bases distintas — `ULTIMA.EXE 0x5d5d`, `mov ax, 0xab02` / `push ax` / `call 0x5a28` en 0x5d61, frente a `ULTIMA.EXE 0x5f53`, `mov ax, 0xad14` / `push ax` / `call 0x5a28` en 0x5f57, y los dos llamadores corren con SELECTOR DE MODO distinto (A con 1, B con 0). Es decir que la misma rutina rellena este búfer o `g_cbt_room_record` según quién la llame, y un censo de productores de 0xAB02 que sólo mire literales dentro del cuerpo del flood-fill no ve ninguno. Derivación completa en re/notes/derivaciones-189-acta.md (tarjeta #189); los dos llamadores verificados aquí contra el disasm",
+   "stride": 32
+  },
+  {
+   "addr": 43975,
+   "size": 1,
+   "name": "g_vis_tile_south",
+   "meaning": "celda del búfer de tiles visibles g_vis_buffer(0xAB02, stride 32): delta 197 = fila 6, col 5 ⇒ una fila POR DEBAJO de la celda central 0xABA7 (fila 5, col 5 = la party) ⇒ es el TILE INMEDIATAMENTE AL SUR de la party. Los 4 consumidores lo tratan como un ID DE TILE, nunca como flag ni contador: CMDS 0x0b58 `and al,0xfc / cmp al,0xb4` (familia 0xb4-0xb7), CMDS 0x131a lo compara contra [si+0x4512] y contra 0xdf, MAINOUT 0x05b2 `and al,0xfc / cmp al,0xd4` (familia 0xd4-0xd7) y TOWN 0x0e3f `cmp [g_unk_abc7],0x8d` = el GATE DEL PUZLE DEL CLAVICÉMBALO. ★ RENOMBRADA EN #75 (g_unk_abc7 -> g_vis_tile_south): la semántica ya estaba derivada; lo que faltaba era poder renombrar SIN poner a cero el canal símbolo, que es lo que resuelve `old_names`.",
+   "evidence": "4 refs por el canal SÍMBOLO (tras #75 se recuperan VÍA ALIAS old_names=['g_unk_abc7']: el corpus .asm sigue imprimiendo el nombre viejo) (CMDS 0x0b58, CMDS 0x131a, MAINOUT 0x05b2, TOWN 0x0e3f); 0 por hex y 0 por desplazamiento negativo — es el contraejemplo que sella test_0xABC7_ES_EL_CONTRAEJEMPLO_DE_MIRAR_SOLO_DOS_CANALES. La geometría (fila 6, col 5) ya está sellada en test_globals.py:140 y test_globals_negdisp.py:258; esta entrada sólo RETIRA el «sin derivación fina», que contradecía a sus propios tests.",
+   "old_names": [
+    "g_unk_abc7"
+   ]
+  },
+  {
+   "addr": 44132,
+   "size": 176,
+   "stride": 16,
+   "name": "g_vis_tile_window",
+   "meaning": "capa de TILES de la ventana de vista 11x11 a stride 16 — la hermana intercalada de g_vis_buffer (stride 32): compose_world_view escribe EN EL MISMO PUNTO el tile hacia las dos bases, con shl bx,4 hacia aqui y shl bx,5 hacia 0xAB02. Los tres buferes 0xAB02 / 0xAC64 / 0xAD14 son consecutivos y de 11 filas, con fronteras que cuadran al byte. 0xAC74 = +16 = fila 1 columna 0 (la vieja tarea #61: su unico acceso visible era por puntero, y la reformulacion «probablemente no existe instruccion escritora» quedo REFUTADA — hay cuatro, todas en forma negativa). ★ #267 (alta): esta direccion estaba DERIVADA TRES VECES (globals-negdisp-adjudicacion §4, globals-size-semantica, y la propia evidencia de g_vis_buffer) y aun asi NO tenia entrada — vivia descrita dentro de la ficha vecina, y el hueco 0xAC62..0xAD13 salia como tierra de nadie en todo censo por catalogo. El alta existe para que la particion y los censos dejen de tropezar ahi. ⚠ #272: los DOS bytes 0xAC62-0xAC63 — entre el final de g_vis_buffer (0xAC61) y esta base — quedan SIN adjudicar: medidos por buffer-267-acta (hueco real 178 B frente a los 176 del bufer), probable relleno de alineacion, SIN derivacion; quien lea los productores de las vecinas debe decir que son o que siguen sin saberse. ⚠ ERRATA historica corregida en #267: ui-render-map.md:101 y kernel-render-sweep.md:176 glosaban el desplazamiento negativo -0x539c como «0x5C64» cuando el complemento es 0xAC64.",
+   "evidence": "derivacion completa en re/notes/globals-negdisp-adjudicacion.md §4. Escritores (cuatro, todos por desplazamiento negativo -0x539c): ULTIMA.EXE 0x537d (world_tile_autotile_resolve, indexado bx+si) y ULTIMA.EXE 0x5534 / 0x5571 / 0x55b9 (compose_world_view). Lectores: viewport_compose_11x11 en 0x56d4 y 0x56db (comparan la celda contra 0x16) y tile_terrain_class_lookup CMDS 0x07bc. Geometria por DOS vias independientes: (1) fronteras al byte — 0xAC64-0xAB02 = 354 = 11*32+2 y 0xAD14-0xAC64 = 0xB0 = 11*16; (2) BLCKTHRN 0x070e empuja 0xB0 como longitud de carga a 0xAC64 y el bucle 0x073d-0x074b copia repne movsw cx=5 + movsb = 11 bytes por fila en 11 filas. El paralelo de strides esta citado tambien desde la ficha de g_vis_buffer (compose_world_view 0x553b-0x5542). kernel-render-sweep.md atribuye ademas a la rutina de 0x542a el volcado de sprites de la lista de actores (0x5d52) sobre este bufer — etiqueta del documento, no re-derivada en esta alta. || #267"
+  },
+  {
+   "addr": 44308,
+   "size": 352,
+   "stride": 32,
+   "name": "g_cbt_room_record",
+   "meaning": "registro de mapa de combate .CBT cargado plano: 352 B (0x160) = 11 filas x 32. Las columnas 0..10 de cada fila son la rejilla 11x11 de tiles; las columnas >= 11 son el RELLENO del paso, y ahí es donde viven los metadatos del .CBT (posiciones de entrada, unidades y los siete arrays de disparador de suelo). Las siete «globales sueltas» de la cola de heredados-168 tanda 6 son campos INTERIORES de este registro, no globales independientes. ★ #219 — SEGUNDO DUEÑO, EXCLUYENTE POR FASE: con g_location < 0x80 esta misma dirección es la MÁSCARA DE CELDAS ILUMINADAS del chunk 32x32 (índice (fila<<5)+col, cero = no iluminada), que ULTIMA.EXE 0x5e4a limpia entera (5e5e `mov cx, 0x400`) y que el pase de la party consulta en 0x5c29 / 0x5c40 / 0x5c8c. Los 352 de este registro son los primeros 352 B de ese mismo búfer: 352 esta CONTENIDO en 1024, no son dos extensiones en conflicto. El discriminador es el MISMO predicado en tres sitios — ULTIMA.EXE 0x4408 (tile_addr lee el terreno de 0xAD14 sólo si g_location > 0x7f), 0x5947 (la pasada de luces sólo corre si < 0x80) y 0x5954 (si >= 0x80 el repintado COPIA 0x160 B de aquí a g_vis_buffer, 0x59f8-0x5a0b). El `size` se queda en 352 porque es la extensión del REGISTRO que da nombre a la entrada; la extensión DIRECCIONABLE del búfer es 1024 B, acotada a 0..31 en los dos ejes por 0x5b7e / 0x5c6a / 0x5c6f. Derivación completa: re/notes/deriv-219-acta.md §1-§3 || ⚠ #264b, TRAMPA PARA QUIEN SE TIENTE DE PONER EL `size` EN 1024: al ensanchar la ventana de esta entrada a 1024 B entran ~18 candidatos ESPURIOS, todos el literal 0xB000 de `HER.DRV`, que son SELECTORES DE SEGMENTO y acaban en `ds`/`es`, no direcciones de dato. Medido como control de partición en re/notes/canal5-interiores-247-acta.md, y ojo al leerlo: allí es la predicción P4 y su resultado quedó **PARCIAL (18 de 19)** — el 19º sólo aparece con una ventana de 14 instrucciones. La extensión DIRECCIONABLE de 1024 es correcta; lo que no se puede es censar sobre ella sin el filtro de segmento || #248 TERCER USO, y NO es un registro ni una máscara: en DNGLOOK esta misma dirección es el BÚFER DE VISITADOS del flood-fill del View Gem de mazmorra. Rejilla de DISPLAY 22x22 al MISMO paso 32, 0xFF = sin visitar y 0 = ya dibujada; el gate de límites es 0..0x15 en los dos ejes (DNGLOOK.OVL 0x034d-0x0363) y el índice es (fila<<5)+col+0xAD14 (0x036a-0x0374), luego el byte más alto alcanzable es (21<<5)+21 = 693. La siembra limpia 0x2e0 = 736 B (23 filas x 32), UNA FILA MÁS que las 22 que el display necesita: 736 es la EXTENSIÓN ESCRITA y 704 la lógica. Este uso NO pasa por tile_addr y no tiene nada que ver con el terreno. Cuadra con el veredicto ya publicado en docs/verdicts/gem-flood/README.md (derivado allí de forma independiente) || #248 SEGUNDO PRODUCTOR del MISMO registro, que NO lo carga de disco sino que lo SINTETIZA: DNGLOOK.OVL 0x0d3e construye en 0xAD14 un registro en formato .CBT para campamento/emboscada (gate `test [g_unk_58a1], 4`), con la rejilla 11x11 sembrada de un tile de fondo, las posiciones de entrada y el plantel de 16 unidades de la fila 5 barajado con Fisher-Yates. CONSUME RNG (kernel 0x2092 rand_range vía el thunk 0x7e02): 16 tiradas rand(0,15) en el barajado, más rand(0,7) y rand(1,N). Ya identificado como constructor sintético en re/notes/cbt-unidades-0-0-y-cruce-movil.md",
+   "evidence": "Cargado por DUNGEON.OVL 0x005e-0x007b (0x160 B a DS:0xAD14). Paso 32 probado en el escritor de disparadores COMBAT.OVL 0x119b-0x11a2 `mov cl,5` / `shl bx,cl` / `add bx,cx` / `mov byte ptr [bx - 0x52ec], al` ((-0x52ec)&0xFFFF = 0xAD14). Estructura corroborada por los BYTES del fichero: original/u5/ultima5/BRIT.CBT son 5632 B = 16 registros de 352, y en el registro 0 las columnas 0..10 son tiles y las >= 11 metadatos. Y por el extractor del port: extractor/src/parsers/combatmap.ts:72-85 `MAP_BYTES=352, ROW_BYTES=32, GRID=11, at(row,col)=data[base+row*32+col]`. NOTA: g_unk_adb9 @0xADB9 queda ANIDADA aquí (+165 = fila 5, col 5, una celda de la rejilla); anidamiento justificado por `stride`, precedente de la tarea #68 con g_vis_buffer @0xAB02. ★ #248, uso de gema: driver DNGLOOK.OVL 0x06a8 (colas X 0xa528 / Y 0xa628, centro sembrado y pre-marcado visitado en `mov byte ptr [0xae7f], 0` = fila 11 col 11) y cuerpo por celda DNGLOOK.OVL 0x0340 (`cmp byte ptr [si], 0` lee y `mov byte ptr [si], 0` marca). ★ #248, escritor de la FILA 5 (plantel): DNGLOOK.OVL 0x0f2e `mov byte ptr [di - 0x5241], 0` y 0x0fc8 `mov byte ptr [bx - 0x5241], al` — (-0x5241)&0xFFFF = 0xADBF = +171 = fila 5 col 11. Es una CUARTA base plegada, además de las tres de lectura que re/notes/cbt-unidades-0-0-y-cruce-movil.md ya lista (-0x524c / -0x522c / -0x520c), y por eso el `0xADBF sin coincidencias en ningún .asm` de esa nota es un CERO EN FALSO del mismo mecanismo que la propia nota describe ★ #264 (procedencia): quien destapó que `DNGLOOK` era un TERCER dueño sin nombrar fue `re/notes/lectura-244-acta.md` §4.2, que dice literalmente «La ficha del ledger de `g_cbt_room_record` atribuye la carga a `DUNGEON.OVL` y el segundo uso a `ULTIMA.EXE:0x5e4a`; `DNGLOOK` no aparece» — eso YA está remediado arriba por #248, pero el documento no estaba cruzado desde aquí. Y queda VIVO lo que esa misma acta mide y esta ficha no dice: las 9 cargas de 0xAD14 son una COTA de cargas DE LA BASE — hay 12 cargas más de BYTES INTERIORES y 12 del sexto canal (lectura-244-acta §3.2 y §5)."
+  },
+  {
+   "addr": 44319,
+   "size": 8,
+   "name": "g_cbt_trigger_tile",
+   "meaning": "disparadores de suelo del .CBT, array 1 de 7: el TILE que se estampa al pisar el disparador. 8 entradas (fila 0, columnas 11..18 del registro)",
+   "evidence": "COMBAT.OVL 0x113e `mov word ptr [bp - 0x10], 0xad1f` y 0x1185-0x1188 `mov bx,[bp-0x10]` / `mov al, byte ptr [bx]` = el valor que luego escribe 0x11a2. Offset +11 sobre g_cbt_room_record. Corroborado por extractor/src/parsers/combatmap.ts:142 `at(0, 11+t)` -> `trigger[t].sprite`, y por re/notes/trigger-sala-impacto-distancia.md:49-62"
+  },
+  {
+   "addr": 44473,
+   "size": 1,
+   "name": "g_unk_adb9",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 4 ficheros (6 refs: BLCKTHRN.OVL,DNGLOOK.OVL,OUTSUBS.OVL,ULTIMA.EXE); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 44575,
+   "size": 8,
+   "name": "g_cbt_trigger_x",
+   "meaning": "disparadores de suelo del .CBT, array 2 de 7: coordenada X del disparador, comparada contra el PRIMER argumento del manejador. 8 entradas (fila 8, columnas 11..18). Al casar se le escribe 0xFF — el centinela one-shot",
+   "evidence": "COMBAT.OVL 0x1138 `mov si, 0xae1f`; 0x115f-0x1166 `mov al,[si]` / `cmp ax, word ptr [bp + 6]` / `jne`; 0x116f-0x1173 `mov al,0xff` / `mov byte ptr [si], al` (consumo one-shot). Offset +267 = fila 8, col 11. Tope de 8 por `mov dx,8` en 0x115c, y CORROBORADO INDEPENDIENTEMENTE por la aritmética: g_cbt_trigger_y empieza exactamente 8 B después. Eje X por extractor/src/parsers/combatmap.ts:146 y re/notes/trigger-sala-impacto-distancia.md:49-62; este cuerpo fija la POSICIÓN DEL ARGUMENTO, no el nombre del eje"
+  },
+  {
+   "addr": 44583,
+   "size": 8,
+   "name": "g_cbt_trigger_y",
+   "meaning": "disparadores de suelo del .CBT, array 3 de 7: coordenada Y del disparador, comparada contra el SEGUNDO argumento. 8 entradas (fila 8, columnas 19..26). También recibe el 0xFF one-shot",
+   "evidence": "COMBAT.OVL 0x113b `mov di, 0xae27`; 0x1168-0x116d `mov al,[di]` / `cmp ax, word ptr [bp + 4]` / `jne`; 0x1171 `mov byte ptr [di], al` con al=0xFF. Offset +275 = fila 8, col 19; abuta exactamente con g_cbt_trigger_x (+267 + 8). Eje Y por el extractor (combatmap.ts:146) y el corpus"
+  },
+  {
+   "addr": 44607,
+   "size": 8,
+   "name": "g_cbt_trigger_pos1_x",
+   "meaning": "disparadores de suelo del .CBT, array 4 de 7: X de la PRIMERA casilla destino que se reescribe al disparar. Es el índice MENOR del direccionamiento (se suma sin escalar). 8 entradas (fila 9, columnas 11..18); una entrada >= 11 anula el destino",
+   "evidence": "COMBAT.OVL 0x1143 `mov word ptr [bp - 4], 0xae3f`; guarda 0x1178 `cmp byte ptr [bx], 0xb` / `jae` (fuera del 11x11); 0x118d `mov cl, byte ptr [bx]` y 0x119f `add bx, [bp-0x16]` — se SUMA sin escalar. Offset +299 = fila 9, col 11. Corroborado por extractor/src/parsers/combatmap.ts:147 (`pos1.x`, header `newPosition1`)"
+  },
+  {
+   "addr": 44615,
+   "size": 8,
+   "name": "g_cbt_trigger_pos1_y",
+   "meaning": "disparadores de suelo del .CBT, array 5 de 7: Y de la primera casilla destino. Es el índice MAYOR: se escala por 32, el paso del registro. 8 entradas (fila 9, columnas 19..26)",
+   "evidence": "COMBAT.OVL 0x1148 `mov word ptr [bp - 8], 0xae47`; guarda 0x1180 `cmp byte ptr [bx], 0xb` / `jae`; 0x1194-0x119d `mov bl, byte ptr [bx]` / `mov cl,5` / `shl bx, cl` = x32. Offset +307 = fila 9, col 19; abuta con g_cbt_trigger_pos1_x. Que el eje escalado por el paso sea la Y concuerda con extractor/src/parsers/combatmap.ts:147 y con re/notes/trigger-sala-impacto-distancia.md"
+  },
+  {
+   "addr": 44639,
+   "size": 8,
+   "name": "g_cbt_trigger_pos2_x",
+   "meaning": "disparadores de suelo del .CBT, array 6 de 7: X de la SEGUNDA casilla destino. Un disparo modifica hasta DOS casillas, cada una con su propia comprobación de estar dentro del 11x11. 8 entradas (fila 10, columnas 11..18)",
+   "evidence": "COMBAT.OVL 0x114d `mov word ptr [bp - 6], 0xae5f`; segundo bloque 0x11a6-0x11d0, guarda 0x11a9 `cmp byte ptr [bx], 0xb` / `jae`; 0x11be `mov cl, byte ptr [bx]`, sumado sin escalar en 0x11d0. Offset +331 = fila 10, col 11. Corroborado por extractor/src/parsers/combatmap.ts:148 (`pos2.x`, header `newPosition2`)"
+  },
+  {
+   "addr": 44647,
+   "size": 8,
+   "name": "g_cbt_trigger_pos2_y",
+   "meaning": "disparadores de suelo del .CBT, array 7 de 7: Y de la segunda casilla destino, escalada por 32. 8 entradas (fila 10, columnas 19..26)",
+   "evidence": "COMBAT.OVL 0x1152 `mov word ptr [bp - 0xa], 0xae67`; guarda 0x11b1 `cmp byte ptr [bx], 0xb` / `jae`; 0x11c5-0x11ce `mov bl, byte ptr [bx]` / `mov cl,5` / `shl bx, cl`. Offset +339 = fila 10, col 19; abuta con g_cbt_trigger_pos2_x. Corroborado por extractor/src/parsers/combatmap.ts:148"
+  },
+  {
+   "addr": 45332,
+   "size": 2,
+   "name": "g_shoppe_id",
+   "meaning": "índice 0-based de la ciudad dentro de la lista SHOP_TOWNES de su tipo (lo fija kernel/TALK al entrar); indexa stock/precio por-town",
+   "evidence": "referenciada por 4 ficheros (26 refs: SHOPPES.OVL,SHOPPES2.OVL,SHOPPES3.OVL,TALK.OVL); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel) | Task 3.6 tiendas — ver re/notes/shops.md",
+   "old_names": [
+    "g_unk_b114"
+   ]
+  },
+  {
+   "addr": 45334,
+   "size": 2,
+   "name": "g_shoppe_id2",
+   "meaning": "2º índice de tienda (greeting/subprompt)",
+   "evidence": "Task 3.6 tiendas — ver re/notes/shops.md"
+  },
+  {
+   "addr": 45336,
+   "size": 2,
+   "name": "g_shop_accum",
+   "meaning": "acumulador de precio/coste del regateo (b118 = base + ⌊base·(100−3·INT)/100⌋)",
+   "evidence": "referenciada por 3 ficheros (65 refs: SHOPPES.OVL,SHOPPES2.OVL,SHOPPES3.OVL); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel) | Task 3.6 tiendas — ver re/notes/shops.md",
+   "old_names": [
+    "g_unk_b118"
+   ]
+  },
+  {
+   "addr": 45338,
+   "size": 2,
+   "name": "g_shop_qty",
+   "meaning": "cantidad concedida por compra (reactivos: reagentQuantities)",
+   "evidence": "Task 3.6 tiendas — ver re/notes/shops.md"
+  },
+  {
+   "addr": 45598,
+   "size": 1,
+   "name": "g_text_scratch",
+   "meaning": "búfer de texto compartido del kernel, terminado en NUL. NO es sólo de combate: COMBAT lo usa de destino para componer el mensaje de arma (strcat), TALK lo usa de almacén del script TLK (g_talk_script_ip se inicializa a esta dirección) y FONT lo lee para pintarlo. ⚠ EXTENSIÓN NO DERIVADA: es un búfer de cadena de longitud dinámica; size=1 es un marcador, no una medida. Cota superior 2038 B hasta g_combat_actor_records @0xBA14",
+   "evidence": "COMBAT.OVL 0x05d5 `mov si, 0xb21e` y 0x060a ídem — destino de los dos strcat inline de armed_with_weapon_msg (0x05d8-0x05f9 y 0x060d-0x0631: repne scasb para hallar el NUL + repne movsw/movsb); TALK.OVL 0x075e `mov word ptr [0xbcde], 0xb21e`; FONT.OVL 0x0536/0x054e/0x055d/0x056a/0x057e/0x05be `mov al, byte ptr [bx|si - 0x4de2]` (=0xB21E) al pintar. CENSO: 53 refs hex + 26 negativas. ⚠ heredados-168 tanda 3 lo etiquetó «búfer de composición del mensaje de COMBATE»; el uso desde TALK y FONT lo desmiente como exclusivo de combate"
+  },
+  {
+   "addr": 47636,
+   "size": 256,
+   "name": "g_combat_actor_records",
+   "meaning": "tabla de 32 registros de combatiente de 8 B. Layout fijado por el cuerpo de move_combat_actor: +2 flags (bit 0x80 miembro del party, bit 0x20 caido), +3 slot de roster, +4 ranura en la tabla de actores de mundo 0x5C5A, +6 X, +7 Y.",
+   "evidence": "CHORE 4 de frontera-25/27. Sin entrada previa en el ledger; censada por los TRES canales (hex, simbolo, complemento a dos) leyendo los .asm en Python (nunca grep -r: los .asm del worktree son symlinks y grep -r los salta en silencio). El layout NO lo invento: sale del cuerpo de SJOG.OVL 0x1c56 (move_combat_actor, verified en el ledger), que direcciona los campos como [bx-0x45e8]/[bx-0x45e6]/[bx-0x45e5] — o sea EN FORMA NEGATIVA, que es justo el canal que un censo por hex no ve. 27 refs en 5 ficheros (COMBAT 10, ULTIMA.EXE 7, CAST 4, SJOG 4, CMDS 2). Tamano 32*8 = 256 B, que llega exactamente hasta 0xBB14 sin solapar con nada del ledger.",
+   "stride": 8
+  },
+  {
+   "addr": 47893,
+   "size": 1,
+   "name": "g_unk_bb15",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (6 refs: DNGLOOK.OVL,DUNGEON.OVL,ULTIMA.EXE); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 47894,
+   "size": 1,
+   "name": "g_unk_bb16",
+   "meaning": "sin derivación fina: BSS/scratch cross-overlay del censo (nfiles>=3); no requerido para la paridad de ningún subsistema migrado",
+   "evidence": "referenciada por 3 ficheros (5 refs: DNGLOOK.OVL,SJOG.OVL,ULTIMA.EXE); fuera de la ventana SAVED.GAM (BSS/DGROUP del kernel)"
+  },
+  {
+   "addr": 47895,
+   "size": 1,
+   "name": "g_dng_gfx_latch",
+   "meaning": "byte de banderas de la carga de gráficos de mazmorra: bit 1 = tiles ya cargados (si está a 0 se cargan las variantes de muro y se marca), bit 2 = hay que pasar antes por la rutina 0x6d9e (y en el desmontaje libera por 0x6d64), bit 4 = una tercera puerta en el desmontaje. ⚠ la escritura de 0x10e0 es `mov byte ptr [0xbb17], 1`, o sea que al marcar «cargado» BORRA los bits 2 y 4",
+   "evidence": "DNGLOOK.OVL 0x10ab `test byte ptr [0xbb17], 2` / `call 0x6d9e`; 0x10b5 `test byte ptr [0xbb17], 1` (puerta de carga); 0x10e0 `mov byte ptr [0xbb17], 1`; 0x1130 `test ... 1` y 0x1159 `test ... 2` y 0x116b `test ... 4` en el desmontaje. Todos los accesos son byte ⇒ size=1. Cuerpo identificado por heredados-168 tanda 4"
+  },
+  {
+   "addr": 48350,
+   "size": 2,
+   "name": "g_talk_script_ip",
+   "meaning": "puntero de instrucción del script TLK: word DS-relativo que recorre el guion de diálogo byte a byte. Se INICIALIZA a 0xB21E (el búfer de texto compartido), o sea que el script vive en g_text_scratch",
+   "evidence": "TALK.OVL 0x075e `mov word ptr [0xbcde], 0xb21e` (init); 0x0788-0x079a el bucle intérprete `mov bx,[0xbcde]` / `cmp byte ptr [bx],0` / `inc word ptr [0xbcde]` / `call 0xf32` (despacho de opcode); 0x072f/0x0741 avance por delimitador; 0x07bf-0x07d0 salto al siguiente NUL. size=2 por las escrituras `mov word ptr` e `inc word ptr`. Cuerpo identificado por heredados-168 tanda 1 (re/notes/heredados-168-tanda1.md §3.2)"
+  },
+  {
+   "addr": 48356,
+   "size": 16,
+   "name": "g_talk_word_buf",
+   "meaning": "búfer acumulador de palabra de TALK, 16 B, indexado por g_talk_word_len. El bit 0x80 de un byte marca fin de palabra. INVISIBLE a los canales hex y símbolo: todos sus accesos son por desplazamiento negativo",
+   "evidence": "TALK.OVL 0x058b `mov byte ptr [bx - 0x431c], al` (escritura, bx = g_talk_word_len); 0x0503 `mov al, byte ptr [si - 0x431c]` (lectura); 0x0555 `test byte ptr [si - 0x431c], 0x80` (marca de fin). (-0x431c)&0xFFFF = 0xBCE4. size=16 DERIVADO del tope `cmp byte ptr [0x4af1],0x10` en 0x0577, no estimado. CENSO: canal hex 0 refs, canal símbolo 0, canal negativo 3 — el cero de los dos primeros NO es refutación (re/tools/globals_negdisp.py). Cuerpo identificado por heredados-168 tanda 2"
+  },
+  {
+   "addr": 48406,
+   "size": 2,
+   "name": "g_shop2_type",
+   "meaning": "SHOPPES2 shop-type = [b114+0x4D4C] (taberna=1)",
+   "evidence": "Task 3.6 tiendas — ver re/notes/shops.md"
+  },
+  {
+   "addr": 48408,
+   "size": 2,
+   "name": "g_lore_lock",
+   "meaning": "SHOPPES2 gate de rumor (1 por visita)",
+   "evidence": "Task 3.6 tiendas — ver re/notes/shops.md"
+  },
+  {
+   "addr": 48410,
+   "size": 2,
+   "name": "g_alive_a",
+   "meaning": "SHOPPES2 contador de vivos del party (ronda de taberna) || ★ #264b — PRODUCTOR Y CONSUMIDORES, que esta entrada no tenía. PRODUCTOR: la misma rutina de ronda pone a CERO `g_shop_accum`, `g_alive_b` y esta global (SHOPPES2.OVL 0x0008-0x0013) y luego la INCREMENTA una vez por miembro vivo del recorrido (SHOPPES2.OVL 0x0036), o sea que su dominio es 0..tamaño de party (re/notes/tavern-192-acta.md). CONSUMIDORES: el valor se usa DOS veces y de dos maneras — como SELECTOR de dos ramas excluyentes (`cmp word ptr [0xbd1a], 0` / `je`, SHOPPES2.OVL 0x014a-0x014f) y, en la rama no-cero, como la CANTIDAD que se suma a `g_food` con tope 9999 (SHOPPES2.OVL 0x0151-0x015d, `call` con `0x57a8` y `0x270f`); la rama cero sólo incrementa el contador de servicios de `[0xbd20]` (re/notes/pool-resto-b-acta.md). ⚠ Las dos notas se leen como si discreparan («número de vivos» frente a «es el SELECTOR, no un contador»), y NO discrepan: es el mismo valor sirviendo de cuenta, de test-a-cero y de cantidad",
+   "evidence": "Task 3.6 tiendas — ver re/notes/shops.md"
+  },
+  {
+   "addr": 48412,
+   "size": 2,
+   "name": "g_alive_b",
+   "meaning": "SHOPPES2 contador de vivos (palabra 'two'..'six')",
+   "evidence": "Task 3.6 tiendas — ver re/notes/shops.md"
+  },
+  {
+   "addr": 48416,
+   "size": 2,
+   "name": "g_cups_served",
+   "meaning": "contador de SERVICIOS servidos en la taberna (rondas de comida 0x01C4 + copas de vino 0x0364); el gate de borrachera dispara con ==3 exactamente",
+   "evidence": "Task 3.6 tiendas — ver re/notes/shops.md"
+  },
+  {
+   "addr": 48418,
+   "size": 2,
+   "name": "g_ship_pay_reject",
+   "meaning": "SHOPPES2 flag: pago de nave rechazado (innAffordCheck)",
+   "evidence": "Task 3.6 tiendas — ver re/notes/shops.md"
+  },
+  {
+   "addr": 48420,
+   "size": 2,
+   "name": "g_ship_bought",
+   "meaning": "SHOPPES2 flag: nave comprada (commit)",
+   "evidence": "Task 3.6 tiendas — ver re/notes/shops.md"
+  },
+  {
+   "addr": 48426,
+   "size": 8,
+   "name": "g_virt_used",
+   "meaning": "gitana: flag por virtud 'usada este emparejamiento/ronda' (8 bytes); se limpia entre rondas",
+   "evidence": "gitana: flag 'virtud usada esta ronda' [8], FONT.OVL pick_virtue 0x0998; se limpia entre rondas"
+  },
+  {
+   "addr": 48434,
+   "size": 8,
+   "name": "g_virt_elim",
+   "meaning": "gitana: flag por virtud 'eliminada del torneo' (8 bytes); persiste entre rondas",
+   "evidence": "gitana: flag 'virtud eliminada del torneo' [8], FONT.OVL matchup 0x0afb; persiste entre rondas"
+  },
+  {
+   "addr": 48444,
+   "size": 1,
+   "name": "g_acc_int",
+   "meaning": "gitana: acumulador de INT durante el quiz (base 15 + puntos de virtudes ganadoras)",
+   "evidence": "gitana: acumulador de INT (base 15 + Sigma virtudes ganadoras), FONT.OVL 0x0ae7; finalize -> INT y MP"
+  },
+  {
+   "addr": 48445,
+   "size": 1,
+   "name": "g_acc_dex",
+   "meaning": "gitana: acumulador de DEX durante el quiz",
+   "evidence": "gitana: acumulador de DEX, FONT.OVL 0x0aef; finalize -> DEX"
+  },
+  {
+   "addr": 48446,
+   "size": 1,
+   "name": "g_acc_str",
+   "meaning": "gitana: acumulador de STR durante el quiz (finalize aplica suelo 20)",
+   "evidence": "gitana: acumulador de STR, FONT.OVL 0x0af7; finalize -> max(STR,20)"
+  }
+ ]
+}

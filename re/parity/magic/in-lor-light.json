@@ -1,0 +1,34 @@
+{
+ "name": "in-lor-light",
+ "note": "In Lor escribe g_light_spell_mins=100 (MINUTOS). Iolo (PJ 3) tiene In Lor mezclado en el save inicial.",
+ "spec": {
+  "seed": 1,
+  "spell": "In_Lor",
+  "casterIndex": 0,
+  "ctx": {
+   "location": 0,
+   "inCombat": false
+  },
+  "roster": [
+   {
+    "class": "M",
+    "mp": 8,
+    "level": 3,
+    "int": 17
+   }
+  ],
+  "spellQuantities": {
+   "0": 6
+  }
+ },
+ "expect": {
+  "light_mins": 100
+ },
+ "compareFields": [
+  "light_mins"
+ ],
+ "live": {
+  "casterDigit": "3",
+  "spellName": "in lor"
+ }
+}

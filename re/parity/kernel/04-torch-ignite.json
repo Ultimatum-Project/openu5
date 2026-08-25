@@ -1,0 +1,8 @@
+{
+  "name": "torch-ignite-town",
+  "_doc": "Ignite fuera de mazmorra: g_torch_mins = 240 FIJO y torches-1 (CMDS.OVL 0x0D98/0x0DD6); el comando consume turno (1 min en pueblo, que ya resta 1 → 239) y la antorcha se consume en MINUTOS: tras 2 turnos más quedan 237 (advance_clock 0x4FB4; byte-idéntico binario/clon en el run de paridad). kernel-survival.md §1 §3.",
+  "initial": "saved-gam",
+  "setup": [{ "global": "torches", "value": 2 }],
+  "actions": [{ "op": "ignite" }, { "op": "pass_turn", "times": 2 }],
+  "fields": ["torches", "torch_mins", "minute"]
+}

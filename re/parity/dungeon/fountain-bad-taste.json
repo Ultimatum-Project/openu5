@@ -1,0 +1,32 @@
+{
+ "name": "fountain-bad-taste",
+ "note": "Fuente 0x53: da\u00f1o rand(0,7) al PJ activo.",
+ "spec": {
+  "seed": 39321,
+  "roster": [
+   {
+    "dex": 15,
+    "hp": 30,
+    "maxHp": 30
+   }
+  ],
+  "activeCharacter": 0,
+  "pos": {
+   "dungeon": 33,
+   "floor": 0,
+   "x": 2,
+   "y": 2,
+   "facing": "east"
+  },
+  "cells": [
+   {
+    "floor": 0,
+    "x": 2,
+    "y": 2,
+    "type": 5,
+    "sub": 3
+   }
+  ],
+  "action": "drink"
+ }
+}

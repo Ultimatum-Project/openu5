@@ -1,0 +1,262 @@
+{
+  "part": "sint03",
+  "source": "SINTETICO — prosa inventada por el port, cero material de EA",
+  "sintetico": true,
+  "entry": {
+    "checkpoint": "sint02",
+    "note": "Encadena del checkpoint de sint02."
+  },
+  "segments": [
+    {
+      "id": "sint03-g01",
+      "ctx": "start",
+      "seam": null,
+      "ocr": {
+        "from": 1,
+        "to": 5
+      },
+      "script": [
+        {
+          "todo": "Ready?",
+          "ocrLn": 1
+        },
+        {
+          "nav": [
+            {
+              "m": "south",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        }
+      ],
+      "expect": [
+        {
+          "text": "Ready?",
+          "ocrLn": 1,
+          "class": "auto"
+        }
+      ],
+      "note": "Ready?"
+    },
+    {
+      "id": "sint03-g02",
+      "ctx": "smallmap",
+      "seam": "enter",
+      "enter": {
+        "loc": 12,
+        "banner": "TIN HOLLOW"
+      },
+      "ocr": {
+        "from": 6,
+        "to": 60
+      },
+      "script": [
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "anchor": {
+            "kind": "npc",
+            "cmd": "buy",
+            "match": "shop:TinSmith",
+            "expectDelta": -120
+          },
+          "ocrLn": 22
+        },
+        {
+          "key": "b",
+          "ocrLn": 23
+        },
+        {
+          "key": "c",
+          "ocrLn": 24
+        },
+        {
+          "todo": "Ferrer says the anvil is cold.",
+          "ocrLn": 26
+        },
+        {
+          "enterLoc": 12,
+          "src": "overlay",
+          "ocrLn": 28
+        },
+        {
+          "anchor": {
+            "kind": "npc",
+            "cmd": "sell",
+            "match": "shop:TinSmith",
+            "expectDelta": 36
+          },
+          "ocrLn": 30
+        },
+        {
+          "key": "s",
+          "ocrLn": 31
+        },
+        {
+          "key": "Enter",
+          "ocrLn": 32
+        },
+        {
+          "todoKeep": "Sinta hands over 3 tin cups.",
+          "ocrLn": 33
+        },
+        {
+          "ledgerCite": "sint03-g02/anvil",
+          "ocrLn": 34
+        },
+        {
+          "expectKeysDelta": 1,
+          "ocrLn": 36
+        },
+        {
+          "expectGemsDelta": 2,
+          "ocrLn": 37
+        },
+        {
+          "nav": [
+            {
+              "m": "west",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "seedInt": 25,
+          "src": "overlay",
+          "ocrLn": 20
+        },
+        {
+          "seedStr": 30,
+          "src": "overlay",
+          "ocrLn": 20
+        },
+        {
+          "wait": 350,
+          "src": "overlay",
+          "ocrLn": 40
+        }
+      ],
+      "expect": [
+        {
+          "text": "Ferrer says the anvil is cold.",
+          "ocrLn": 26,
+          "class": "auto"
+        },
+        {
+          "text": "Sinta hands over 3 tin cups.",
+          "ocrLn": 33,
+          "class": "numeric"
+        },
+        {
+          "text": "The tinsmith bows.",
+          "ocrLn": 44,
+          "class": "pending"
+        }
+      ],
+      "note": "Trato en la herreria de estano (arneses de ledger por overlay)."
+    },
+    {
+      "id": "sint03-g03",
+      "ctx": "overworld",
+      "seam": "exit",
+      "enter": {
+        "overworld": true
+      },
+      "ocr": {
+        "from": 61,
+        "to": 80
+      },
+      "script": [
+        {
+          "exitOverworld": "britannia",
+          "ocrLn": 62
+        },
+        {
+          "nav": [
+            {
+              "m": "east",
+              "v": "walk",
+              "n": 4
+            }
+          ]
+        },
+        {
+          "anchor": {
+            "kind": "npc",
+            "cmd": "toll",
+            "match": "d130",
+            "expectDelta": -8
+          },
+          "ocrLn": 66
+        },
+        {
+          "key": "y",
+          "ocrLn": 67
+        },
+        {
+          "key": "Enter",
+          "ocrLn": 68
+        },
+        {
+          "todo": "The ferryman waves thee across.",
+          "ocrLn": 70
+        }
+      ],
+      "expect": [
+        {
+          "text": "The ferryman waves thee across.",
+          "ocrLn": 70,
+          "class": "auto"
+        }
+      ],
+      "note": "Peaje del vado, con el ancla resolviendo en el mapa grande."
+    },
+    {
+      "id": "sint03-g04",
+      "ctx": "smallmap",
+      "seam": "enter",
+      "enter": {
+        "loc": 23,
+        "banner": "GLASS COVE"
+      },
+      "ocr": {
+        "from": 81,
+        "to": 100
+      },
+      "skip": "pendiente-runner",
+      "skipReason": "control negativo del rango de mazmorra: GLASS COVE (loc 23) queda fuera de 33..40",
+      "script": [
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "todo": "Glass chimes in the cove.",
+          "ocrLn": 83
+        }
+      ],
+      "expect": [
+        {
+          "text": "Glass chimes in the cove.",
+          "ocrLn": 83,
+          "class": "auto"
+        }
+      ],
+      "note": "Control negativo: location cerrada que NO es mazmorra."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+ "name": "search-chest",
+ "note": "Search de cofre 0x40 (SJOG:0x0710): rand(1,30) vs threshold; DEX 30, floor 0 -> thr=0 -> roll1>0 -> 'No trap' (1 tirada).",
+ "spec": {
+  "seed": 16962,
+  "roster": [{ "dex": 30, "hp": 30, "maxHp": 30 }],
+  "pos": { "dungeon": 33, "floor": 0, "x": 2, "y": 2, "facing": "east" },
+  "cells": [{ "floor": 0, "x": 3, "y": 2, "type": 4, "sub": 0 }],
+  "action": "search"
+ }
+}

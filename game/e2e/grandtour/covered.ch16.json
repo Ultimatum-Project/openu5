@@ -1,0 +1,9 @@
+{
+  "chapter": "ch16",
+  "coveredIds": [
+    "map-underworld"
+  ],
+  "notes": [
+    "NAVAL: entrada al Underworld por REMOLINO (MAINOUT 0x1248, F-0 whirlpoolRelocate en main). Rama naval desde ch13 (West Britanny, superficie) — sustituye al ch16-ascenso archivado (dead-end fiel). Costuras CLASE #47 declaradas: fragata+posición en mar abierto (party pobre de 1 oro, no compra fielmente) + remolino adyacente (§4: vía natural PROBADA = 0 remolinos en 400 turnos → seam, regla cap→seam del lead). El paso dispara el F-0: \"WHIRLPOOL!\" + reubicación a (34,18) con la nave preservada, SIN combate. SELLA en el Underworld en barco. Arco de shards (no llegables por nave desde (34,18): pozo 432 tiles, shards landlocked) → backlog multi-modal (brief §8). HORA 10:00, encadenado sobre ch13.gam."
+  ]
+}

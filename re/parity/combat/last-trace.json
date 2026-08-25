@@ -1,0 +1,1002 @@
+{
+ "seed": 47532,
+ "records": [
+  {
+   "slot": 0,
+   "kind": "player",
+   "flags": 128,
+   "hp": 0,
+   "speed": 24,
+   "ref": 0,
+   "obj": 0,
+   "counter": 12,
+   "x": 5,
+   "y": 8
+  },
+  {
+   "slot": 1,
+   "kind": "player",
+   "flags": 128,
+   "hp": 0,
+   "speed": 22,
+   "ref": 1,
+   "obj": 1,
+   "counter": 3,
+   "x": 6,
+   "y": 9
+  },
+  {
+   "slot": 2,
+   "kind": "player",
+   "flags": 128,
+   "hp": 0,
+   "speed": 21,
+   "ref": 2,
+   "obj": 2,
+   "counter": 4,
+   "x": 4,
+   "y": 9
+  },
+  {
+   "slot": 6,
+   "kind": "enemy",
+   "flags": 64,
+   "hp": 10,
+   "speed": 23,
+   "ref": 20,
+   "obj": 3,
+   "counter": 2,
+   "x": 4,
+   "y": 7
+  }
+ ],
+ "roster": [
+  {
+   "name": "Elwood",
+   "status": "G",
+   "str": 20,
+   "dex": 24,
+   "int": 17,
+   "hp": 9999,
+   "maxHp": 9999,
+   "defense": 7
+  },
+  {
+   "name": "Shamino",
+   "status": "G",
+   "str": 20,
+   "dex": 22,
+   "int": 16,
+   "hp": 9999,
+   "maxHp": 9999,
+   "defense": 7
+  },
+  {
+   "name": "Iolo",
+   "status": "G",
+   "str": 19,
+   "dex": 21,
+   "int": 17,
+   "hp": 9999,
+   "maxHp": 9999,
+   "defense": 7
+  }
+ ],
+ "food": 63,
+ "actorSlot": 0,
+ "trace": [
+  {
+   "lo": 1,
+   "hi": 7,
+   "caller": 46620,
+   "seed": 840,
+   "partyHp": [
+    9999,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 9,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 3,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 6,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 1,
+   "hi": 7,
+   "caller": 46620,
+   "seed": 57880,
+   "partyHp": [
+    9995,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 8,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 4,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 8,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 0,
+   "hi": 20,
+   "caller": 48030,
+   "seed": 2841,
+   "partyHp": [
+    9993,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 7,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 5,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 10,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 0,
+   "hi": 20,
+   "caller": 48030,
+   "seed": 35518,
+   "partyHp": [
+    9973,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 6,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 6,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 12,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 0,
+   "hi": 20,
+   "caller": 48030,
+   "seed": 11970,
+   "partyHp": [
+    9967,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 1,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 11,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 7,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 0,
+   "hi": 20,
+   "caller": 48030,
+   "seed": 12053,
+   "partyHp": [
+    9948,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 10,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 14,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 13,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 1,
+   "hi": 7,
+   "caller": 46620,
+   "seed": 33120,
+   "partyHp": [
+    9937,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 9,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 1,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 15,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 0,
+   "hi": 20,
+   "caller": 48030,
+   "seed": 61271,
+   "partyHp": [
+    9934,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 8,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 2,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 2,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 0,
+   "hi": 20,
+   "caller": 48030,
+   "seed": 44989,
+   "partyHp": [
+    9927,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 5,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 5,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 8,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 1,
+   "hi": 7,
+   "caller": 46620,
+   "seed": 13724,
+   "partyHp": [
+    9922,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 4,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 6,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 10,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 0,
+   "hi": 20,
+   "caller": 48030,
+   "seed": 50385,
+   "partyHp": [
+    9922,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 3,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 7,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 12,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 1,
+   "hi": 7,
+   "caller": 46620,
+   "seed": 64180,
+   "partyHp": [
+    9909,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 12,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 10,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 3,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 0,
+   "hi": 20,
+   "caller": 48030,
+   "seed": 28709,
+   "partyHp": [
+    9909,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 11,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 11,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 5,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  },
+  {
+   "lo": 0,
+   "hi": 20,
+   "caller": 48030,
+   "seed": 465,
+   "partyHp": [
+    9897,
+    9999,
+    9999
+   ],
+   "records": [
+    {
+     "slot": 0,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 24,
+     "ref": 0,
+     "obj": 0,
+     "counter": 9,
+     "x": 5,
+     "y": 8
+    },
+    {
+     "slot": 1,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 22,
+     "ref": 1,
+     "obj": 1,
+     "counter": 13,
+     "x": 6,
+     "y": 9
+    },
+    {
+     "slot": 2,
+     "kind": "player",
+     "flags": 128,
+     "hp": 0,
+     "speed": 21,
+     "ref": 2,
+     "obj": 2,
+     "counter": 9,
+     "x": 4,
+     "y": 9
+    },
+    {
+     "slot": 6,
+     "kind": "enemy",
+     "flags": 64,
+     "hp": 10,
+     "speed": 23,
+     "ref": 20,
+     "obj": 3,
+     "counter": 13,
+     "x": 4,
+     "y": 7
+    }
+   ]
+  }
+ ],
+ "unmodeled": 0,
+ "final": {
+  "partyHp": [
+   9897,
+   9999,
+   9999
+  ],
+  "records": [
+   {
+    "slot": 0,
+    "kind": "player",
+    "flags": 128,
+    "hp": 0,
+    "speed": 24,
+    "ref": 0,
+    "obj": 0,
+    "counter": 9,
+    "x": 5,
+    "y": 8
+   },
+   {
+    "slot": 1,
+    "kind": "player",
+    "flags": 128,
+    "hp": 0,
+    "speed": 22,
+    "ref": 1,
+    "obj": 1,
+    "counter": 13,
+    "x": 6,
+    "y": 9
+   },
+   {
+    "slot": 2,
+    "kind": "player",
+    "flags": 128,
+    "hp": 0,
+    "speed": 21,
+    "ref": 2,
+    "obj": 2,
+    "counter": 9,
+    "x": 4,
+    "y": 9
+   },
+   {
+    "slot": 6,
+    "kind": "enemy",
+    "flags": 64,
+    "hp": 10,
+    "speed": 23,
+    "ref": 20,
+    "obj": 3,
+    "counter": 13,
+    "x": 4,
+    "y": 7
+   }
+  ],
+  "food": 63
+ }
+}

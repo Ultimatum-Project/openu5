@@ -1,0 +1,1 @@
+{"name":"klimb-dead-skips-roll","spec":{"action":"klimb","seed":48879,"members":[{"dex":3,"hp":20,"name":"A"},{"dex":15,"hp":0,"status":"D","name":"Dead"},{"dex":2,"hp":15,"name":"C"}]}}

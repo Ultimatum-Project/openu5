@@ -1,0 +1,12 @@
+{
+ "name": "search-dark",
+ "note": "Search sin luz (torchTurns 0): gate E4-1 (SJOG:0x0668) aborta -> 'darkness.', sin 'You find:' ni tirada (semilla intacta).",
+ "spec": {
+  "seed": 16962,
+  "torchTurns": 0,
+  "roster": [{ "dex": 30, "hp": 30, "maxHp": 30 }],
+  "pos": { "dungeon": 33, "floor": 0, "x": 2, "y": 2, "facing": "east" },
+  "cells": [{ "floor": 0, "x": 3, "y": 2, "type": 4, "sub": 0 }],
+  "action": "search"
+ }
+}

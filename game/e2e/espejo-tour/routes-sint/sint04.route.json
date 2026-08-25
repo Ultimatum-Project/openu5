@@ -1,0 +1,241 @@
+{
+  "part": "sint04",
+  "source": "SINTETICO — prosa inventada por el port, cero material de EA",
+  "sintetico": true,
+  "entry": {
+    "checkpoint": "sint03",
+    "note": "Encadena del checkpoint de sint03."
+  },
+  "segments": [
+    {
+      "id": "sint04-g01",
+      "ctx": "resume",
+      "seam": null,
+      "ocr": {
+        "from": 1,
+        "to": 5
+      },
+      "script": [
+        {
+          "todo": "Ready?",
+          "ocrLn": 1
+        },
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        }
+      ],
+      "expect": [
+        {
+          "text": "Ready?",
+          "ocrLn": 1,
+          "class": "auto"
+        }
+      ],
+      "note": "Ready?"
+    },
+    {
+      "id": "sint04-g02",
+      "ctx": "dungeon",
+      "seam": "dungeon-enter",
+      "enter": {
+        "loc": 40,
+        "banner": "IRON WELL",
+        "dungeon": true
+      },
+      "ocr": {
+        "from": 6,
+        "to": 40
+      },
+      "openedBy": "3c",
+      "script": [
+        {
+          "dng": "advance",
+          "from": "Advance",
+          "sim": 1,
+          "ocrLn": 8
+        },
+        {
+          "dng": "turnAround",
+          "from": "Turn around.",
+          "sim": 1,
+          "ocrLn": 10
+        },
+        {
+          "todo": "Search...",
+          "ocrLn": 12
+        },
+        {
+          "dng": "advance",
+          "from": "Advonee",
+          "sim": 0.714,
+          "ocrLn": 14
+        },
+        {
+          "dng": "search",
+          "dir": "ahead",
+          "from": "Search... Dir-Ahead",
+          "sim": 1,
+          "ocrLn": 16
+        },
+        {
+          "dng": "look",
+          "dir": "left",
+          "from": "Look... Dir-Left",
+          "sim": 1,
+          "ocrLn": 18
+        }
+      ],
+      "expect": [
+        {
+          "text": "IRON WELL",
+          "ocrLn": 7,
+          "class": "auto"
+        },
+        {
+          "text": "Search...",
+          "ocrLn": 12,
+          "class": "auto"
+        }
+      ],
+      "note": "entrada-dng: el pozo de hierro (loc 40, borde del rango de mazmorra)."
+    },
+    {
+      "id": "sint04-g03",
+      "ctx": "overworld",
+      "seam": "exit",
+      "enter": {
+        "overworld": true,
+        "underworld": true
+      },
+      "ocr": {
+        "from": 41,
+        "to": 60
+      },
+      "script": [
+        {
+          "exitOverworld": "underworld",
+          "ocrLn": 42
+        },
+        {
+          "nav": [
+            {
+              "m": "south",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "todo": "Underworld!",
+          "ocrLn": 43
+        },
+        {
+          "nav": [
+            {
+              "m": "east",
+              "v": "walk",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "enterLoc": 32,
+          "src": "overlay",
+          "ocrLn": 44
+        }
+      ],
+      "expect": [
+        {
+          "text": "Underworld!",
+          "ocrLn": 43,
+          "class": "auto"
+        }
+      ],
+      "note": "Costura de SALIDA al Underworld: emerger es SALIR del interior (#32)."
+    },
+    {
+      "id": "sint04-g04",
+      "ctx": "overworld",
+      "seam": "exit",
+      "enter": {
+        "overworld": true
+      },
+      "ocr": {
+        "from": 61,
+        "to": 75
+      },
+      "script": [
+        {
+          "exitOverworld": "britannia",
+          "ocrLn": 62
+        },
+        {
+          "todo": "Britannia!",
+          "ocrLn": 63
+        },
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "enterLoc": 1,
+          "src": "overlay",
+          "ocrLn": 64
+        }
+      ],
+      "expect": [
+        {
+          "text": "Britannia!",
+          "ocrLn": 63,
+          "class": "auto"
+        }
+      ],
+      "note": "Segunda costura consecutiva: la superficie de siempre."
+    },
+    {
+      "id": "sint04-g05",
+      "ctx": "post-combat",
+      "seam": "camp-end",
+      "ocr": {
+        "from": 76,
+        "to": 90
+      },
+      "skip": "pendiente-runner",
+      "skipReason": "mazmorra INDETERMINABLE: retrocediendo desde aquí, lo primero que aparece es una SALIDA de la mazmorra (overworld/santuario/otra location) — este post-combat no es de interior",
+      "script": [
+        {
+          "nav": [
+            {
+              "m": "west",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "todo": "The camp fire dies.",
+          "ocrLn": 78
+        }
+      ],
+      "expect": [
+        {
+          "text": "The camp fire dies.",
+          "ocrLn": 78,
+          "class": "auto"
+        }
+      ],
+      "note": "Cerrado tras las costuras."
+    }
+  ]
+}

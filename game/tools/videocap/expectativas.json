@@ -1,0 +1,711 @@
+{
+  "_": [
+    "EXPECTATIVAS DEL GATE DE VÍDEOS — carril `gate-videos`. Fichero DECLARATIVO: el gate",
+    "(gate.mjs + gate-core.mjs) no sabe nada de ningún vídeo concreto; todo lo que decide",
+    "verde/rojo por vídeo está aquí.",
+    "",
+    "DEFAULT-DENY: un .webm de la colección sin fila en `videos` pone el gate ROJO",
+    "(verificaExpectativas). Un vídeo sin `debe` declarado pasaría cualquier comprobación de",
+    "contenido sin que nadie haya escrito nunca qué promete — que es exactamente el fallo que",
+    "se coló dos veces (resurrección y absorción del endgame).",
+    "",
+    "PROCEDENCIA DE CADA FIRMA (`origen`):",
+    "  · `sidecar`   — LEÍDA de un sidecar real de este mismo vídeo. Es la única categoría",
+    "                  que acredita que la cadena está viva de punta a punta.",
+    "  · `port`      — la cadena existe VERBATIM en game/src (grep), y el index/censo dice que",
+    "                  este vídeo la muestra. No verificada contra metraje.",
+    "  · `index`     — declarada por `index.md` de la colección o por la auditoría; sin cita de",
+    "                  código porque la línea se compone en ejecución (nombres, cantidades).",
+    "Las `port`/`index` son PREDICCIONES: la primera regrabación con sidecar las confirma o",
+    "las refuta, y una refutación es información (el vídeo no mostraba lo que se creía)."
+  ],
+  "crops": {
+    "_panel": [
+      "Recorte del PANEL DERECHO completo (consola + roster + stats) de 1280×800. Es el que",
+      "usó la auditoría de eventos y con el que reproduce sus testigos: whirlpool 3,28→EOF.",
+      "En los eventos el roster ES superficie narrativa — la resurrección se lee ahí",
+      "(`Shamino 0D` → `Shamino 1G`), no en la consola."
+    ],
+    "panel": "520:800:760:0",
+    "_consola": [
+      "Recorte de la CONSOLA sola. Es el que usó la auditoría de replays y con el que",
+      "reproduce sus dos testigos documentados: part01 2,04→10,7 (E3 dice «2→10,5») y ad01",
+      "7,24→20,9 (E3: «7→21») + 47,2→58,6 (E3: «47–59»). En un replay el roster tictaquea",
+      "solo (HP/comida/reloj) y meterlo dentro ENMASCARARÍA las paradas."
+    ],
+    "consola": "515:460:765:340",
+    "_viewport": [
+      "Recorte del VIEWPORT (la imagen del juego) de 1280×800 — el complemento exacto de",
+      "`panel`. Es donde PAGA la mayoría de los eventos: la inversión del santuario, el",
+      "bracket XOR del Códice, el sacrificio de Blackthorn, la aparición de la acampada y",
+      "los tres quakes + la explosión del ritual del Shard son clímax 100 % MUDOS — no",
+      "escriben una sola fila de consola. `sondaViewport` mide aquí, a RESOLUCIÓN COMPLETA",
+      "(sin `scale`: el remuestreo aliasa el dither del códec, ver gate-core.mjs), y su cifra",
+      "reproduce el instrumento de `fx-ritual-shard` clavada — máximo 38,2001 en",
+      "shard-faulinei-faithful contra el «máximo 38,2» que ese carril dejó escrito abajo."
+    ],
+    "viewport": "760:800:0:0"
+  },
+  "defaults": {
+    "colaMaxPct": 30,
+    "paradaMaxS": 12,
+    "colaMinS": 5,
+    "coherenciaTolS": 3,
+    "cambiosMaxS": 10,
+    "pausaMinS": 0.4,
+    "blancoMax": 20,
+    "blancoSdMax": 1,
+    "atenuadoMax": 27,
+    "_legibilidad": [
+      "cambiosMaxS 10 y el ancla por el otro lado: CALIBRADOS por la auditoría del Grand",
+      "Tour con el detector validado en las dos direcciones (5 s de fotograma congelado",
+      "inyectados en vídeo real = detectados exactos; los 3 s con movimiento = 0). ≥10",
+      "cambios/s = un estado nuevo cada ≤100 ms cuando leer una línea pide ≥0,5 s; 50 de los",
+      "91 lo superan y 24 pasan de 21. El ÚNICO vídeo del tour que se puede seguir es",
+      "`ch17-doom-5`, a 3,1 cambios/s con pausas de 3,92/3,20/2,60 s.",
+      "pausaMinS 0,4: 63 de 80 vídeos con contenido no sostienen NINGUNA pantalla ≥0,40 s;",
+      "sólo el 7,9 % del metraje transcurre en estados sostenidos. Es el segundo disparador",
+      "porque un vídeo puede tener buen ritmo MEDIO y no dejar leer nada.",
+      "blancoMax 20 / blancoSdMax 1 / atenuadoMax 27: umbrales de la sonda de luminancia,",
+      "BARRIDOS contra las 91 clases de la auditoría — la derivación completa y los dos que",
+      "deliberadamente NO se cazan están en `compruebaInformacion` (gate-core.mjs)."
+    ],
+    "_climaxMudo": [
+      "🔴 TANDA CINE 22-08 — lo que la regrabación con los pacers del port VIVOS deja al",
+      "descubierto, y que este fichero declaraba como caso ÚNICO (ver `moongate-transit`,",
+      "«el ÚNICO caso de la colección donde la sonda de consola miente por diseño»).",
+      "NO es único: es la clase MAYORITARIA de la colección. La razón es datable — cuando",
+      "esa línea se escribió, TODOS los vídeos estaban grabados con los seis pacers del port",
+      "APAGADOS (`navigator.webdriver`, re/notes/tempo-cinematico.md §2), así que ningún FX",
+      "de escena duraba nada y la cola de consola coincidía con la cola de imagen. Con los",
+      "pacers vivos el clímax de estos eventos son SEGUNDOS de pantalla sin una sola fila:",
+      "la inversión del santuario, el bracket XOR del Códice, el sacrificio y la celda de",
+      "Blackthorn. `COLA` mide el PANEL; el pago está en el VIEWPORT.",
+      "Cada `colaMaxPct` de abajo iba con su ventana MEDIDA (hoja de contacto a 1 fps LEÍDA +",
+      "`freezedetect -v info` sobre el recorte del viewport `crop=760:800:0:0`), y con la",
+      "cola REALMENTE muerta (viewport quieto → EOF), que en los cinco era ≤ 4,4 s.",
+      "★ RECOMENDACIÓN AL CARRIL DEL GATE: la comprobación que falta no es un umbral, es una",
+      "SONDA — una cola medida sobre el viewport. Estos cinco umbrales son un parche honesto",
+      "mientras no exista, no una absolución: se han subido con la cifra delante, no a ojo.",
+      "",
+      "✅ CUMPLIDA (carril `gate-viewport`, 22-08). La sonda existe: `sondaViewport` en",
+      "gate.mjs + `compruebaColaViewport`/`relevoViewport`/`huecoMuerto`/`instantesDeMovimiento`",
+      "en gate-core.mjs, con `COLA-VP` como columna propia. Las CUATRO guardas de cola/parada",
+      "(COLA, PARADA, COLA-VIS, PARADA-VIS) miden ahora el hueco en que NINGUNO de los dos planos",
+      "paga, y los VEINTIDÓS umbrales por caso que había repartidos por este fichero (13",
+      "`colaMaxPct` + 5 `paradaMaxS` de la clase clímax-mudo, más los de `bad-taste`, `refuge` ×2",
+      "y `shrine-ordained`) están RETIRADOS. Cada retirada dejó su `_umbralRetirado` con la cifra.",
+      "La cola realmente muerta de los diecisiete va de 0,0 s a 4,5 s (0-13 %) — SALVO",
+      "`refuge-resurreccion-faithful`, que se pone ROJO con 10,9 s / 38 % y es un ACIERTO: su",
+      "umbral decía literalmente que existía para «que el rojo llegue con el recorte pendiente»,",
+      "y el recorte sigue pendiente. Ver su ficha.",
+      "",
+      "🔴 DOS COSAS QUE LA SONDA NO PUEDE, y las dos se declaran solas en vez de salir verdes:",
+      "· SATURACIÓN POR TERRENO. Donde la lava o el agua animan solas el viewport no se para",
+      "  nunca y la medida deja de informar. Ocupación > 50 % (= la MEDIANA supera el umbral de",
+      "  movimiento, sin constante nueva) ⇒ SATURADA ⇒ `COLA-VP` sale SIN-DATO y el relevo NO se",
+      "  aplica. Derivado del aviso de `grandtour-cine`: ch34-doom 74 % (40 s en que el juego no",
+      "  hace NADA) contra 10-24 % de los clímax mudos. En la colección entera son 47 de 165.",
+      "· EL ARTEFACTO DE KEYFRAME, que casi convierte a `COLA-VP` en una comprobación incapaz de",
+      "  ponerse roja. La VP8 de Playwright mete un keyframe cada 128 fotogramas = 5,12 s, y un",
+      "  keyframe re-codifica el cuadro entero: da ~1,6-1,9 de diferencia SOBRE CONTENIDO",
+      "  IDÉNTICO, muy por encima del umbral 0,35. Síntoma: SEIS vídeos sin relación medían un",
+      "  hueco muerto máximo de EXACTAMENTE 5,1 s. Se descuenta por TIEMPO (el contenedor dice",
+      "  dónde están los keyframes, `ffprobe -skip_frame nokey`). Control: `ch15-underworld` está",
+      "  fichado como «9,6 s de 11,3 en un fotograma» y la sonda mide 9,76 s al descontarlos —",
+      "  con el artefacto medía 5,12 s. `ch03-britain` (colgado) pasa de 5,1 s a 25,8 s."
+    ],
+    "_shadowlordShard": [
+      "🔴 LOS CUATRO `shadowlord-shard` ENTRAN EN LA CLASE `_climaxMudo` (carril fx-ritual-shard,",
+      "22-08) — y por qué NO estaban ya en ella es el dato: hasta esta fecha su clip CORTABA",
+      "antes del clímax, así que no había cola muda que declarar. `eventos.mjs` los grababa con",
+      "`drenajeMaxMs: 1500` y el grabador avisaba en cada corrida «fxActive no drenó en 1500 ms",
+      "— corte con FX vivo»; ese aviso se leyó como «el ritual no tiene FX portado» y quedó",
+      "escrito como tal en `eventos.mjs`. Era falso: los FX se emiten (`use-tools.ts:106-137`) y",
+      "los pintan LAS DOS pieles (`world-fx.ts` + `shader/skin.ts` (2e-bis)/(2f)).",
+      "",
+      "LA CIFRA QUE MANDA, derivada EJECUTANDO `planTurnPhase` sobre el lote real de `useShard`:",
+      "quakes=3 · quakeStartMs=7130 · quakeEnd=9938 · explosión lead=9938 fin=10523. Los 7130 ms",
+      "son el `shard-sweep` de CAST 0x15dd-0x162a, que en el binario BLOQUEA antes de que nada",
+      "visual ocurra (la pausa 0x1674 `push 7; call 0x7b66` va DESPUÉS del barrido). ⇒ el clímax",
+      "empieza en t₀+7,1 s y acaba en t₀+10,5 s, y con 1,5 s de drenaje NO CABÍA.",
+      "",
+      "MEDIDO A/B, misma rama y mismo servidor, 25/50 fps sobre `crop=760:800:0:0`:",
+      "  ANTES  (drenaje 1500): CERO fotogramas con diff>5 tras el doom · máximo 0,236 (fiel) y",
+      "         0,232 (shader) · el clip acababa en doom+4,1 s.",
+      "  DESPUÉS(drenaje 14000): 46 fotogramas>5 en fiel de doom+7,14 a doom+9,78 y 40 en shader",
+      "         de doom+7,03 a doom+9,75 · máximo 38,2 / 38,1 ⇒ DISCRIMINANTE ×162.",
+      "  El arranque medido (doom+7,14) casa con el derivado (7,130 s) con +10 ms de desviación.",
+      "  La sacudida es un desplazamiento VERTICAL RÍGIDO de ±8 px alternando cada ~60 ms (el",
+      "  residuo cae de 59 a 0,2-0,5 al corregir el dy) = 2 px EGA × escala 4, en LAS DOS pieles.",
+      "  La explosión se MIRÓ cuadro a cuadro en las dos: la celda alterna 41,1 ↔ 46,1 de media",
+      "  cada 60 ms — en el cuadro apagado se ve el Shadowlord (`underTile` 0xFC + banco alto) y",
+      "  en el encendido la estrella naranja ENCIMA, que es el orden de CAST 0x16e1-0x16fa.",
+      "",
+      "POR QUÉ `colaMaxPct` 60 y `paradaMaxS` 14: el gate reprocha 54-55 % de cola porque el",
+      "clímax es 100 % MUDO (la última fila es el doom y la coreografía no escribe una sola",
+      "línea más). La cola REALMENTE muerta, medida sobre el viewport con umbral 0,5 — más del",
+      "doble del ruido ambiente máximo medido en los clips ANTES (0,236) —, es de 1,66/1,70/1,86/",
+      "1,62 s = 7-8 % en los cuatro. PARADA-VIS mide la consola congelada: 12,3-12,4 s, que es",
+      "exactamente el clímax + la cola. Los dos umbrales se suben CON LA CIFRA DELANTE, y la",
+      "recomendación de `_climaxMudo` (que lo que falta es una SONDA de cola sobre el viewport,",
+      "no un umbral) sigue en pie y este caso la refuerza: aquí el parche tapa 7 % de cola real."
+    ],
+    "_umbrales": [
+      "colaMaxPct 30: la cola de un vídeo bien cortado anda por 10-25 % en la tabla medida",
+      "(dungeon-tesoro 12, blackthorn-camara 10, combate 17-19, healer 23-24) y los defectos",
+      "cazados a mano por 42-72 % (whirlpool 72, cataratas 70, shard 69, blackthorn-captura 63,",
+      "codice 62, resurreccion 59, moongate-piedra 42). El umbral parte el hueco.",
+      "paradaMaxS 12 en EVENTOS: se calibra contra el HOLD LEGÍTIMO MÁS LARGO que la",
+      "colección declara, no contra un número redondo. La auditoría clasificó como espera",
+      "legítima (clase `a`) el pergamino del endgame (10,9 s), el interrogatorio paceado de",
+      "blackthorn-captura (2,9-15,4 en tramos), la inversión de 6 277 ms de shrine-well-done,",
+      "la sostenida de 7,08 s de shrine-donacion y las tres ventanas de flash XOR del healer",
+      "(8,08-14,32 s). 12 s los deja pasar TODOS y sigue cazando los de 13-64 s. Un umbral de",
+      "8 s ponía rojos SIETE escenas paceadas y ninguna de ellas es un defecto — se midió.",
+      "colaMinS 5: suelo ABSOLUTO de la cola, argumentado en `compruebaCola` (en un clip de",
+      "6 s el porcentaje es inestable y la tabla medida no reprocha ninguna cola < 5,4 s)."
+    ],
+    "prohibido": [
+      "Blocked!",
+      "None!",
+      "Nothing to get!",
+      "Nothing to open!",
+      "Nothing to attack!",
+      "Nothing to mix!",
+      "None owned!",
+      "None mixed!",
+      "No effect!",
+      "No lock!",
+      "Not here!",
+      "Funny, no response!",
+      "no response!",
+      "What?",
+      "Disabled!",
+      "Failed!",
+      "Nothing!"
+    ],
+    "_prohibido": [
+      "VOCABULARIO DE TOMA FALLIDA — derivado del corpus de negativas del port, no inventado:",
+      "grep de literales de `hud.message` en game/src. Cada token existe VERBATIM ahí y el",
+      "testigo `videocap-gate.test.ts` lo carea (anti-fantasma) para que la lista no pueda",
+      "quedar rancia ni llevar una cadena que el port ya no emite.",
+      "Un token aquí NO es un defecto del PORT: es la huella de que el GUION del arnés le pidió",
+      "al juego algo imposible (teclas derramadas, ruta contra un muro, prompt sin contestar).",
+      "La auditoría lo dice explícito: «los prompts abiertos son prompts LEGÍTIMOS del port ante",
+      "teclas mal alineadas del guion» (TABLA.md §Sospechosos de PORT)."
+    ],
+    "ruido": [
+      "^(North|South|East|West|Up|Down)$",
+      "^Pass$",
+      "^(Open|Get|Look|Search|Attack|Push|Jimmy|Klimb)-(North|South|East|West|Up|Down)$",
+      "^Row (North|South|East|West)$",
+      "Blocked!",
+      "^Thou dost see"
+    ],
+    "_ruido": [
+      "RUIDO DE NAVEGACIÓN — filas que NO cuentan como «último evento significativo» para la",
+      "COLA. Sin esta lista los cuatro `shadowlord-shard` salen verdes: su ritual acaba en",
+      "t≈11 de 35,8 y los 25 s restantes (69 %) son la ruta grabada paseando con la consola",
+      "cambiando EN CADA PASO — por eso la sonda de estático no los delata y hizo falta la hoja",
+      "de contacto (VERIFICACION-EVENTOS.md §2, nota final del §6). El ruido es justo lo que",
+      "convierte esa observación en predicado."
+    ]
+  },
+  "defaultsReplay": {
+    "paradaMaxS": 8,
+    "colaMaxPct": 40,
+    "_": [
+      "RÉGIMEN DE REPLAY. `paradaMaxS` baja a 8 porque aquí NO hay escena paceada que",
+      "proteger: un replay reproduce un walkthrough tecla a tecla y todo silencio largo de",
+      "consola es la familia (b) de TABLA-REPLAYS.md — selector/prompt parado. La auditoría",
+      "midió 109 paradas = 491 s = 20,9 % del metraje, con la mayor de 32,7 s (part04, el",
+      "picker de miembro comiéndose las flechas 63 s con el reloj congelado).",
+      "`colaMaxPct` sube a 40 porque un replay no «acaba en un evento»: termina donde termina",
+      "el route, y su cola no es una decisión de montaje."
+    ]
+  },
+  "patrones": [
+    {
+      "re": "^ch[0-9]",
+      "_": [
+        "GRAND TOUR — familia entera por PATRÓN, y no por 91 filas idénticas. La razón no es",
+        "la comodidad: un vídeo del tour no PROMETE una línea de consola. Lo que promete lo",
+        "asserta el propio capítulo contra los BYTES del `.GAM` (por eso un capítulo VERDE ya",
+        "garantiza el estado), y ese aserto vive en el código del capítulo, no aquí. Escribir",
+        "91 `debe` inventados sería fabricar una promesa para poder comprobarla.",
+        "Lo que el gate añade sobre el tour son las tres preguntas que el capítulo NO contesta:",
+        "¿el .webm está completo? (INTEGRIDAD) · ¿se ve algo o va a toda pastilla? (VELOCIDAD) ·",
+        "¿se quedó la imagen parada? (PARADA-VIS / COLA-VIS).",
+        "Los sufijos `-2`, `-3`… son TESTS distintos del mismo capítulo y por eso entran como",
+        "vídeos independientes; el capítulo al que pertenecen sale del `results.tsv`, no del",
+        "nombre. `ch37-wrong-campos` declara SIN-VIDEO en el TSV (su test no abre página): es",
+        "legítimo, el censo lo separa y no enrojece."
+      ],
+      "_disolvencia": [
+        "🔴 NO añadir una regla de «defecto de render» contra la disolvencia MOTEADA del",
+        "endgame que se ve en `ch17-doom-5`: quedó COMPROBADA como FIEL leyéndola a",
+        "resolución completa — es la transición del original, no un artefacto. Queda escrito",
+        "aquí porque el sitio donde se escribiría la regla que la rompería es este fichero."
+      ],
+      "exp": {
+        "debe": [],
+        "debeVacioPorque": "GRAND TOUR: la promesa del vídeo la asserta el capítulo contra los bytes del .GAM, no una firma de consola.",
+        "colaMaxPct": 100,
+        "colaMaxPctPorque": "un capítulo del tour no es una pieza montada: acaba donde acaba el test. La cola no es una decisión de autoría y medirla sería reprochar algo que nadie eligió.",
+        "paradaMaxS": 12,
+        "paradaMaxSPorque": "es el MISMO 12 de `defaults` (aquí sólo se re-declara para que el patrón sea legible de un vistazo), calibrado en `_umbrales` contra el hold legítimo más largo que la colección declaraba. 🔴 El carril `grandtour-cine` reportó que dos de los cinco FALLO nuevos del tour son la pausa de lectura LEGÍTIMA de `ch19-endgame` contra este 12 — y el remedio NO ha sido subirlo. Medido por `gate-viewport`: en ch19-endgame el viewport no se queda quieto más de 4,0-4,6 s en TODO el clip (la página gira cada 3 s y la imagen cambia en cada giro), así que el hueco realmente muerto está en 4,6 s contra 12 y el relevo del viewport lo cierra solo. Mover un umbral derivado para tapar un punto ciego del instrumento es justo lo que este carril acaba de deshacer en otros diecisiete vídeos: se arregla el instrumento, no el número."
+      }
+    }
+  ],
+  "videos": {
+    "bad-taste-shader": {
+      "debe": [
+        "Bad taste"
+      ],
+      "origen": "port",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 45. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 0,8 s (7 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: medido 5,4 s / 43 %: la auditoría lo adjudicó «No regrabar» y el hold del efecto es parte del gag. Se declara para que el umbral flojo se VEA."
+    },
+    "blackthorn-camara-faithful": {
+      "debe": [
+        "Opened!"
+      ],
+      "origen": "sidecar",
+      "_nota": "★ Estos dos LLEVABAN `colaMaxPct: 65`, declarado así: «el evento acaba en t≈10 de 33 y el 61 % restante es paseo por el tejado (VERIFICACION §3.3): el umbral flojo DOCUMENTA una inconsistencia de adjudicación heredada, no la absuelve.» RETIRADO en la tanda cine 22-08 porque la causa desapareció: el guion ya no graba el paseo (`guionPartidaHasta` corta 6 teclas después del «Opened!»), y los dos miden hoy **5,1 s / 28 %** contra el umbral POR DEFECTO de 30. Un umbral flojo que ya no hace falta se quita — si se dejara puesto, taparía la próxima cola de verdad."
+    },
+    "blackthorn-camara-shader": {
+      "debe": [
+        "Opened!"
+      ],
+      "origen": "sidecar"
+    },
+    "blackthorn-captura-faithful": {
+      "debe": [
+        "merciful death"
+      ],
+      "origen": "index",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 40. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 2,8 s (8 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: medido 34 %: la última fila es la promesa de la «merciful death» (t≈23 s) y lo que viene DESPUÉS es el pago — el SACRIFICIO (Shamino desaparece del roster) y el despertar en la CELDA (cambio de sala a t≈30), leídos en la"
+    },
+    "blackthorn-captura-shader": {
+      "debe": [
+        "merciful death"
+      ],
+      "origen": "index",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 40. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 0,6 s (2 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: gemelo del anterior; medido 34 %, viewport quieto desde t=30,8 de 35,2 ⇒ 4,4 s muertos"
+    },
+    "camp-aparicion-faithful": {
+      "debe": [
+        "Party rested"
+      ],
+      "origen": "sidecar",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 75 y paradaMaxS 16. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 1,0 s (5 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: EL CASO EXTREMO de la clase `_climaxMudo`: el port vuelca TODA la prosa de la aparición de una vez (sidecar: «An apparition!», el discurso entero, «…vanishes…» y «Party rested!» comparten el instante t=5,5 s — misma cond"
+    },
+    "camp-aparicion-shader": {
+      "debe": [
+        "Party rested"
+      ],
+      "origen": "sidecar",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 75. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 0,3 s (2 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: gemelo del anterior. Y esta toma es además la EVIDENCIA de que el defecto #4 del index (la aparición invisible en la piel shader) está cerrado: la hoja de contacto a 1 fps enseña la hoguera con figura y los pulsos de inv"
+    },
+    "cataratas-shader": {
+      "debe": [
+        "F-A-L-L-S",
+        "Falling into"
+      ],
+      "origen": "sidecar",
+      "_debe": "REFUTACIÓN MEDIDA: esta fila decía `FALLS` (predicción `origen: port`) y el primer sidecar real la puso roja — el port escribe `F-A-L-L-S!!!`, con guiones. Es el caso de manual del campo `origen`: una firma predicha que el metraje corrige."
+    },
+    "clavicembalo-pasadizo-shader": {
+      "debe": [
+        "Pasadizo|passage|Klimb|Play"
+      ],
+      "origen": "index",
+      "permitido": {
+        "Blocked!": 2
+      },
+      "permitidoPorque": {
+        "Blocked!": "el guion manda 6 Norths y caben 4 (TABLA.md fila clavicembalo): dos `North Blocked!` son la firma de ESE defecto de guion, tolerados mientras la ficha esté abierta."
+      }
+    },
+    "codice-ceremonia-faithful": {
+      "debe": [
+        "Codex|Códice|Truth|Love|Courage"
+      ],
+      "origen": "sidecar",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 45. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 4,5 s (13 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: medido 38 %: el último verso rúnico sale a t≈22 y el bracket XOR (máscaras VISIBLES, leídas en la hoja de contacto a 1/2 s) más la salida al overworld llegan a t=31 de 33,8 ⇒ cola realmente muerta 2,8 s. Con los pacers v"
+    },
+    "codice-ceremonia-shader": {
+      "debe": [
+        "Codex|Códice|Truth|Love|Courage"
+      ],
+      "origen": "sidecar",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 45. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 0,4 s (1 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: gemelo del anterior; medido 37 %, viewport quieto desde t=31,0 de 34,4 ⇒ 3,4 s muertos, COLA-VIS 17 %"
+    },
+    "combate-base-faithful": {
+      "debe": [
+        "VICTORY"
+      ],
+      "origen": "sidecar",
+      "permitido": {
+        "Blocked!": 4
+      },
+      "permitidoPorque": {
+        "Blocked!": "TRES `Blocked!` medidos (t=11,6 · 14,6 · 22,3 s) en 30 s de combate, aislados y separados por 3-8 s: es el pathing de `conduceCombate` rodeando a un enemigo, exactamente la clase que este fichero ya tolera en dungeon-tesoro con cupo 6. El cupo 4 deja pasar estos tres y NO deja pasar un martilleo. Sólo se ven ahora porque la toma anterior no tenía sidecar — no es una regresión de la tanda cine."
+      }
+    },
+    "combate-base-shader": {
+      "debe": [
+        "VICTORY"
+      ],
+      "origen": "sidecar",
+      "permitido": {
+        "Blocked!": 4
+      },
+      "permitidoPorque": {
+        "Blocked!": "gemelo del anterior — los mismos tres, t=11,6 · 14,6 · 22,3 s"
+      }
+    },
+    "conversacion-shader": {
+      "debe": [
+        "My name is",
+        "Fare thee well"
+      ],
+      "origen": "index"
+    },
+    "dungeon-tesoro-shader": {
+      "debe": [
+        "VICTORY",
+        "Found:"
+      ],
+      "origen": "port",
+      "permitido": {
+        "Blocked!": 6,
+        "Nothing!": 6
+      },
+      "permitidoPorque": {
+        "Blocked!": "tras la regrabación 22-08b los `South Blocked!` bajan «de 46 s de martilleo a 4-5 apariciones sueltas normales de pathing de combate» (VERIFICACION §1.5). El cupo 6 deja pasar el pathing y NO deja pasar el martilleo.",
+        "Nothing!": "CINCO medidos (t=19,7 · 26,2 · 34,6 · 50,7 · 58,1 s) repartidos por los 66 s del combate — un `Attack-Aim!` que cae en casilla vacía cuando el slime al que apuntaba ya se ha movido. Misma clase que el `Blocked!` de la línea de arriba (pathing del conductor, no defecto del port) y misma forma de tolerarla: cupo 6, que deja pasar estos cinco sueltos y no una tanda."
+      }
+    },
+    "endgame-absorcion-faithful": {
+      "debe": [
+        "is absorbed!"
+      ],
+      "origen": "sidecar",
+      "_debe": "~~LA FIRMA QUE FALTA. El testigo EA imprime `Geoffrey is absorbed!` / `Jaana is absorbed!`; el port NO imprime ninguna porque el guion ejecuta la absorción desde `page.evaluate` y no aplica los eventos (VERIFICACION §4.3.b). El gate DEBE ponerse rojo aquí en cuanto haya sidecar.~~ TACHADO-DOCUMENTADO y CERRADO por el carril `gate-viewport` (22-08). El diagnóstico era exacto y la predicción se cumplió al revés de como se temía: el mensaje NACE en el port (`combat.ts:1574`, `maybeAbsorb` → DS 0x8f02) y lo que lo silenciaba era la COSTURA DEL GUION, que descartaba los eventos de `playerMove`. La receta conduce ahora la absorción con TECLAS REALES por el despachador (`main.ts:3114` `combatOut(combat.playerMove(dir))` → `hud.message` `main.ts:2567`), paseo greedy portado de `ch19-endgame.spec.ts:186-247`. MEDIDO en el sidecar de la regrabación: «Avatar is absorbed!» t=14,10 y «Shamino is absorbed!» t=14,63 (faithful; el shader las da a t=14,2/14,7). DEBE pasa 1/1 y el rojo anunciado NO llega porque la causa está arreglada, no porque se haya bajado el listón.",
+      "ritmo": {
+        "tecla": " ",
+        "minIntervaloS": 2.6,
+        "minPulsaciones": 4,
+        "trasLinea": "FOLLOW"
+      },
+      "_ritmo": "Mínimo DERIVADO DEL TESTIGO EA (2,60 / 3,10 / 3,80 s por página). ~~el port da 0,68-0,76 s por el `waitForTimeout(700)` fijo de la receta~~ — CERRADO: la receta pasa por `lectura(700)` y con `U5_VIDEO_TEMPO=cine` eso son los 3000 ms derivados del testigo. MEDIDO en la regrabación: faithful 11 páginas, min 3,00 s, media 3,01 s; shader 12 páginas, min 3,01 s, media 3,03 s. Dentro de la banda del testigo por los dos lados (su min es 2,67 y su mediana 4,33).",
+      "_regrabado": "TANDA `gate-viewport` 22-08 — los DOS vídeos regrabados con `U5_VIDEO_TEMPO=cine` y sidecar. Eran anteriores a tres arreglos ya en main y el `index.md` avisaba de que «lo que se ve aquí ya no es lo que hace el port»: pergamino re-anclado (`1cba8f86`, el papel está 11 px a la izquierda), la piel shader que ya no recompone la UI encima del desenlace (`4741eb84`) y la absorción portada (`c31c0f7a`, #179). Los tres REVISADOS MIRANDO FRAMES en hoja de contacto: en la fiel la tinta del pergamino cae dentro del papel y no roza el rollo; en la shader The Homecoming / The Dream / la puerta de Blackthorn se pintan a pantalla completa SIN panel encima; y la consola de la shader enseña «Avatar is absorbed!» en el cuadro de la sala roja. Duración 46,7→82,4 s (fiel) y 47,4→93,9 s (shader). ★ Y el careo que cierra el círculo con la otra mitad de este carril: PARADA-VIS mide 12,0/13,1 s de PANEL congelado — o sea que bajo el gate ANTERIOR esta regrabación habría salido ROJA contra `paradaMaxS` 12, por la pausa de lectura que es justamente el entregable. Con la sonda de viewport el hueco realmente muerto es de 5,1/3,1 s y pasa sin tocar ningún umbral."
+    },
+    "endgame-absorcion-shader": {
+      "debe": [
+        "is absorbed!"
+      ],
+      "origen": "sidecar",
+      "ritmo": {
+        "tecla": " ",
+        "minIntervaloS": 2.6,
+        "minPulsaciones": 4,
+        "trasLinea": "FOLLOW"
+      },
+      "_debe": "gemelo del anterior — MEDIDO en su sidecar: «Avatar is absorbed!» y «Shamino is absorbed!»."
+    },
+    "espejo-roto-shader": {
+      "debe": [
+        "Broken!"
+      ],
+      "origen": "port"
+    },
+    "gema-vista-shader": {
+      "debe": [
+        "gem|Gem|View"
+      ],
+      "origen": "index"
+    },
+    "healer-flash-faithful": {
+      "debe": [
+        "guard thy soul|Receive now the Light"
+      ],
+      "origen": "port"
+    },
+    "healer-flash-shader": {
+      "debe": [
+        "guard thy soul|Receive now the Light"
+      ],
+      "origen": "port"
+    },
+    "humo-paseo-shader": {
+      "debe": [],
+      "debeVacioPorque": "es el humo del pipeline (paseo del momento-01), no un evento: no promete ninguna línea. Se declara explícito para que no pase por olvido.",
+      "origen": "index",
+      "permitido": {
+        "Blocked!": 1
+      },
+      "permitidoPorque": {
+        "Blocked!": "un `East Blocked!` suelto, adjudicado LIMPIO por la auditoría (TABLA.md fila humo)."
+      }
+    },
+    "intro-atract-faithful": {
+      "debe": [],
+      "debeVacioPorque": "la intro/atract no usa la consola del juego: es cinemática a canvas. Su comprobación real es el plano B (63 s, cero estático) y el `debe` no aplica.",
+      "origen": "index"
+    },
+    "moongate-piedra-shader": {
+      "debe": [
+        "Moonstone",
+        "To phase"
+      ],
+      "origen": "sidecar"
+    },
+    "moongate-transit-faithful": {
+      "debe": [],
+      "debeVacioPorque": "el cruce nocturno es puramente visual (cierre en 16 etapas + hold): el port no escribe una línea propia. Su verificación es el plano B — y desde el carril `gate-viewport`, en concreto COLA-VP, que es la comprobación que este vídeo llevaba pidiendo desde que se escribió aquí «el ÚNICO caso de la colección donde la sonda de consola miente por diseño». No era el único: era el primero que se vio.",
+      "origen": "index",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 70. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 1,0 s (7 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: la consola se queda quieta 9 s de 15 (60 %) MIENTRAS el viewport pinta el cierre en 16 etapas — es contenido, no cola (VERIFICACION §3, «confirmados limpios»). Es el ÚNICO caso de la colección donde la sonda de consola m"
+    },
+    "moongate-transit-shader": {
+      "debe": [],
+      "debeVacioPorque": "gemelo del anterior",
+      "origen": "index",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 70. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 1,0 s (7 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: gemelo del anterior"
+    },
+    "naval-xit-shader": {
+      "debe": [
+        "Hoist|Furl|X-it|Xit"
+      ],
+      "origen": "port"
+    },
+    "refuge-resurreccion-faithful": {
+      "debe": [
+        "FORTIS FORTUNA"
+      ],
+      "origen": "port",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 35 — y el vídeo pasa a ROJO, que es el desenlace que el propio umbral anunciaba: «el umbral se deja por encima para que el rojo llegue con el RECORTE PENDIENTE, no antes». El recorte sigue pendiente y ahora está MEDIDO en vez de anotado: la imagen no cambia desde t=18,0 de 28,8 ⇒ 10,9 s = 38 % de cola realmente muerta (COLA-VP), con COLA-VIS coincidiendo en 9,0 s / 31 %. MIRADO en hoja de contacto: los cuadros de t=20,0 · 22,4 · 24,8 · 28,6 son IDÉNTICOS —la party quieta en la sala de LB— y lo único que se mueve es la consola apilando `>Pass`, que es RUIDO declarado. Es el primer FALLO real que caza la sonda de viewport, y es un acierto: el plano de consola no puede verlo (sigue escribiendo) y el de panel lo ve a medias. ★ ACCIÓN PENDIENTE, de producción: recortar la cola en el origen (`colaMs`/`drenajeMaxMs` del evento en `eventos.mjs`) y regrabar. Su GEMELA shader pasa con 3,1 s / 11 %, así que no es la escena: es esta toma. NO se le pone un umbral para taparlo — sería volver exactamente a lo que este carril quita."
+    },
+    "refuge-resurreccion-shader": {
+      "debe": [
+        "FORTIS FORTUNA"
+      ],
+      "origen": "port",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 35. La cola realmente muerta es de 3,1 s (11 %) contra el 30 % / 5 s por defecto. Su gemela FIEL sí se pone roja (10,9 s / 38 %): el recorte pendiente que la auditoría adjudicó existe en una toma y no en la otra."
+    },
+    "resurreccion-hechizo-shader": {
+      "debe": [
+        "Resurrection!",
+        "On who:"
+      ],
+      "origen": "sidecar",
+      "_debe": "EL CASO QUE MOTIVÓ EL ENCARGO. La toma auditada tecleaba «in mani corp» con espacios → `IN NOX` → `No effect!` y el evento NO ESTABA EN EL VÍDEO (TABLA.md fila 1). Estas dos firmas son exactamente lo que aquella toma no tenía."
+    },
+    "shadowlord-ciudad-shader": {
+      "debe": [
+        "air of falsehood|falsehood"
+      ],
+      "origen": "port",
+      "_nota": "sin cupo de `Blocked!`: la auditoría re-adjudicó este vídeo a REGRABAR precisamente porque «lo último que el espectador lee son tres líneas Blocked!» (VERIFICACION §2). El gate debe enrojecer."
+    },
+    "shadowlord-shard-astaroth-shader": {
+      "debe": [
+        "Flame of Truth|doom of the Shadowlord|Doom of the Shadowlord"
+      ],
+      "origen": "sidecar",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 60 y paradaMaxS 14. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 1,7 s (8 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: clase `_climaxMudo`, ver `_shadowlordShard`: medido 54 % de cola de consola contra 1,70 s (8 %) de cola realmente muerta en el viewport; último movimiento t=20,72 de 22,42."
+    },
+    "shadowlord-shard-faulinei-faithful": {
+      "debe": [
+        "Flame of Truth|doom of the Shadowlord|Doom of the Shadowlord"
+      ],
+      "origen": "sidecar",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 60 y paradaMaxS 14. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 1,8 s (8 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: clase `_climaxMudo`, ver `_shadowlordShard`: medido 55 % de cola de consola contra 1,66 s (7 %) real; último movimiento t=20,52 de 22,18 — que es el fin derivado de la explosión (t₀+10,523 s) con +19 ms."
+    },
+    "shadowlord-shard-faulinei-shader": {
+      "debe": [
+        "Flame of Truth|doom of the Shadowlord|Doom of the Shadowlord"
+      ],
+      "origen": "sidecar",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 60 y paradaMaxS 14. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 1,8 s (8 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: clase `_climaxMudo`, ver `_shadowlordShard`: medido 54 % contra 1,86 s (8 %) real; último movimiento t=20,88 de 22,74. Es además la EVIDENCIA de que la shader pinta el clímax (pasos (2f) sacudida y (2e-bis) explosión), c"
+    },
+    "shadowlord-shard-nosfentor-shader": {
+      "debe": [
+        "Flame of Truth|doom of the Shadowlord|Doom of the Shadowlord"
+      ],
+      "origen": "sidecar",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 60 y paradaMaxS 14. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 1,6 s (7 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: clase `_climaxMudo`, ver `_shadowlordShard`: medido 54 % contra 1,62 s (7 %) real; último movimiento t=20,76 de 22,38."
+    },
+    "shrine-donacion-shader": {
+      "debe": [
+        "hundredweights|ALAKAZAM"
+      ],
+      "origen": "sidecar",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 45. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 0,8 s (3 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: medido 41 %: el «ALAKAZAM!» rúnico sale a t≈12,8 y la INVERSIÓN de pantalla ocupa t≈13,0-19,5 — 6,5 s LEÍDOS cuadro a cuadro en la hoja a 1 fps (pantalla en negativo en 7 cuadros seguidos), del mismo orden que los 6 277 "
+    },
+    "shrine-ordained-shader": {
+      "debe": [
+        "ORDAINED|Return again"
+      ],
+      "origen": "port",
+      "_umbralRetirado": "RETIRADO por el carril `gate-viewport` colaMaxPct 35. Motivo: la cola se mide ahora sobre el VIEWPORT y la realmente muerta aquí es de 0,0 s (0 %) contra el 30 % / 5 s POR DEFECTO. El umbral a mano tapaba el punto ciego de la sonda de consola (clímax mudo), no un defecto; dejarlo puesto taparía la próxima cola de verdad. La cifra que lo justificaba sigue en el registro: medido 31 %, adjudicado «No» por la auditoría."
+    },
+    "shrine-well-done-faithful": {
+      "debe": [
+        "WELL DONE"
+      ],
+      "origen": "port"
+    },
+    "shrine-well-done-shader": {
+      "debe": [
+        "WELL DONE"
+      ],
+      "origen": "port"
+    },
+    "tienda-shader": {
+      "debe": [
+        "Come again"
+      ],
+      "origen": "port"
+    },
+    "torch-borrowed-shader": {
+      "debe": [
+        "Borrowed!"
+      ],
+      "origen": "port"
+    },
+    "whirlpool-shader": {
+      "debe": [
+        "WHIRLPOOL"
+      ],
+      "origen": "sidecar",
+      "_nota": "`index.md` #11 declaraba «fuera los 23 s de >Pass» y la verificación midió que SEGUÍAN DOS `Pass` y 72 % de cola (VERIFICACION §1.2). CERRADO en la tanda cine 22-08 SIN cupo, que es lo que este campo exigía: la cola baja a 3,3 s (48 % de un clip de 6,8 s, por debajo del suelo absoluto `colaMinS` 5 s) recortando el montaje en el origen (espera 4000→1000, colaMs 2500→800). Los dos `Pass` que quedan son los turnos que el remolino necesita para cazar a la fragata — juego, no relleno, y `^Pass$` es ruido declarado."
+    },
+    "part01": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY: un replay del espejo no «promete un evento», reproduce un walkthrough. La pregunta equivalente («¿midió algo?») la contesta el plano C (VACUO) contra el report.json, no una firma de consola."
+    },
+    "part02": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part03": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part04": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part05": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part06": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part07": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part08": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part09": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part10": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part11": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part12": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part13": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part14": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part15": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part16": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part17": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part18": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part19": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part20": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part21": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part22": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part23": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "part24": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    },
+    "ad01": {
+      "esReplay": true,
+      "debe": [],
+      "debeVacioPorque": "REPLAY (ver part01)"
+    }
+  }
+}

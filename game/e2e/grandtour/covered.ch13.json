@@ -1,0 +1,33 @@
+{
+  "chapter": "ch13",
+  "coveredIds": [
+    "command-e",
+    "command-l",
+    "command-s",
+    "command-t",
+    "floor-19-z0",
+    "location-19-west-britanny",
+    "npc-castle-18-camile",
+    "npc-castle-19-phillip",
+    "npc-castle-20-christopher",
+    "search-81-loc19-3-2",
+    "search-82-loc19-5-7",
+    "search-83-loc19-7-7",
+    "search-84-loc19-7-2",
+    "search-85-loc19-5-7",
+    "search-86-loc19-3-2",
+    "sign-19-1-1",
+    "sign-19-1-6",
+    "sign-19-13-6",
+    "sign-19-3-1",
+    "sign-19-3-6",
+    "sign-19-5-1",
+    "sign-19-5-6",
+    "sign-19-7-1",
+    "sign-19-7-6",
+    "sign-19-9-1"
+  ],
+  "notes": [
+    "West Britanny (loc 19) — el \"yield king\" restante: aldea de granjeros junto al castillo de Lord British (los Shadowlords no la tocan). GEMAS 0→0 · LLAVES 1→1 (#65: declaración viva de ambos canales). 1 planta (z0), CERO gates/fleers/trampas (checklist de 3 lecciones LIMPIO). TESTIGOS byte-exactos: Camile → 'Shadowlords' (lore); Phillip → 'works the fields' (granjero-artista); Christopher → 'Times of Lore' (easter egg de Origin; ['writ'] corta ANTES del buy-gate, sin coste). NPCs hablados 3/3 (wander aiType 1, granja abierta, best-effort si alguno deriva). Señales 10/11 (cementerio), searches 6/6 (2 celdas dobles ejercitadas con 2 (S)earch, 1 id/hallazgo real). HORA CANÓNICA 10:00. LLAVES 1→1 (CERO (J)immy: 1 cerrojo en (6,27) que gatea cuarto SIN contenido — flood-fill confirma todo alcanzable sin cruzarlo). Oro 200→200 y karma 80→80 INALTERADOS. Comandos e/t/s/l. Tienda (dn130) DIFERIDA. Tras ch13: PIVOTE A MAZMORRA."
+  ]
+}

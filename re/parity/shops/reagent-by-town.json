@@ -1,0 +1,12 @@
+{
+  "cases": [
+    {"op": "reagent", "magicTown": 0, "slot": 1, "int": 0},
+    {"op": "reagent", "magicTown": 0, "slot": 1, "int": 20},
+    {"op": "reagent", "magicTown": 0, "slot": 6, "int": 15},
+    {"op": "reagent", "magicTown": 1, "slot": 0, "int": 33},
+    {"op": "reagent", "magicTown": 2, "slot": 4, "int": 10},
+    {"op": "reagent", "magicTown": 3, "slot": 7, "int": 25},
+    {"op": "reagent", "magicTown": 4, "slot": 0, "int": 5},
+    {"op": "reagent", "magicTown": 0, "slot": 0, "int": 10}
+  ]
+}

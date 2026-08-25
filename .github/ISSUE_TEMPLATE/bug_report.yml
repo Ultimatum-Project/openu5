@@ -1,0 +1,62 @@
+# Draft — destino final: .github/ISSUE_TEMPLATE/bug_report.yml del repo público.
+name: Bug report
+description: Something broke (crash, softlock, rendering, UI). For behaviour that differs from the original game, use "Fidelity report" instead.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! A report with an **exported save + RNG seed** is
+        reproducible in minutes and is the single most valuable contribution.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you do, what did you expect, what happened instead.
+      placeholder: "Pressed (K)limb next to the Minoc ladder; the game froze with the cursor blinking."
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Load the attached save
+        2. Walk two tiles north
+        3. Press K, then Enter
+    validations:
+      required: true
+  - type: textarea
+    id: save
+    attributes:
+      label: Exported save + seed
+      description: |
+        F5 → Export in-game, then drag the file here. Include the RNG seed if you
+        started with `?seed=`. Saves contain no personal data.
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+      placeholder: "v0.x / commit abc1234 / the hosted demo on <date>"
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser & OS
+      placeholder: "Firefox 141 on Windows 11"
+    validations:
+      required: true
+  - type: dropdown
+    id: data-source
+    attributes:
+      label: Game data source
+      description: The engine ships no game data — which copy did you extract from?
+      options:
+        - GOG (Ultima 4+5+6 pack)
+        - Original floppies/CD
+        - Other (say which in the description)
+    validations:
+      required: true

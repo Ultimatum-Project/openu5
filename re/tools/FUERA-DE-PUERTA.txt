@@ -1,0 +1,84 @@
+# FUERA-DE-PUERTA — ficheros test_*.py de re/tools que NO entran en la batería canónica,
+# CADA UNO CON SU RAZÓN. Nace del censo #55 (re/notes/censo-55-fuera-de-puerta-acta.md):
+# la batería cubría 13 de 51 ficheros y los otros 38 estaban fuera SIN QUE NADIE LO
+# DECIDIERA. Esto no mete los 38 —que es lo caro y lo que había impedido decidir—: hace la
+# exclusión EXPLÍCITA y revisable.
+#
+# REGLA (default-deny, la comprueba test_puerta.py): todo test_*.py de re/tools está en la
+# batería O en este fichero. Si no está en ninguno, el test se pone ROJO nombrándolo. Añadir
+# un test fuera de la puerta sigue siendo legítimo — pero a sabiendas.
+#
+# 🔴 SE INSERTA, NO SE REESCRIBE. Es un fichero COMPARTIDO: un script que lo regenere borra
+# los comentarios de los demás (ya pasó, 15 líneas). El control es el diff: cero borrados.
+#
+# Formato:  <nombre pelado>  # <razón>
+
+# --- MATERIAL DE EA EN COLECCIÓN (MEDIDO en #55) — ✅ GUARDA PUESTA EN #86 ----
+# Leían original/u5/... al IMPORTAR, así que sin ese material no daban «skipped»: daban
+# FileNotFoundError en colección y tumbaban la corrida ENTERA de re/tools. Es el mismo
+# defecto que #55 arregló en test_measure_seed_provenance con pytest.mark.skipif.
+#
+# #86 les puso esa guarda, VALIDADA EN LAS DOS DIRECCIONES (2026-08-06):
+#   sin material → EXIT=0, 49 skipped, CERO errores de colección (antes: 6 errores, 0 tests)
+#   con material → EXIT=0, 65 passed + 1 skipped (el opt-in U5RE_LIVE de DOSBox)
+# La forma de la guarda la vigila `test_guarda_ea.py`, que SÍ está en la batería.
+#
+# ⏳ SIGUEN AQUÍ porque la ENTRADA EN LA PUERTA la adjudica el lead, no el autor de la
+# guarda. Coste MEDIDO por fichero (wall, corrida individual, material presente) para que
+# la decisión no se tome sobre un total que esconde la partición:
+#   test_intro_blit_resolve   0,65 s   7 tests
+#   test_orphan_emitters      0,66 s  12 tests
+#   test_master_scenario      1,02 s   6 tests
+#   test_combat_parity        1,10 s   6 + 1 skipped
+#   test_loops_parity         3,60 s  22 tests
+#   test_seed_gate           33,32 s  12 tests   ← 83% del coste de los seis, él solo
+# ⇒ cinco cuestan 7,03 s JUNTOS; el sexto, 33,32 s. Con «los seis tardan 40 s» sólo cabe
+#   decir sí o no; con la partición, la respuesta razonable puede ser «entran cinco».
+test_combat_parity.py  # guarda #86 puesta (ULTIMA.EXE); candidato, 1,10 s — pendiente adjudicación
+test_intro_blit_resolve.py  # guarda #86 puesta (ULTIMA.EXE); candidato, 0,65 s — pendiente adjudicación
+test_loops_parity.py  # guarda #86 puesta (DATA.OVL); candidato, 3,60 s — pendiente adjudicación
+test_master_scenario.py  # guarda #86 puesta (DATA.OVL); candidato, 1,02 s — pendiente adjudicación
+test_orphan_emitters.py  # guarda #86 puesta (ULTIMA.EXE); candidato, 0,66 s — pendiente adjudicación
+test_seed_gate.py  # guarda #86 puesta (ULTIMA.EXE); candidato CARO, 33,32 s — pendiente adjudicación
+
+# --- NO ES UN INVARIANTE (adjudicado en #55) ---------------------------------
+test_measure_seed_provenance.py  # réplica de una MEDICIÓN (#84), no invariante: su rojo
+#   dice que una cifra publicada caducó, no que el árbol esté roto. Su fallo vivo (la
+#   réplica produce 6 claves que el generador no) es el cabo de #84, no una regresión.
+
+# --- SIN ADJUDICAR INDIVIDUALMENTE (declarado, no explicado) ------------------
+# Los 31 restantes. Razón de FAMILIA medida: la suite completa de re/tools tarda
+# ~17 min contra los ~3,3 de la puerta, y una puerta que no se corre no es una puerta.
+# NO he adjudicado uno a uno cuál merece entrar: queda declarado como deuda visible,
+# que es justo lo que este fichero existe para hacer posible.
+test_blackthorn_parity.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_capa_vs_mecanica.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_capture_original.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_cmds_parity.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_dataovl_catalog.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_dataovl_census.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_disasm.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_dispatch.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_dungeon_parity.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_entrada_vacia.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_exe_layout.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_globals.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_globals_negdisp.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_gypsy_parity.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_magic_parity.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_mirror_globals.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_mirror_headless.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_mirror_runner.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_npc_parity.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_oracle.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_oracle_capture.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_overworld_ai_parity.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_parity.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_rng_parity.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_seed_diff.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_seg2_resolve.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_shops_parity.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_shrines_parity.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+test_transport_parity.py  # sin adjudicar (#55): coste de suite; revisar al tocar su carril
+
+

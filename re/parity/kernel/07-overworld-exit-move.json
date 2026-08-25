@@ -1,0 +1,17 @@
+{
+  "name": "overworld-exit-and-slow-terrain",
+  "_doc": "Salida del pueblo por el borde sur (prompt 'Dost thou wish to leave?' → Y; salir NO consume minuto, TOWN 0x600/0x15D4) y movimiento exterior: coste base 2 min + terreno MUY lento (tiles 9-15, bosque profundo alrededor de Iolo's Hut) = 6 min por paso con 'Very slow!' (MAINOUT 0xC39 + 0x3E0 advance_clock(4)). Cierra los ⚠️ 'terreno lento' y valida el coste exterior. Se siembra food>0 para aislar del escenario de hambre anterior.",
+  "initial": "saved-gam",
+  "setup": [
+    { "global": "food", "value": 300 },
+    { "global": "x", "value": 15 },
+    { "global": "y", "value": 30 },
+    { "global": "minute", "value": 10 }
+  ],
+  "actions": [
+    { "op": "move", "dir": "south" },
+    { "op": "move", "dir": "south", "anchor": "location", "confirm": "y" },
+    { "op": "move", "dir": "west", "times": 2 }
+  ],
+  "fields": ["location", "floor", "x", "y", "minute", "hour"]
+}

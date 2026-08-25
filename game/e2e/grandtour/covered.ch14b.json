@@ -1,0 +1,19 @@
+{
+  "chapter": "ch14b",
+  "coveredIds": [
+    "cell-deceit-chest",
+    "cell-deceit-room",
+    "command-a",
+    "command-c",
+    "command-e",
+    "command-k",
+    "command-o",
+    "dungeon-deceit",
+    "spell-0-in-lor",
+    "spell-22-des-por"
+  ],
+  "notes": [
+    "GEMAS 0→3 — el cofre de floor 7 es donde NACEN las gemas de la cadena, y la nota del capítulo declaraba llaves y oro del botín pero NO las gemas (#65).",
+    "Deceit (loc 33) — MAZMORRA Entrega 2 (descenso + combate). HALLAZGO topológico (dungeons.json[loc33]): Deceit es un laberinto de bolsas conectadas SÓLO en vertical; el cofre (floor 7, 5,5) es INALCANZABLE por escaleras/Des Por solos (BFS: sin ruta) — toda vía exige ≥1 FOSO (pitfall) + varios Des Por, y el cofre está amurallado (se entra CAYENDO). Desde el fondo NO hay vuelta a Britannia: el único borde de salida es el UNDERWORLD (Des Por en floor 7). Por eso el capítulo SELLA en el Underworld (location 0, floor 0xFF) — forma \"travesía\" fiel al saqueo del fondo de una mazmorra U5. Arnés E2: dungeonDescendTo (planifica foso/Des Por/Klimb re-observando cascadas), resolveArenaCombat (canónico fase-2, side-aware: Attack-Aim al rival del bando contrario en alcance, si no BFS de arena o Space pasa). COFRE: (O)pen → botín rng.next(1,90) → oro SUBE (delta del capítulo). SALA (fase 2, L4): Room-1 REAL (floor-1 (5,7), 7× Gremlin) ganada por ASEDIO RANGED — la party enjaulada en el bolsillo sur dispara por la reja Portcullis(153, rangeWeaponPassable) con arco sembrado (0x1a, range 7); los Gremlins (melé) no cruzan → cero bajas, con los 2 fighters REALES (sin fantasma-Shamino). karma/llaves/INT intactos; oro sólo cambia por el botín. Delta esperado: currentHp (daño de foso), currentMp/spellQuantities (In Lor + Des Por). Comandos e/c/k/o/a. Sembrado caster + cura de entrada de VIVOS + arco (costura de arnés, cf #47/E1). HORA 10:00, encadenado sobre ch14.gam."
+  ]
+}

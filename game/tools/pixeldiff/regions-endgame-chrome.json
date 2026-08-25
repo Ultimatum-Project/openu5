@@ -1,0 +1,69 @@
+{
+  "_doc": "Máscaras del arnés VISUAL DEL DESENLACE (#176) para los instantes que CONSERVAN el chrome del juego (sala verde, páginas de diálogo, orbe/moongate). Mismas coordenadas que regions-samestate.json (espacio lógico 320x200, rect [x0,y0,x1,y1] INCLUSIVO), pero con modos ROBUSTOS y no con los duros. 🔴 EL PORQUÉ, MEDIDO: la referencia aquí NO es un volcado nativo de VRAM del oráculo (como en mismo-estado) sino una GRABACIÓN DE PANTALLA remuestreada y comprimida en H.264 — la prueba directa de escalado entero da 0,6705 de bloques 4x4 uniformes y el CONTROL con bloques 3x3 da 0,6745, es decir lo mismo que el azar. Con eso `strict`/`strict_ink` compararían el ruido del códec, no el port. Ver egcalib.py §ALCANCE.",
+  "_cobertura": "Ninguna región empieza antes de la columna lógica 4: la grabación pierde 3,5 columnas por la izquierda (borde de la ventana de DOSBox fuera de pantalla, egcalib.cobertura_izquierda). Son columnas de la barra azul del chrome, sin contenido de juego. test_endgame_visual.py lo vigila.",
+  "_console": "La consola va en 'presence' y NO en contenido: la página EXACTA de diálogo que se ve en el vídeo depende de cuándo pulsó el usuario que grabó, y el port la pacea por su propio reloj. Lo comprobable es que HAY texto donde debe haberlo, no cuál.",
+  "regions": [
+    {
+      "name": "viewport",
+      "kind": "rect",
+      "rect": [
+        8,
+        8,
+        183,
+        183
+      ],
+      "mode": "hist_video",
+      "thresh": 0.85
+    },
+    {
+      "name": "viewport_celdas",
+      "kind": "rect",
+      "rect": [
+        16,
+        16,
+        175,
+        175
+      ],
+      "mode": "lit_tiles",
+      "thresh": 0.9
+    },
+    {
+      "name": "panel_roster",
+      "kind": "rect",
+      "rect": [
+        192,
+        8,
+        311,
+        55
+      ],
+      "mode": "ignore",
+      "thresh": 0.7
+    },
+    {
+      "name": "panel_stats",
+      "kind": "rect",
+      "rect": [
+        192,
+        64,
+        311,
+        79
+      ],
+      "mode": "ignore",
+      "thresh": 0.7
+    },
+    {
+      "name": "consola",
+      "kind": "rect",
+      "rect": [
+        192,
+        88,
+        318,
+        191
+      ],
+      "mode": "ignore",
+      "thresh": 0.45
+    }
+  ],
+  "_color_retirado": "🔴 EL MODO `color` NO ESTÁ, Y NO ES UN OLVIDO. Lo puse, y midió el CÓDEC. El blanco del original (EGA 15) sale de la grabación atenuado y azulado y el snap a paleta lo manda a idx7/8/9: medido en `sala_verde`, el borde del marco da dominante idx15 en el port y idx7 en la referencia, y el viewport idx15 contra idx8 — un FAIL por cada instante con chrome. El repo YA lo tenía escrito en game/src/skin/fiel/frame.ts:112-118, donde el mismo falso positivo (idx15 vs «idx7 del vídeo») quedó adjudicado con captura limpia de emulador: idx15 es lo FIEL. Volví a fabricarlo por no leer esa nota antes de elegir el modo. `color` vale contra un volcado de VRAM, no contra una grabación.",
+  "_paneles_ignorados": "🔴 `panel_roster` y `panel_stats` van en 'ignore' porque los dos lados NO son la misma partida y no pueden serlo: la referencia es el save de 6 miembros del usuario (Elwood/Shamino/Iolo/Mariah/Geoffrey/Jaana, 240G cada uno, F:9999 G:9999, 4-10-139) y el port se siembra en partida NUEVA de 3 (Avatar/Shamino/Iolo, F:63 G:150, 4-5-139). Medido: tinta 0,0955 contra 0,3656 en el roster. Eso es el FIXTURE, no el desenlace — compararlo sería un rojo permanente que no dice nada del port. La `consola` va por lo mismo: su contenido depende de por dónde se llegó (el original trae el log del combate de sombras; el port, lo que emitió checkDoomRescue). Lo que este manifiesto compara es LA ESCENA (el viewport), que es de lo que trata el hueco."
+}

@@ -1,0 +1,21 @@
+{
+  "name": "ultima-v-clone",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "extractor",
+    "game"
+  ],
+  "scripts": {
+    "test": "npm run test -w extractor && npm run test -w game",
+    "extract": "npm run extract -w extractor --",
+    "dev": "npm run dev -w game",
+    "build": "npm run build -w game",
+    "e2e": "npm run e2e -w game",
+    "tour:manifest": "node game/e2e/grandtour/manifest.gen.mjs",
+    "verify:corpus": "node game/e2e/grandtour/verify-corpus.mjs",
+    "re:pixeldiff:samestate": "python3 game/tools/pixeldiff/samestate.py",
+    "re:pixeldiff:samestate:capture": "python3 game/tools/pixeldiff/samestate.py --capture-original && npm run e2e:pixeldiff -w game",
+    "verify:all": "npm test && npm run typecheck:e2e -w game && npm run e2e"
+  }
+}

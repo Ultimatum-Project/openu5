@@ -1,0 +1,7 @@
+# Artefactos por-corrida del tour (traces, resultados Playwright) — incluye los
+# VÍDEOS de la pasada U5_TOUR_VIDEO=1 (.artifacts/video-run/) y su concatenado
+# (.artifacts/video-out/, tools/tour-video-concat.sh): frames del juego JAMÁS
+# tracked. Los CHECKPOINTS (saves/*.gam, saves/*.sidecar.json) y la cobertura
+# (covered.*.json) SÍ se commitean: son generados por el port (no datos de EA) y
+# son la entrada del capítulo siguiente y del espejo del oráculo.
+.artifacts/

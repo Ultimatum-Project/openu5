@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": false,
+    // `tarjeta-rica.ts` importa `shortEquipNames.json` (los 48 nombres de equipo volcados de
+    // DATA.OVL). Se importa en vez de calcarse porque un `.json` es una HOJA —no arrastra
+    // grafo, que es lo que encarece las importaciones cruzadas aquí— y un calco de 48
+    // cadenas sí puede quedarse rancio en silencio.
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src",
+    // Las Pages Functions ENTRAN en el typecheck. No están en `src` porque su carpeta la
+    // enruta Cloudflare por ficheros, pero son TypeScript que se despliega: dejarlas fuera
+    // sería tener código servido que ningún `tsc` mira. Los tipos de los bindings los
+    // escribe `src/records-servidor.ts` (ver su cabecera), así que esto no arrastra
+    // `@cloudflare/workers-types`.
+    "functions",
+    "../extractor/src/browser.ts",
+    "../extractor/src/pipeline.ts"
+  ]
+}

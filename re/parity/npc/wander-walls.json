@@ -1,0 +1,13 @@
+{
+ "name": "wander-walls",
+ "kind": "wander",
+ "note": "Wander con muros en 3 de las 4 direcciones del puesto (11,10),(10,9),(9,10): si la dirección aleatoria pincha un muro el NPC no se mueve ese turno.",
+ "spec": {
+  "seed": 4660,
+  "location": 2, "floor": 0, "hour": 8,
+  "npc": {"slot": 1, "aiType": 1, "post": {"x": 10, "y": 10}, "start": {"x": 10, "y": 10}, "type": 112},
+  "player": {"floor": 0, "x": 0, "y": 0},
+  "walls": [[11,10],[10,9],[9,10]],
+  "turns": 24
+ }
+}

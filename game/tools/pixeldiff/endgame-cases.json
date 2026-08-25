@@ -1,0 +1,113 @@
+{
+  "_doc": "Instantes del DESENLACE que el arnés visual compara port↔original (#176, hueco 2 de /verificacion). Cada caso empareja UNA fase viva del pacer del port (game/src/ui/endgame-pacer.ts) con UN segundo del testigo en vídeo. Las capturas (PNG) NUNCA se commitean: viven en original/av-referencia/_pixeldiff/endgame/, gitignored. Lo que se versiona es ESTE manifiesto, las regiones y endgame-verdicts.json.",
+  "_acotamiento": "🔴 EL DISPARADOR DEL FINAL QUEDA FUERA DEL MARCO, y es una condición del encargo, no una comodidad. Todos los instantes son POSTERIORES a que el final ya corre: el primero (t=35 s) cae DESPUÉS del re-tinte verde, y el combate de sombras con la absorción — que es lo que arranca el final en el binario y la mecánica que el port aún no modela (#179, y el hueco 1 de la misma página) — termina hacia t=27. Ninguna referencia codifica CÓMO se llega al final; todas dicen QUÉ se pinta una vez está corriendo. El lado del port se siembra por __u5test igual que game/e2e/endgame.spec.ts, que llega a las fases sin jugar Doom. Ninguno de los dos lados pasa por el gate. `t_final_arranca` es esa frontera y test_endgame_visual.py la vigila: un instante por debajo pone la guarda ROJA.",
+  "t_final_arranca": 28.0,
+  "video": "original/av-referencia/endgame/endgame-victoria-box-20260721.mov",
+  "testigo": "re/notes/endgame-witness-20260721.md",
+  "_recorte": "Calibrado UNA VEZ contra la plantilla de chrome re-extraída de game/src/skin/fiel/frame.ts (FRAME_FILLS) y aplicado FIJO a todos los instantes, incluidos los que ya no tienen chrome. Control: el desplazamiento residual contra la plantilla es 0 px lógicos en las tres tramas con chrome (t=35/60/92) y ±1 con los recortes vecinos; el bbox del fiducial heredado se iba 2 px. Segundo control: el bbox del chrome sale IDÉNTICO en 13 muestras de t=3 a t=95, o sea la ventana de DOSBox no se movió durante la grabación — que es lo que hace legítimo un recorte fijo.",
+  "recorte": [
+    -14,
+    7,
+    1265,
+    773
+  ],
+  "recorte_precision": 0.9934,
+  "cobertura_izquierda": 4,
+  "_paginas": "🔴 CORRECCIÓN AL TESTIGO HEREDADO, MEDIDA. `endgame-witness-20260721.md:20-21` describe DOS pantallas de historia («la casa del Avatar» en 105-117 y «The Dream» en 118-128). Muestreando el vídeo cada 3 s y mirando los frames salen SEIS páginas distintas, cada una con su lámina, entre t≈102 y t≈129 — que es exactamente lo que el port ya modela (ART_BY_PAGE en skin/fiel/endgame-frame.ts: end1:0-2 y end2:0-2, y `planEndgame` emite un beat por página). El testigo también coloca mal las etiquetas: la casa del Avatar no está en 105 sino en 109, y lo que hay en 103-106 es «The Homecoming» con el sendero y el círculo de piedras. El port no hereda el error; la nota sí lo tenía, y por eso el emparejamiento de este manifiesto se hizo MIRANDO los frames y no leyendo la tabla.",
+  "cases": [
+    {
+      "name": "sala_verde",
+      "t": 35.0,
+      "phase": "greenScene",
+      "regions": "regions-endgame-chrome.json",
+      "que_prueba": "La sala se ha re-teñido de VERDE y Lord British está en pie. `viewport_tinte` (índice EGA dominante) es el que caza el fallo gordo: una sala que se quedara en ladrillo rojo daría otro dominante."
+    },
+    {
+      "name": "dialogo_caja",
+      "t": 60.0,
+      "phase": "dialogue",
+      "regions": "regions-endgame-chrome.json",
+      "que_prueba": "Con el diálogo del trono abierto la sala verde sigue pintada y la consola tiene texto. La PÁGINA exacta no se compara (ver _console en las regiones)."
+    },
+    {
+      "name": "orbe_moongate",
+      "t": 92.0,
+      "phase": "orbMoongate",
+      "regions": "regions-endgame-chrome.json",
+      "que_prueba": "La puerta lunar ROJA está pintada dentro de la sala. `viewport` (hist) ve entrar la masa de rojo y `viewport_celdas` ve DÓNDE."
+    },
+    {
+      "name": "disolucion",
+      "t": 100.0,
+      "phase": "dissolve",
+      "regions": "regions-endgame-full.json",
+      "expect": "PASS",
+      "espera_ms": 1200,
+      "que_prueba": "🔴 ESTE CASO NO COMPARA EL PROGRESO, y no puede: la disolución avanza a reloj y los dos lados están en un punto distinto de ella — dos progresos distintos del mismo efecto no son comparables frame a frame. Lo que sí es independiente del progreso es la FORMA: el orden es un LFSR, así que a cualquier altura los píxeles apagados están repartidos por TODA la pantalla y ninguna celda 16x16 queda entera en negro. `pantalla_celdas` mide eso, y es justo lo que separa una disolución de un barrido o de un rectángulo que encoge. El ORDEN concreto ya lo guarda `endgameDissolveOrder` por derivación, no hace falta píxel."
+    },
+    {
+      "name": "historia_0",
+      "t": 107.0,
+      "phase": "storyHouse",
+      "page": 0,
+      "regions": "regions-endgame-full.json",
+      "que_prueba": "Página 0 de END.DAT: rótulo «The Homecoming» + sendero y círculo de piedras (end1:0)."
+    },
+    {
+      "name": "historia_1",
+      "t": 110.5,
+      "phase": "storyHouse",
+      "page": 1,
+      "regions": "regions-endgame-full.json",
+      "que_prueba": "Página 1: interior de la casa con la silueta del Avatar en la puerta (end1:1).",
+      "expect": "FAIL",
+      "divergencia_catalogada": "DIVERGENCIA ADJUDICADA (#187): defecto de la REFERENCIA. El binario LIMPIA la pantalla entera al pasar de página — ENDGAME.OVL fn 0x0000 hace por página `putchar(0xFF)` (0x00b4, = fill (0,0)-(319,199) al fondo negro de la ventana 0, ULTIMA.EXE 0x17bb-0x17f1 + 0x1f77) sobre el backbuffer y presenta con copia total (0x0185 → 0x0F6E → EGA.DRV 0x814). Los restos multicolores de la mitad baja son de la grabación; el port, que pinta limpio, es FIEL. Derivación: re/notes/endgame-banda-limpieza-187.md. `expect: FAIL` se queda porque la comparación sigue siendo contra esa grabación."
+    },
+    {
+      "name": "historia_2",
+      "t": 118.0,
+      "phase": "storyDream",
+      "page": 2,
+      "regions": "regions-endgame-full.json",
+      "que_prueba": "Página 2: la noche y el sueño, montaña azul (end1:2).",
+      "expect": "FAIL",
+      "divergencia_catalogada": "DIVERGENCIA ADJUDICADA (#187): defecto de la REFERENCIA. El binario LIMPIA la pantalla entera al pasar de página — ENDGAME.OVL fn 0x0000 hace por página `putchar(0xFF)` (0x00b4, = fill (0,0)-(319,199) al fondo negro de la ventana 0, ULTIMA.EXE 0x17bb-0x17f1 + 0x1f77) sobre el backbuffer y presenta con copia total (0x0185 → 0x0F6E → EGA.DRV 0x814). Los restos multicolores de la mitad baja son de la grabación; el port, que pinta limpio, es FIEL. Derivación: re/notes/endgame-banda-limpieza-187.md. `expect: FAIL` se queda porque la comparación sigue siendo contra esa grabación."
+    },
+    {
+      "name": "historia_3",
+      "t": 120.5,
+      "phase": "storyDream",
+      "page": 3,
+      "regions": "regions-endgame-full.json",
+      "que_prueba": "Página 3: rótulo «The Dream» + sala del trono de Blackthorn (end2:0).",
+      "expect": "FAIL",
+      "divergencia_catalogada": "DIVERGENCIA ADJUDICADA (#187): defecto de la REFERENCIA. El binario LIMPIA la pantalla entera al pasar de página — ENDGAME.OVL fn 0x0000 hace por página `putchar(0xFF)` (0x00b4, = fill (0,0)-(319,199) al fondo negro de la ventana 0, ULTIMA.EXE 0x17bb-0x17f1 + 0x1f77) sobre el backbuffer y presenta con copia total (0x0185 → 0x0F6E → EGA.DRV 0x814). Los restos multicolores de la mitad baja son de la grabación; el port, que pinta limpio, es FIEL. Derivación: re/notes/endgame-banda-limpieza-187.md. `expect: FAIL` se queda porque la comparación sigue siendo contra esa grabación."
+    },
+    {
+      "name": "historia_4",
+      "t": 122.0,
+      "phase": "storyDream",
+      "page": 4,
+      "regions": "regions-endgame-full.json",
+      "que_prueba": "Página 4: Blackthorn y la corona (end2:1)."
+    },
+    {
+      "name": "historia_5",
+      "t": 128.0,
+      "phase": "storyDream",
+      "page": 5,
+      "regions": "regions-endgame-full.json",
+      "que_prueba": "Página 5: la puerta roja (end2:2).",
+      "expect": "FAIL",
+      "divergencia_catalogada": "DIVERGENCIA ADJUDICADA (#187): defecto de la REFERENCIA. El binario LIMPIA la pantalla entera al pasar de página — ENDGAME.OVL fn 0x0000 hace por página `putchar(0xFF)` (0x00b4, = fill (0,0)-(319,199) al fondo negro de la ventana 0, ULTIMA.EXE 0x17bb-0x17f1 + 0x1f77) sobre el backbuffer y presenta con copia total (0x0185 → 0x0F6E → EGA.DRV 0x814). Los restos multicolores de la mitad baja son de la grabación; el port, que pinta limpio, es FIEL. Derivación: re/notes/endgame-banda-limpieza-187.md. `expect: FAIL` se queda porque la comparación sigue siendo contra esa grabación."
+    },
+    {
+      "name": "pergamino",
+      "t": 131.0,
+      "phase": "terminalFreeze",
+      "regions": "regions-endgame-full.json",
+      "que_prueba": "El pergamino ESTAMPADO ENTERO en el congelado terminal — el estado en el que el original se queda para siempre. `pantalla_tinta` es la guarda directa del bug del 23-07 (el pergamino que salía en blanco porque la tinta negra caía sobre fondo negro): un pergamino vacío hunde la fracción de tinta y el caso se pone ROJO."
+    }
+  ],
+  "_instantes_estables": "Los seis instantes de historia NO se eligieron a ojo: se barrió el vídeo cada 0,5 s y se midió ESTABILIDAD como fracción de píxeles idénticos entre frame(t) y frame(t+0,4). Los elegidos dan 1,0000 — la pantalla está quieta. El primer intento cogió t=115,5 para la página 2 y t=127,0 para la 5, ambos A MEDIA TRANSICIÓN de página: el careo salía rojo (hist 0,812 y 0,635) y el rojo era MÍO, no del port."
+}

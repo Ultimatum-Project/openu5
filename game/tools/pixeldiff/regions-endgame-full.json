@@ -1,0 +1,44 @@
+{
+  "_doc": "Máscaras del arnés VISUAL DEL DESENLACE (#176) para los instantes A PANTALLA COMPLETA (disolución, las seis páginas de historia, pergamino). Aquí NO hay chrome: el marco azul del juego ya no existe, y por eso el registro de estos frames NO puede usar el fiducial de `pdlib.detect_frame_bbox` — lo hace `egcalib.normalize_fixed` con el recorte calibrado del vídeo. Ver egcalib.py, que documenta los cuatro modos de fallo medidos del registro heredado (dos de ellos SILENCIOSOS).",
+  "_modos": "Las cuatro regiones cubren el mismo rectángulo con instrumentos distintos y no redundantes: 'hist' ve el CONTENIDO/paleta pero es orden-independiente; 'lit_tiles' ve la ESTRUCTURA ESPACIAL (qué celdas 16x16 están enteramente negras = dónde hay arte y dónde fondo), que es lo que distingue una lámina de otra y lo que hist no puede ver; 'presence' ve si hay tinta o la pantalla salió VACÍA (el bug del pergamino en blanco del 23-07 es justo eso).",
+  "_cobertura": "Ninguna región empieza antes de la columna lógica 4 (la grabación pierde 3,5 columnas por la izquierda). 'pantalla_celdas' empieza en 16 para que la rejilla de 16x16 quede ALINEADA con la del original: una región que empezara en 4 desplazaría todas las celdas 4 px y el acuerdo caería sin que nada esté mal.",
+  "regions": [
+    {
+      "name": "pantalla",
+      "kind": "rect",
+      "rect": [
+        4,
+        0,
+        319,
+        199
+      ],
+      "mode": "hist_video",
+      "thresh": 0.83
+    },
+    {
+      "name": "pantalla_celdas",
+      "kind": "rect",
+      "rect": [
+        16,
+        0,
+        319,
+        191
+      ],
+      "mode": "lit_tiles",
+      "thresh": 0.8
+    },
+    {
+      "name": "pantalla_tinta",
+      "kind": "rect",
+      "rect": [
+        4,
+        0,
+        319,
+        199
+      ],
+      "mode": "presence",
+      "thresh": 0.7
+    }
+  ],
+  "_color_retirado": "🔴 `color` retirado por la misma medición que en regions-endgame-chrome.json: el dominante EGA de una grabación mide el códec (blanco→gris), no el port. Ver game/src/skin/fiel/frame.ts:112-118."
+}

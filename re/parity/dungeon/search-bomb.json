@@ -1,0 +1,11 @@
+{
+ "name": "search-bomb",
+ "note": "Search de bomba 0x62 (SJOG:0x07c6): rand(1,30) vs threshold; DEX 10, floor 2 -> thr=12. Un unico rand.",
+ "spec": {
+  "seed": 777,
+  "roster": [{ "dex": 10, "hp": 30, "maxHp": 30 }],
+  "pos": { "dungeon": 33, "floor": 2, "x": 2, "y": 2, "facing": "east" },
+  "cells": [{ "floor": 2, "x": 3, "y": 2, "type": 6, "sub": 2 }],
+  "action": "search"
+ }
+}

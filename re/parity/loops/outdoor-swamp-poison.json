@@ -1,0 +1,1 @@
+{"name":"outdoor-swamp-poison","kind":"outdoor","seed":48879,"tile":4,"floor":0,"hour":12,"members":[{"dex":3,"status":"G"},{"dex":28,"status":"G"}],"ticks":25,"onSwamp":true}

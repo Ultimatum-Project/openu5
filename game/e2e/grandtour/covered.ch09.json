@@ -1,0 +1,24 @@
+{
+  "chapter": "ch09",
+  "coveredIds": [
+    "command-e",
+    "command-l",
+    "command-t",
+    "floor-8-z0",
+    "location-8-new-magincia",
+    "npc-towne-41-tomoka",
+    "npc-towne-42-shirita",
+    "npc-towne-43-yasuda",
+    "npc-towne-44-tetsuo",
+    "npc-towne-45-fumiko",
+    "npc-towne-46-kaiko",
+    "npc-towne-47-katrina",
+    "npc-towne-48-wartow",
+    "sign-8-15-27",
+    "sign-8-20-17",
+    "sign-8-20-20"
+  ],
+  "notes": [
+    "New Magincia (loc 8): location+z0, 8 NPCs towne (z1 DEFERIDA — ver abajo). TESTIGOS de contenido byte-exactos: Wartow → MANTRA DE HUMILIDAD 'LUM' (rama SEGURA ['humi','brit','n','y']; ⚠NUNCA 'y' en Labels 1-4 → KarmaMinusOne×2); Katrina → 'battle of Virtue' (TALK-ONLY por decisión del lead, sin JoinParty → roster/.gam intactos); Shirita → 'pride and arrogance'; Yasuda → 'Shadowlords'; Tetsuo → 'lose that virtue'; Fumiko → 'freedom'; Kaiko → 'usurper' (cross-Hassad/endgame); Tomoka → 'labours of the group'. HORA CANÓNICA 10:00 (8 NPCs z-invariantes: z=[0,0,0]; mapa abierto sin particiones → floor-fija trivial). GEMAS 0→0 (#65). LLAVES 1→1 (CERO (J)immy: smallmap 8 sin puertas con cerrojo — 7×184+2×186 z0, 2×184 z1, todas regulares). Oro 200→200 y karma 80→80 INALTERADOS (⚠ las tiendas Barkeeper dn130/GuildMaster dn134 siguen DIFERIDAS, pero YA NO por pobreza: su razón vieja («inasequibles con oro 1», task #51) caducó con el pin entryGold de #52 y se contradecía con el «Oro 200→200» de cuatro palabras antes — hoy son alcanzables y se difieren por DECISIÓN de la spec (no se visitan), no por el saldo. Misma corrección que ya hizo ch08; la auditoría final (01-08) la extendió a los hermanos que se la dejaron). DESVIACIONES vs brief (runtime manda): (a) R2 no aplica — greetings de Yasuda/Tetsuo/Fumiko sólo interpolan <AvatarsName>, SIN <AskName> → keyword plano sin anteponer nombre; (b) testigo de Tomoka corregido a ['comm']→'labours of the group' (el ['blac'] del brief responde 'keep his promise', SIN 'harvest'). Señales 3/10 (subconjunto determinista). z1 (Guild/mercado negro) DEFERIDA por SELLO ESTRUCTURAL: la única escalera a z1 (tile 200 en (30,16) z0) está tras la barra de la taberna (mobiliario no-walkable); walkTo sólo alcanza (24,19) → sin (K)limb fiel → floor-8-z1 + 2 searches z1 diferidas (concuerda con task #51). Comandos e/t/l. Cierra la serie de las 8 towns principales (locs 1-8) del Grand Tour."
+  ]
+}

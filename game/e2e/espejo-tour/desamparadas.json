@@ -1,0 +1,36 @@
+{
+  "_doc": [
+    "REGISTRO DE PARTES DESAMPARADAS — las que aportan comparables que NO PUEDEN casar.",
+    "",
+    "Una parte es DESAMPARADA cuando su ruta no deriva NI UN paso de nav: sin movimiento",
+    "conducido la party nunca sale del tile de entrada, así que todo bloque posicional del",
+    "transcript se compara contra un estado que no avanzó. Su material NO está retirado por",
+    "`skip`, de modo que sigue DENTRO del denominador y lo diluye.",
+    "",
+    "★ POR QUÉ ESTE FICHERO EXISTE Y NO ES UNA LISTA DE EXCLUSIÓN.",
+    "Quitar del denominador lo que sale mal es exactamente cómo se fabrica una cifra bonita.",
+    "Este registro NO excluye a nadie: OBLIGA A DECLARAR. La regla que mete a una parte aquí",
+    "es CIEGA AL RESULTADO (0 pasos de nav se lee del route.json commiteado, sin abrir un",
+    "report) y es ANTERIOR a cualquier medición de conformidad — la escribió quien curó ad02",
+    "en el `entry.note` de la propia ruta. La conformidad se publica SIEMPRE con las dos",
+    "cifras, con y sin; ver `re/notes/denominador-10-acta.md`.",
+    "",
+    "El guarda `tests/espejo-denominador.test.ts` se pone ROJO NOMBRANDO a cualquier parte",
+    "con 0 pasos de nav que no esté aquí. Añadir una entrada es un acto DELIBERADO y",
+    "revisable, no un silencio.",
+    "",
+    "🔴 `motivo` NO es prosa libre: tiene que decir DÓNDE está la causa (corpus / arnés /",
+    "ruta) y qué la cerraría. Una entrada sin salida es un cabo suelto disfrazado de registro."
+  ],
+
+  "desamparadas": {
+    "ad02": {
+      "causa": "corpus",
+      "motivo": "El OCR de `ad_ep02.ocrlog.txt` destruye el VERBO de cada eco de input: 0 líneas `>North|South|East|West` limpias en 10 692 (sus vecinas ad01/ad03 dan 411 y 435). La corrupción no es un near-miss recuperable por distancia de edición: 0 recuperables a umbral 0,84 y 0,75 sobre el vocabulario de movimiento plegado por confusiones OCR (a umbral 0,65, tan flojo que produce falsos positivos en todo el corpus, aparecen 4). La ruta deriva 0 pasos de nav; las otras 48 partes ≥ 47.",
+      "declarado_en": "entry.note de routes-ad/ad02.route.json, ANTES de cualquier medición de conformidad: «el input-log de movimiento es IRRECUPERABLE (0 pasos nav)»",
+      "cierre": "RE-OCR del vídeo fuente de ad_ep02 con el perfil re-calibrado (lo mismo que `full-part-logs-recal/` hizo por part07+part09..18 en LP1). NO hay recal para AD, y el vídeo del episodio no está en `original/av-referencia/`. Bloqueado por MATERIAL, no por código: no se arregla ni en el arnés ni en la ruta.",
+      "impacto_denominador": "1261 comparables / 0 matched en el brazo H (7e0b3b56) = 7,7% del denominador de las 49 aportando 0 al numerador",
+      "sha_medicion": "7e0b3b56"
+    }
+  }
+}

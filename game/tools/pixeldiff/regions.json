@@ -1,0 +1,19 @@
+{
+  "_doc": "Máscaras de región del arnés píxel-diff (task #26). Coords en el espacio LÓGICO 320x200 del original, rect [x0,y0,x1,y1] INCLUSIVO (como el binario). Derivadas de game/src/skin/fiel/frame.ts + skin.ts (paint_screen_frame 0x637e). 'mode' fija cómo se compara cada región; 'thresh' es el umbral de PASS (0..1). 'kind' rect (relleno) | outline (perímetro 1px).",
+  "modes": {
+    "strict": "match% = fracción de píxeles con índice EGA idéntico. Para cromo/paneles con MISMO estado (fase 2). Sensible a 1px.",
+    "hist": "sim% = 1 - 0.5*L1 de histogramas de paleta normalizados (orden-independiente). Para viewport / texto con animación, RNG o escena distinta.",
+    "presence": "compara 'tinta' (fracción de px no-fondo) entre port y original; delata caja poblada vs VACÍA.",
+    "color": "índice EGA dominante no-fondo de la región; delata color de elemento equivocado (p.ej. borde blanco vs gris).",
+    "ignore": "no se compara."
+  },
+  "regions": [
+    { "name": "viewport",     "kind": "rect",    "rect": [8, 8, 183, 183],   "mode": "hist",     "thresh": 0.75 },
+    { "name": "sky_band",     "kind": "rect",    "rect": [8, 0, 183, 7],     "mode": "hist",     "thresh": 0.80 },
+    { "name": "panel_roster", "kind": "rect",    "rect": [192, 8, 311, 55],  "mode": "hist",     "thresh": 0.80 },
+    { "name": "panel_stats",  "kind": "rect",    "rect": [192, 64, 311, 79], "mode": "presence", "thresh": 0.60 },
+    { "name": "console",      "kind": "rect",    "rect": [192, 88, 318, 191],"mode": "hist",     "thresh": 0.80 },
+    { "name": "status_line",  "kind": "rect",    "rect": [8, 184, 183, 199], "mode": "presence", "thresh": 0.60 },
+    { "name": "border_rule",  "kind": "outline", "rect": [7, 7, 184, 184],   "mode": "color",    "thresh": 1.0 }
+  ]
+}

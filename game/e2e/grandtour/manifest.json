@@ -1,0 +1,5196 @@
+[
+  {
+    "id": "location-1-moonglow",
+    "category": "location",
+    "name": "Moonglow",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-2-britain",
+    "category": "location",
+    "name": "Britain",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-3-jhelom",
+    "category": "location",
+    "name": "Jhelom",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-4-yew",
+    "category": "location",
+    "name": "Yew",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-5-minoc",
+    "category": "location",
+    "name": "Minoc",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-6-trinsic",
+    "category": "location",
+    "name": "Trinsic",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-7-skara-brae",
+    "category": "location",
+    "name": "Skara_Brae",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-8-new-magincia",
+    "category": "location",
+    "name": "New_Magincia",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-9-fogsbane",
+    "category": "location",
+    "name": "Fogsbane",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-10-stormcrow",
+    "category": "location",
+    "name": "Stormcrow",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-11-greyhaven",
+    "category": "location",
+    "name": "Greyhaven",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-12-waveguide",
+    "category": "location",
+    "name": "Waveguide",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-13-iolos-hut",
+    "category": "location",
+    "name": "Iolos_Hut",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-14-suteks-hut",
+    "category": "location",
+    "name": "Suteks_Hut",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-15-sinvraals-hut",
+    "category": "location",
+    "name": "SinVraals_Hut",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-16-grendels-hut",
+    "category": "location",
+    "name": "Grendels_Hut",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-17-lord-britishs-castle",
+    "category": "location",
+    "name": "Lord_Britishs_Castle",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-18-palace-of-blackthorn",
+    "category": "location",
+    "name": "Palace_of_Blackthorn",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-19-west-britanny",
+    "category": "location",
+    "name": "West_Britanny",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-20-north-britanny",
+    "category": "location",
+    "name": "North_Britanny",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-21-east-britanny",
+    "category": "location",
+    "name": "East_Britanny",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-22-paws",
+    "category": "location",
+    "name": "Paws",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-23-cove",
+    "category": "location",
+    "name": "Cove",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-24-buccaneers-den",
+    "category": "location",
+    "name": "Buccaneers_Den",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-25-ararat",
+    "category": "location",
+    "name": "Ararat",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-26-bordermarch",
+    "category": "location",
+    "name": "Bordermarch",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-27-farthing",
+    "category": "location",
+    "name": "Farthing",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-28-windemere",
+    "category": "location",
+    "name": "Windemere",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-29-stonegate",
+    "category": "location",
+    "name": "Stonegate",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-30-lycaeum",
+    "category": "location",
+    "name": "Lycaeum",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-31-empath-abbey",
+    "category": "location",
+    "name": "Empath_Abbey",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "location-32-serpents-hold",
+    "category": "location",
+    "name": "Serpents_Hold",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-1-z0",
+    "category": "floor",
+    "name": "Moonglow z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-1-z1",
+    "category": "floor",
+    "name": "Moonglow z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-2-z0",
+    "category": "floor",
+    "name": "Britain z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-2-z1",
+    "category": "floor",
+    "name": "Britain z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-3-z0",
+    "category": "floor",
+    "name": "Jhelom z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-3-z1",
+    "category": "floor",
+    "name": "Jhelom z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-4-z-1",
+    "category": "floor",
+    "name": "Yew z-1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-4-z0",
+    "category": "floor",
+    "name": "Yew z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-5-z0",
+    "category": "floor",
+    "name": "Minoc z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-5-z1",
+    "category": "floor",
+    "name": "Minoc z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-6-z0",
+    "category": "floor",
+    "name": "Trinsic z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-6-z1",
+    "category": "floor",
+    "name": "Trinsic z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-7-z0",
+    "category": "floor",
+    "name": "Skara_Brae z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-7-z1",
+    "category": "floor",
+    "name": "Skara_Brae z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-8-z0",
+    "category": "floor",
+    "name": "New_Magincia z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-8-z1",
+    "category": "floor",
+    "name": "New_Magincia z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-9-z0",
+    "category": "floor",
+    "name": "Fogsbane z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-9-z1",
+    "category": "floor",
+    "name": "Fogsbane z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-9-z2",
+    "category": "floor",
+    "name": "Fogsbane z2",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-10-z0",
+    "category": "floor",
+    "name": "Stormcrow z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-10-z1",
+    "category": "floor",
+    "name": "Stormcrow z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-10-z2",
+    "category": "floor",
+    "name": "Stormcrow z2",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-11-z0",
+    "category": "floor",
+    "name": "Greyhaven z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-11-z1",
+    "category": "floor",
+    "name": "Greyhaven z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-11-z2",
+    "category": "floor",
+    "name": "Greyhaven z2",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-12-z0",
+    "category": "floor",
+    "name": "Waveguide z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-12-z1",
+    "category": "floor",
+    "name": "Waveguide z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-12-z2",
+    "category": "floor",
+    "name": "Waveguide z2",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-13-z0",
+    "category": "floor",
+    "name": "Iolos_Hut z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-14-z0",
+    "category": "floor",
+    "name": "Suteks_Hut z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-15-z0",
+    "category": "floor",
+    "name": "SinVraals_Hut z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-16-z0",
+    "category": "floor",
+    "name": "Grendels_Hut z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-17-z-1",
+    "category": "floor",
+    "name": "Lord_Britishs_Castle z-1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-17-z0",
+    "category": "floor",
+    "name": "Lord_Britishs_Castle z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-17-z1",
+    "category": "floor",
+    "name": "Lord_Britishs_Castle z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-17-z2",
+    "category": "floor",
+    "name": "Lord_Britishs_Castle z2",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-17-z3",
+    "category": "floor",
+    "name": "Lord_Britishs_Castle z3",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-18-z-1",
+    "category": "floor",
+    "name": "Palace_of_Blackthorn z-1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-18-z0",
+    "category": "floor",
+    "name": "Palace_of_Blackthorn z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-18-z1",
+    "category": "floor",
+    "name": "Palace_of_Blackthorn z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-18-z2",
+    "category": "floor",
+    "name": "Palace_of_Blackthorn z2",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-18-z3",
+    "category": "floor",
+    "name": "Palace_of_Blackthorn z3",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-19-z0",
+    "category": "floor",
+    "name": "West_Britanny z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-20-z0",
+    "category": "floor",
+    "name": "North_Britanny z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-21-z0",
+    "category": "floor",
+    "name": "East_Britanny z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-22-z0",
+    "category": "floor",
+    "name": "Paws z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-23-z0",
+    "category": "floor",
+    "name": "Cove z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-24-z0",
+    "category": "floor",
+    "name": "Buccaneers_Den z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-25-z0",
+    "category": "floor",
+    "name": "Ararat z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-25-z1",
+    "category": "floor",
+    "name": "Ararat z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-26-z0",
+    "category": "floor",
+    "name": "Bordermarch z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-26-z1",
+    "category": "floor",
+    "name": "Bordermarch z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-27-z0",
+    "category": "floor",
+    "name": "Farthing z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-28-z0",
+    "category": "floor",
+    "name": "Windemere z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-29-z0",
+    "category": "floor",
+    "name": "Stonegate z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-30-z0",
+    "category": "floor",
+    "name": "Lycaeum z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-30-z1",
+    "category": "floor",
+    "name": "Lycaeum z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-30-z2",
+    "category": "floor",
+    "name": "Lycaeum z2",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-31-z0",
+    "category": "floor",
+    "name": "Empath_Abbey z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-31-z1",
+    "category": "floor",
+    "name": "Empath_Abbey z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-31-z2",
+    "category": "floor",
+    "name": "Empath_Abbey z2",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-32-z-1",
+    "category": "floor",
+    "name": "Serpents_Hold z-1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-32-z0",
+    "category": "floor",
+    "name": "Serpents_Hold z0",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "floor-32-z1",
+    "category": "floor",
+    "name": "Serpents_Hold z1",
+    "source": "maps/smallmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "dungeon-deceit",
+    "category": "dungeon",
+    "name": "Deceit",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "dungeon-despise",
+    "category": "dungeon",
+    "name": "Despise",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "dungeon-destard",
+    "category": "dungeon",
+    "name": "Destard",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "dungeon-wrong",
+    "category": "dungeon",
+    "name": "Wrong",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "dungeon-covetous",
+    "category": "dungeon",
+    "name": "Covetous",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "dungeon-shame",
+    "category": "dungeon",
+    "name": "Shame",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "dungeon-hythloth",
+    "category": "dungeon",
+    "name": "Hythloth",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "dungeon-doom",
+    "category": "dungeon",
+    "name": "Doom",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "word-fallax",
+    "category": "word-of-power",
+    "name": "FALLAX",
+    "source": "data.json:wordsOfPower",
+    "reachableBy": null
+  },
+  {
+    "id": "word-vilis",
+    "category": "word-of-power",
+    "name": "VILIS",
+    "source": "data.json:wordsOfPower",
+    "reachableBy": null
+  },
+  {
+    "id": "word-inopia",
+    "category": "word-of-power",
+    "name": "INOPIA",
+    "source": "data.json:wordsOfPower",
+    "reachableBy": null
+  },
+  {
+    "id": "word-malum",
+    "category": "word-of-power",
+    "name": "MALUM",
+    "source": "data.json:wordsOfPower",
+    "reachableBy": null
+  },
+  {
+    "id": "word-avidus",
+    "category": "word-of-power",
+    "name": "AVIDUS",
+    "source": "data.json:wordsOfPower",
+    "reachableBy": null
+  },
+  {
+    "id": "word-infama",
+    "category": "word-of-power",
+    "name": "INFAMA",
+    "source": "data.json:wordsOfPower",
+    "reachableBy": null
+  },
+  {
+    "id": "word-ignavus",
+    "category": "word-of-power",
+    "name": "IGNAVUS",
+    "source": "data.json:wordsOfPower",
+    "reachableBy": null
+  },
+  {
+    "id": "word-veramocor",
+    "category": "word-of-power",
+    "name": "VERAMOCOR",
+    "source": "data.json:wordsOfPower",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-deceit-chest",
+    "category": "dungeon-cell",
+    "name": "Deceit: chest",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-deceit-fountain",
+    "category": "dungeon-cell",
+    "name": "Deceit: fountain",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-deceit-trap",
+    "category": "dungeon-cell",
+    "name": "Deceit: trap",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-deceit-room",
+    "category": "dungeon-cell",
+    "name": "Deceit: room",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-despise-trap",
+    "category": "dungeon-cell",
+    "name": "Despise: trap",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-destard-trap",
+    "category": "dungeon-cell",
+    "name": "Destard: trap",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-destard-room",
+    "category": "dungeon-cell",
+    "name": "Destard: room",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-wrong-fountain",
+    "category": "dungeon-cell",
+    "name": "Wrong: fountain",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-wrong-trap",
+    "category": "dungeon-cell",
+    "name": "Wrong: trap",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-wrong-field",
+    "category": "dungeon-cell",
+    "name": "Wrong: field",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-wrong-room",
+    "category": "dungeon-cell",
+    "name": "Wrong: room",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-covetous-fountain",
+    "category": "dungeon-cell",
+    "name": "Covetous: fountain",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-covetous-field",
+    "category": "dungeon-cell",
+    "name": "Covetous: field",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-covetous-room",
+    "category": "dungeon-cell",
+    "name": "Covetous: room",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-shame-chest",
+    "category": "dungeon-cell",
+    "name": "Shame: chest",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-shame-trap",
+    "category": "dungeon-cell",
+    "name": "Shame: trap",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-shame-room",
+    "category": "dungeon-cell",
+    "name": "Shame: room",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-hythloth-trap",
+    "category": "dungeon-cell",
+    "name": "Hythloth: trap",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-hythloth-room",
+    "category": "dungeon-cell",
+    "name": "Hythloth: room",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-doom-trap",
+    "category": "dungeon-cell",
+    "name": "Doom: trap",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "cell-doom-room",
+    "category": "dungeon-cell",
+    "name": "Doom: room",
+    "source": "maps/dungeons.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-1-zachariah",
+    "category": "npc",
+    "name": "Zachariah",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-2-malifora",
+    "category": "npc",
+    "name": "Malifora",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-3-malik",
+    "category": "npc",
+    "name": "Malik",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-4-donn-piatt",
+    "category": "npc",
+    "name": "Donn Piatt",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-5-lord-stuart-the-hungry",
+    "category": "npc",
+    "name": "Lord Stuart the Hungry",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-6-greyson",
+    "category": "npc",
+    "name": "Greyson",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-7-justin",
+    "category": "npc",
+    "name": "Justin",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-8-eb",
+    "category": "npc",
+    "name": "Eb",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-9-terrance",
+    "category": "npc",
+    "name": "Terrance",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-10-telila",
+    "category": "npc",
+    "name": "Telila",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-11-gwenno",
+    "category": "npc",
+    "name": "Gwenno",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-12-annon",
+    "category": "npc",
+    "name": "Annon",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-13-bullwier",
+    "category": "npc",
+    "name": "Bullwier",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-14-trian",
+    "category": "npc",
+    "name": "Trian",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-15-goeth",
+    "category": "npc",
+    "name": "Goeth",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-16-thorne",
+    "category": "npc",
+    "name": "Thorne",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-17-chamfort",
+    "category": "npc",
+    "name": "Chamfort",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-18-landon",
+    "category": "npc",
+    "name": "Landon",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-19-judge-dryden",
+    "category": "npc",
+    "name": "Judge Dryden",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-20-jeremy",
+    "category": "npc",
+    "name": "Jeremy",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-21-jerone",
+    "category": "npc",
+    "name": "Jerone",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-22-felespar",
+    "category": "npc",
+    "name": "Felespar",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-23-mario",
+    "category": "npc",
+    "name": "Mario",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-24-aleyn",
+    "category": "npc",
+    "name": "Aleyn",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-25-tactus",
+    "category": "npc",
+    "name": "Tactus",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-26-fiona",
+    "category": "npc",
+    "name": "Fiona",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-27-rew",
+    "category": "npc",
+    "name": "Rew",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-28-fenelon",
+    "category": "npc",
+    "name": "Fenelon",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-29-lady-sahra",
+    "category": "npc",
+    "name": "Lady Sahra",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-30-delwyn",
+    "category": "npc",
+    "name": "Delwyn",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-31-woolfe",
+    "category": "npc",
+    "name": "Woolfe",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-32-sindar-i-think",
+    "category": "npc",
+    "name": "Sindar... ...I think.",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-33-jimmy",
+    "category": "npc",
+    "name": "Jimmy",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-34-gruman",
+    "category": "npc",
+    "name": "Gruman",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-35-jaana",
+    "category": "npc",
+    "name": "Jaana",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-36-greymarch",
+    "category": "npc",
+    "name": "Greymarch",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-37-froed",
+    "category": "npc",
+    "name": "Froed",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-38-flain",
+    "category": "npc",
+    "name": "Flain",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-39-kindor",
+    "category": "npc",
+    "name": "Kindor",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-40-saul",
+    "category": "npc",
+    "name": "Saul",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-41-tomoka",
+    "category": "npc",
+    "name": "Tomoka",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-42-shirita",
+    "category": "npc",
+    "name": "Shirita",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-43-yasuda",
+    "category": "npc",
+    "name": "Yasuda",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-44-tetsuo",
+    "category": "npc",
+    "name": "Tetsuo",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-45-fumiko",
+    "category": "npc",
+    "name": "Fumiko",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-46-kaiko",
+    "category": "npc",
+    "name": "Kaiko",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-47-katrina",
+    "category": "npc",
+    "name": "Katrina",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-towne-48-wartow",
+    "category": "npc",
+    "name": "Wartow",
+    "source": "talk/towne.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-1-alistair-the-bard",
+    "category": "npc",
+    "name": "Alistair the Bard",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-2-stephen",
+    "category": "npc",
+    "name": "Stephen",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-3-treanna",
+    "category": "npc",
+    "name": "Treanna",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-4-margaret",
+    "category": "npc",
+    "name": "Margaret",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-5-desiree",
+    "category": "npc",
+    "name": "Desiree",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-6-drudgeworth",
+    "category": "npc",
+    "name": "Drudgeworth",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-7-saduj",
+    "category": "npc",
+    "name": "Saduj",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-8-stillwelt",
+    "category": "npc",
+    "name": "Stillwelt",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-9-chuckles",
+    "category": "npc",
+    "name": "Chuckles",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-10-blackthorn",
+    "category": "npc",
+    "name": "Blackthorn",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-11-gorn",
+    "category": "npc",
+    "name": "Gorn",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-12-thou-art-in-grave-danger",
+    "category": "npc",
+    "name": ".... Thou art in grave danger!",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-13-kraw",
+    "category": "npc",
+    "name": "Kraw",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-14-weblock",
+    "category": "npc",
+    "name": "Weblock",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-15-gallrot",
+    "category": "npc",
+    "name": "Gallrot",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-16-foulwell",
+    "category": "npc",
+    "name": "Foulwell",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-17-hassad",
+    "category": "npc",
+    "name": "Hassad",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-18-camile",
+    "category": "npc",
+    "name": "Camile",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-19-phillip",
+    "category": "npc",
+    "name": "Phillip",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-20-christopher",
+    "category": "npc",
+    "name": "Christopher",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-21-thentis",
+    "category": "npc",
+    "name": "Thentis",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-22-joshua",
+    "category": "npc",
+    "name": "Joshua",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-23-leof",
+    "category": "npc",
+    "name": "Leof",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-24-vigil",
+    "category": "npc",
+    "name": "Vigil",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-25-kurt",
+    "category": "npc",
+    "name": "Kurt",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-26-sir-adam-the-torch",
+    "category": "npc",
+    "name": "Sir Adam the Torch",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-27-squire-jimmy",
+    "category": "npc",
+    "name": "Squire Jimmy",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-28-flint",
+    "category": "npc",
+    "name": "Flint",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-29-glinkie",
+    "category": "npc",
+    "name": "Glinkie",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-30-bandaii",
+    "category": "npc",
+    "name": "Bandaii",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-31-ava",
+    "category": "npc",
+    "name": "Ava",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-32-leona",
+    "category": "npc",
+    "name": "Leona",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-33-ambrose",
+    "category": "npc",
+    "name": "Ambrose",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-34-thorkin",
+    "category": "npc",
+    "name": "Thorkin",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-35-scally",
+    "category": "npc",
+    "name": "Scally",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-36-bidney",
+    "category": "npc",
+    "name": "Bidney",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-37-sven",
+    "category": "npc",
+    "name": "Sven",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-38-lord-dalgrin",
+    "category": "npc",
+    "name": "Lord Dalgrin",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-39-tierra",
+    "category": "npc",
+    "name": "Tierra",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-castle-40-geoffrey",
+    "category": "npc",
+    "name": "Geoffrey",
+    "source": "talk/castle.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-1-jennifer",
+    "category": "npc",
+    "name": "Jennifer",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-2-jotham",
+    "category": "npc",
+    "name": "Jotham",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-3-windmire",
+    "category": "npc",
+    "name": "Windmire",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-4-emilly",
+    "category": "npc",
+    "name": "Emilly",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-5-anthony",
+    "category": "npc",
+    "name": "Anthony",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-6-charlotte",
+    "category": "npc",
+    "name": "Charlotte",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-7-david",
+    "category": "npc",
+    "name": "David",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-8-gregory",
+    "category": "npc",
+    "name": "Gregory",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-9-jacqueline",
+    "category": "npc",
+    "name": "Jacqueline",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-10-sutek",
+    "category": "npc",
+    "name": "Sutek",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-11-sin-vraal",
+    "category": "npc",
+    "name": "Sin'Vraal",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-12-grendel",
+    "category": "npc",
+    "name": "Grendel",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-13-smith",
+    "category": "npc",
+    "name": "Smith",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-14-lord-kenneth",
+    "category": "npc",
+    "name": "Lord Kenneth",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-dwelling-15-sir-arbuthnot",
+    "category": "npc",
+    "name": "Sir Arbuthnot",
+    "source": "talk/dwelling.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-1-johne-captain-johne",
+    "category": "npc",
+    "name": "Johne, Captain Johne.",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-2-sir-simon",
+    "category": "npc",
+    "name": "Sir Simon",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-3-lady-tessa",
+    "category": "npc",
+    "name": "Lady Tessa",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-4-lord-seggallion",
+    "category": "npc",
+    "name": "Lord Seggallion",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-5-temme",
+    "category": "npc",
+    "name": "Temme",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-6-dufus",
+    "category": "npc",
+    "name": "Dufus",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-7-quintin",
+    "category": "npc",
+    "name": "Quintin",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-8-thrud",
+    "category": "npc",
+    "name": "Thrud",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-9-elistaria",
+    "category": "npc",
+    "name": "Elistaria",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-10-balinor",
+    "category": "npc",
+    "name": "Balinor",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-11-lady-janell",
+    "category": "npc",
+    "name": "Lady Janell",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-12-lord-shalineth",
+    "category": "npc",
+    "name": "Lord Shalineth",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-13-rollo",
+    "category": "npc",
+    "name": "Rollo",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-14-lady-hayden",
+    "category": "npc",
+    "name": "Lady Hayden.",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-15-lord-r-hien",
+    "category": "npc",
+    "name": "Lord R'hien",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-16-lord-michael",
+    "category": "npc",
+    "name": "Lord Michael",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-17-cory",
+    "category": "npc",
+    "name": "Cory",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-18-hardluck",
+    "category": "npc",
+    "name": "Hardluck",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-19-barbra",
+    "category": "npc",
+    "name": "Barbra",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-20-tim",
+    "category": "npc",
+    "name": "Tim",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-21-toede",
+    "category": "npc",
+    "name": "Toede",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-22-lord-malone",
+    "category": "npc",
+    "name": "Lord Malone",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-23-monsieur-loubet",
+    "category": "npc",
+    "name": "Monsieur Loubet",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-24-kristi",
+    "category": "npc",
+    "name": "Kristi",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-25-gardner",
+    "category": "npc",
+    "name": "Gardner",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-26-sir-sean",
+    "category": "npc",
+    "name": "Sir Sean",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-27-mariah",
+    "category": "npc",
+    "name": "Mariah",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-28-toshi",
+    "category": "npc",
+    "name": "Toshi",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-29-maxwell",
+    "category": "npc",
+    "name": "Maxwell",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-30-dupre",
+    "category": "npc",
+    "name": "Dupre",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-31-sentri",
+    "category": "npc",
+    "name": "Sentri",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "npc-keep-32-julia",
+    "category": "npc",
+    "name": "Julia",
+    "source": "talk/keep.json",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-0-iolo-s-bows",
+    "category": "shop",
+    "name": "Iolo's Bows",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-1-naughty-nomaan-s",
+    "category": "shop",
+    "name": "Naughty Nomaan's",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-2-arms-of-justice",
+    "category": "shop",
+    "name": "Arms of Justice",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-3-darkwatch-armoury",
+    "category": "shop",
+    "name": "Darkwatch Armoury",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-4-the-paladin-s-protectorate",
+    "category": "shop",
+    "name": "The Paladin's Protectorate!",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-5-north-star-armoury",
+    "category": "shop",
+    "name": "North Star Armoury",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-6-buccaneers-booty",
+    "category": "shop",
+    "name": "Buccaneers Booty",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-7-the-shattered-shield",
+    "category": "shop",
+    "name": "The Shattered Shield",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-8-siege-crafters",
+    "category": "shop",
+    "name": "Siege Crafters",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-9-the-honest-meal",
+    "category": "shop",
+    "name": "The Honest Meal",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-10-the-wayfarer-tavern",
+    "category": "shop",
+    "name": "The Wayfarer Tavern",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-11-the-sword-and-keg",
+    "category": "shop",
+    "name": "The Sword and Keg",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-12-the-slaughtered-lamb",
+    "category": "shop",
+    "name": "The Slaughtered Lamb",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-13-the-humble-palate",
+    "category": "shop",
+    "name": "The Humble Palate",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-14-the-blue-boar-tavern",
+    "category": "shop",
+    "name": "The Blue Boar Tavern",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-15-the-cat-s-lair",
+    "category": "shop",
+    "name": "The Cat's Lair",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-16-the-fallen-virgin",
+    "category": "shop",
+    "name": "The Fallen Virgin",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-17-the-folley-tap",
+    "category": "shop",
+    "name": "The Folley Tap",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-18-horse-rider",
+    "category": "shop",
+    "name": "Horse & Rider",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-19-the-stablehouse",
+    "category": "shop",
+    "name": "The Stablehouse",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-20-wishing-well-horses",
+    "category": "shop",
+    "name": "Wishing Well Horses",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-21-island-shipwrights",
+    "category": "shop",
+    "name": "Island Shipwrights",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-22-the-crow-s-nest",
+    "category": "shop",
+    "name": "The Crow's Nest",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-23-the-oaken-oar",
+    "category": "shop",
+    "name": "The Oaken Oar",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-24-the-rusty-bucket",
+    "category": "shop",
+    "name": "The Rusty Bucket",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-25-the-herbalist",
+    "category": "shop",
+    "name": "The Herbalist",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-26-healers-herbs",
+    "category": "shop",
+    "name": "Healers Herbs",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-27-the-alchemist",
+    "category": "shop",
+    "name": "The Alchemist",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-28-mysticism",
+    "category": "shop",
+    "name": "Mysticism",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-29-the-sharper-mage",
+    "category": "shop",
+    "name": "The Sharper Mage",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-30-the-den",
+    "category": "shop",
+    "name": "The Den",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-31-the-guild",
+    "category": "shop",
+    "name": "The Guild",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-32-the-nemesis",
+    "category": "shop",
+    "name": "The Nemesis",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-33-the-healers-mission",
+    "category": "shop",
+    "name": "The Healers Mission",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-34-wounds-of-honour",
+    "category": "shop",
+    "name": "Wounds of Honour",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-35-the-spirit-healers",
+    "category": "shop",
+    "name": "The Spirit Healers",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-36-healers-sanctum",
+    "category": "shop",
+    "name": "Healers' Sanctum",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-37-sanctuary",
+    "category": "shop",
+    "name": "Sanctuary",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-38-the-shield-of-truth",
+    "category": "shop",
+    "name": "The Shield of Truth",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-39-the-empath",
+    "category": "shop",
+    "name": "The Empath",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-40-the-wayfarer-inn",
+    "category": "shop",
+    "name": "The Wayfarer Inn",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-41-the-warrior-s-stead",
+    "category": "shop",
+    "name": "The Warrior's Stead",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-42-the-haunting-inn",
+    "category": "shop",
+    "name": "The Haunting Inn",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-43-hotel-brittany",
+    "category": "shop",
+    "name": "Hotel Brittany",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-44-the-smugglers-inn",
+    "category": "shop",
+    "name": "The Smugglers' Inn",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "shop-45-the-king-s-ransom-inn",
+    "category": "shop",
+    "name": "The King's Ransom Inn",
+    "source": "data.json:storeNames",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-0-in-lor",
+    "category": "spell",
+    "name": "In Lor",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-1-grav-por",
+    "category": "spell",
+    "name": "Grav Por",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-2-an-zu",
+    "category": "spell",
+    "name": "An Zu",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-3-an-nox",
+    "category": "spell",
+    "name": "An Nox",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-4-mani",
+    "category": "spell",
+    "name": "Mani",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-5-an-ylem",
+    "category": "spell",
+    "name": "An Ylem",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-6-an-sanct",
+    "category": "spell",
+    "name": "An Sanct",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-7-an-xen-cor",
+    "category": "spell",
+    "name": "An Xen Cor",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-8-rel-hur",
+    "category": "spell",
+    "name": "Rel Hur",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-9-in-wis",
+    "category": "spell",
+    "name": "In Wis",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-10-kal-xen",
+    "category": "spell",
+    "name": "Kal Xen",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-11-in-xen-man",
+    "category": "spell",
+    "name": "In Xen Man",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-12-vas-lor",
+    "category": "spell",
+    "name": "Vas Lor",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-13-vas-flam",
+    "category": "spell",
+    "name": "Vas Flam",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-14-in-flam-gr",
+    "category": "spell",
+    "name": "In Flam Gr",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-15-in-nox-gr",
+    "category": "spell",
+    "name": "In Nox Gr",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-16-in-zu-grav",
+    "category": "spell",
+    "name": "In Zu Grav",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-17-in-por",
+    "category": "spell",
+    "name": "In Por",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-18-an-grav",
+    "category": "spell",
+    "name": "An Grav",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-19-in-sanct",
+    "category": "spell",
+    "name": "In Sanct",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-20-in-sanct-g",
+    "category": "spell",
+    "name": "In Sanct G",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-21-uus-por",
+    "category": "spell",
+    "name": "Uus Por",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-22-des-por",
+    "category": "spell",
+    "name": "Des Por",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-23-wis-quas",
+    "category": "spell",
+    "name": "Wis Quas",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-24-in-bet-xen",
+    "category": "spell",
+    "name": "In Bet Xen",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-25-an-ex-por",
+    "category": "spell",
+    "name": "An Ex Por",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-26-in-ex-por",
+    "category": "spell",
+    "name": "In Ex Por",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-27-vas-mani",
+    "category": "spell",
+    "name": "Vas Mani",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-28-in-zu",
+    "category": "spell",
+    "name": "In Zu",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-29-rel-tym",
+    "category": "spell",
+    "name": "Rel Tym",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-30-in-vas-p-y",
+    "category": "spell",
+    "name": "In Vas P Y",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-31-quas-an-wi",
+    "category": "spell",
+    "name": "Quas An Wi",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-32-in-an",
+    "category": "spell",
+    "name": "In An",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-33-wis-an-yle",
+    "category": "spell",
+    "name": "Wis An Yle",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-34-an-xen-ex",
+    "category": "spell",
+    "name": "An Xen Ex",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-35-rel-xen-be",
+    "category": "spell",
+    "name": "Rel Xen Be",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-36-sanct-lo",
+    "category": "spell",
+    "name": "Sanct Lo",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-37-xen-corp",
+    "category": "spell",
+    "name": "Xen Corp",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-38-in-quas-xe",
+    "category": "spell",
+    "name": "In Quas Xe",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-39-in-quas-wi",
+    "category": "spell",
+    "name": "In Quas Wi",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-40-in-nox-hur",
+    "category": "spell",
+    "name": "In Nox Hur",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-41-in-quas-co",
+    "category": "spell",
+    "name": "In Quas Co",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-42-in-mani-co",
+    "category": "spell",
+    "name": "In Mani Co",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-43-kal-xen-co",
+    "category": "spell",
+    "name": "Kal Xen Co",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-44-in-vas-g-c",
+    "category": "spell",
+    "name": "In Vas G C",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-45-in-flam-hu",
+    "category": "spell",
+    "name": "In Flam Hu",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-46-vas-rel-po",
+    "category": "spell",
+    "name": "Vas Rel Po",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "spell-47-an-tym",
+    "category": "spell",
+    "name": "An Tym",
+    "source": "data.json:spells",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-0-wizards",
+    "category": "enemy",
+    "name": "WIZARDS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-1-bard",
+    "category": "enemy",
+    "name": "BARD",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-2-fighter",
+    "category": "enemy",
+    "name": "FIGHTER",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-3-x",
+    "category": "enemy",
+    "name": "Avatar",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-4-villager",
+    "category": "enemy",
+    "name": "VILLAGER",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-5-merchant",
+    "category": "enemy",
+    "name": "MERCHANT",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-6-jester",
+    "category": "enemy",
+    "name": "JESTER",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-7-bard",
+    "category": "enemy",
+    "name": "BARD",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-8-pirates",
+    "category": "enemy",
+    "name": "PIRATES",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-9-x",
+    "category": "enemy",
+    "name": "Beggar",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-10-child",
+    "category": "enemy",
+    "name": "CHILD",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-11-beggar",
+    "category": "enemy",
+    "name": "BEGGAR",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-12-guards",
+    "category": "enemy",
+    "name": "GUARDS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-13-x",
+    "category": "enemy",
+    "name": "Lord British",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-14-blackthorn",
+    "category": "enemy",
+    "name": "BLACKTHORN",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-15-lord-british",
+    "category": "enemy",
+    "name": "LORD BRITISH",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-16-sea-horses",
+    "category": "enemy",
+    "name": "SEA HORSES",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-17-squids",
+    "category": "enemy",
+    "name": "SQUIDS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-18-sea-serpents",
+    "category": "enemy",
+    "name": "SEA SERPENTS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-19-sharks",
+    "category": "enemy",
+    "name": "SHARKS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-20-giant-rats",
+    "category": "enemy",
+    "name": "GIANT RATS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-21-bats",
+    "category": "enemy",
+    "name": "BATS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-22-spiders",
+    "category": "enemy",
+    "name": "SPIDERS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-23-ghosts",
+    "category": "enemy",
+    "name": "GHOSTS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-24-slime",
+    "category": "enemy",
+    "name": "SLIME",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-25-gremlins",
+    "category": "enemy",
+    "name": "GREMLINS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-26-mimics",
+    "category": "enemy",
+    "name": "MIMICS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-27-reapers",
+    "category": "enemy",
+    "name": "REAPERS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-28-gazers",
+    "category": "enemy",
+    "name": "GAZERS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-29-x",
+    "category": "enemy",
+    "name": "Insect Swarm",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-30-gargoyle",
+    "category": "enemy",
+    "name": "GARGOYLE",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-31-insects",
+    "category": "enemy",
+    "name": "INSECTS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-32-orcs",
+    "category": "enemy",
+    "name": "ORCS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-33-skeletons",
+    "category": "enemy",
+    "name": "SKELETONS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-34-snakes",
+    "category": "enemy",
+    "name": "SNAKES",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-35-ettins",
+    "category": "enemy",
+    "name": "ETTINS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-36-headlesses",
+    "category": "enemy",
+    "name": "HEADLESSES",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-37-wisps",
+    "category": "enemy",
+    "name": "WISPS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-38-daemons",
+    "category": "enemy",
+    "name": "DAEMONS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-39-dragons",
+    "category": "enemy",
+    "name": "DRAGONS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-40-sand-traps",
+    "category": "enemy",
+    "name": "SAND TRAPS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-41-trolls",
+    "category": "enemy",
+    "name": "TROLLS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-42-x",
+    "category": "enemy",
+    "name": "Rot Worm",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-43-x",
+    "category": "enemy",
+    "name": "Shadow Lord",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-44-mongbats",
+    "category": "enemy",
+    "name": "MONGBATS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-45-corpsers",
+    "category": "enemy",
+    "name": "CORPSERS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-46-rotworms",
+    "category": "enemy",
+    "name": "ROTWORMS",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "enemy-47-shadow-lord",
+    "category": "enemy",
+    "name": "SHADOW LORD",
+    "source": "data.json:enemyStats",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-0-leatherhelm",
+    "category": "equipment",
+    "name": "LeatherHelm",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-1-chaincoif",
+    "category": "equipment",
+    "name": "ChainCoif",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-2-ironhelm",
+    "category": "equipment",
+    "name": "IronHelm",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-3-spikedhelm",
+    "category": "equipment",
+    "name": "SpikedHelm",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-4-smallshield",
+    "category": "equipment",
+    "name": "SmallShield",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-5-largeshield",
+    "category": "equipment",
+    "name": "LargeShield",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-6-spikedshield",
+    "category": "equipment",
+    "name": "SpikedShield",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-7-magicshield",
+    "category": "equipment",
+    "name": "MagicShield",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-8-jewelshield",
+    "category": "equipment",
+    "name": "JewelShield",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-9-clotharmour",
+    "category": "equipment",
+    "name": "ClothArmour",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-10-leatherarmour",
+    "category": "equipment",
+    "name": "LeatherArmour",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-11-ringmail",
+    "category": "equipment",
+    "name": "Ringmail",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-12-scalemail",
+    "category": "equipment",
+    "name": "ScaleMail",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-13-chainmail",
+    "category": "equipment",
+    "name": "ChainMail",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-14-platemail",
+    "category": "equipment",
+    "name": "PlateMail",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-15-mysticarmour",
+    "category": "equipment",
+    "name": "MysticArmour",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-16-dagger",
+    "category": "equipment",
+    "name": "Dagger",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-17-sling",
+    "category": "equipment",
+    "name": "Sling",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-18-club",
+    "category": "equipment",
+    "name": "Club",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-19-flamingoil",
+    "category": "equipment",
+    "name": "FlamingOil",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-20-maingauche",
+    "category": "equipment",
+    "name": "MainGauche",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-21-spear",
+    "category": "equipment",
+    "name": "Spear",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-22-throwingaxe",
+    "category": "equipment",
+    "name": "ThrowingAxe",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-23-shortsword",
+    "category": "equipment",
+    "name": "ShortSword",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-24-mace",
+    "category": "equipment",
+    "name": "Mace",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-25-morningstar",
+    "category": "equipment",
+    "name": "MorningStar",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-26-bow",
+    "category": "equipment",
+    "name": "Bow",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-27-arrows",
+    "category": "equipment",
+    "name": "Arrows",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-28-crossbow",
+    "category": "equipment",
+    "name": "Crossbow",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-29-quarrels",
+    "category": "equipment",
+    "name": "Quarrels",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-30-longsword",
+    "category": "equipment",
+    "name": "LongSword",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-31-twohhammer",
+    "category": "equipment",
+    "name": "TwoHHammer",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-32-twohaxe",
+    "category": "equipment",
+    "name": "TwoHAxe",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-33-twohsword",
+    "category": "equipment",
+    "name": "TwoHSword",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-34-halberd",
+    "category": "equipment",
+    "name": "Halberd",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-35-swordofchaos",
+    "category": "equipment",
+    "name": "SwordofChaos",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-36-magicbow",
+    "category": "equipment",
+    "name": "MagicBow",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-37-silversword",
+    "category": "equipment",
+    "name": "SilverSword",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-38-magicaxe",
+    "category": "equipment",
+    "name": "MagicAxe",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-39-glasssword",
+    "category": "equipment",
+    "name": "GlassSword",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-40-jeweledsword",
+    "category": "equipment",
+    "name": "JeweledSword",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-41-mysticsword",
+    "category": "equipment",
+    "name": "MysticSword",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-42-ringinvisibility",
+    "category": "equipment",
+    "name": "RingInvisibility",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-43-ringprotection",
+    "category": "equipment",
+    "name": "RingProtection",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-44-ringregeneration",
+    "category": "equipment",
+    "name": "RingRegeneration",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-45-amuletofturning",
+    "category": "equipment",
+    "name": "AmuletOfTurning",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-46-spikedcollar",
+    "category": "equipment",
+    "name": "SpikedCollar",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "equip-47-ankh",
+    "category": "equipment",
+    "name": "Ankh",
+    "source": "data.json:equipIndexes+InventoryDetails.Armament",
+    "reachableBy": null
+  },
+  {
+    "id": "potion-0-blue",
+    "category": "potion",
+    "name": "Blue Potion",
+    "source": "data.json:potions",
+    "reachableBy": null
+  },
+  {
+    "id": "potion-1-yellow",
+    "category": "potion",
+    "name": "Yellow Potion",
+    "source": "data.json:potions",
+    "reachableBy": null
+  },
+  {
+    "id": "potion-2-red",
+    "category": "potion",
+    "name": "Red Potion",
+    "source": "data.json:potions",
+    "reachableBy": null
+  },
+  {
+    "id": "potion-3-green",
+    "category": "potion",
+    "name": "Green Potion",
+    "source": "data.json:potions",
+    "reachableBy": null
+  },
+  {
+    "id": "potion-4-orange",
+    "category": "potion",
+    "name": "Orange Potion",
+    "source": "data.json:potions",
+    "reachableBy": null
+  },
+  {
+    "id": "potion-5-purple",
+    "category": "potion",
+    "name": "Purple Potion",
+    "source": "data.json:potions",
+    "reachableBy": null
+  },
+  {
+    "id": "potion-6-black",
+    "category": "potion",
+    "name": "Black Potion",
+    "source": "data.json:potions",
+    "reachableBy": null
+  },
+  {
+    "id": "potion-7-white",
+    "category": "potion",
+    "name": "White Potion",
+    "source": "data.json:potions",
+    "reachableBy": null
+  },
+  {
+    "id": "reagent-0-sulfur-ash",
+    "category": "reagent",
+    "name": "Sulfur Ash",
+    "source": "data.json:reagents",
+    "reachableBy": null
+  },
+  {
+    "id": "reagent-1-ginseng",
+    "category": "reagent",
+    "name": "Ginseng",
+    "source": "data.json:reagents",
+    "reachableBy": null
+  },
+  {
+    "id": "reagent-2-garlic",
+    "category": "reagent",
+    "name": "Garlic",
+    "source": "data.json:reagents",
+    "reachableBy": null
+  },
+  {
+    "id": "reagent-3-sp-silk",
+    "category": "reagent",
+    "name": "Sp. Silk",
+    "source": "data.json:reagents",
+    "reachableBy": null
+  },
+  {
+    "id": "reagent-4-blood-moss",
+    "category": "reagent",
+    "name": "Blood Moss",
+    "source": "data.json:reagents",
+    "reachableBy": null
+  },
+  {
+    "id": "reagent-5-blk-pearl",
+    "category": "reagent",
+    "name": "Blk. Pearl",
+    "source": "data.json:reagents",
+    "reachableBy": null
+  },
+  {
+    "id": "reagent-6-nightshade",
+    "category": "reagent",
+    "name": "Nightshade",
+    "source": "data.json:reagents",
+    "reachableBy": null
+  },
+  {
+    "id": "reagent-7-mandrake",
+    "category": "reagent",
+    "name": "Mandrake",
+    "source": "data.json:reagents",
+    "reachableBy": null
+  },
+  {
+    "id": "shrine-0-honesty",
+    "category": "shrine",
+    "name": "Honesty (Ahm)",
+    "source": "data.json:virtues+mantras",
+    "reachableBy": null
+  },
+  {
+    "id": "shrine-1-compassion",
+    "category": "shrine",
+    "name": "Compassion (Mu)",
+    "source": "data.json:virtues+mantras",
+    "reachableBy": null
+  },
+  {
+    "id": "shrine-2-valour",
+    "category": "shrine",
+    "name": "Valour (Ra)",
+    "source": "data.json:virtues+mantras",
+    "reachableBy": null
+  },
+  {
+    "id": "shrine-3-justice",
+    "category": "shrine",
+    "name": "Justice (Beh)",
+    "source": "data.json:virtues+mantras",
+    "reachableBy": null
+  },
+  {
+    "id": "shrine-4-sacrifice",
+    "category": "shrine",
+    "name": "Sacrifice (Cah)",
+    "source": "data.json:virtues+mantras",
+    "reachableBy": null
+  },
+  {
+    "id": "shrine-5-honor",
+    "category": "shrine",
+    "name": "Honor (Summ)",
+    "source": "data.json:virtues+mantras",
+    "reachableBy": null
+  },
+  {
+    "id": "shrine-6-spirituality",
+    "category": "shrine",
+    "name": "Spirituality (Om)",
+    "source": "data.json:virtues+mantras",
+    "reachableBy": null
+  },
+  {
+    "id": "shrine-7-humility",
+    "category": "shrine",
+    "name": "Humility (Lum)",
+    "source": "data.json:virtues+mantras",
+    "reachableBy": null
+  },
+  {
+    "id": "moongate-phase-48",
+    "category": "moongate",
+    "name": "Fase lunar 48",
+    "source": "data.json:moonPhases",
+    "reachableBy": null
+  },
+  {
+    "id": "moongate-phase-49",
+    "category": "moongate",
+    "name": "Fase lunar 49",
+    "source": "data.json:moonPhases",
+    "reachableBy": null
+  },
+  {
+    "id": "moongate-phase-50",
+    "category": "moongate",
+    "name": "Fase lunar 50",
+    "source": "data.json:moonPhases",
+    "reachableBy": null
+  },
+  {
+    "id": "moongate-phase-51",
+    "category": "moongate",
+    "name": "Fase lunar 51",
+    "source": "data.json:moonPhases",
+    "reachableBy": null
+  },
+  {
+    "id": "moongate-phase-52",
+    "category": "moongate",
+    "name": "Fase lunar 52",
+    "source": "data.json:moonPhases",
+    "reachableBy": null
+  },
+  {
+    "id": "moongate-phase-53",
+    "category": "moongate",
+    "name": "Fase lunar 53",
+    "source": "data.json:moonPhases",
+    "reachableBy": null
+  },
+  {
+    "id": "moongate-phase-54",
+    "category": "moongate",
+    "name": "Fase lunar 54",
+    "source": "data.json:moonPhases",
+    "reachableBy": null
+  },
+  {
+    "id": "moongate-phase-55",
+    "category": "moongate",
+    "name": "Fase lunar 55",
+    "source": "data.json:moonPhases",
+    "reachableBy": null
+  },
+  {
+    "id": "shard-falsehood",
+    "category": "shard",
+    "name": "Shard of Falsehood",
+    "source": "data.json:shards",
+    "reachableBy": null
+  },
+  {
+    "id": "flame-truth",
+    "category": "flame",
+    "name": "Flame of Truth",
+    "source": "re/notes/shadowlord-ritual.md",
+    "reachableBy": null
+  },
+  {
+    "id": "shadowlord-faulinei",
+    "category": "shadowlord",
+    "name": "Faulinei",
+    "source": "re/notes/shadowlord-ritual.md",
+    "reachableBy": null
+  },
+  {
+    "id": "shard-hatred",
+    "category": "shard",
+    "name": "Shard of Hatred",
+    "source": "data.json:shards",
+    "reachableBy": null
+  },
+  {
+    "id": "flame-love",
+    "category": "flame",
+    "name": "Flame of Love",
+    "source": "re/notes/shadowlord-ritual.md",
+    "reachableBy": null
+  },
+  {
+    "id": "shadowlord-astaroth",
+    "category": "shadowlord",
+    "name": "Astaroth",
+    "source": "re/notes/shadowlord-ritual.md",
+    "reachableBy": null
+  },
+  {
+    "id": "shard-cowardice",
+    "category": "shard",
+    "name": "Shard of Cowardice",
+    "source": "data.json:shards",
+    "reachableBy": null
+  },
+  {
+    "id": "flame-courage",
+    "category": "flame",
+    "name": "Flame of Courage",
+    "source": "re/notes/shadowlord-ritual.md",
+    "reachableBy": null
+  },
+  {
+    "id": "shadowlord-nosfentor",
+    "category": "shadowlord",
+    "name": "Nosfentor",
+    "source": "re/notes/shadowlord-ritual.md",
+    "reachableBy": null
+  },
+  {
+    "id": "artifact-magic-crpt",
+    "category": "artifact",
+    "name": "Magic Crpt",
+    "source": "data.json:specialItemNames",
+    "reachableBy": null
+  },
+  {
+    "id": "artifact-skull-keys",
+    "category": "artifact",
+    "name": "Skull Keys",
+    "source": "data.json:specialItemNames",
+    "reachableBy": null
+  },
+  {
+    "id": "artifact-amulet",
+    "category": "artifact",
+    "name": "Amulet",
+    "source": "data.json:specialItemNames",
+    "reachableBy": null
+  },
+  {
+    "id": "artifact-crown",
+    "category": "artifact",
+    "name": "Crown",
+    "source": "data.json:specialItemNames",
+    "reachableBy": null
+  },
+  {
+    "id": "artifact-sceptre",
+    "category": "artifact",
+    "name": "Sceptre",
+    "source": "data.json:specialItemNames",
+    "reachableBy": null
+  },
+  {
+    "id": "artifact-spyglass",
+    "category": "artifact",
+    "name": "Spyglass",
+    "source": "data.json:specialItemNames2",
+    "reachableBy": null
+  },
+  {
+    "id": "artifact-hms-cape-plan",
+    "category": "artifact",
+    "name": "HMS Cape Plan",
+    "source": "data.json:specialItemNames2",
+    "reachableBy": null
+  },
+  {
+    "id": "artifact-sextant",
+    "category": "artifact",
+    "name": "Sextant",
+    "source": "data.json:specialItemNames2",
+    "reachableBy": null
+  },
+  {
+    "id": "artifact-pocket-watch",
+    "category": "artifact",
+    "name": "Pocket Watch",
+    "source": "data.json:specialItemNames2",
+    "reachableBy": null
+  },
+  {
+    "id": "artifact-black-badge",
+    "category": "artifact",
+    "name": "Black Badge",
+    "source": "data.json:specialItemNames2",
+    "reachableBy": null
+  },
+  {
+    "id": "artifact-wooden-box",
+    "category": "artifact",
+    "name": "Wooden Box",
+    "source": "data.json:specialItemNames2",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-95-148",
+    "category": "sign",
+    "name": "NORTH BRITAIN",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-76-113",
+    "category": "sign",
+    "name": "NORTH BRITAIN",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-85-78",
+    "category": "sign",
+    "name": "SERPENTS",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-195-41",
+    "category": "sign",
+    "name": "BEWARE!",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-245-6",
+    "category": "sign",
+    "name": "PRIVATE ISLAND",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-233-242",
+    "category": "sign",
+    "name": "KNOW THAT YE",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-55-66",
+    "category": "sign",
+    "name": "BEWARE THE",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-45-172",
+    "category": "sign",
+    "name": "THIS IS THE",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-54-143",
+    "category": "sign",
+    "name": "HEREUPON BEGAN",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-103-223",
+    "category": "sign",
+    "name": "HERE LIES A",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-104-223",
+    "category": "sign",
+    "name": "HERE LIES A",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-105-223",
+    "category": "sign",
+    "name": "HERE LIES A",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-106-223",
+    "category": "sign",
+    "name": "HERE LIES A",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-0-107-223",
+    "category": "sign",
+    "name": "HERE LIES A",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-1-14-20",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-1-16-20",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-2-11-0",
+    "category": "sign",
+    "name": "PRIVATE",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-2-16-27",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-2-14-27",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-3-15-28",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-14-5",
+    "category": "sign",
+    "name": "MAY ALL WHO",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-17-17",
+    "category": "sign",
+    "name": "POLITICAL",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-12-4",
+    "category": "sign",
+    "name": "ALAS",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-11-2",
+    "category": "sign",
+    "name": "HERE LIES",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-13-1",
+    "category": "sign",
+    "name": "HERE LIES",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-14-1",
+    "category": "sign",
+    "name": "HERE LIES",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-17-3",
+    "category": "sign",
+    "name": "HERE LIES",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-18-4",
+    "category": "sign",
+    "name": "UNDERNEATH",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-18-1",
+    "category": "sign",
+    "name": "HERE LIES",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-16-2",
+    "category": "sign",
+    "name": "JOHN WAS",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-14-3",
+    "category": "sign",
+    "name": "HERE LIES",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-17-21",
+    "category": "sign",
+    "name": "Wanted:",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-16-28",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-4-14-28",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-5-20-14",
+    "category": "sign",
+    "name": "MISSION OF",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-5-14-28",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-5-16-28",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-6-15-28",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-7-5-1",
+    "category": "sign",
+    "name": "HERE LIES",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-7-15-25",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-8-15-27",
+    "category": "sign",
+    "name": "New Magincia",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-8-19-7",
+    "category": "sign",
+    "name": "Here lie",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-8-18-1",
+    "category": "sign",
+    "name": "Heywood",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-8-20-1",
+    "category": "sign",
+    "name": "Slim",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-8-22-1",
+    "category": "sign",
+    "name": "Banter",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-8-24-1",
+    "category": "sign",
+    "name": "Demitry",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-8-26-1",
+    "category": "sign",
+    "name": "Bulbous",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-8-28-1",
+    "category": "sign",
+    "name": "Rushin",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-8-20-20",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-8-20-17",
+    "category": "sign",
+    "name": "BLACKTHORN'S",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-9-12-28",
+    "category": "sign",
+    "name": "FOGSBANE      VISITORS",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-11-18-25",
+    "category": "sign",
+    "name": "GREYHAVEN     A LIGHT OF",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-14-1-1",
+    "category": "sign",
+    "name": "HERE LIES",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-14-3-1",
+    "category": "sign",
+    "name": "HERE LIES",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-14-5-1",
+    "category": "sign",
+    "name": "HES NO LONGER",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-17-6-13",
+    "category": "sign",
+    "name": "YE ROYAL",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-17-24-13",
+    "category": "sign",
+    "name": "NORTH STAR",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-17-20-24",
+    "category": "sign",
+    "name": "YE KINGS",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-17-16-19",
+    "category": "sign",
+    "name": "PRIVATE",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-18-15-26",
+    "category": "sign",
+    "name": "WELCOME TO",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-19-13-6",
+    "category": "sign",
+    "name": "GRAVE ROBBERS",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-19-1-1",
+    "category": "sign",
+    "name": "HERE LIES POOR",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-19-3-1",
+    "category": "sign",
+    "name": "HERE WE SADLY",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-19-5-1",
+    "category": "sign",
+    "name": "LOST A FIGHT",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-19-7-1",
+    "category": "sign",
+    "name": "TRIED TO FLY",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-19-9-1",
+    "category": "sign",
+    "name": "STRONG AND",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-19-1-6",
+    "category": "sign",
+    "name": "ANDRE LIES",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-19-3-6",
+    "category": "sign",
+    "name": "IN THE PUB WAS",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-19-5-6",
+    "category": "sign",
+    "name": "LOVED THE WOMEN",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-19-7-6",
+    "category": "sign",
+    "name": "WORK HARDER",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-19-9-6",
+    "category": "sign",
+    "name": "FAR TOO FRUGAL",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-20-17-28",
+    "category": "sign",
+    "name": "WELCOME TO",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-22-19-17",
+    "category": "sign",
+    "name": "WELCOME TO",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-28-16-23",
+    "category": "sign",
+    "name": "BEWARE",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-28-14-23",
+    "category": "sign",
+    "name": "BEWARE",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-30-15-11",
+    "category": "sign",
+    "name": "Pub And",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-30-10-12",
+    "category": "sign",
+    "name": "LIBRARY",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-32-25-24",
+    "category": "sign",
+    "name": "TRAINING",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "sign-32-15-19",
+    "category": "sign",
+    "name": "LIVE BY THE",
+    "source": "signs.json",
+    "reachableBy": null
+  },
+  {
+    "id": "command-a",
+    "category": "command",
+    "name": "Comando A",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-b",
+    "category": "command",
+    "name": "Comando B",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-c",
+    "category": "command",
+    "name": "Comando C",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-d",
+    "category": "command",
+    "name": "Comando D",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-e",
+    "category": "command",
+    "name": "Comando E",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-f",
+    "category": "command",
+    "name": "Comando F",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-g",
+    "category": "command",
+    "name": "Comando G",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-h",
+    "category": "command",
+    "name": "Comando H",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-i",
+    "category": "command",
+    "name": "Comando I",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-j",
+    "category": "command",
+    "name": "Comando J",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-k",
+    "category": "command",
+    "name": "Comando K",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-l",
+    "category": "command",
+    "name": "Comando L",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-m",
+    "category": "command",
+    "name": "Comando M",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-n",
+    "category": "command",
+    "name": "Comando N",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-o",
+    "category": "command",
+    "name": "Comando O",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-p",
+    "category": "command",
+    "name": "Comando P",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-q",
+    "category": "command",
+    "name": "Comando Q",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-r",
+    "category": "command",
+    "name": "Comando R",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-s",
+    "category": "command",
+    "name": "Comando S",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-t",
+    "category": "command",
+    "name": "Comando T",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-u",
+    "category": "command",
+    "name": "Comando U",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-v",
+    "category": "command",
+    "name": "Comando V",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-w",
+    "category": "command",
+    "name": "Comando W",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-x",
+    "category": "command",
+    "name": "Comando X",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-y",
+    "category": "command",
+    "name": "Comando Y",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "command-z",
+    "category": "command",
+    "name": "Comando Z",
+    "source": "re/notes/command-dispatch.md",
+    "reachableBy": null
+  },
+  {
+    "id": "endgame-veramocor",
+    "category": "endgame",
+    "name": "Aprender VERAMOCOR con el Codex",
+    "source": "re/notes/endgame.md",
+    "reachableBy": null
+  },
+  {
+    "id": "endgame-doom-floor8",
+    "category": "endgame",
+    "name": "Descender a Doom planta 8",
+    "source": "re/notes/endgame.md",
+    "reachableBy": null
+  },
+  {
+    "id": "endgame-rescue-lb",
+    "category": "endgame",
+    "name": "Rescatar a Lord British",
+    "source": "re/notes/endgame.md",
+    "reachableBy": null
+  },
+  {
+    "id": "memory-beat-wishing-well",
+    "category": "memory-beat",
+    "name": "Pozo de los deseos",
+    "source": "re/notes/town-klimb.md",
+    "reachableBy": null
+  },
+  {
+    "id": "memory-beat-blackthorn-jail",
+    "category": "memory-beat",
+    "name": "Cárcel del Palacio de Blackthorn",
+    "source": "re/notes/blackthorn.md",
+    "reachableBy": null
+  },
+  {
+    "id": "memory-beat-lb-treasure",
+    "category": "memory-beat",
+    "name": "Tesoro de Lord British",
+    "source": "re/notes/endgame.md",
+    "reachableBy": null
+  },
+  {
+    "id": "memory-beat-victory",
+    "category": "memory-beat",
+    "name": "Victoria (final del juego)",
+    "source": "re/notes/endgame.md",
+    "reachableBy": null
+  },
+  {
+    "id": "search-12-loc21-15-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc21 (15,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-13-loc18-8-6",
+    "category": "memory-object",
+    "name": "Objeto oculto #7 @loc18 (8,6)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-14-loc5-2-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #7 @loc5 (2,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-15-loc0-64-80",
+    "category": "memory-object",
+    "name": "Objeto oculto #5 @loc0 (64,80)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-16-loc18-7-6",
+    "category": "memory-object",
+    "name": "Objeto oculto #5 @loc18 (7,6)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-17-loc18-23-6",
+    "category": "memory-object",
+    "name": "Objeto oculto #5 @loc18 (23,6)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-18-loc1-8-5",
+    "category": "memory-object",
+    "name": "Objeto oculto #8 @loc1 (8,5)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-19-loc1-25-6",
+    "category": "memory-object",
+    "name": "Objeto oculto #11 @loc1 (25,6)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-20-loc1-25-8",
+    "category": "memory-object",
+    "name": "Objeto oculto #11 @loc1 (25,8)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-21-loc1-23-5",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc1 (23,5)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-22-loc1-13-13",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc1 (13,13)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-23-loc1-14-13",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc1 (14,13)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-24-loc1-16-13",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc1 (16,13)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-25-loc1-17-13",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc1 (17,13)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-26-loc1-24-19",
+    "category": "memory-object",
+    "name": "Objeto oculto #15 @loc1 (24,19)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-27-loc1-27-3",
+    "category": "memory-object",
+    "name": "Objeto oculto #13 @loc1 (27,3)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-28-loc1-27-29",
+    "category": "memory-object",
+    "name": "Objeto oculto #10 @loc1 (27,29)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-29-loc2-2-1",
+    "category": "memory-object",
+    "name": "Objeto oculto #15 @loc2 (2,1)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-30-loc2-6-26",
+    "category": "memory-object",
+    "name": "Objeto oculto #5 @loc2 (6,26)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-31-loc2-24-6",
+    "category": "memory-object",
+    "name": "Objeto oculto #10 @loc2 (24,6)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-32-loc3-21-16",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc3 (21,16)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-33-loc3-20-10",
+    "category": "memory-object",
+    "name": "Objeto oculto #15 @loc3 (20,10)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-34-loc3-29-1",
+    "category": "memory-object",
+    "name": "Objeto oculto #15 @loc3 (29,1)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-35-loc3-30-23",
+    "category": "memory-object",
+    "name": "Objeto oculto #5 @loc3 (30,23)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-36-loc3-1-29",
+    "category": "memory-object",
+    "name": "Objeto oculto #13 @loc3 (1,29)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-37-loc4-29-11",
+    "category": "memory-object",
+    "name": "Objeto oculto #5 @loc4 (29,11)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-38-loc4-22-26",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc4 (22,26)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-39-loc4-1-26",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc4 (1,26)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-40-loc4-13-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #31 @loc4 (13,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-41-loc4-14-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #31 @loc4 (14,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-42-loc4-14-4",
+    "category": "memory-object",
+    "name": "Objeto oculto #30 @loc4 (14,4)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-43-loc4-16-3",
+    "category": "memory-object",
+    "name": "Objeto oculto #30 @loc4 (16,3)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-44-loc4-18-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #30 @loc4 (18,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-45-loc4-16-3",
+    "category": "memory-object",
+    "name": "Objeto oculto #5 @loc4 (16,3)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-46-loc4-27-22",
+    "category": "memory-object",
+    "name": "Objeto oculto #5 @loc4 (27,22)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-47-loc4-20-22",
+    "category": "memory-object",
+    "name": "Objeto oculto #7 @loc4 (20,22)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-48-loc5-27-8",
+    "category": "memory-object",
+    "name": "Objeto oculto #2 @loc5 (27,8)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-49-loc5-13-11",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc5 (13,11)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-50-loc5-12-11",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc5 (12,11)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-51-loc5-8-21",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc5 (8,21)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-52-loc5-8-23",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc5 (8,23)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-53-loc5-7-23",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc5 (7,23)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-54-loc6-24-6",
+    "category": "memory-object",
+    "name": "Objeto oculto #8 @loc6 (24,6)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-55-loc7-5-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #30 @loc7 (5,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-56-loc7-6-7",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc7 (6,7)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-57-loc8-21-18",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc8 (21,18)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-58-loc8-25-21",
+    "category": "memory-object",
+    "name": "Objeto oculto #7 @loc8 (25,21)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-59-loc9-10-12",
+    "category": "memory-object",
+    "name": "Objeto oculto #13 @loc9 (10,12)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-60-loc11-21-15",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc11 (21,15)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-61-loc11-14-9",
+    "category": "memory-object",
+    "name": "Objeto oculto #8 @loc11 (14,9)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-62-loc11-16-12",
+    "category": "memory-object",
+    "name": "Objeto oculto #2 @loc11 (16,12)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-63-loc13-24-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc13 (24,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-64-loc14-16-12",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc14 (16,12)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-65-loc14-14-16",
+    "category": "memory-object",
+    "name": "Objeto oculto #12 @loc14 (14,16)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-66-loc14-17-12",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc14 (17,12)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-67-loc14-14-12",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc14 (14,12)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-68-loc17-20-7",
+    "category": "memory-object",
+    "name": "Objeto oculto #11 @loc17 (20,7)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-69-loc17-21-7",
+    "category": "memory-object",
+    "name": "Objeto oculto #11 @loc17 (21,7)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-70-loc17-22-7",
+    "category": "memory-object",
+    "name": "Objeto oculto #11 @loc17 (22,7)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-71-loc17-23-7",
+    "category": "memory-object",
+    "name": "Objeto oculto #11 @loc17 (23,7)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-72-loc17-21-13",
+    "category": "memory-object",
+    "name": "Objeto oculto #5 @loc17 (21,13)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-73-loc17-7-18",
+    "category": "memory-object",
+    "name": "Objeto oculto #7 @loc17 (7,18)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-74-loc17-20-23",
+    "category": "memory-object",
+    "name": "Objeto oculto #10 @loc17 (20,23)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-75-loc18-17-18",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc18 (17,18)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-76-loc18-13-6",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc18 (13,6)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-77-loc18-14-6",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc18 (14,6)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-78-loc18-16-6",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc18 (16,6)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-79-loc18-17-6",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc18 (17,6)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-80-loc18-19-7",
+    "category": "memory-object",
+    "name": "Objeto oculto #10 @loc18 (19,7)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-81-loc19-3-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #30 @loc19 (3,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-82-loc19-5-7",
+    "category": "memory-object",
+    "name": "Objeto oculto #30 @loc19 (5,7)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-83-loc19-7-7",
+    "category": "memory-object",
+    "name": "Objeto oculto #30 @loc19 (7,7)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-84-loc19-7-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #30 @loc19 (7,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-85-loc19-5-7",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc19 (5,7)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-86-loc19-3-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #10 @loc19 (3,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-87-loc20-18-25",
+    "category": "memory-object",
+    "name": "Objeto oculto #8 @loc20 (18,25)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-88-loc21-13-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc21 (13,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-89-loc21-14-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc21 (14,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-90-loc21-16-2",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc21 (16,2)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-91-loc22-13-13",
+    "category": "memory-object",
+    "name": "Objeto oculto #10 @loc22 (13,13)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-92-loc22-3-12",
+    "category": "memory-object",
+    "name": "Objeto oculto #7 @loc22 (3,12)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-93-loc23-15-1",
+    "category": "memory-object",
+    "name": "Objeto oculto #12 @loc23 (15,1)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-94-loc24-19-22",
+    "category": "memory-object",
+    "name": "Objeto oculto #7 @loc24 (19,22)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-95-loc24-19-22",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc24 (19,22)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-96-loc25-25-16",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc25 (25,16)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-97-loc26-11-4",
+    "category": "memory-object",
+    "name": "Objeto oculto #12 @loc26 (11,4)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-98-loc27-11-17",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc27 (11,17)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-99-loc27-10-17",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc27 (10,17)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-100-loc28-19-22",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc28 (19,22)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-101-loc30-23-9",
+    "category": "memory-object",
+    "name": "Objeto oculto #10 @loc30 (23,9)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-102-loc30-23-7",
+    "category": "memory-object",
+    "name": "Objeto oculto #12 @loc30 (23,7)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-103-loc30-20-7",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc30 (20,7)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-104-loc30-22-19",
+    "category": "memory-object",
+    "name": "Objeto oculto #5 @loc30 (22,19)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-105-loc30-22-17",
+    "category": "memory-object",
+    "name": "Objeto oculto #12 @loc30 (22,17)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-106-loc31-6-3",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc31 (6,3)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-107-loc31-19-7",
+    "category": "memory-object",
+    "name": "Objeto oculto #15 @loc31 (19,7)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-108-loc32-8-21",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc32 (8,21)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-109-loc1-19-24",
+    "category": "memory-object",
+    "name": "Objeto oculto #15 @loc1 (19,24)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-110-loc1-20-24",
+    "category": "memory-object",
+    "name": "Objeto oculto #15 @loc1 (20,24)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-111-loc17-12-12",
+    "category": "memory-object",
+    "name": "Objeto oculto #3 @loc17 (12,12)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-112-loc17-12-12",
+    "category": "memory-object",
+    "name": "Objeto oculto #4 @loc17 (12,12)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "search-113-loc0-0-0",
+    "category": "memory-object",
+    "name": "Objeto oculto #0 @loc0 (0,0)",
+    "source": "data.json:searchObjects",
+    "reachableBy": null
+  },
+  {
+    "id": "map-overworld",
+    "category": "map",
+    "name": "Overworld (Britannia)",
+    "source": "maps/overworld.json",
+    "reachableBy": null
+  },
+  {
+    "id": "map-underworld",
+    "category": "map",
+    "name": "Underworld",
+    "source": "maps/underworld.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-0-campfire",
+    "category": "combat-arena",
+    "name": "CampFire",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-1-swamp",
+    "category": "combat-arena",
+    "name": "Swamp",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-2-glade",
+    "category": "combat-arena",
+    "name": "Glade",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-3-treed",
+    "category": "combat-arena",
+    "name": "Treed",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-4-desert",
+    "category": "combat-arena",
+    "name": "Desert",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-5-cleantree",
+    "category": "combat-arena",
+    "name": "CleanTree",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-6-mountains",
+    "category": "combat-arena",
+    "name": "Mountains",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-7-bigbridge",
+    "category": "combat-arena",
+    "name": "BigBridge",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-8-brick",
+    "category": "combat-arena",
+    "name": "Brick",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-9-basement",
+    "category": "combat-arena",
+    "name": "Basement",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-10-psychedelic",
+    "category": "combat-arena",
+    "name": "Psychedelic",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-11-boatocean",
+    "category": "combat-arena",
+    "name": "BoatOcean",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-12-boatnorth",
+    "category": "combat-arena",
+    "name": "BoatNorth",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-13-boatsouth",
+    "category": "combat-arena",
+    "name": "BoatSouth",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-14-boatboat",
+    "category": "combat-arena",
+    "name": "BoatBoat",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  },
+  {
+    "id": "arena-15-bay",
+    "category": "combat-arena",
+    "name": "Bay",
+    "source": "maps/combatmaps.json",
+    "reachableBy": null
+  }
+]

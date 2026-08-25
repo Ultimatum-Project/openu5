@@ -1,0 +1,137 @@
+# GUION DE TECLAS de la partida «faulinei» (momento-03) — Ante Faulinei
+#
+# LA ESCENA ES EL RITUAL, y eso viene del propio momento: `defs.ts` lo define con
+# `shadowlordConvocado`, y ese parche NO es un campo de estado — `compone.ts:147`
+# (`colocaShadowlord`) lo convierte en DOS cosas: `state.shadowlordSummoned` y un
+# OBJETO de mundo en (x, y−1). El Shadowlord está literalmente UNA CASILLA AL NORTE
+# del grupo, y el momento queda «a un Use» del ritual (comentario de compone.ts:143-145).
+#
+# 🔴 CORRIGE MI PROPIA LECTURA ANTERIOR. Dije «cámara SELLADA: 0 pasos al norte» tras
+# la sonda de rumbos. El dato era correcto y la conclusión no: al norte no hay un muro,
+# hay UN SHADOWLORD. Una sonda que sólo cuenta pasos no distingue pared de ocupante —
+# y el ocupante era justo el sujeto del momento que yo daba por ausente.
+#
+# El índice 17 del picker de (U)se está MEDIDO, no supuesto (sonda de 0..22 sobre el
+# estado real: 17 es la única que consume el shard; delante van pergaminos, pociones y
+# las ocho gemas lunares). Si cambia la mochila del acto 2, cambia el índice.
+# (L)ook es direccional y lleva su flecha detrás; (I)gnite va sola.
+l
+ArrowUp
+i
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowLeft
+ArrowLeft
+ArrowLeft
+l
+ArrowRight
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowUp
+ArrowUp
+ArrowUp
+l
+ArrowUp
+u
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowDown
+Enter
+ArrowUp
+ArrowUp
+ArrowUp
+l
+ArrowUp
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowUp
+ArrowUp
+ArrowUp
+i
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowUp
+ArrowUp
+ArrowUp
+l
+ArrowDown
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowUp
+ArrowUp
+ArrowUp
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowDown
+ArrowDown
+ArrowDown
+l
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowUp
+ArrowUp
+ArrowUp
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowUp
+ArrowUp
+ArrowUp
+ArrowRight
+ArrowRight
+ArrowRight
+ArrowDown
+ArrowDown
+ArrowDown
+ArrowLeft
+ArrowLeft
+ArrowLeft
+ArrowUp
+ArrowUp
+ArrowUp
+ArrowRight
+ArrowRight
+ArrowRight

@@ -1,0 +1,15 @@
+{
+  "cases": [
+    {"op": "guild", "guildTown": 0, "item": 0, "int": 0},
+    {"op": "guild", "guildTown": 0, "item": 1, "int": 33},
+    {"op": "guild", "guildTown": 0, "item": 2, "int": 15},
+    {"op": "guild", "guildTown": 2, "item": 1, "int": 20},
+    {"op": "horse", "horseTown": 0, "int": 0},
+    {"op": "horse", "horseTown": 0, "int": 10},
+    {"op": "horse", "horseTown": 3, "int": 25},
+    {"op": "frigate", "shipTown": 0, "int": 0},
+    {"op": "frigate", "shipTown": 1, "int": 20},
+    {"op": "skiff", "shipTown": 0, "int": 0},
+    {"op": "skiff", "shipTown": 3, "int": 33}
+  ]
+}

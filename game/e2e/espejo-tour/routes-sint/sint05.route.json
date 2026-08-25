@@ -1,0 +1,215 @@
+{
+  "part": "sint05",
+  "source": "SINTETICO — prosa inventada por el port, cero material de EA",
+  "sintetico": true,
+  "entry": {
+    "checkpoint": "sint04",
+    "note": "Encadena del checkpoint de sint04."
+  },
+  "segments": [
+    {
+      "id": "sint05-g01",
+      "ctx": "start",
+      "seam": null,
+      "ocr": {
+        "from": 1,
+        "to": 5
+      },
+      "script": [
+        {
+          "todo": "Ready?",
+          "ocrLn": 1
+        },
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        }
+      ],
+      "expect": [
+        {
+          "text": "Ready?",
+          "ocrLn": 1,
+          "class": "auto"
+        }
+      ],
+      "note": "Ready?"
+    },
+    {
+      "id": "sint05-g02",
+      "ctx": "smallmap",
+      "seam": "enter",
+      "enter": {
+        "loc": 7,
+        "banner": "BRASSFORD"
+      },
+      "ocr": {
+        "from": 6,
+        "to": 50
+      },
+      "script": [
+        {
+          "nav": [
+            {
+              "m": "east",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "todo": "The inn of the brass owl is warm.",
+          "ocrLn": 8
+        },
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "todo": "Torbin stays by the hearth.",
+          "ocrLn": 14
+        },
+        {
+          "todo": "Quilla joins the march!",
+          "ocrLn": 22
+        },
+        {
+          "key": "Enter",
+          "ocrLn": 24
+        },
+        {
+          "key": "y",
+          "ocrLn": 25
+        },
+        {
+          "key": "Enter",
+          "ocrLn": 26
+        },
+        {
+          "key": "y",
+          "ocrLn": 27
+        },
+        {
+          "nav": [
+            {
+              "m": "south",
+              "v": "walk",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "dismiss": "Torbin",
+          "src": "overlay",
+          "ocrLn": 12
+        },
+        {
+          "recruit": "Quilla",
+          "src": "overlay",
+          "ocrLn": 20
+        }
+      ],
+      "expect": [
+        {
+          "text": "The inn of the brass owl is warm.",
+          "ocrLn": 8,
+          "class": "auto"
+        },
+        {
+          "text": "Quilla joins the march!",
+          "ocrLn": 22,
+          "class": "auto"
+        }
+      ],
+      "note": "Swap de compania: Torbin sale, Quilla entra."
+    },
+    {
+      "id": "sint05-g03",
+      "ctx": "resume",
+      "seam": null,
+      "ocr": {
+        "from": 51,
+        "to": 80
+      },
+      "enter": {
+        "loc": 36,
+        "dungeon": true,
+        "carryover": true,
+        "dungeonFrom": "visita-abierta-en-sint04-g02"
+      },
+      "openedBy": "3d-neutro",
+      "script": [
+        {
+          "dng": "advance",
+          "from": "Advance",
+          "sim": 0.98,
+          "ocrLn": 53
+        },
+        {
+          "dng": "pass",
+          "from": "Pass",
+          "sim": 0.98,
+          "ocrLn": 55
+        },
+        {
+          "dng": "turnLeft",
+          "from": "Turn [eft",
+          "sim": 0.93,
+          "ocrLn": 57
+        }
+      ],
+      "expect": [
+        {
+          "text": "Advance",
+          "ocrLn": 53,
+          "class": "auto"
+        }
+      ],
+      "note": "interior-dng: ranura NEUTRA abierta como 3d-neutro."
+    },
+    {
+      "id": "sint05-g04",
+      "ctx": "shrine",
+      "seam": null,
+      "enter": {
+        "shrine": 3
+      },
+      "ocr": {
+        "from": 81,
+        "to": 95
+      },
+      "script": [
+        {
+          "typedMantra": "LATON",
+          "ocrLn": 83
+        },
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        }
+      ],
+      "expect": [
+        {
+          "text": "The brass bell answers.",
+          "ocrLn": 84,
+          "class": "known-gap"
+        }
+      ],
+      "note": "Altar del laton."
+    }
+  ]
+}

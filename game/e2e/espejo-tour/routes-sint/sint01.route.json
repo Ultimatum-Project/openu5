@@ -1,0 +1,267 @@
+{
+  "part": "sint01",
+  "source": "SINTETICO — prosa inventada por el port, cero material de EA",
+  "sintetico": true,
+  "entry": {
+    "boot": "fresh",
+    "normalizeAvatarName": "Sinta",
+    "entryClock": {
+      "hour": 10,
+      "minute": 0
+    },
+    "note": "Arranque fresco del corpus sintetico. Hora canonica de arneses 10:00."
+  },
+  "segments": [
+    {
+      "id": "sint01-g01",
+      "ctx": "start",
+      "seam": null,
+      "ocr": {
+        "from": 1,
+        "to": 4
+      },
+      "script": [
+        {
+          "todo": "Ready?",
+          "ocrLn": 1
+        },
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 2
+            }
+          ]
+        }
+      ],
+      "expect": [
+        {
+          "text": "Ready?",
+          "ocrLn": 1,
+          "class": "auto"
+        }
+      ],
+      "note": "Ready?"
+    },
+    {
+      "id": "sint01-g02",
+      "ctx": "overworld",
+      "seam": "enter",
+      "enter": {
+        "loc": 1,
+        "banner": "COPPER KEEP",
+        "overworld": true
+      },
+      "ocr": {
+        "from": 5,
+        "to": 30
+      },
+      "script": [
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 3
+            },
+            {
+              "m": "east",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "key": "o",
+          "ocrLn": 10
+        },
+        {
+          "key": "ArrowUp",
+          "ocrLn": 10
+        },
+        {
+          "typed": "BRASS",
+          "ocrLn": 12
+        },
+        {
+          "nav": [
+            {
+              "m": "south",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "gap": 2
+        },
+        {
+          "todo": "The brass owl hoots twice!",
+          "ocrLn": 18
+        }
+      ],
+      "expect": [
+        {
+          "text": "Open-North Opened!",
+          "ocrLn": 10,
+          "class": "auto"
+        },
+        {
+          "text": "The brass owl hoots twice!",
+          "ocrLn": 18,
+          "class": "auto"
+        },
+        {
+          "text": "Sinta counts 12 tin coins.",
+          "ocrLn": 22,
+          "class": "numeric"
+        }
+      ],
+      "note": "Portico de laton del corpus sintetico."
+    },
+    {
+      "id": "sint01-g03",
+      "ctx": "smallmap",
+      "seam": "enter",
+      "enter": {
+        "loc": 7,
+        "banner": "BRASSFORD"
+      },
+      "ocr": {
+        "from": 31,
+        "to": 60
+      },
+      "script": [
+        {
+          "nav": [
+            {
+              "m": "east",
+              "v": "walk",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "todo": "A tin whistle lies here.",
+          "ocrLn": 34
+        },
+        {
+          "todo": "Vela joins the march!",
+          "ocrLn": 46
+        },
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "seedGold": 900,
+          "src": "overlay",
+          "ocrLn": 44
+        },
+        {
+          "recruit": "Vela",
+          "src": "overlay",
+          "ocrLn": 44
+        },
+        {
+          "key": "t",
+          "ocrLn": 51
+        },
+        {
+          "key": "ArrowRight",
+          "ocrLn": 51
+        }
+      ],
+      "expect": [
+        {
+          "text": "A tin whistle lies here.",
+          "ocrLn": 34,
+          "class": "auto"
+        },
+        {
+          "text": "Vela joins the march!",
+          "ocrLn": 46,
+          "class": "auto"
+        }
+      ],
+      "note": "Vela se une; el arnes de oro entra por overlay."
+    },
+    {
+      "id": "sint01-g04",
+      "ctx": "combat",
+      "seam": "combat",
+      "policy": "auto",
+      "ocr": {
+        "from": 61,
+        "to": 80
+      },
+      "script": [
+        {
+          "nav": [
+            {
+              "m": "north",
+              "v": "walk",
+              "n": 1
+            }
+          ]
+        },
+        {
+          "todo": "Attack-Aim!",
+          "ocrLn": 63
+        }
+      ],
+      "expect": [
+        {
+          "text": "Attack-Aim!",
+          "ocrLn": 63,
+          "class": "rng"
+        }
+      ],
+      "note": "Escaramuza sintetica (RNG, no comparable)."
+    },
+    {
+      "id": "sint01-g05",
+      "ctx": "post-combat",
+      "seam": "victory",
+      "ocr": {
+        "from": 81,
+        "to": 95
+      },
+      "skip": "pendiente-runner",
+      "skipReason": "mazmorra INDETERMINABLE: retrocediendo desde aquí, lo primero que aparece es una SALIDA de la mazmorra (overworld/santuario/otra location) — este post-combat no es de interior",
+      "script": [
+        {
+          "nav": [
+            {
+              "m": "west",
+              "v": "walk",
+              "n": 2
+            }
+          ]
+        },
+        {
+          "todo": "The kettle boils over!",
+          "ocrLn": 83
+        }
+      ],
+      "expect": [
+        {
+          "text": "The kettle boils over!",
+          "ocrLn": 83,
+          "class": "auto"
+        }
+      ],
+      "note": "Cerrado con razon declarada (fuera de interior)."
+    }
+  ],
+  "ledger": {
+    "note": "Corpus sintetico: sin anclas numericas del LP.",
+    "assert": {}
+  }
+}

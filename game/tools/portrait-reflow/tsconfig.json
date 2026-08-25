@@ -1,0 +1,12 @@
+{
+  // Type-check gate del BANCO DE MEDICIÓN del re-flow vertical. El tsconfig del juego
+  // sólo incluye `src`+`tests` y el de e2e sólo `e2e`, así que estos dos scripts (que
+  // corren por `tsx`, sin type-check) no los veía ningún gate.
+  //
+  //   npx tsc --noEmit -p tools/portrait-reflow
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "@playwright/test"]
+  },
+  "include": ["."]
+}

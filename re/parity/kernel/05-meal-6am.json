@@ -1,0 +1,12 @@
+{
+  "name": "meal-6am-food",
+  "_doc": "Comidas a las 6/12/18: al cruzar a una hora de comida, food -= miembros vivos (no 'D'/'S'); el descuento ocurre en el turno del cambio de hora (kernel_turn_housekeeping 0x2B5D-0x2B99). Se siembra el reloj a 5:59 y se pasa 1 turno → 6:00. kernel-survival.md §2.",
+  "initial": "saved-gam",
+  "setup": [
+    { "global": "hour", "value": 5 },
+    { "global": "minute", "value": 59 },
+    { "global": "food", "value": 300 }
+  ],
+  "actions": [{ "op": "pass_turn", "times": 2 }],
+  "fields": ["food", "hour", "minute"]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "town-move",
+  "_doc": "Movimiento normal en pueblo = 1 minuto por paso (bucle TOWN 0x15D4 advance_clock(1)). Se teleporta al césped al sur del edificio (15,28: zona sin NPCs) escribiendo g_party_x/y — seguro en pueblo, no hay caché de chunks.",
+  "initial": "saved-gam",
+  "setup": [
+    { "global": "x", "value": 15 },
+    { "global": "y", "value": 28 }
+  ],
+  "actions": [{ "op": "move", "dir": "south", "times": 2 }],
+  "fields": ["x", "y", "minute", "hour"]
+}

@@ -1,0 +1,12 @@
+{
+ "name": "wander-corner",
+ "kind": "wander",
+ "note": "Wander pegado a la esquina (1,1): el radio Manhattan 3 y los límites 0..31 abortan direcciones que se salen (sin reintento).",
+ "spec": {
+  "seed": 48813,
+  "location": 5, "floor": 0, "hour": 10,
+  "npc": {"slot": 3, "aiType": 1, "post": {"x": 1, "y": 1}, "start": {"x": 1, "y": 1}, "type": 112},
+  "player": {"floor": 0, "x": 20, "y": 20},
+  "turns": 24
+ }
+}

@@ -1,0 +1,62 @@
+{
+  "_doc": [
+    "REGISTRO DEL DESFASE DEL DERIVADOR — corpus que NO están en el PUNTO FIJO de su generador.",
+    "",
+    "`derive-dungeon-ops.mjs` es IDEMPOTENTE (medido: 2ª y 3ª corrida dan el mismo sha). Un",
+    "corpus commiteado debería por tanto ser un PUNTO FIJO: re-derivarlo no cambia un byte.",
+    "`routes-ad` lo es. `routes` (LP1) NO: re-derivarlo mueve 19 de sus 24 ficheros.",
+    "",
+    "★ POR QUÉ ESTE FICHERO EXISTE Y NO ES UNA LISTA DE EXCLUSIÓN.",
+    "El desfase no está aquí para ser tolerado: está aquí para ser RUIDOSO. Mientras exista,",
+    "cualquier carril que corra el derivador POR CUALQUIER MOTIVO mueve el denominador de LP1",
+    "sin verlo, y la conformidad cambia sin causa atribuible — el descenso se leería como",
+    "defecto del port. El registro OBLIGA A DECLARAR el conjunto exacto; no lo perdona.",
+    "",
+    "🔴 EL CONJUNTO ES EXACTO, NO UN TOPE. El guarda `tests/espejo-desfase-derivador.test.ts` se",
+    "pone ROJO si la divergencia CRECE, ENCOGE o CAMBIA DE MIEMBROS. Un desfase que se mueve",
+    "sin que nadie lo declare es indistinguible de un arreglo silencioso y de una regresión",
+    "silenciosa: las dos cosas piden acta.",
+    "",
+    "🔴 `cierre` NO es prosa libre: dice QUÉ decisión lo cierra y QUIÉN la toma. `caduca` impide",
+    "que «conocido» sea eterno — vencida la fecha, el guarda exige re-declararlo o cerrarlo."
+  ],
+
+  "corpus": {
+    "routes": {
+      "causa": "arnés — DOS productores en conflicto permanente sobre el mismo campo",
+      "motivo": "`mkoverlay-lp1.mjs:279` escribe `skip: false` (tombstone «quítalo», POLARIDAD EXPLÍCITA de #43) para todo `post-combat` que su máquina `stepInterior` declara NO interior. El cinturón de `enrichRoute` (`if (!seg.skip) seg.skip = \"pendiente-runner\"`) se lo vuelve a poner. Ninguno de los dos cede: GANA EL QUE CORRIÓ ÚLTIMO. En `routes-ad` corrió último el derivador (por eso AD es punto fijo y no tiene entrada aquí); en LP1 corrió último `curate`/`mkoverlay`.",
+      "declarado_en": "re/notes/cola-probe-preregistro.md §1, medido ANTES de tocar código y con `git status` limpio; carril `cola-probe`",
+      "cierre": "DECISIÓN DEL LEAD, no del carril que la tropiece: (a) adjudicar cuál de los dos productores manda sobre `skip` en un `post-combat` no-interior, y (b) re-derivar LP1 publicando el efecto sobre la conformidad con las dos cifras (antes/después), como se hizo con el denominador de `ad02`. Arreglarlo dentro de otra ventana MEZCLA su delta con éste y ninguno de los dos queda atribuible.",
+      "impacto_denominador": "66 `post-combat` que HOY están sin `skip` —o sea DENTRO del denominador de LP1— se cerrarían al re-derivar, y 5 segmentos se abrirían. Efecto sobre `matched`: NO MEDIDO (offline, sin correr el espejo).",
+      "sha_medicion": "e4374327",
+      "caduca": "2026-09-30",
+      "cierra_66": [
+        "part02-g03", "part02-g11", "part02-g13", "part02-g16",
+        "part03-g10", "part03-g12", "part03-g14",
+        "part05-g08", "part05-g11", "part05-g13", "part05-g15", "part05-g18", "part05-g20",
+        "part06-g08", "part06-g14", "part06-g17",
+        "part07-g07", "part07-g10", "part07-g16", "part07-g18", "part07-g20", "part07-g24", "part07-g25",
+        "part08-g04", "part08-g09",
+        "part09-g03", "part09-g05", "part09-g07", "part09-g09", "part09-g18", "part09-g20", "part09-g21",
+        "part10-g04", "part10-g06", "part10-g20", "part10-g22", "part10-g27", "part10-g30",
+        "part11-g14", "part11-g16", "part11-g18", "part11-g19", "part11-g21", "part11-g23", "part11-g31", "part11-g33",
+        "part12-g06", "part12-g08", "part12-g14", "part12-g19", "part12-g22",
+        "part13-g11",
+        "part14-g08",
+        "part17-g03",
+        "part18-g05", "part18-g07", "part18-g10", "part18-g12",
+        "part19-g07",
+        "part20-g13", "part20-g15", "part20-g17", "part20-g19",
+        "part21-g05", "part21-g07",
+        "part22-g09"
+      ],
+      "_nota_cierra": "65 de los 66 son la HUELLA del conflicto (post-combat sin mazmorra que el cinturón cerraría). `part19-g07` es de OTRA causa y va aquí igual porque también se cierra: pierde `openedBy: 3d` por MATERIAL, sus ops `dng` bajan de 3 a 2 y no llega al mínimo del gate. No confundir las dos poblaciones.",
+      "abre_5": [
+        "part16-g03:3c", "part16-g06:3d-neutro", "part17-g05:3d", "part17-g06:3d", "part22-g05:3d-neutro"
+      ],
+      "_nota_abre": "Material que el derivador YA sabe abrir y que el artefacto rancio mantiene cerrado. Es la cara BUENA del desfase: re-derivar no sólo quita, también da.",
+      "skipReason_cambian": 47,
+      "ops_dng_cambian_en_segmentos": 13
+    }
+  }
+}

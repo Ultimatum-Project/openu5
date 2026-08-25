@@ -1,0 +1,21 @@
+{
+  "name": "gypsy-to-endgame-seedNZ",
+  "seed": 40961,
+  "gypsy": {
+    "base": { "strength": 15, "dexterity": 15, "intelligence": 15 },
+    "answers": ["B", "B", "A", "A", "B", "A", "B"]
+  },
+  "members": [
+    { "str": 18, "dex": 12, "status": "G" },
+    { "str": 10, "dex": 25, "status": "S" },
+    { "str": 22, "dex": 8, "status": "G" },
+    { "str": 14, "dex": 16, "status": "G" }
+  ],
+  "phases": [
+    { "kind": "town", "hour": 12, "ticks": 5, "secondWorldTurn": true },
+    { "kind": "outdoor", "tile": 5, "floor": 0, "hour": 3, "ticks": 6 },
+    { "kind": "bridge", "hour": 3 },
+    { "kind": "outdoor", "tile": 4, "floor": 0, "hour": 12, "ticks": 3, "onSwamp": true }
+  ],
+  "endgameTime": { "year": 139, "month": 5, "day": 4 }
+}

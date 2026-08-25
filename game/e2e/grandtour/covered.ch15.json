@@ -1,0 +1,12 @@
+{
+  "chapter": "ch15",
+  "coveredIds": [
+    "command-c",
+    "command-k",
+    "map-underworld",
+    "spell-0-in-lor"
+  ],
+  "notes": [
+    "Underworld (emergencia de Deceit, location 0 · floor 0xFF · 240,73 · tile 24 DoomEntrance). GEMAS 3→3 (#65: HEREDADAS del cofre de ch14b e INVARIANTES aquí — este capítulo no las gasta; declararlo convierte «no lo sé» en «medido y quieto»). HALLAZGO topológico (BFS underworld.json+TileData.json, verificado en vivo): la emergencia es una CUENCA de 12 tiles anillada por montañas (SmallMountains=12 klimbables, TallMountains=13 impasables). ANDANDO Y SIN GARFIO la party no sale de esas 12 casillas — MEDIDA del PORT, NO dead-end fiel: la pata «(E)nter → \"Enter What?\"» que sellaba esto citaba game.ts:4336, guarda BORRADA por cab88af4 POR NO DERIVADA (hoy game.ts:4351 dice lo contrario: MAINOUT cmd_enter 0x08de despacha por TILE sin mirar g_floor), y la casilla de emergencia (240,73) ES tile 24 DoomEntrance = Deceit ⇒ pulsar E carga la mazmorra. No hay moongate en la cuenca (ninguna moonstone enterrada z=0xFF). El Underworld es OSCURO (lightLevel floorByte>0x7f→2); la party EMERGE aún alumbrada (sello ch14b lightSpellMins=66) e In Lor la re-alumbra (→100, éxito SILENCIOSO sin string; qty/maná/nivel HEREDADOS de ch14b, sin sembrar). Recorrido REAL por flechas de la cuenca (240,73→74→75, 239/240/241,75). Con garfio (test de capacidad) se anilla la montaña y se abre el Underworld ORIENTAL (BFS 7223 tiles) — pero shards ((192,80)/(130,65)/(176,184)) y amuleto de LB ((105,225)) quedan AGUA-LOCKED incluso con garfio → travesía NAVAL futura (README), fuera del alcance melé-only. SELLA dentro del Underworld en (240,75) — el capítulo ELIGE quedarse; NO es un veredicto de «sin salida». karma/keys/gold/INT intactos; el miembro 1 sigue MUERTO (heredado de ch14b). Comandos c/k. Delta: lightSpellMins (In Lor + decaimiento), time (recorrido; el import lo re-normaliza aguas abajo). HORA 10:00, encadenado sobre ch14b.gam."
+  ]
+}

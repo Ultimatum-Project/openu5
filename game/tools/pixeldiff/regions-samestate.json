@@ -1,0 +1,22 @@
+{
+  "_doc": "Máscaras del arnés píxel-diff en modo MISMO-ESTADO (task #26 FASE 2). Mismas regiones/coords que regions.json (espacio lógico 320x200, rect [x0,y0,x1,y1] INCLUSIVO), pero con los modos DUROS que sólo son honestos cuando port y original cargan el MISMO SAVED.GAM (capture_original.py siembra el save en el oráculo; capture-port.pw.ts lo carga en el port vía __u5test.loadNativeSave). Cromo/paneles pasan a 'strict' (píxel EGA idéntico) y border_rule (1px) se activa gracias a la captura nativa 320x200 del oráculo (sin downscale). El viewport y la banda del cielo van en 'hist' (contenido/color, tolera fase de animación: olas ~117ms, sol/lunas) PERO el viewport lleva ADEMÁS 'viewport_light' (lit_tiles): el histograma es orden-independiente y no ve un radio de máscara nocturna equivocado (port apaga 80% del viewport, original 30%, histogramas parecidos → falso PASS). lit_tiles compara la máscara de luz a nivel de celda 16×16 y sí lo pilla. Descubierto por el caso overworld_night (task #26 fase 2 batería).",
+  "modes": {
+    "strict": "fracción de píxeles con índice EGA idéntico. Cromo geométrico a MISMO estado; sensible a 1px.",
+    "strict_ink": "como strict pero SÓLO sobre píxeles de tinta (no-fondo) de cualquiera de los dos: en paneles de texto dispersos el fondo negro NO infla el score y las divergencias de texto (fecha 4-5 vs 5-4, vientos ausentes) se delatan.",
+    "hist": "1 - 0.5*L1 de histogramas de paleta (orden-independiente). Viewport/cielo: contenido/color con tolerancia de animación.",
+    "lit_tiles": "acuerdo espacial de la MÁSCARA DE LUZ a nivel de celda 16×16 (fracción de tiles que coinciden en lit/dark). Pilla divergencias de radio/forma de la máscara nocturna que 'hist' no ve; tolera animación (un tile iluminado nunca queda todo negro).",
+    "presence": "tinta (px no-fondo) port vs original; caja poblada vs VACÍA.",
+    "color": "índice EGA dominante no-fondo; color de elemento equivocado.",
+    "ignore": "no se compara."
+  },
+  "regions": [
+    { "name": "viewport",       "kind": "rect",    "rect": [8, 8, 183, 183],   "mode": "hist",       "thresh": 0.85 },
+    { "name": "viewport_light", "kind": "rect",    "rect": [8, 8, 183, 183],   "mode": "lit_tiles",  "thresh": 0.95 },
+    { "name": "sky_band",       "kind": "rect",    "rect": [8, 0, 183, 7],     "mode": "hist",       "thresh": 0.80 },
+    { "name": "panel_roster",   "kind": "rect",    "rect": [192, 8, 311, 55],  "mode": "strict_ink", "thresh": 0.90 },
+    { "name": "panel_stats",    "kind": "rect",    "rect": [192, 64, 311, 79], "mode": "strict_ink", "thresh": 0.90 },
+    { "name": "console",        "kind": "rect",    "rect": [192, 88, 318, 191],"mode": "ignore",     "thresh": 0.85 },
+    { "name": "status_line",    "kind": "rect",    "rect": [8, 184, 183, 199], "mode": "ignore",     "thresh": 0.85 },
+    { "name": "border_rule",    "kind": "outline", "rect": [7, 7, 184, 184],   "mode": "color",      "thresh": 1.0 }
+  ]
+}

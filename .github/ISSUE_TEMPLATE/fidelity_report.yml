@@ -1,0 +1,65 @@
+# Draft — destino final: .github/ISSUE_TEMPLATE/fidelity_report.yml del repo público.
+name: Fidelity report
+description: The port behaves differently from the original DOS game (rules, RNG, text, timing, visuals).
+labels: ["fidelity"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the report this project exists for. The golden rule: **the binary
+        is always right**. If the port contradicts the original, the port is wrong
+        — unless the difference is already catalogued in
+        [`deliberate-divergences.md`](../blob/main/re/deliberate-divergences.md)
+        (please check it first).
+  - type: textarea
+    id: divergence
+    attributes:
+      label: Observed divergence
+      description: What the port does vs. what the original DOS game does. Be as concrete as you can ("the guard turned left here, the port turns right").
+    validations:
+      required: true
+  - type: dropdown
+    id: evidence-kind
+    attributes:
+      label: Evidence type
+      options:
+        - Side-by-side with DOSBox (I own the game and reproduced it in both)
+        - Video/longplay of the original (link + timestamp)
+        - Assembly citation (overlay + offset)
+        - Printed docs (manual / clue book, page)
+        - Memory of the game (weakest — still welcome, will need verification)
+    validations:
+      required: true
+  - type: textarea
+    id: asm-citation
+    attributes:
+      label: Assembly citation (if you have one)
+      description: |
+        Overlay + offset, e.g. `COMBAT.OVL 0x194A` or `ULTIMA.EXE 0x2092`, plus
+        the relevant instructions. Short cited excerpts only — **no bulk
+        disassembly listings** (they get the issue edited/closed).
+      placeholder: |
+        COMBAT.OVL 0x194A: cmp byte [bp-6], 0x0A ; jae ...
+        The port checks > instead of >=.
+    validations:
+      required: false
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction in the port
+      description: Exported save + seed + steps, so the divergence can be replayed deterministically.
+    validations:
+      required: true
+  - type: textarea
+    id: original-repro
+    attributes:
+      label: Reproduction in the original
+      description: If you reproduced it in DOSBox — save state / steps / seed conditions. Video timestamp if from a longplay.
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: Port version / commit
+    validations:
+      required: true
