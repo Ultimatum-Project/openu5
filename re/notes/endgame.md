@@ -64,8 +64,7 @@ infinito (0x04f9) = pantalla "The End" (se reinicia).
 
 Pergamino (strings): `Be it known that on / the <ordinal(day)> Day of / the
 <ordinal(month)> Month / of the Year / <cardinal(year/100)> Hundred /
-<cardinal(year%100)> / the Avatar / saved the life / of our sovereign / Lord
-British, thereby / saving our people / and our land. / THE QUEST OF THE AVATAR IS
+<cardinal(year%100)> / the Avatar / «saved the life / …» (92 B, sha1 c084c52c — recortado; verifica contra tu copia). / THE QUEST OF THE AVATAR IS
 FOREVER` (bytes crudos "[E@QUE_@OF@[E@AVATAR / IS@FOREVER" en la fuente cinemática).
 
 ### Rama del final (endgame_main @0x08b9)

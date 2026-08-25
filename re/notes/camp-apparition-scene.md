@@ -116,8 +116,7 @@ que sube, en orden de roster (= lo ya sellado en tests; el resto de la escena es
 - `0x0915-0x0920` `index = g_karma / 20` (div 0x14).
 - `0x0923 jge`: si `index < 4` → offset de la tabla DS 0x1a74 = `[0,132,269,410]`
   (= records 0-3 de KARMA.DAT, los MISMOS del refuge); si `index ≥ 4` (karma 80-99) →
-  **offset FIJO 0x29f=671** (0x094c) = **record 5**: `"Well armed art thou to fight
-  Death's embrace, O enlightened one! Thy destiny awaits thee!"` (byte-exacto del
+  **offset FIJO 0x29f=671** (0x094c) = **record 5**: `"«Well armed art thou …» (90 B, sha1 b08e6ab2 — recortado; verifica contra tu copia)!"` (byte-exacto del
   fichero; KARMA.DAT mide 761 B, rec5 671-760). ⇒ el rec5 que death-resurrection-audit
   declaró «inalcanzable» por el refuge **SÍ es alcanzable — por la acampada**. (El
   refuge con 80-99 recita el rec4 "Return once more…"; el camp, el rec5.)

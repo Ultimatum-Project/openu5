@@ -234,7 +234,11 @@ describe("FASE 3c — patrones de COMBATE calibrados para AD", () => {
     // el ancla es la COMA del banner, no la palabra desnuda
     const noCombate = [
       '"Well armed art thou to fight Death\'s embrace, O enlightened one!"', // core/game.ts:3963
-      "A creature of great Evil must hide its name, for it is at the mercy of one armed with such",
+      // KEEP.TLK, recortado a 11 palabras (cita corta): la muestra sólo tiene que llevar
+      // «armed with …» en prosa NO-combate y una coma que no sea la del banner — que es
+      // justo el ancla que se está ejerciendo. El pasaje completo eran 20 palabras de EA
+      // viajando al árbol público sin que el aserto ganara nada con ellas.
+      "name, for it is at the mercy of one armed with such",
     ];
     for (const s of noCombate)
       expect(AD_COMBAT_RNG.some((re) => re.test(probeFold(s))), s.slice(0, 40)).toBe(false);

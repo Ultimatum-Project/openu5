@@ -17,6 +17,7 @@ import {
 import { traceSprayRays, sprayColorForMode } from "./skin/fiel/combat.js";
 import { blocksSpellLine } from "./core/magic/areaSpellTables.js";
 import { NpcManager, type NpcSlot } from "./core/npc/manager.js";
+import { cargaFielActiva } from "./core/npc/carga-fiel.js";
 import { joinByName, effectiveName } from "./core/party.js";
 import { testHookInnLeave } from "./debug/debugApi.js";
 import {
@@ -3575,6 +3576,13 @@ async function boot(): Promise<void> {
         | Record<string, unknown>
         | undefined;
       if (hooks) {
+        // PUERTA #D1 (`core/npc/carga-fiel.ts`): estado REAL de la puerta DENTRO de la
+        // página. Read-only y sólo DEV. Existe porque «puse la env en la shell» y «la puerta
+        // está abierta en el bundle» son dos afirmaciones distintas (dos procesos, dos
+        // mecanismos): un careo de brazos que no lo compruebe puede medir un brazo con la
+        // puerta cerrada creyéndola abierta, y leer «no hay diferencia» como «los NPC no
+        // afectan aquí» — el veredicto invertido.
+        hooks.cargaFielActiva = (): boolean => cargaFielActiva();
         hooks.loadNativeSave = (bytes: ArrayLike<number>, sidecar?: SaveSidecar): void => {
           const gam = bytes instanceof Uint8Array ? bytes : Uint8Array.from(bytes);
           applyLoadedState(importNativeSave(gam, sidecar ?? NEW_GAME_SIDECAR));

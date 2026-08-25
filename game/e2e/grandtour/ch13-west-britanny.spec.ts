@@ -8,8 +8,8 @@
  *
  * NPCs (verificados contra CASTLE.TLK REAL, description incluida — lección ch10/ch11; los 3 con
  * greeting benigno, sin AskName en la description → gate=none):
- *   - Camile(18)      ['shad'] → "Blackthorn sends the Shadowlords unto many townes, but we lie too
- *        close to Lord British's castle…". TESTIGO: 'Shadowlords' (lore de Shadowlords).
+ *   - Camile(18)      ['shad'] → Blackthorn manda Shadowlords a muchas ciudades, pero ésta queda
+ *        demasiado cerca del castillo. TESTIGO: 'Shadowlords'. [literal EA no incluido]
  *   - Phillip(19)     ['chri'] → "He works the fields with me." TESTIGO: 'works the fields'
  *        (granjero-artista; Christopher es su "mate").
  *   - Christopher(20) ['writ'] → "I'm currently working on an epic called 'Times of Lore!'". TESTIGO:

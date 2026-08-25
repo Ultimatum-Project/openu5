@@ -12,8 +12,8 @@
  *   - Shalineth(12) ['merc','y'] → "…<Rune>FAULINEI<Rune> is the chant…the Name of this dread lord…"
  *        ('merc'→Label0 "swear not to use it foolishly?"; 'y'→FAULINEI). ⚠ 'n' → "Thou fool."
  *        <EndConversation> (SIN karma). Rama SEGURA = ['merc','y']. TESTIGO DURO: 'FAULINEI'.
- *   - Janell(11)   ['arti'] → "Seek out the twin sisters in the hidden city of Cove, and ask them of
- *        the Shard of Falsehood!". TESTIGO: 'Shard of Falsehood'.
+ *   - Janell(11)   ['arti'] → remite a las hermanas gemelas de la ciudad oculta de Cove para
+ *        preguntarles por el Shard. TESTIGO: 'Shard of Falsehood'. [literal EA no incluido]
  *   - Mariah(27)   ['shad'] talk-only → "I met one in Moonglow…but did escape with my life!".
  *        DECISIÓN DEL LEAD: TALK-ONLY (criterio Katrina/Jaana) — JAMÁS 'join' (JoinParty → roster/.gam).
  *        TESTIGO: 'escape with my life'.

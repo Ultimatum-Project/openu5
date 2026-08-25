@@ -33,8 +33,7 @@ de poder, Blackthorn) sobre chitchat.
 
 **FIEL verificados corpus↔talk.json** (resumen — todos (a)):
 
-- **Greyson** (towne.json idx6, noble fighting bard) — kw `[sacr,ques,shri]` → «One must
-  know first the Mantra for a particular shrine. Meditate there, and…» = auld P04 24:00
+- **Greyson** (towne.json idx6, noble fighting bard) — kw `[sacr,ques,shri]` → ««One must know first …» (78 B, sha1 51034f55 — recortado; verifica contra tu copia)» = auld P04 24:00
   → **(a) EMITIDA-EXACTA**. Testigo de la mecánica mantra/shrine.
 - **Kindor** (towne.json idx39) — kw `[shri]` → «Yes, I know the Mantra of Spirituality.»
   — auld P11 12:12 confirma NPC+tema → (a).
@@ -43,8 +42,7 @@ de poder, Blackthorn) sobre chitchat.
 
 - **Lord Malone** (keep.json idx22, Serpent's Hold) — kw `[evil,cowa,shad]` → «Even
   Nosfentor dares not cross the sacred threshold of Serpent's Hold!» (Shadowlord cobardía).
-- **Glinkie** (castle.json idx29) — kw `[word,powe]` → «Whilst at the destroyed shrine,
-  yell the word of power. Then meditate upon…» (mecánica palabra-de-poder).
+- **Glinkie** (castle.json idx29) — kw `[word,powe]` → ««Whilst at the destroyed …» (77 B, sha1 585130e2 — recortado; verifica contra tu copia)» (mecánica palabra-de-poder).
 
 **Balance batch-1+2**: Lord Michael + Greyson + Kindor = (a) FIEL. El sistema Talk del
 port casa el TLK original en todos los flujos de quest careados hasta ahora — cero tickets.

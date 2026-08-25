@@ -16,6 +16,7 @@ import { isPassable } from "../world/movement.js";
 import { getActiveMap, type ActiveMap, type WorldData } from "../world/map.js";
 import { DoorManager } from "../world/doors.js";
 import { OriginalRng } from "../rng-original.js";
+import { cargaFielActiva } from "./carga-fiel.js";
 import type { RandFn } from "../world/survival.js";
 import { guardWanderStep, type GuardState } from "../world/loops/guards.js";
 import {
@@ -562,6 +563,16 @@ export class NpcManager {
         pathIdx: -1,
         stuck: 0,
       });
+    }
+    // PUERTA #D1 (carga-fiel.ts): con la puerta ABIERTA la AUSENCIA de `npcWalk` significa
+    // lo que significa en el binario —la ventana del save viene vacía, NO HAY NADIE— y no
+    // «no sé, re-deriva». `town_load_map` con `fresh=0` (TOWN.OVL:0x11FF/0x1203) se salta la
+    // lectura del `.NPC` y la activación entera: el mapa se queda con lo que traiga el save.
+    // Con la puerta cerrada (default) se re-deriva, que es la divergencia declarada.
+    if (restore && !state.npcWalk && cargaFielActiva()) {
+      this.npcs.set(location, []);
+      this.syncWalkToState(location, state);
+      return;
     }
     if (restore && state.npcWalk && state.npcWalk.location === location) {
       const bySlot = new Map(state.npcWalk.slots.map((w) => [w.slot, w]));

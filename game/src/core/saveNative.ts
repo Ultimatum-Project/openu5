@@ -38,6 +38,7 @@ import { FIRST_DUNGEON_LOCATION, wordSpokenFlag } from "./quest/words.js";
 import { SHADOWLORDS, shadowlordDeadFlag } from "./quest/shadowlord-keys.js";
 import { isLatchedPhaseByte } from "./world/moongates.js";
 import { OBJECT_SLOT_COUNT, SLOT_TILE_FREE } from "./world/worldObjects.js";
+import { cargaFielActiva } from "./npc/carga-fiel.js";
 import { findFreeActorSlot, firstFreeRecycleSlot } from "./world/actorPool.js";
 
 /** Tamaño íntegro del fichero SAVED.GAM / INIT.GAM. */
@@ -247,6 +248,20 @@ export interface SaveSidecar {
     shadowlordLocs?: number[];
     shadowlordSummoned?: number;
     shadowlordDoomBits?: number;
+    /**
+     * PUERTA #D1 (`npc/carga-fiel.ts`) — el espejo de la banda de NPC del `.GAM`
+     * (`DS:0x5C5A..0x65C2`, acta `npc-carga-partida-fresh-gate.md` §3.3). Viaja en el
+     * SIDECAR y no a byte nativo por una razón MEDIDA, no por comodidad: los dos intentos
+     * de trasplantar la banda a mano al `.GAM` (167 B y 603 B, acta §4 armas D y D2)
+     * dejaron el render del ORIGINAL byte-idéntico ⇒ falta adjudicar quién puebla el
+     * registro-objeto `0x5C5A` y el `objIdx` `+0x0C`, y sin eso un `.GAM` con la banda
+     * escrita sería un `.GAM` que DOSBox sigue sin pintar. La vía nativa no está
+     * disponible todavía; ésta sí, y es completa (las cinco piezas + x/y/z).
+     *
+     * Sólo se escribe y sólo se lee con la puerta ABIERTA: con la puerta cerrada el campo
+     * es INERTE, que es lo que permite migrar el corpus sin cambiar la conducta de `main`.
+     */
+    npcWalk?: GameState["npcWalk"];
   };
 }
 
@@ -1030,6 +1045,8 @@ function extractSidecar(state: GameState): SaveSidecar {
   put("shadowlordLocs", state.shadowlordLocs);
   put("shadowlordSummoned", state.shadowlordSummoned);
   put("shadowlordDoomBits", state.shadowlordDoomBits);
+  // PUERTA #D1: la banda de NPC sólo viaja con la puerta abierta (npc/carga-fiel.ts).
+  if (cargaFielActiva()) put("npcWalk", state.npcWalk);
 
   const qol: SaveSidecar["qol"] = { journal: state.journal };
   if (state.explored !== undefined) qol.explored = state.explored;
@@ -1114,6 +1131,18 @@ export function importNativeSave(gam: Uint8Array, sidecar: SaveSidecar): GameSta
     if (gs.shipSkiffs === undefined) state.shipSkiffs = gam[OBJ0_SKIFFS_OFFSET]!;
   }
   copy("hmsCapeToggle");
+  // PUERTA #D1: sólo se LEE con la puerta abierta. Con la puerta cerrada, una semilla ya
+  // migrada (que sí lleva el campo) es inerte y el port re-deriva por horario como hoy.
+  //
+  // 🔴 Y el `?? null` NO es cosmética — cierra un agujero de ESTADO VIVO. Los dos llamadores
+  // cargan con `Object.assign(game.state, loaded)` (main.ts:3516 y :582), que copia
+  // PROPIEDADES PROPIAS: si `loaded` no trae `npcWalk`, el `npcWalk` de la partida VIVA
+  // sobrevive al assign, y `enterMap(…, restore=true)` lo restauraría creyéndolo del save.
+  // Cargar un save SIN banda estando en el mismo pueblo resucitaría los NPC de la sesión
+  // anterior — justo lo contrario del gate. Escribir `null` hace la ausencia EXPLÍCITA y
+  // propagable. Es la clase [[el-cargador-de-mapa-reemplaza-position-la-referencia-previa-queda-muerta]]
+  // vista desde el otro lado: aquí el peligro no es reemplazar, es NO reemplazar.
+  if (cargaFielActiva()) state.npcWalk = gs.npcWalk ?? null;
   // Capa de trama (#238): sidecar autoritativo (saves del port, viejos y nuevos); si no la
   // trae (un SAVED.GAM del DOS), se lee de sus bytes nativos.
   if (gs.shadowlordLocs !== undefined) {

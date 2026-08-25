@@ -248,6 +248,11 @@ FICHEROS=(
   # ellos aparecen 4 ficheros mas de game/src con dialogo EA, hoy declarados CON PRESUPUESTO
   # (el aserto compara con `==`: enrojece si crecen y tambien si encogen).
   re/tools/test_prosa_ea_en_fuente.py
+  # Testigo del gate `fresh` de town_load_map (tren #161, carril npcs-save-sintetico): 12 casos,
+  # 0,3 s. Lo registra el LEAD al aterrizar porque `test_puerta` enrojeció nombrándolo — la
+  # guarda de #55 haciendo exactamente su trabajo: un test que no está ni aquí ni declarado
+  # fuera no lo ejecuta nadie, y su color no lo mira nadie.
+  re/tools/test_npc_fresh_gate.py
   # Guarda del GENESIS PUBLICO (0,2 s, sin red, sin material EA: reusa las 3 agujas de
   # agujas_tlk.py). Vigila los tres defectos MEDIDOS el 25-08 sobre el destino real:
   # (1) la whitelist no se actualizo tras #376 y copiaba 98 route JSON (15,5 MB de prosa
@@ -362,6 +367,10 @@ FICHEROS=(
   # era el SEGMENTO de una llamada far. Su mitad negativa es la que lo hace util: exige
   # que el predicado ingenuo, el `\b` pelado y EL ANTERIOR AL ARREGLO fallen.
   re/tools/test_call_cero.py
+  # (El carril `prosa-publicada-630` registro este mismo testigo por su cuenta, avisando de que
+  #  si su autor lo registraba tambien habria que quitar una de las dos lineas porque «duplicarla
+  #  no da conflicto y falsea el cardinal». Asi fue: el lead lo habia registrado arriba en el tren
+  #  #161. Se retira ESTA, se conserva aquella, y queda escrito que el aviso acerto.)
   # #30 — testigo propio de verify_show, el anotador que consumen seis sitios. Entra en la
   # puerta (0,2 s) y NO en FUERA-DE-PUERTA: degrada solo si falta el material de EA.
   re/tools/test_verify_show.py
@@ -392,6 +401,16 @@ FICHEROS=(
   # La guarda default-deny de la propia puerta (#55): si un test_*.py no esta ni
   # aqui ni en FUERA-DE-PUERTA.txt, se pone rojo nombrandolo.
   re/tools/test_puerta.py
+  # El testigo de la PUERTA PYTEST COMPLETA (rojos-invisibles, 25-08) — la MITAD QUE
+  # FALTABA de la de arriba. La de #55 vigila la EXISTENCIA («¿alguien decidió sobre este
+  # fichero?»); ésta vigila el COLOR («¿y pasa?»), que es lo que dejó OCHO rojos invisibles
+  # hasta diecinueve dias. Entra en la puerta por el mismo motivo que test_puerta_vitest.py: los
+  # cuatro caminos del predicado fallan EN SILENCIO —si no hiciera nada, la corrida saldría
+  # verde igual— y una puerta sin testigo es decoración. 13 tests, ~4 s (dos de ellos
+  # invocan pytest en subproceso). Lleva el MUTANTE del encargo sembrado dentro: crea un
+  # test_*.py sin registrar en re/tools y exige que test_puerta.py se ponga rojo
+  # NOMBRÁNDOLO, con su control positivo (retirado el intruso, vuelve a verde).
+  re/tools/test_puerta_pytest.py
   # Predicado de `censo_filas_represadas.py`, la guarda del REPARTO (0,06 s, sin git
   # ni disco: casos sinteticos). ENTRA AQUI y no el censo EN VIVO, a proposito: el
   # represamiento es el estado NORMAL de una flota sana —mientras un compañero tenga
@@ -1020,6 +1039,48 @@ if [ "$ROJOS" -gt 0 ]; then
 else
   echo "BATERIA: cardinal OK ($EJECUTADO/$ESPERADO ejecutados, $VERDES verdes, 0 rojos)."
 fi
+
+# ════ PUERTA DE LA POBLACIÓN PYTEST EXCLUIDA (rojos-invisibles, 25-08) ═══════════════════
+# 🔴 EL AGUJERO, MEDIDO ANTES DE TAPARLO. Todo lo de arriba corre `FICHEROS`, que es una
+# LISTA A MANO: 82 ficheros de los 118 que hay en `re/tools`. Los otros 36 están declarados
+# en `FUERA-DE-PUERTA.txt` —el default-deny de #55 funciona: cero huérfanos— pero DECLARADOS
+# NO ES MEDIDOS: el manifiesto dice por qué no entran, no si pasan. Censados uno a uno el
+# 25-08, OCHO tests estaban en ROJO por TRES causas —de hace 19, 15 y 6 dias—, y la ultima era
+# una regresión de producto de seis días antes (#352 cambió el centinela de la moongate y
+# dejó atrás los escenarios de paridad; su autor midió la suite entera y no pudo verlo).
+#
+# ★ ES EL MISMO AGUJERO QUE #221 TAPÓ EN VITEST y con la misma forma, para que los dos
+#   criterios no puedan divergir: población + default-deny sobre rojos + TRINQUETE (una
+#   exención que se pone verde BLOQUEA hasta que se retire ⇒ la lista sólo puede encoger).
+#
+# COSTE: 99 s medidos para 32 ficheros / 546 tests en UNA invocación. La razón de #55 para
+# excluirlos («la suite completa tarda ~17 min») es CIERTA del conjunto y engañosa del
+# reparto: los 36 suman 789 s y CUATRO se llevan 680 (test_oracle 277 —levanta DOSBox—,
+# test_mirror_headless 188, test_parity 113, test_rng_parity 102). Esos cuatro siguen fuera,
+# en `NO_CORREN`, cada uno con su cifra. Los 32 restantes entran. Los tres ficheros que
+# estaban rojos costaban 22 s entre los tres.
+# ⚠ Y una cifra de #55 estaba rancia por 3x: test_seed_gate se excluyó por «33,32 s» y hoy
+#   mide 12,2 — entra.
+echo "BATERIA: puerta de la poblacion pytest EXCLUIDA (32 ficheros, ~99 s)..."
+PYTEST_FUERA_XML=$(mktemp)
+PYTEST_FUERA_LISTA=$(python3 -c 'import sys; sys.path.insert(0, "re/tools")
+import puerta_pytest_completa as P
+print(" ".join("re/tools/" + f for f in P.poblacion()))')
+# Sin comillas A PROPÓSITO (aquí SÍ se quiere partir en palabras) y en bash, que es el
+# intérprete de este script — la trampa de zsh que documenta CLAUDE.md es de la shell del
+# HOST, no de aquí. El `|| true` no enmascara nada: el rc de pytest da 1 con cualquier rojo
+# y esta puerta TOLERA los declarados; quien decide es el predicado del .py, que además
+# distingue «rojo sin declarar» (1) de «exención caducada» (65) y «población perdida» (64).
+python3 -m pytest $PYTEST_FUERA_LISTA -q --no-header -p no:cacheprovider \
+  --junit-xml="$PYTEST_FUERA_XML" > /dev/null 2>&1 || true
+python3 re/tools/puerta_pytest_completa.py "$PYTEST_FUERA_XML"
+EXIT_PYTEST_FUERA=$?
+rm -f "$PYTEST_FUERA_XML"
+if [ "$EXIT_PYTEST_FUERA" -ne 0 ]; then
+  echo "BATERIA: PUERTA PYTEST EXCLUIDA en ROJO (exit $EXIT_PYTEST_FUERA)." >&2
+  exit "$EXIT_PYTEST_FUERA"
+fi
+FASE="pytest-fuera-ok"
 
 # ════ GUARDA DE POBLACIÓN DE LAS LÍNEAS VITEST (#258, 14-08) ════════════════════════════
 # 🔴 EL AGUJERO, MEDIDO ANTES DE TAPARLO: el CARDINAL de arriba es SÓLO de pytest. De las

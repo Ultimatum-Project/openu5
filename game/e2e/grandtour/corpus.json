@@ -1,10 +1,10 @@
 {
-  "_doc": "F3-T1 corpus de contenido del Grand Tour. Hechos FALSABLES minados de walkthroughs/cluebook (docs/superpowers/specs/2026-07-11-walkthrough-corpus.md §4), NO autoridad de reglas (el asm manda) sino de CONTENIDO: dónde está cada objeto, qué NPC enseña qué Word, qué se teclea, qué texto sale. Cada hecho declara `checks[]` estáticos que `verify-corpus.mjs` cruza contra los assets extraídos; los `verify:[\"e2e\"]` los prueba el capítulo del tour que los juega. CAMPOS: `authority` ∈ {asm (re/notes/*, derivado byte-a-byte, máxima), cluebook, walkthrough}; `primary` = procedencia primaria exacta (fichero TLK + nº registro / DATA.OVL / stringPool / re-note + offset); `claim.deliverySequence` = teclas EXACTAS que el capítulo debe teclear para disparar el hecho jugando; `claim.deliveryLine`/`useMessage` = texto byte-exacto esperado. Reconciliación de nombres: `teacher` = grafía EXTRAÍDA del juego; `teacherWalkthrough` = grafía del walkthrough cuando difiere. PREDICADOS de checks: ver cabecera de verify-corpus.mjs (dataArray*, dungeon/locationExists, npcTeachesWord/AnswerContains/HasKeyword, stringPoolContains).",
+  "_doc": "F3-T1 corpus de contenido del Grand Tour. Hechos FALSABLES minados de walkthroughs/cluebook (docs/superpowers/specs/2026-07-11-walkthrough-corpus.md §4), NO autoridad de reglas (el asm manda) sino de CONTENIDO: dónde está cada objeto, qué NPC enseña qué Word, qué se teclea, qué texto sale. Cada hecho declara `checks[]` estáticos que `verify-corpus.mjs` cruza contra los assets extraídos; los `verify:[\"e2e\"]` los prueba el capítulo del tour que los juega. CAMPOS: `authority` ∈ {asm (re/notes/*, derivado byte-a-byte, máxima), cluebook, walkthrough}; `primary` = procedencia primaria exacta (fichero TLK + nº registro / DATA.OVL / stringPool / re-note + offset); `claim.deliverySequence` = teclas EXACTAS que el capítulo debe teclear para disparar el hecho jugando; `claim.deliveryLine`/`useMessage` = QUÉ texto debe salir, descrito en prosa nuestra. 🔴 NO llevan el literal de EA: ningún consumidor los lee (git grep: `deliveryLine` sólo aparece en este fichero; control positivo `npcAnswerContains`, que sí tiene lector en verify-corpus.mjs), así que los 8 pasajes verbatim que había aquí —145 palabras, la racha más larga de todo el árbol público con 42— eran documentación redundante con el `contains` que SÍ se ejecuta. La parte falsable vive en `checks[].npcAnswerContains` (fragmento corto, cruzado contra el TLK del propio jugador) y la procedencia exacta en `primary`; el texto íntegro está, para quien lo quiera, en su copia del juego. Los marcados `[literal EA no incluido]` son esos ocho. Reconciliación de nombres: `teacher` = grafía EXTRAÍDA del juego; `teacherWalkthrough` = grafía del walkthrough cuando difiere. PREDICADOS de checks: ver cabecera de verify-corpus.mjs (dataArray*, dungeon/locationExists, npcTeachesWord/AnswerContains/HasKeyword, stringPoolContains).",
   "facts": [
     {
       "id": "wop-deceit",
       "kind": "word-of-power",
-      "claim": { "dungeon": "Deceit", "word": "FALLAX", "teacher": "Malifora", "teacherWalkthrough": "Malfora", "town": "Moonglow", "deliveryKeyword": "word", "deliverySequence": ["word"], "deliveryLine": "I see the runes FALLAX inscribed upon the entrance of the dungeon Deceit!" },
+      "claim": { "dungeon": "Deceit", "word": "FALLAX", "teacher": "Malifora", "teacherWalkthrough": "Malfora", "town": "Moonglow", "deliveryKeyword": "word", "deliverySequence": ["word"], "deliveryLine": "[literal EA no incluido] TOWNE.TLK reg #2, respuesta a 'word': anuncia el Word FALLAX y nombra la mazmorra Deceit. Fragmento falsable en checks[].npcAnswerContains; el texto integro sale del TLK del propio jugador." },
       "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
       "primary": "TOWNE.TLK reg #2 (Malifora, Moonglow) — qa keyword 'word'; entrega libre (el pago de 15 oro es un label aparte y opcional)",
       "authority": "cluebook",
@@ -21,7 +21,7 @@
     {
       "id": "wop-despise",
       "kind": "word-of-power",
-      "claim": { "dungeon": "Despise", "word": "VILIS", "teacher": "Annon", "town": "Britain", "deliveryKeyword": "word", "deliverySequence": ["word", "yes"], "deliveryLine": "The Word is VILIS, and remember, it can be used to open the dungeon Despise!", "referral": "Tras entregar VILIS, Annon apunta a la hija de otro consejero, que trabaja de velera (sailmaker): 'Ask the child about her mother' — cadena hacia otra Word of Power." },
+      "claim": { "dungeon": "Despise", "word": "VILIS", "teacher": "Annon", "town": "Britain", "deliveryKeyword": "word", "deliverySequence": ["word", "yes"], "deliveryLine": "[literal EA no incluido] TOWNE.TLK reg #12, al responder 'yes' al Label 4: entrega el Word VILIS para abrir Despise. Fragmento falsable en checks[].npcAnswerContains.", "referral": "Tras entregar VILIS, Annon apunta a la hija de otro consejero, que trabaja de velera (sailmaker): 'Ask the child about her mother' — cadena hacia otra Word of Power." },
       "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
       "primary": "TOWNE.TLK reg #12 (Annon, Britain) — qa 'word'/'powe' encadena a Label 4 ('Dost thou wish to know it?'); la línea sale al responder 'yes'",
       "authority": "cluebook",
@@ -55,7 +55,7 @@
     {
       "id": "wop-wrong",
       "kind": "word-of-power",
-      "claim": { "dungeon": "Wrong", "word": "MALUM", "teacher": "Felespar", "teacherWalkthrough": "Felspar", "town": "Yew", "deliveryKeyword": "word", "deliverySequence": ["word", "yes", "yes", "dawn"], "deliveryLine": "Very well, the Word of Power for the dungeon Wrong is MALUM! Use it wisely!", "password": "dawn", "note": "Felespar es preso en la cárcel de Yew y exige la CONTRASEÑA de la Resistencia. Cadena: 'word'/'powe' → Label 2 ('inquiring about the Words of Power, yes?') → 'yes' → Label 3 ('art thou with the Resistance?') → 'yes' → Label 4 ('And, their password is?') → teclear 'dawn' → MALUM. Sin 'dawn' no entrega la palabra." },
+      "claim": { "dungeon": "Wrong", "word": "MALUM", "teacher": "Felespar", "teacherWalkthrough": "Felspar", "town": "Yew", "deliveryKeyword": "word", "deliverySequence": ["word", "yes", "yes", "dawn"], "deliveryLine": "[literal EA no incluido] TOWNE.TLK reg #22, cadena de Labels 2→3→4 con keyword terminal 'dawn': entrega el Word MALUM para Wrong. Fragmento falsable en checks[].npcAnswerContains.", "password": "dawn", "note": "Felespar es preso en la cárcel de Yew y exige la CONTRASEÑA de la Resistencia. Cadena: 'word'/'powe' → Label 2 ('inquiring about the Words of Power, yes?') → 'yes' → Label 3 ('art thou with the Resistance?') → 'yes' → Label 4 ('And, their password is?') → teclear 'dawn' → MALUM. Sin 'dawn' no entrega la palabra." },
       "sources": ["cluebook Paths of Destiny", "wiki.ultimacodex.com/wiki/Ultima_V_Walkthrough"],
       "primary": "TOWNE.TLK reg #22 (Felespar, Yew) — Labels 2→3→4; keyword terminal 'dawn' (contraseña de la Resistencia)",
       "authority": "cluebook",
@@ -265,7 +265,7 @@
     {
       "id": "npc-moonglow-donn-piatt",
       "kind": "npc-dialogue",
-      "claim": { "town": "Moonglow", "dialogNumber": 4, "npc": "Donn Piatt", "job": "Head Counsel de Moonglow", "joinable": false, "keywords": { "man|towe": "'The man in the tower is a seed of discontent and will bring thee ill fortune!'", "pub": "edificio SE", "herb": "edificio SW" }, "note": "Advierte de 'the man in the tower' (el mago de la torre, camino oscuro)." },
+      "claim": { "town": "Moonglow", "dialogNumber": 4, "npc": "Donn Piatt", "job": "Head Counsel de Moonglow", "joinable": false, "keywords": { "man|towe": "[literal EA no incluido] rumor contra el mago de la torre: sembrador de discordia y presagio de mala fortuna. Fragmento falsable en checks[].npcAnswerContains.", "pub": "edificio SE", "herb": "edificio SW" }, "note": "Advierte de 'the man in the tower' (el mago de la torre, camino oscuro)." },
       "sources": ["talk/towne.json"],
       "primary": "TOWNE.TLK reg #4 (Donn Piatt, Moonglow) — qa 'man'/'towe'",
       "authority": "tlk",
@@ -279,7 +279,7 @@
     {
       "id": "npc-jhelom-trian",
       "kind": "npc-dialogue",
-      "claim": { "town": "Jhelom", "dialogNumber": 14, "npc": "Trian", "job": "juglar (canta canciones de valor)", "joinable": false, "keywords": { "figh|thor": "remite a Thorne (frecuenta el pub, visita santuarios)", "dest|word|powe": "→ hint sobre el que conoce la Word of Power" }, "note": "CONFIRMA el hallazgo de Goeth: 'There is one in this towne who doth search for that which is not there. He knows the Word of Power. But, he has gone quite insane, so if he doth have trouble remembering, saying each word backwards oft is of some help!' — corrobora que Goeth habla al revés (cross wop-destard, AIPONI)." },
+      "claim": { "town": "Jhelom", "dialogNumber": 14, "npc": "Trian", "job": "juglar (canta canciones de valor)", "joinable": false, "keywords": { "figh|thor": "remite a Thorne (frecuenta el pub, visita santuarios)", "dest|word|powe": "→ hint sobre el que conoce la Word of Power" }, "note": "[literal EA no incluido] CONFIRMA el hallazgo de Goeth: Trian avisa de que en esta ciudad hay quien busca lo que no está y conoce un Word of Power, pero ha perdido la cordura — y sugiere leer cada palabra AL REVÉS si le falla la memoria. Corrobora que Goeth habla invertido (cross wop-destard, AIPONI). Fragmento falsable en checks[].npcAnswerContains." },
       "sources": ["talk/towne.json"],
       "primary": "TOWNE.TLK reg #14 (Trian, Jhelom) — Label 0 qa 'y' (hint 'saying each word backwards')",
       "authority": "tlk",
@@ -569,7 +569,7 @@
     {
       "id": "npc-newmagincia-kaiko",
       "kind": "npc-dialogue",
-      "claim": { "town": "New Magincia", "dialogNumber": 46, "npc": "Kaiko", "job": "cultiva los campos de New Magincia", "joinable": false, "keywords": { "town": "'New Magincia!'", "king|usur|blac": "Blackthorn el usurpador; se lleva media cosecha y encarcela a los que tienen el saber de los ancianos" }, "note": "CROSS: Kaiko es la mujer de New Magincia que le habló a Hassad del Avatar — Hassad (wop-hythloth, IGNAVUS) tiene el keyword 'kaik' que responde 'She is a fine woman. If she has told thee of me, she must have great faith in thee.' Kaiko → referral a Hassad." },
+      "claim": { "town": "New Magincia", "dialogNumber": 46, "npc": "Kaiko", "job": "cultiva los campos de New Magincia", "joinable": false, "keywords": { "town": "'New Magincia!'", "king|usur|blac": "Blackthorn el usurpador; se lleva media cosecha y encarcela a los que tienen el saber de los ancianos" }, "note": "[literal EA no incluido] CROSS: Kaiko es la mujer de New Magincia que le habló a Hassad del Avatar — Hassad (wop-hythloth, IGNAVUS) tiene el keyword 'kaik' y responde elogiándola y tomando su recomendación como aval del interlocutor. Kaiko → referral a Hassad." },
       "sources": ["talk/towne.json", "npcs.json"],
       "primary": "TOWNE.TLK reg #46 (Kaiko) — qa 'town'→'New Magincia!'; cross Hassad CASTLE.TLK #17 keyword 'kaik'; npcs.json loc 8",
       "authority": "tlk",
@@ -753,7 +753,7 @@
     {
       "id": "npc-castle-ambrose",
       "kind": "npc-dialogue",
-      "claim": { "location": "Cove (o castle-map; CASTLE.TLK)", "tlk": "CASTLE.TLK #33", "npc": "Ambrose", "joinable": false, "keywords": { "myst|weap|avat": "buscó las fabuladas Mystic weapons del Avatar", "sear|mine|hyth": "descendió por las minas de Hythloth; están en el Underworld, donde estaba el Great Abyss, con lava, al NORTE de la entrada subterránea de Hythloth" }, "note": "PAYOFF del rumor de Bullwier (npc-jhelom-bullwier). Ubicación de las Mystic arms. Clave: 'only the Mystic arms work near great evil. Only such evil could hold our lord!' → hacen falta para Doom." },
+      "claim": { "location": "Cove (o castle-map; CASTLE.TLK)", "tlk": "CASTLE.TLK #33", "npc": "Ambrose", "joinable": false, "keywords": { "myst|weap|avat": "buscó las fabuladas Mystic weapons del Avatar", "sear|mine|hyth": "descendió por las minas de Hythloth; están en el Underworld, donde estaba el Great Abyss, con lava, al NORTE de la entrada subterránea de Hythloth" }, "note": "[literal EA no incluido] PAYOFF del rumor de Bullwier (npc-jhelom-bullwier). Ubicación de las Mystic arms. Clave: sólo las armas místicas sirven cerca del gran mal, y sólo un mal así puede retener a Lord British → hacen falta para Doom. Fragmento falsable en checks[].npcAnswerContains." },
       "sources": ["talk/castle.json"],
       "primary": "CASTLE.TLK reg #33 (Ambrose) — qa 'myst'/'weap', 'sear'/'mine'/'hyth' (Underworld N de Hythloth)",
       "authority": "tlk",
@@ -852,7 +852,7 @@
     {
       "id": "npc-dwelling-sinvraal",
       "kind": "npc-dialogue",
-      "claim": { "location": "cabaña del gran desierto del este (DWELLING.TLK #11)", "tlk": "DWELLING.TLK #11", "npc": "Sin'Vraal", "joinable": false, "keywords": { "asta": "'Speak not that name... lest thou summon the Shadowlord of Hatred!' — sirvió a Astaroth", "summ|shad|hat": "MECÁNICA: 'they who yell their Names, oft die at the will of the foul wraiths!'", "shar": "revela la ubicación del Shard of Hatred en el Underworld (coordenada vía op Rune)" }, "note": "El gárgola del desierto al que Lord Michael (npc-keep-lord-michael) remite por el Lord of Hatred. Reformado por el 'Once and True King' (LB). Cross: Astaroth/Hate (sl-identities), Shard of Hatred (sl-ritual). AVISO de mecánica: gritar el Nombre de un Shadowlord puede MATAR miembros de la party." },
+      "claim": { "location": "cabaña del gran desierto del este (DWELLING.TLK #11)", "tlk": "DWELLING.TLK #11", "npc": "Sin'Vraal", "joinable": false, "keywords": { "asta": "'Speak not that name... lest thou summon the Shadowlord of Hatred!' — sirvió a Astaroth", "summ|shad|hat": "[literal EA no incluido] MECÁNICA: gritar el Nombre de un Shadowlord lo invoca, y quien lo hace suele morir a manos de esos espectros. Pronunciar el Nombre es el disparador.", "shar": "revela la ubicación del Shard of Hatred en el Underworld (coordenada vía op Rune)" }, "note": "El gárgola del desierto al que Lord Michael (npc-keep-lord-michael) remite por el Lord of Hatred. Reformado por el 'Once and True King' (LB). Cross: Astaroth/Hate (sl-identities), Shard of Hatred (sl-ritual). AVISO de mecánica: gritar el Nombre de un Shadowlord puede MATAR miembros de la party." },
       "sources": ["talk/dwelling.json"],
       "primary": "DWELLING.TLK reg #11 (Sin'Vraal) — job 'served Astaroth'; qa 'summ'/'shad'/'hat', 'shar' (Shard of Hatred)",
       "authority": "tlk",

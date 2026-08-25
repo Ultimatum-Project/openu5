@@ -21,9 +21,9 @@
  *                 TESTIGO: 'pride and arrogance'.
  *   - Yasuda(43)  ['shad'] → "The Shadowlords are Blackthorn's enforcers…". TESTIGO: 'Shadowlords'.
  *   - Tetsuo(44)  ['virt'] → "…forced upon thee, they lose that virtue." TESTIGO: 'lose that virtue'.
- *   - Fumiko(45)  ['virt'] → "None are more hopelessly enslaved than those who falsely believe they
- *                 are free!". TESTIGO: 'hopelessly enslaved' (el 'Devoid of freedom…' del brief es
- *                 el keyword 'free'/'choi', NO 'virt' — el runtime manda).
+ *   - Fumiko(45)  ['virt'] → paradoja de la libertad: los que se creen libres son los más
+ *                 esclavizados. TESTIGO: 'hopelessly enslaved' (el 'Devoid of freedom…' del brief es
+ *                 el keyword 'free'/'choi', NO 'virt' — el runtime manda). [literal EA no incluido]
  *   - Kaiko(46)   ['king'] → "Blackthorn, the usurper!" (cross-Hassad/endgame). TESTIGO: 'usurper'.
  *   - Tomoka(41)  ['comm'] → "Each of us profits from the labours of the group!" (campos comunales).
  *                 TESTIGO: 'labours of the group'.

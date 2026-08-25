@@ -145,9 +145,7 @@ Flujo derivado:
      - `«"An artifact of astral …» (82 B, sha1 18f9f70e — recortado; verifica contra tu copia)`
      - `«"From the world that …» (60 B, sha1 3a5bb5b9 — recortado; verifica contra tu copia)`
      - `«"Often did I return …» (95 B, sha1 77915b39 — recortado; verifica contra tu copia)`
-     - `"Older even than Mondain's evil are the forces which bind us here..."`
-     - `"But older still is the power of the Orb of the Moons!"`
-     - `«"FOLLOW!" cries Lord British, …» (120 B, sha1 0b2b63b4 — recortado; verifica contra tu copia)`  (→ GAP 4)
+     - `"«Older even than Mondain's …» (172 B, sha1 16e8e04f — recortado; verifica contra tu copia), …» (120 B, sha1 0b2b63b4 — recortado; verifica contra tu copia)`  (→ GAP 4)
   5. *(rama No, tras 2 negativas)* `\n"Well then, pull up a chair."\n\n"We shall be here a while."`  (→ GAP 3b)
   - Otros tramos: DS 0x84cc `\n\nHe says:\n\n`, DS 0x84da `"I see...`, DS 0x9c40 `\nEnjoy!"`.
 - **Plan:** el port CARGA ENDMSG.DAT (como carga otros .DAT) o embebe estas strings en el manifiesto

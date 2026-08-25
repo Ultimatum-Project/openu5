@@ -8,6 +8,41 @@
 # batería O en este fichero. Si no está en ninguno, el test se pone ROJO nombrándolo. Añadir
 # un test fuera de la puerta sigue siendo legítimo — pero a sabiendas.
 #
+# ════════════════════════════════════════════════════════════════════════════════════════
+# 🔴 25-08 · «FUERA DE LA PUERTA» YA NO SIGNIFICA «NO LO CORRE NADIE». LEE ESTO ANTES DE
+#     AÑADIR UNA LÍNEA AQUÍ.
+# ════════════════════════════════════════════════════════════════════════════════════════
+# Este fichero declaraba POR QUÉ un test no entra en la batería, y eso resultó ser media
+# declaración: decía por qué no entra, no si PASA. La razón de familia de abajo —«sin
+# adjudicar (#55): coste de suite»— se lee como «entraría si fuera barato», que implica que
+# pasaría. Censados los 36 uno a uno el 25-08, OCHO tests estaban en ROJO:
+#   · test_disasm ×3 desde el 06-08 (19 días) y test_disasm ×1 + test_globals_negdisp ×2
+#     desde el 10-08 (15 días);
+#   · test_shrines_parity[moongate-dug-up] — REGRESIÓN de producto de 44a31faa (#352, 19-08),
+#     cuyo autor midió la suite entera y no pudo verla porque este fichero no lo corre nadie;
+#   · test_measure_seed_provenance — el único legítimo, y ya declarado abajo (aunque su
+#     magnitud estaba rancia por dos órdenes: decía «6 claves», son 795+49).
+# Los siete primeros están ARREGLADOS. Un fichero que no corre no se distingue de uno que
+# pasa, y eso ya no puede volver a ocurrir en silencio:
+#
+# ⇒ DESDE HOY, 32 DE LOS 36 SÍ CORREN, en `puerta_pytest_completa.py` (cableada en la
+#   batería justo después del cardinal). Allí no bloquean por defecto: se les aplica el
+#   predicado de #221 —población + default-deny sobre ROJOS + trinquete que obliga a retirar
+#   la exención en cuanto el fichero se pone verde—. Coste medido: 99 s los 32 juntos.
+#   Los 4 que NO corren ni siquiera allí están en su `NO_CORREN` con su cifra: test_oracle
+#   (277 s, levanta DOSBox), test_mirror_headless (188 s), test_parity (113 s),
+#   test_rng_parity (102 s) — el 86 % del coste del conjunto vive en esos cuatro.
+#
+# ⇒ ESTAR AQUÍ SIGNIFICA HOY: «no entra en la puerta RÁPIDA (diagnóstico por subsistema)».
+#   Su COLOR lo vigila la otra puerta. Si además quieres que ni se ejecute, hay que decirlo
+#   en `NO_CORREN` CON UN MOTIVO DE RECURSO Y SU COSTE MEDIDO — no basta con esta lista.
+#   La coherencia entre las tres listas la carea `test_puerta_pytest.py`.
+#
+# ⚠ Y UNA CIFRA DE #55 ESTABA RANCIA POR 3x: test_seed_gate se excluyó por «33,32 s» (era el
+#   83 % del coste de los seis candidatos de #86); medido hoy son 12,2 s. Entra a la puerta
+#   nueva. Las cifras de coste de abajo son de julio y nadie las volvió a tomar: las de hoy,
+#   por fichero, están en `COSTE_MEDIDO` de puerta_pytest_completa.py.
+#
 # 🔴 SE INSERTA, NO SE REESCRIBE. Es un fichero COMPARTIDO: un script que lo regenere borra
 # los comentarios de los demás (ya pasó, 15 líneas). El control es el diff: cero borrados.
 #
@@ -43,8 +78,17 @@ test_seed_gate.py  # guarda #86 puesta (ULTIMA.EXE); candidato CARO, 33,32 s —
 
 # --- NO ES UN INVARIANTE (adjudicado en #55) ---------------------------------
 test_measure_seed_provenance.py  # réplica de una MEDICIÓN (#84), no invariante: su rojo
-#   dice que una cifra publicada caducó, no que el árbol esté roto. Su fallo vivo (la
-#   réplica produce 6 claves que el generador no) es el cabo de #84, no una regresión.
+#   dice que una cifra publicada caducó, no que el árbol esté roto. Su fallo vivo es el cabo
+#   de #84, no una regresión. Sigue siendo la adjudicación correcta, y hoy es la ÚNICA
+#   entrada de `EXENTOS` en puerta_pytest_completa.py (o sea: corre, y su rojo se tolera con
+#   nombre y razón, y el trinquete la retirará solo el día que alguien lo cierre).
+#   🔴 25-08 · LA MAGNITUD QUE DECÍA ESTA LÍNEA ESTABA RANCIA POR DOS ÓRDENES. Decía «la
+#   réplica produce 6 claves que el generador no»; re-medido: réplica 1.471 claves frente a
+#   725 del generador — 795 sólo-réplica, 49 sólo-generador, 676 comunes y 11 divergencias
+#   de nombre entre las comunes. No es un descuadre de seis claves: la réplica mide hoy una
+#   población del DOBLE de tamaño. Cifra puesta al día porque «6» invitaba a leerlo como un
+#   cabo de tarde, y no lo es. FICHA: reparar la réplica de #84 es pieza mayor y queda
+#   pendiente; lo que se arregla aquí es la declaración, que era falsa.
 
 # --- SIN ADJUDICAR INDIVIDUALMENTE (declarado, no explicado) ------------------
 # Los 31 restantes. Razón de FAMILIA medida: la suite completa de re/tools tarda

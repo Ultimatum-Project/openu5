@@ -141,3 +141,9 @@ site/legacy/mejoras-img/
 # que #380 saca del índice (REGLA 4: material EA jamás tracked). Se regenera en un
 # segundo, así que perderlo no cuesta nada y commitearlo lo cuesta todo.
 game/src/i18n/*.claro.json
+
+# careo-visual (#careo-ch01): el GUION de compases lleva los ecos de consola VERBATIM
+# del binario de EA (">North", "Borrowed!", "Item: Potion"), igual que routes/ y
+# routes-ad/ desde #376. La HERRAMIENTA se commitea; el guion se queda en disco.
+game/tools/careo-visual/compases-*.json
+game/tools/careo-visual/_out

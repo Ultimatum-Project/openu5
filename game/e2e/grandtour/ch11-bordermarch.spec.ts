@@ -10,8 +10,8 @@
  * NPCs (verificados contra KEEP.TLK REAL, description INCLUIDA — lección de ch10):
  *   - Sir Simon(2)  ['scep'] → "…it can disperse all magical barriers, even in the ethereal plane…
  *        held by the Shadowlords themselves, in their earthly fortress!" (Cetro). TESTIGO: 'magical barriers'.
- *   - Lady Tessa(3) ['amul'] → "I have seen the Amulet which Lord British once bore. It lies forgotten
- *        in the Underworld…" (Amuleto). TESTIGO: 'Amulet which Lord British once bore'.
+ *   - Lady Tessa(3) ['amul'] → dice haber visto el Amuleto y lo sitúa olvidado en el Underworld
+ *        (Amuleto). TESTIGO: 'Amulet which Lord British once bore'. [literal EA no incluido]
  *   - Dupre(30)  compañero, TALK-ONLY. ⚠ Su description CAE en un Label de saludo "That is thee, yes?"
  *        cuyo default BUCLEA → hay que responder 'y' (la lección de ch10 generalizada: un Label de
  *        saludo consume el 1er token igual que AskName). 'y' → "I hardly recognize thee…". ⚠ JAMÁS
