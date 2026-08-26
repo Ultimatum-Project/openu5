@@ -1390,6 +1390,22 @@ export class CoreViewImpl implements CoreView {
    * Orden del barrido = el del binario (x fuera, y dentro) y tope de DOS emisores
    * ([0x217e]/[0x2180] y [0x2182]/[0x2184]). Coordenadas de VENTANA (pueden caer
    * fuera de 0..10).
+   *
+   * 🔴 SE COMPARA EL TILE COMPLETO, NO SU BYTE BAJO (F8). Este predicado decía
+   * `(terrainAt(...) & 0xff) !== src` y esa máscara ALIASABA los dos espacios de tile
+   * del port (board-137-acta.md): la capa de objetos/vehículos guarda el banco alto
+   * `+0x100`, así que `0x11B Carpet2` (la alfombra que deja el (X)-it, game.ts
+   * `setMapOverride(… 0x1B + ACTOR_TILE_BANK)`) enmascaraba a `0x1B Lighthouse` y
+   * `0x12A SkiffDown` a `0x2A LighthouseLight` ⇒ una alfombra aparcada en el
+   * sobremundo, o un esquife atracado en un pueblo, PROYECTABAN HAZ DE FARO de noche.
+   * En el binario es imposible: el barrido del sobremundo es un `memchr` sobre el
+   * BÚFER DE TERRENO y la tabla de objetos no participa — `OUTSUBS.OVL.asm`
+   * `0267: mov ax,0x400` · `026b: mov ax,0x1b` · `026f: mov ax,0x6608` ·
+   * `0273: call 0x6172`; el de pueblo igual (`TOWN.OVL 0x04ca cmp byte [bx],0x2a`
+   * sobre el 32×32). Comparar el tile entero es la traducción fiel de «este BYTE en el
+   * PLANO DE TERRENO»: medido en este árbol, el plano estático del sobremundo no tiene
+   * ninguna celda ≥ 0x100 y sus 4 faros valen `0x1B` pelado (guarda en
+   * tests/f8-objeto-vs-vision-y-luz.test.ts §2/§3).
    */
   private beamEmitters(
     terrainAt: (col: number, row: number) => number,
@@ -1399,7 +1415,7 @@ export class CoreViewImpl implements CoreView {
     const out: (readonly [number, number])[] = [];
     for (let col = -BEAM_REACH; col < VIEW_WINDOW + BEAM_REACH && out.length < 2; col++) {
       for (let row = -BEAM_REACH; row < VIEW_WINDOW + BEAM_REACH; row++) {
-        if ((terrainAt(col, row) & 0xff) !== src) continue;
+        if (terrainAt(col, row) !== src) continue; // tile COMPLETO: el banco alto NO es terreno
         out.push([col, row] as const);
         if (out.length >= 2) break;
       }

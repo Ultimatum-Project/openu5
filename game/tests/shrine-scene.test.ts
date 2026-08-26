@@ -37,6 +37,8 @@ import {
 } from "../src/core/world/shrine-scene.js";
 import { CoreViewImpl } from "../src/skin/coreview.js";
 import { VIEW_WINDOW } from "../src/skin/api.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 
 const ASSETS = resolve(dirname(fileURLToPath(import.meta.url)), "../assets");
 /** `shrine-scene.json` del extractor (MISCMAPS.DAT[176:352] y [352:528]). */
@@ -174,7 +176,8 @@ describe("#277 · guion derivado (CAST2 0x0e76)", () => {
   });
 });
 
-describe("#277 · (E)nter en un santuario monta la escena y la pinta en el viewport", () => {
+describeConAssets([DS_STRINGS], "#277 · (E)nter en un santuario monta la escena y la pinta en el viewport", () => {
+  conDsStrings();
   it("el viewport pinta el MAPA del santuario y el Avatar acaba ARRODILLADO ante el altar", () => {
     const game = makeGame();
     const view = new CoreViewImpl(game);
@@ -308,7 +311,8 @@ describe("#275 · la entrada VACÍA sale del rito EN SILENCIO (CAST2 0x09cc / 0x
   });
 });
 
-describe("#277 · hueco DECLARADO, no portado", () => {
+describeConAssets([DS_STRINGS], "#277 · hueco DECLARADO, no portado", () => {
+  conDsStrings();
   it("los 16 minutos que el original cobra por el rito están derivados pero NO cableados", () => {
     // CAST2 0x10ed `push 0x10; call advance_clock`. NO se aplica en el port: `advanceClock`
     // consume RNG con reintento sin tope en el cambio de día (#101), así que cablearlo mueve

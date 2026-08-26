@@ -46,12 +46,28 @@ export const MOONGATE_STAGE_MS = 32;
  * existe un segundo bucle de llegada: el cierre deja `g_moongate_anim`=0 y al
  * re-dibujar el DESTINO es el compositor de ambiente (`kernel_moongate_render`
  * 0x475a, `anim++` de noche @0x4775) quien SUBE las puertas 0→16 — la piel lo
- * calca reseteando su etapa de ambiente a 0 al terminar el cruce. Cadencia del
- * cierre: testigo `moongate-animacion-viaje.mov` (cierres f040-f045 y f069-f078
- * ≈ 15 etapas en 0.6-0.9 s) → ~60 ms/etapa. Clase C (la duración del `delay(2)`
- * no es derivable byte-exacta), recalibrable sin tocar la mecánica.
+ * calca reseteando su etapa de ambiente a 0 al terminar el cruce.
+ *
+ * 🔴 **DERIVADA, ya NO Clase C** (#166/G1, carril cadencia-asm). Esto decía
+ * «Clase C, la duración del `delay(2)` no es derivable byte-exacta» y valía
+ * ~60 ms/etapa por el testigo `moongate-animacion-viaje.mov`. Las dos cosas eran
+ * falsas: `delay(n)` 0x20fa **no es un bucle de CPU**, engancha INT 1Ch
+ * (`int 21h/25h` @0x2133), su handler 0x2159 hace `inc word [0x5448]` y
+ * 0x2138-0x213f espera a que el contador llegue a n. INT 1Ch es el tick del PIT
+ * y **el binario no reprograma el canal 0 en ninguno de los 28 ficheros** (cero
+ * `out 0x43`/`out 0x40`; los únicos puertos escritos son 0x42 y 0x61, del
+ * altavoz) ⇒ tick del BIOS = 1193182/65536 = 18.2065 Hz = **54.9254 ms**, y el
+ * `delay(2)` son **2 ticks = 109.85 ms**, en milisegundos y sin depender de la
+ * máquina. Cierre completo = 15 × 2 ticks = **30 ticks = 1647.8 ms**.
+ *
+ * El testigo viejo era el que estaba mal: medía 15 etapas en 0.6-0.9 s = 0.55×.
+ * Careado contra TRES cruces independientes del corpus Lord Fenton, medidos por
+ * la altura del cuerpo de puerta (EGA 9) en la celda (5,5) a 30 fps —
+ * ep21 115.967→117.600 = 1633 ms · ep12 820.033→821.700 = 1667 ms ·
+ * ep27 1406.000→1407.633 = 1633 ms, media 1644.3 ms— la derivación cae a
+ * **−0.21 %**, dentro de la cuantización de un fotograma (±33 ms).
  */
-export const MOONGATE_TRANSIT_STAGE_MS = 60;
+export const MOONGATE_TRANSIT_STAGE_MS = 2 * (1000 / 18.2065);
 
 /**
  * ms que la puerta se sostiene LLENA sobre el jugador en el ORIGEN antes de que

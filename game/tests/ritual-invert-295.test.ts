@@ -36,6 +36,8 @@ import { VIEWPORT_INTERIOR, invertRect, fillViewportInterior } from "../src/skin
 import { wellDoneInvertWindowMs, quakeDurationMs, renderCue } from "../src/skin/fiel/speaker.js";
 import { RitualInvert } from "../src/ui/ritual-invert.js";
 import { planTurnPhase } from "../src/skin/turn-phase.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 
 // ── Fixture: un santuario con la lección del Codex YA aprendida y la quest ACTIVA, que es
 //    la única combinación que lleva a la rama WELL DONE (`shrineMode` → "quest-complete").
@@ -94,7 +96,8 @@ function ritoDeHonestidad(learned: boolean, quest: boolean): GameEvent[] {
 
 const idx = (evs: GameEvent[], p: (e: GameEvent) => boolean): number => evs.findIndex(p);
 
-describe("#295 · el core EMITE la inversión donde la emite el binario", () => {
+describeConAssets([DS_STRINGS], "#295 · el core EMITE la inversión donde la emite el binario", () => {
+  conDsStrings();
   it("CONTROL POSITIVO: el fixture llega de verdad a la rama WELL DONE", () => {
     const evs = ritoDeHonestidad(true, true);
     expect(

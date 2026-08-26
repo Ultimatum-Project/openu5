@@ -25,6 +25,8 @@ import type { CharacterState, ExtractedInitialState, GameState } from "../src/co
 import { Game, type GameData, type GameEvent } from "../src/core/game.js";
 import type { WorldData } from "../src/core/world/map.js";
 import { SHRINE_TILE, type ShrineData } from "../src/core/world/shrines.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 import {
   renderCue,
   ORDAINED_INC,
@@ -86,7 +88,8 @@ function visita(over: Partial<GameState>, virtue = "Honesty", mantras = ["Ahm", 
   return game.submitShrineVisit(virtue, mantras);
 }
 
-describe("#364-b · la melodía suena en ORDAINED, en el sitio del binario", () => {
+describeConAssets([DS_STRINGS], "#364-b · la melodía suena en ORDAINED, en el sitio del binario", () => {
+  conDsStrings();
   it("el cue va PEGADO detrás del «Return again» (0x0ac3 print → 0x0adb bucle)", () => {
     const out = visita({ shrineVisitedBitmap: 0, shrineQuestBitmap: 0 });
     const iMsg = out.findIndex(

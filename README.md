@@ -16,7 +16,7 @@ original engine's rules, re-derived from the binary itself**:
   next to the code that implements it** (file + offset, e.g. `COMBAT:0x194A`).
 - **Coverage ledger: 202,800 / 202,800 bytes** of executable + data justified one
   by one (code / data / inert, each with a note).
-- **239 automated parity tests** run identical scenarios in the re-derived model
+- **276 automated parity tests** run identical scenarios in the re-derived model
   and compare outputs — including a full gypsy-to-endgame critical path threaded
   through a single RNG seed.
 - **Runtime verification against the real binary**: a custom harness boots the
@@ -48,7 +48,9 @@ Keys: arrows to move · **T**alk **O**pen **L**ook **G**et **K**limb **S**earch 
 **M**ix **C**ast **R**eady **U**se · **z** stats · **Tab** map · **F5** save.
 Full list in [docs/controls.md].
 
-*(When the browser "bring your own files" demo ships, this section links to it.)*
+Or skip the local setup: the browser "bring your own files" demo at
+[openu5.org](https://openu5.org) asks for your game folder and extracts it
+client-side — nothing is uploaded.
 
 ## Status
 
@@ -57,9 +59,9 @@ Full list in [docs/controls.md].
 | Full game completable start-to-finish | ✅ |
 | Binary-exact rule migration (ledger 100%) | ✅ |
 | Unit + parity + E2E suites (`verify:all`) | ✅ |
-| Live game on the unified original RNG stream | 🔄 in progress |
-| "Grand Tour" — a purist E2E playthrough of ALL content with a 100% coverage manifest | ⏳ the final proof |
-| UI/graphics improvements (gameplay untouched, suite-locked) | ⏸ after 100% |
+| Live game on the unified original RNG stream | ✅ |
+| "Grand Tour" — a purist E2E playthrough of ALL content (112/112 dungeon rooms sealed, main line closed end-to-end, re-run byte-identically) | ✅ |
+| 1988-faithful skin + optional shader skin + mobile touch deck (gameplay untouched, suite-locked) | ✅ |
 
 ## Methodology
 

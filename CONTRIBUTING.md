@@ -31,10 +31,11 @@ npm install && npm run extract && npm run dev
 ```
 
 ### Test tiers
-- **Tier 1 (no game data needed):** `npm run test:pure` — typecheck, lint and
-  data-independent unit tests. This is what public CI runs.
+- **Tier 1 (no game data needed):** `npm run test:pure -w game` —
+  data-independent unit tests (plus `npx tsc --noEmit` in `game/` for the
+  typecheck). This is what public CI runs, on Node 22.
 - **Tier 2 (needs your game data):** `npm test` (unit against extracted assets),
-  `npm run e2e` (Playwright), `npm run re:parity:all` (parity harness).
+  `npm run e2e` (Playwright), `python3 re/tools/parity_all.py` (parity harness).
 - **Tier 3 (needs dosbox-x):** live oracle runs against the real binary.
   Documented in docs/methodology.md; not required for most PRs.
 

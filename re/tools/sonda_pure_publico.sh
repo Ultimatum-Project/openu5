@@ -36,6 +36,35 @@
 # ══════════════════════════════════════════════════════════════════════════════════════════
 set -uo pipefail
 
+# 🔴 NODE@22 SE ARMA AQUÍ, igual que en `bateria_aterrizaje.sh:56-60` y por la MISMA causa.
+# Node 26 trae un `localStorage` propio que ENSOMBRECE el de jsdom ⇒ `window.localStorage`
+# undefined ⇒ `analitica-embudo` da 23 rojos DETERMINISTAS. El CI público pina `node-version: 22`
+# (`docs/publicacion/ci-nivel1.yml`), así que ese rojo NO existe donde esta sonda dice medir.
+#
+# 🔴 POR QUÉ ESTO ES GRAVE Y NO COSMÉTICO (medido el 26-08 por el carril `destello-conjuro`,
+# y ya le había pasado a TRES carriles la noche del 17-08): la sonda, corrida desde una shell
+# con otro node, daba rojo y su propio texto de diagnóstico mandaba a **excluir el fichero del
+# CI público** («la causa habitual es un test NUEVO que lee dato del juego»). Siguiendo esa
+# pista al pie de la letra, un carril **retira del CI público un test SANO** para callar un
+# artefacto de versión de intérprete: cobertura real perdida para siempre, y por escrito.
+# Dentro de la batería nunca se vio porque la batería sí pinaba el intérprete — de ahí que la
+# misma sonda diera VERDE en la batería y ROJA a mano, sobre el mismo árbol.
+# ★★ Un mensaje de diagnóstico que nombra una causa que no ha comprobado no es una ayuda: es
+# una instrucción equivocada con autoridad. Segunda de la misma familia en 24 h (la otra: la
+# guarda del censo de suites afirmaba «Playwright cambió su salida» cuando era CARGA).
+if [ -d /opt/homebrew/opt/node@22/bin ]; then
+  export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
+fi
+_NODE_V="$(node --version 2>/dev/null || echo '?')"
+case "$_NODE_V" in
+  v22.*) : ;;
+  *)
+    echo "SONDA AVISO: corriendo con node $_NODE_V, pero el CI público pina node 22." >&2
+    echo "             Un rojo de \`localStorage\`/jsdom aquí es de la VERSIÓN, no del árbol:" >&2
+    echo "             NO lo arregles excluyendo el fichero del subconjunto puro." >&2
+    ;;
+esac
+
 RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RAIZ="$(cd "$RAIZ/.." && pwd)"
 JOBS="${U5_SONDA_JOBS:-tsc,e2e,pure,build}"
@@ -123,7 +152,11 @@ quiere build && corre "build"             npx vite build
 if [ "${#FALLOS[@]}" -ne 0 ]; then
   echo "" >&2
   echo "SONDA: ${#FALLOS[@]} job(s) ROJOS en el árbol público: ${FALLOS[*]}" >&2
-  echo "  Si es \`test:pure\`, la causa habitual es un test NUEVO que lee dato del juego." >&2
+  echo "  🔴 ANTES DE TOCAR NADA, descarta el artefacto de INTÉRPRETE: si el rojo habla de" >&2
+  echo "     \`localStorage\`/jsdom, es node≠22 ensombreciendo el de jsdom, NO tu árbol." >&2
+  echo "     Estás en node $_NODE_V; el CI público pina 22. Excluir el fichero para callar eso" >&2
+  echo "     retira del CI público un test SANO — cobertura perdida para siempre." >&2
+  echo "  Descartado eso: si es \`test:pure\`, la causa habitual es un test NUEVO que lee dato del juego." >&2
   echo "  Las dos salidas, en este orden (game/vitest.pure.config.ts, MANTENIMIENTO):" >&2
   echo "    1) si el fichero es MAYORITARIAMENTE puro → acota el \`describe\` que lee dato" >&2
   echo "       con \`describeSiViaja\` (game/tests/assets-opcionales.ts) y NO lo excluyas;" >&2

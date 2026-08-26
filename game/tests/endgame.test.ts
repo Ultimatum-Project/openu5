@@ -19,6 +19,8 @@ import {
   spellOrdinal,
 } from "../src/core/quest/endgame.js";
 import { rescueLordBritish } from "../src/core/quest/lordbritish.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 
 function readJson<T>(url: string): T {
   const path = fileURLToPath(new URL(url, import.meta.url));
@@ -161,7 +163,8 @@ describe("questScroll — careo con el TESTIGO de vídeo (endgame-witness-202607
   });
 });
 
-describe("rescueLordBritish — fork de la caja (ENDGAME_main 0x08c2)", () => {
+describeConAssets([DS_STRINGS], "rescueLordBritish — fork de la caja (ENDGAME_main 0x08c2)", () => {
+  conDsStrings();
   const readyGame = (year: number) => {
     const g = gameAt(year, 4, 5);
     g.questFlags["in-doom"] = true;

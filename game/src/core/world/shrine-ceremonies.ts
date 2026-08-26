@@ -13,6 +13,7 @@ import type { GameState } from "../state.js";
 import type { GameEvent } from "../game.js";
 import { tf } from "../../i18n/index.js";
 import { sfxEvent } from "../sfx.js";
+import { dsRec } from "../data/ds-strings.js";
 import {
   shrineMode,
   shrineShowMantra,
@@ -38,47 +39,46 @@ import {
  * binario imprime `'"' + tabla_offsets[virtud] + '"\n\n'` (CAST2 0x0d81-0x0d98: char 0x22
  * → print_string 0x3670 del buffer 0xb21e+off → DS 0x95e6 `"\n\n`); la tabla es DS 0x4b6e
  * = DATA.OVL fileoff 0x4b7e (`0x0d8d mov ax,[bx+0x4b6e]`), relativa al buffer 0xb21e que
- * carga MISCMSG desde el offset de fichero 0x3ab. Byte-exactas del fichero (con sus `\n`
- * internos), con las comillas y el "\n\n" de cierre del kernel incluidos.
+ * carga MISCMSG desde el offset de fichero 0x3ab.
  * ⚠️ La tabla VECINA DS 0x4b5e (fileoff 0x4b6e) apunta a los records CORTOS 12-19, que
  * pertenecen SOLO al mandato ORDAINED (ver ORDAINED_PAGES) — usarlos aquí era el
  * off-by-0x10 `codex-lesson-swap` (texto equivocado en pantalla, auditoría 47896cfc).
+ *
+ * Índice del PRIMER record de las ocho máximas en MISCMSG.DAT. Son CONTIGUOS —
+ * rec20..rec27, verificados contra los offsets de byte que cita la tabla CAST2 DS 0x4b6e
+ * (0x04ab, 0x04f9, 0x0534, 0x057f, 0x05d6, 0x062a, 0x066b, 0x06bb) — así que la virtud
+ * `v` recita `CODEX_FIRST_REC + v`.
+ *
+ * 🔴 EL TEXTO YA NO ESTÁ AQUÍ: las ocho eran prosa de EA transcrita (la de Humildad, 17
+ * palabras, entraba en el presupuesto de `re/notes/acta-630-prosa-publicada.md`). Hoy
+ * llegan del MISCMSG.DAT del propio usuario vía `ds-strings.json`. El original imprime
+ * la comilla y el doble salto aparte del record, y por eso se COMPONEN aquí.
  */
-const CODEX_PAGES: readonly string[] = [
-  '"A dishonest life brings\nunto thee temporary gain, but forsakes\nthe permanent."\n\n', // 0 Honestidad — MISCMSG 0x04ab (0x4b6e[0]=0x100)
-  '"Only a\ndetested life\nowes its\npleasures to another\'s pain."\n\n', // 1 Compasión — 0x04f9
-  '"Those who fear to try, know\nnot their\nlimits and thus know not themselves."\n\n', // 2 Valor — 0x0534
-  '"Those who inflict injustice upon others, cannot expect fair treatment unto themselves."\n\n', // 3 Justicia — 0x057f
-  '"None live alone, save\nthey who will\nnot share their fortune with those around them."\n\n', // 4 Sacrificio — 0x05d6
-  '"It is the guilt, not the guillotine,\nthat\nconstitutes the shame."\n\n', // 5 Honor — 0x062a
-  '"To forsake one\'s inner being is to abandon thy hopes for thyself and thy world."\n\n', // 6 Espiritualidad — 0x066b
-  '"Pride is a vice, which Pride itself inclines one to find in others, and overlook in oneself."\n\n', // 7 Humildad — 0x06bb
-];
+const CODEX_FIRST_REC = 20;
+
+/** Máxima del Códice de la virtud `v` (0..7), entrecomillada como la imprime el original. */
+function codexPage(v: number): string {
+  return `"${dsRec("MISCMSG.DAT", CODEX_FIRST_REC + v)}"\n\n`;
+}
 
 /**
  * Frases del mandato ORDAINED (records CORTOS 12-19 de MISCMSG.DAT, tabla CAST2 DS 0x4b5e
- * = DATA.OVL fileoff 0x4b6e; `0x0aaa mov ax,[bx+0x4b5e]`): el ordained las compone como
+ * = DATA.OVL fileoff 0x4b6e; `0x0aaa mov ax,[bx+0x4b5e]`). 🔴 El TEXTO ya no está aquí:
+ * llega del MISCMSG.DAT del propio usuario vía `ds-strings.json` (FICHA β). El ordained
+ * las compone como
  * `…learn <frase>` + DS 0x9598 (`"\n`), SIN envoltorio de comillas propio (la comilla de
  * cierre viaja en 0x9598 y la de apertura en el record 0x7b9). Derivado T-003 (yt-careo
  * §T-003). Tabla PROPIA, separada de CODEX_PAGES (que son las lecciones largas 20-27).
  */
-const ORDAINED_PAGES: readonly string[] = [
-  "the failing of Dishonesty!", // 0 Honestidad — MISCMSG 0x03ab (0x4b5e[0]=0x00)
-  "of the heart of a cruel soul!", // 1 Compasión — 0x03c6
-  "the failing of a life without Valour!", // 2 Valor — 0x03e4
-  "the weakness of the Unjust!", // 3 Justicia — 0x040a
-  "the failing of unwilling Sacrifice!", // 4 Sacrificio — 0x0426
-  "the darkness of Dishonor!", // 5 Honor — 0x044a
-  "the neglect of one's Spirit!", // 6 Espiritualidad — 0x0464
-  "the weakness of a life consumed by Pride!", // 7 Humildad — 0x0481
-];
+/** Índice del PRIMER record ORDAINED en MISCMSG.DAT (recs 12-19, contiguos). */
+const ORDAINED_FIRST_REC = 12;
 
 /**
  * Frase ORDAINED de la virtud `v`, CRUDA (inglés): se interpola como ARG de `tf()`, que ya
  * pasa cada arg-string por `t()` — la key de es.json es la frase pelada, sin envoltorio.
  */
 function ordainedPage(v: number): string {
-  return ORDAINED_PAGES[v] ?? "";
+  return dsRec("MISCMSG.DAT", ORDAINED_FIRST_REC + v);
 }
 
 /**
@@ -129,14 +129,19 @@ function keyWait(): GameEvent {
  * la primitiva de terremoto residente (kernel 0x3072); ver el bloque `if (r.ceremony)`.
  */
 const CEREMONY_WIND_GUSTS = 3;
-const CEREMONY_WIND = "A STRANGE WIND CAUSES THE PAGE TO TURN!\n\n"; // MISCMSG 0x0900 (0xb773)
+/**
+ * 🔴 EL VIENTO Y LAS CUATRO PÁGINAS DE LA PROFECÍA YA NO ESTÁN AQUÍ: son los records
+ * 40..44 de MISCMSG.DAT (0x0900/0x092a/0x097c/0x09b7/0x0a2b, buffers 0xb773..0xb89e), y
+ * los cinco salen HOY del fichero del propio usuario vía `ds-strings.json`. Estaban
+ * transcritos —las runas incluidas— y dos de ellos entraban en el residuo de prosa de EA
+ * que el árbol público servía (`re/notes/acta-630-prosa-publicada.md`).
+ * Se emiten TAL CUAL, sin componer: el record ya trae su `\n\n` final (verificado
+ * byte a byte por `ds-strings-fidelidad.test.ts`).
+ */
+const CEREMONY_WIND_REC = 40;
+const CEREMONY_PROPHECY_FIRST_REC = 41;
+const CEREMONY_PROPHECY_PAGE_COUNT = 4;
 const CEREMONY_READ = "Thou dost read:\n\n"; // DS 0x95ea → DATA.OVL 0x95fa
-const CEREMONY_PROPHECY_PAGES: readonly string[] = [
-  "BEYOND@SHAMES\nEGRESS@IN@[E\nCENTRE@OF@[E\nUNDERWORLD@[ERE IS@A@PLACE@OF\nDARKNESSo\n\n", // MISCMSG 0x092a (0xb79d)
-  "BEYOND@[IS\nDARKNESS@LIES\n[E@GATE@TO@[E\nCORE@OF@[E\nWORLDo\n\n", // MISCMSG 0x097c (0xb7ef)
-  "WHEN@[OU@ART\nR^DY@[OU@MU_\nCALL@FOR[\nVERAMOCOR@TO UNLOCK@[E@GATE\nAND@VENTURE@PA_\nE[ER^L@WARDS\nAND@_^LERS@OF\nSOULSo\n\n", // MISCMSG 0x09b7 (0xb82a)
-  "[AT@WHICH@[E\nWORLD@HA[@LO_\nAWAITS@[Y@COMI]o\n\n", // MISCMSG 0x0a2b (0xb89e)
-];
 
 // (sin `pendingShrine`: no hay prompt "Meditate?" que dejar pendiente. El campo que
 // aquí se describía —«meditación pendiente de respuesta Y/N», con su `kind`— fue
@@ -365,7 +370,7 @@ export function runShrineCeremony(
       if (exitTrap) events.push(exitTrap);
       return events;
     }
-    events.push({ kind: "message", text: CODEX_PAGES[r.virtue]! }); // 0x0d81-0x0d9c: putchar '"' + lección larga (tabla DS 0x4b6e = fileoff 0x4b7e, recs 20-27) + DS 0x95e6 `"\n\n`
+    events.push({ kind: "message", text: codexPage(r.virtue) }); // 0x0d81-0x0d9c: putchar '"' + lección larga (tabla DS 0x4b6e = fileoff 0x4b7e, recs 20-27) + DS 0x95e6 `"\n\n`
     events.push({ kind: "party-changed" });
     events.push(keyWait()); // 0x0d9f — CUARTA espera. El gate de la ceremonia (0x0da2) va DETRÁS: sin las 8 virtudes, ésta es la última
     if (r.ceremony) {
@@ -428,17 +433,21 @@ export function runShrineCeremony(
       // de la profecía impresas con la FUENTE RÚNICA (`rune: true` → set_font(1),
       // 0x0e02-0x0e5b). Ver CEREMONY_* arriba. Sin flag de estado (VERAMOCOR es la Palabra
       // que el jugador debe recordar; el bit visitado ya se fijó en shrineCodexLesson).
-      events.push({ kind: "message", text: CEREMONY_WIND }); // 0x0df1: MISCMSG 0x0900
+      events.push({ kind: "message", text: dsRec("MISCMSG.DAT", CEREMONY_WIND_REC) }); // 0x0df1: MISCMSG 0x0900
       // ★ #294 — las CINCO esperas restantes del handler. El «viento» y la línea de
       // apertura NO se separan entre sí (0x0df8 va entre ellas, y 0x0dfb-0x0e0d imprimen
       // «Thou dost read:» + la PRIMERA página seguidas): la espera cae ANTES de la línea
       // de apertura, y luego UNA POR PÁGINA rúnica.
       events.push(keyWait()); // 0x0df8
       events.push({ kind: "message", text: CEREMONY_READ }); // 0x0dfb: DS 0x95ea
-      for (let i = 0; i < CEREMONY_PROPHECY_PAGES.length; i++) {
+      for (let i = 0; i < CEREMONY_PROPHECY_PAGE_COUNT; i++) {
         // Cada página es set_font(1) → print_string → set_font(0) → TECLA
         // (0x0e02-0x0e16 · 0x0e19-0x0e2d · 0x0e30-0x0e44 · 0x0e47-0x0e5b).
-        events.push({ kind: "message", text: CEREMONY_PROPHECY_PAGES[i]!, rune: true });
+        events.push({
+          kind: "message",
+          text: dsRec("MISCMSG.DAT", CEREMONY_PROPHECY_FIRST_REC + i),
+          rune: true,
+        });
         events.push(keyWait()); // 0x0e16 / 0x0e2d / 0x0e44 / 0x0e5b
       }
     }

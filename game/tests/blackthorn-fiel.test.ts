@@ -31,6 +31,8 @@ import { Game, type GameData, type GameEvent } from "../src/core/game.js";
 import type { SmallMapLocation, WorldData } from "../src/core/world/map.js";
 import type { NpcManager, NpcRuntime } from "../src/core/npc/manager.js";
 import { LOC_BLACKTHORN, PALACE_GUARD_TYPE , TIME_SPELL_BADGE} from "../src/core/world/blackthorn.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 
 const BT = LOC_BLACKTHORN; // 0x12
 const TOWN = 6; // un pueblo cualquiera != 0x12 y != Minoc
@@ -139,7 +141,8 @@ const has = (evs: GameEvent[], kind: string): boolean => kinds(evs).includes(kin
 // ---------------------------------------------------------------------------
 // T-A — el reto de password EN LA INTERCEPCIÓN
 // ---------------------------------------------------------------------------
-describe("T-A — la intercepción ejecuta guard_demand entero (TALK 0x01e2)", () => {
+describeConAssets([DS_STRINGS], "T-A — la intercepción ejecuta guard_demand entero (TALK 0x01e2)", () => {
+  conDsStrings();
   it("SIN insignia, guardia adyacente → captura DIRECTA y SILENCIOSA (0x02a4 → jmp 0x216)", () => {
     const s = makeState({ timeSpell: undefined });
     const game = makeGame(s, managerWith(s, [{ slot: 8, dx: 1 }]));
@@ -184,7 +187,8 @@ describe("T-A — la intercepción ejecuta guard_demand entero (TALK 0x01e2)", (
 // ---------------------------------------------------------------------------
 // T-B — NO hay pase persistente
 // ---------------------------------------------------------------------------
-describe("T-B — el binario no escribe pase alguno: re-reta cada intercepción", () => {
+describeConAssets([DS_STRINGS], "T-B — el binario no escribe pase alguno: re-reta cada intercepción", () => {
+  conDsStrings();
   it("acertar el password NO concede pase: el turno siguiente RE-RETA", () => {
     const s = makeState({ timeSpell: TIME_SPELL_BADGE });
     const game = makeGame(s, managerWith(s, [{ slot: 8, dx: 1 }]));
@@ -304,7 +308,8 @@ describe("F2-T4 — demanda sin limitador, vida de un turno, desempate por índi
 // ---------------------------------------------------------------------------
 // §6 APROBADO — la vía (T)alk también arresta al fallar el password
 // ---------------------------------------------------------------------------
-describe("(T)alk fallado → arresto (result==2, ruling del lead 2026-07-30)", () => {
+describeConAssets([DS_STRINGS], "(T)alk fallado → arresto (result==2, ruling del lead 2026-07-30)", () => {
+  conDsStrings();
   it("fallar el password hablando con el guardia ESCALA a la escena de captura", () => {
     const s = makeState({ timeSpell: TIME_SPELL_BADGE });
     const game = makeGame(s, managerWith(s, [{ slot: 8, dx: 1 }]));

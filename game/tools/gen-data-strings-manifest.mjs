@@ -60,6 +60,23 @@ function provenanceFor(id) {
     // `i18n-corpus-sin-endgame` — ENDMSG.DAT era el único .DAT de texto sin superficie).
     "endgame.json": { source: ["ENDMSG.DAT"], parser: "extractor/src/parsers/endgame-msg.ts", cite: "extractor/src/parsers/endgame-msg.ts · re/notes/endgame-derivation.md" },
   };
+  // ds-strings.json (FICHA β, carril cadenas-segmento-d): los mensajes que el original
+  // carga al búfer DS 0xB21E. Son DOS superficies porque el motor no imprime el record
+  // pelado — lo ENVUELVE—, y la clave de es.json es la huella de lo que recibe `t()`:
+  //   · #records  — los 64 registros crudos, tal cual salen del fichero del usuario.
+  //   · #composed — las formas que el port EMITE (comillas, `{}?"`, `\n\n`). Su careo
+  //     contra los sitios reales del port vive en `tests/ds-strings-compuestas.test.ts`.
+  if (id === "ds-strings.json#records" || id === "ds-strings.json#composed") {
+    const compuesta = id.endsWith("#composed");
+    return {
+      source: ["KARMA.DAT", "MISCMSG.DAT", "ENDMSG.DAT"],
+      parser: "extractor/src/parsers/ds-strings.ts",
+      chain: compuesta
+        ? "KARMA/MISCMSG/ENDMSG.DAT → ds-strings.ts → registros NUL → composición del port (comilla + record + comilla, record + virtud + `?\"`, …)"
+        : "KARMA/MISCMSG/ENDMSG.DAT → ds-strings.ts → registros NUL en orden de fichero",
+      cite: "extractor/src/parsers/ds-strings.ts · re/notes/acta-ficha-beta-ds-strings.md",
+    };
+  }
   // demo-scene.json#titles (auditoría G8, inventario de mundo-cerrado): los títulos
   // de capítulo del attract-demo — único texto user-facing del fichero (el resto es
   // mapas/bytecode del guion, numérico).

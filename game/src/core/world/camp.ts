@@ -20,6 +20,7 @@ import { isFrigateSailsUp, repairHull, HULL_MAX } from "./transport.js";
 import { campApparition } from "../quest/lordbritish.js";
 import { sfxEvent } from "../sfx.js";
 import { tf } from "../../i18n/index.js";
+import { dsRec } from "../data/ds-strings.js";
 
 /** Tile LeftBed (0xAB) — (H)ole up sobre él en un pueblo → dormir en cama (CMDS 0x0552,
  * despacho 0x32b9 `cmp 0xab`). RightBed (0xAC) NO cuenta: el original sólo comprueba 0xAB. */
@@ -40,16 +41,17 @@ const LEFT_BED_TILE = 0xab;
 export const AMBUSH_TABLE = [0x29, 0x14, 0x15, 0x18, 0x16, 0x19, 0x24, 0x14] as const;
 
 /**
- * Record 5 de KARMA.DAT (offset de byte 0x29f=671, byte-exacto) — el que la nota de
+ * Índice del record 5 de KARMA.DAT (offset de byte 0x29f=671) — el que la nota de
  * death-resurrection declaró "inalcanzable" por la vía del refuge (su tabla DS 0x1a74
  * tiene basura en el 6º offset). SÍ es alcanzable por la APARICIÓN de acampada: con
  * karma≥80 (index≥4) OUTSUBS 0x0923 `jge 0x940` salta la tabla y carga el offset FIJO
  * 0x29f (0x094c `push 0x29f` → loader 0x256e). Entrecomillado como los demás (prefijo
  * DS 0x77e0 `\n"` + putchar '"' 0x095a). Ver re/notes/camp-apparition-scene.md §5.
+ *
+ * 🔴 El TEXTO ya no está aquí: llega del KARMA.DAT del propio usuario vía
+ * `ds-strings.json` (FICHA β, `core/data/ds-strings.ts`).
  */
-const CAMP_KARMA_MESSAGES: readonly string[] = [
-  "\"Well armed art thou to fight Death's embrace, O enlightened one! Thy destiny awaits thee!\"", // KARMA.DAT rec5 (camp, karma 80-99)
-];
+const CAMP_KARMA_REC = 5;
 
 /** Contexto estrecho de la acampada (lo arma Game.campCtx()). */
 export interface CampCtx {
@@ -65,8 +67,6 @@ export interface CampCtx {
   dungeonState: DungeonState | null;
   /** Tabla de tipos de enemigo (combatResources?.enemyDefs); undefined en mocks. */
   enemyDefs: EnemyDef[] | undefined;
-  /** Tabla de records 0-4 de KARMA.DAT (compartida con el refuge, vive en Game). */
-  refugeKarmaMessages: readonly string[];
   mapTileWithOverrides(x: number, y: number): number;
   /**
    * GUARDA 2 del paseo del vigía (`CS COMBAT.OVL:0x0000` vía CMDS 0x03a6): ¿está LIBRE la
@@ -654,8 +654,8 @@ export function campRepairShip(ctx: CampCtx): GameEvent[] {
 function campKarmaMessage(ctx: CampCtx): string {
   // `?? 0` defensivo: fixtures de test con estado parcial (karma real siempre existe).
   const idx = Math.floor(Math.max(0, ctx.state.karma ?? 0) / 20);
-  if (idx < 4) return ctx.refugeKarmaMessages[idx]!; // 0x0928: tabla 0x1a74 recs 0-3
-  return CAMP_KARMA_MESSAGES[0]!; // 0x0940: offset fijo 0x29f = rec5
+  // 0x0928: tabla 0x1a74 recs 0-3 · 0x0940: offset fijo 0x29f = rec5.
+  return `"${dsRec("KARMA.DAT", idx < 4 ? idx : CAMP_KARMA_REC)}"`;
 }
 
 /**

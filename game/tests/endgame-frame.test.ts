@@ -34,6 +34,8 @@ import type { WorldData } from "../src/core/world/map.js";
 import { DungeonState, CellType, type DungeonCell, type DungeonData } from "../src/core/dungeon/dungeon.js";
 import { CoreViewImpl } from "../src/skin/coreview.js";
 import { TILE_HIDDEN, VIEW_WINDOW } from "../src/skin/api.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 
 const TEXT: EndgameText = {
   dialogue: Array.from({ length: 11 }, (_, i) => (i === 0 ? '\nLord British says:\n\n"Well met,\n' : `rec${i}`)),
@@ -300,7 +302,8 @@ function absorbAndEnd(g: Game): ReturnType<Game["endCombat"]> {
   return g.endCombat();
 }
 
-describe("desvío del desenlace por absorción — emisión del guión con endgameText inyectado (#34/#179)", () => {
+describeConAssets([DS_STRINGS], "desvío del desenlace por absorción — emisión del guión con endgameText inyectado (#34/#179)", () => {
+  conDsStrings();
   it("con endgameText: el evento endgame lleva el GUIÓN completo con el nombre del avatar", () => {
     const g = doomGame({}, TEXT);
     const events = absorbAndEnd(g);

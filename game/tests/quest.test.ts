@@ -7,6 +7,8 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, it, expect } from "vitest";
 import { createNewGame, type ExtractedInitialState, type GameState } from "../src/core/state.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 import {
   wordForDungeon,
   wordSpokenFlag,
@@ -322,7 +324,8 @@ describe("levelForExp / campApparition (OUTSUBS 0x0658)", () => {
   });
 });
 
-describe("endgame / rescueLordBritish", () => {
+describeConAssets([DS_STRINGS], "endgame / rescueLordBritish", () => {
+  conDsStrings();
   function primed(): GameState {
     const state = freshState();
     // Shards + destrucción de los tres Shadowlords.

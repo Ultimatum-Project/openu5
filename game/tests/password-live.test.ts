@@ -46,6 +46,8 @@ import { Game, type GameData, type GameEvent } from "../src/core/game.js";
 import type { SmallMapLocation, WorldData } from "../src/core/world/map.js";
 import { NpcManager, type NpcSlot } from "../src/core/npc/manager.js";
 import { LOC_BLACKTHORN , TIME_SPELL_BADGE} from "../src/core/world/blackthorn.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 
 const BT = LOC_BLACKTHORN; // 0x12 = 18
 
@@ -168,7 +170,8 @@ const promptOf = (events: GameEvent[], kind: string): GameEvent | undefined =>
 const messages = (events: GameEvent[]): string[] =>
   events.filter((e) => e.kind === "message").map((e) => e.text ?? "");
 
-describe("F1.7-T3 — Blackthorn password (TALK 0x02a4, pieza C)", () => {
+describeConAssets([DS_STRINGS], "F1.7-T3 — Blackthorn password (TALK 0x02a4, pieza C)", () => {
+  conDsStrings();
   it("TALK a un guardia del Palacio abre el prompt del password con el reto verbatim del Badge", () => {
     const game = makeGuardGame();
     const events = game.tryTalkGuard("north") ?? [];

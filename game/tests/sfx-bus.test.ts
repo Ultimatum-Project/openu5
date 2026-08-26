@@ -24,6 +24,8 @@ import { Game as GameClass, type CombatResources, type GameData } from "../src/c
 import type { CharacterState, ExtractedInitialState, GameState } from "../src/core/state.js";
 import type { RandFn } from "../src/core/world/survival.js";
 import type { WorldData } from "../src/core/world/map.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, dsRecordDeAsset, DS_STRINGS } from "./ds-strings-fixture.js";
 
 describe("core/sfx — constructores y mapeadores puros", () => {
   it("sfxEvent produce un GameEvent de kind 'sfx' con el cue", () => {
@@ -161,7 +163,8 @@ function forceApparition(game: Game): void {
   (game as unknown as { rand: RandFn }).rand = () => 0;
 }
 
-describe("Game.camp — partitura de la aparición (§4.7a)", () => {
+describeConAssets([DS_STRINGS], "Game.camp — partitura de la aparición (§4.7a)", () => {
+  conDsStrings();
   it("emite materialización → arpegio → [campanilla+acorde] POR miembro vivo, en orden", () => {
     // RE-BASELINE (carril aparición, re/notes/camp-apparition-scene.md): el acorde
     // 0x08c1 está DENTRO del bucle por-miembro 0x07fb-0x08f9 (igual que la campanilla
@@ -225,9 +228,8 @@ describe("Game.camp — partitura de la aparición (§4.7a)", () => {
       .camp(1)
       .filter((e) => e.kind === "message")
       .map((e) => e.text!);
-    expect(texts).toContain(
-      "\"Well armed art thou to fight Death's embrace, O enlightened one! Thy destiny awaits thee!\"",
-    );
+    // rec5 leído del asset por camino independiente del port (ver refuge-live).
+    expect(texts).toContain(`"${dsRecordDeAsset("KARMA.DAT", 5)}"`);
   });
 });
 

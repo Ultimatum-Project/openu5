@@ -203,6 +203,16 @@ export default mergeConfig(
         // `assets/npcs.json` en el cuerpo (152). Assets del juego del usuario, que por
         // diseño no viajan. Es la familia de los 20 de `assets/data.json`, no la del espejo.
         "tests/gargolas-alfombra.test.ts",
+        // MISMA causa (26-08, tren F8, cazado por la SONDA DEL ÁRBOL PÚBLICO antes de
+        // aterrizar — que es exactamente para lo que existe). El fichero muere **AL
+        // COLECTAR**, no en un `it`: lee los tres assets en CARGA DE MÓDULO (líneas 72-74,
+        // `assets/npcs.json` · `assets/maps/smallmaps.json` · `assets/maps/overworld.json`).
+        // El ENOENT medido en el árbol público: `…/game/assets/npcs.json`.
+        // Va a `exclude` y NO a `describeSiViaja` porque **su SUJETO ES EL DATO**: los cuatro
+        // bloques (§1 censo del .NPC, §2 geometría de apliques, §3 los dos casos del haz)
+        // parten de esos mapas reales. Acotar describes dejaría el fichero sin nada que correr
+        // y con la falsa apariencia de estar cubierto en el CI público.
+        "tests/f8-objeto-vs-vision-y-luz.test.ts",
         // SÉPTIMA (02-08, carril `compra-fantasma`, cazado por la sonda de 17 s del propio
         // carril). ★★ Y con un CENSO que convierte esta familia en un PREDICADO en vez de una
         // enumeración: **`e2e/espejo-tour/runner.ts:27` importa `../grandtour/nav`, que arrastra

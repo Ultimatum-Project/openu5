@@ -10,7 +10,7 @@ Doc completa (arquitectura, formato de máscaras, fase 2):
 
 | fichero | qué hace |
 |---|---|
-| `pdlib.py` | núcleo: paleta EGA real (idx6 oliva), snap a paleta, registro por marco, normalización a 320×200 |
+| `pdlib.py` | núcleo: paleta EGA real (**idx6 = marrón `#AA5500`, EGA con brown-fix**), snap a paleta, registro por marco, normalización a 320×200 |
 | `normalize.py` | CLI: una captura → PNG lógico 320×200 |
 | `extract_ref.py` | ffmpeg: frames de un .mov/imagen DOSBox → normalizados |
 | `compare.py` + `regions.json` | comparador por máscaras de región + imagen de diff + veredicto |

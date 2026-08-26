@@ -6,7 +6,9 @@
  * rectángulo de la puerta MENGUA sobre el jugador). El bucle del original es
  * descendente: `kernel_moongate_enter` 0x48a8 → 0x4912-0x492b, blit parcial
  * `0x1112(anim,5,5)` + delay + `dec [0x5887]`, etapas 15→1. La piel lo calca con
- * `MOONGATE_TRANSIT_STAGE_MS` (Clase C, `skin/fiel/moongate.ts`).
+ * `MOONGATE_TRANSIT_STAGE_MS` (`skin/fiel/moongate.ts`) — que desde #166/G1 ya NO es
+ * Clase C: el `delay(2)` @0x4924 son 2 ticks de INT 1Ch = 109.85 ms, y el cierre
+ * entero 30 ticks = 1647.8 ms (ver `re/notes/cadencia-delay-pit.md`).
  *
  * Se conduce con la MISMA siembra que `e2e/moongate-fisica-352.spec.ts` (piedra 0
  * enterrada en (77,40), fases latcheadas, hora 22 = noche) para pisar la puerta con

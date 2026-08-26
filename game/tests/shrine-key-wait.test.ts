@@ -35,6 +35,8 @@ import type { WorldData } from "../src/core/world/map.js";
 import { SHRINE_TILE, CODEX_TILE, type ShrineData } from "../src/core/world/shrines.js";
 import type { ShrineSceneTiles } from "../src/core/world/shrine-scene.js";
 import { ShrineKeyPacer } from "../src/ui/shrine-key-pacer.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 
 const ASSETS = resolve(dirname(fileURLToPath(import.meta.url)), "../assets");
 const SCENES = JSON.parse(readFileSync(`${ASSETS}/shrine-scene.json`, "utf-8")) as {
@@ -105,7 +107,8 @@ const tokens = (evs: GameEvent[]): string[] =>
 
 const countWaits = (evs: GameEvent[]): number => evs.filter((e) => e.kind === "shrine-key-wait").length;
 
-describe("#294 · rama ORDAINED de shrine_visit: DOS esperas (0x0a9b · 0x0abc)", () => {
+describeConAssets([DS_STRINGS], "#294 · rama ORDAINED de shrine_visit: DOS esperas (0x0a9b · 0x0abc)", () => {
+  conDsStrings();
   it("las dos teclas parten el texto del altar en TRES bloques, en el orden del binario", () => {
     const game = makeGame(SHRINE_TILE);
     game.enter(); // arma el interrogatorio (pending.visit)
@@ -169,7 +172,8 @@ describe("#294 · las ramas del santuario que NO esperan (negativos derivados)",
   });
 });
 
-describe("#294 · handler del Códice 0x0d24: espera-luego-imprime", () => {
+describeConAssets([DS_STRINGS], "#294 · handler del Códice 0x0d24: espera-luego-imprime", () => {
+  conDsStrings();
   it("con quest y sin ceremonia final: CUATRO esperas en el orden exacto del binario", () => {
     const game = makeGame(CODEX_TILE);
     game.state.shrineQuestBitmap = 0x01; // quest de Honesty → r.virtue = 0
@@ -245,7 +249,8 @@ describe("#294 · handler del Códice 0x0d24: espera-luego-imprime", () => {
   });
 });
 
-describe("#294 · cada marcador es un OBJETO distinto (el corte por referencia de main.ts)", () => {
+describeConAssets([DS_STRINGS], "#294 · cada marcador es un OBJETO distinto (el corte por referencia de main.ts)", () => {
+  conDsStrings();
   it("las cuatro esperas del Códice no comparten instancia", () => {
     // `applyEvents` corta con `events.slice(events.indexOf(e) + 1)`, que es identidad por
     // REFERENCIA: con un marcador compartido las nueve esperas del Códice cortarían todas

@@ -87,7 +87,17 @@ estado difieren en los tiles de agua por FASE**. Se midió también en el port (
   testigo manda: la velocidad de una captura de DOSBox depende de los ciclos configurados,
   y los tres testigos son capturas distintas. Que las DOS ceremonias midan el mismo
   sentido (port ~2× y ~1,8× más rápido que LF) es un indicio de causa común, no una prueba.
-- **No hay cita de asm para la cadencia**, y no puede haberla: el `delay(2)` del cierre y
+- ~~**No hay cita de asm para la cadencia**, y no puede haberla: el `delay(2)` del cierre y
   el pareado de la aparición no son derivables byte-exactos (es justo por lo que están
-  marcados Clase C). Lo que el asm SÍ fija —nº de pulsos = miembros vivos, escalera
-  descendente 15→1, forma del blit parcial— coincide en los dos lados.
+  marcados Clase C).~~ 🔴 **FALSO PARA EL CIERRE, y lo corrige `cadencia-delay-pit.md`
+  (carril `cadencia-asm`, 26-08):** `delay(n)` 0x20fa **no es un bucle de CPU** — engancha
+  INT 1Ch (`int 21h/25h` @0x2133), su handler 0x2159 hace `inc word [0x5448]` y 0x2138
+  espera al contador. El binario **no reprograma el canal 0 del PIT en ninguno de los 28
+  ficheros**, así que el tick es el del BIOS (18,2065 Hz) y el `delay(2)` @0x4924 son
+  **2 ticks = 109,85 ms**; el cierre, **30 ticks = 1647,76 ms**. La cita existe, la
+  cadencia del cruce ES derivable byte-exacta, y **los 1633 ms medidos aquí eran los
+  correctos**: quien estaba mal era el port (900 ms). *Sigue siendo cierto para la
+  APARICIÓN*, que cuelga de `tone_sweep` 0x2192, un busy-wait calibrado a la CPU cuyo
+  cuerpo exterior NO está calibrado ⇒ no tiene duración en ms. Lo que el asm SÍ fija
+  —nº de pulsos = miembros vivos, escalera descendente 15→1, forma del blit parcial—
+  coincide en los dos lados.

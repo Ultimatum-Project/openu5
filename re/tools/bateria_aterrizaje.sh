@@ -694,6 +694,18 @@ FICHEROS=(
   # de ver regresiones de paleta. 10 tests en 0,3 s medidos, sin EA ni red.
   game/tools/pixeldiff/test_pdlib.py
   game/tools/pixeldiff/test_compare.py
+  # LA BATERIA DE REGRESION DEL CAREO VISUAL (carril memoria-careo, 26-08). Entra por la
+  # MISMA razon que las dos de arriba y con un argumento mas fuerte: el careo visual va a
+  # correr sobre 82 episodios y su modo de fallo peor es quedarse CIEGO EN SILENCIO — un
+  # instrumento estropeado sigue emitiendo su hoja y su informe sigue diciendo «cero
+  # divergencias», que es lo mismo que dice un careo limpio. Cada control declara su CANAL
+  # y su REGIMEN en una tabla default-DENY, y cada uno se ESTRENA en cada corrida contra el
+  # instrumento roto de la manera en que historicamente se rompio (int16 que invierte
+  # negro/blanco, remuestreo que promedia, adjudicador que ignora base2, segmentador que
+  # funde acciones, brillo del margen, celda fija que caza agua). 24 tests en 1,6 s medidos,
+  # sin navegador, sin red y sin material de EA. Registro de las averias que fija:
+  # re/notes/careo-artefactos-conocidos.md.
+  game/tools/careo-visual/test_careolib.py
   # EL BARRIDO DE «Borrar datos locales» de /byo (08-08, carril byo-shots-clean). Entra por
   # la razon por la que existe: la lista de lo que se borra es POR PREFIJOS, y un prefijo que
   # se queda corto NO DA ERROR — el boton sigue diciendo «borrado» y deja restos, que es la

@@ -29,6 +29,8 @@ import type { SmallMapLocation, WorldData } from "../src/core/world/map.js";
 import type { NpcManager, NpcRuntime } from "../src/core/npc/manager.js";
 import { LOC_BLACKTHORN, PALACE_GUARD_TYPE } from "../src/core/world/blackthorn.js";
 import { scheduleIndex } from "../src/core/time.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, dsRecordDeAsset, DS_STRINGS } from "./ds-strings-fixture.js";
 
 function makeChar(over: Partial<CharacterState> = {}): CharacterState {
   return {
@@ -162,7 +164,8 @@ const promptOf = (events: { kind: string; text?: string }[]): string | undefined
 const messages = (events: { kind: string; text?: string }[]): string[] =>
   events.filter((e) => e.kind === "message").map((e) => e.text ?? "");
 
-describe("F1.7-T2 — Blackthorn captura viva (BLCKTHRN 0x060e / TOWN 0x12ae)", () => {
+describeConAssets([DS_STRINGS], "F1.7-T2 — Blackthorn captura viva (BLCKTHRN 0x060e / TOWN 0x12ae)", () => {
+  conDsStrings();
   it("dispara en loc 0x12 con party vivo: emite el prompt del interrogatorio con la virtud", () => {
     const game = makeGame();
     const events = game.confirmTownExit(false); // TOWN 0x15D4: un townTurn
@@ -335,7 +338,8 @@ describe("F1.7-T2 — Blackthorn captura viva (BLCKTHRN 0x060e / TOWN 0x12ae)", 
   });
 });
 
-describe("F1.7 #23 — monólogo de apertura del interrogatorio (escena del trono, BLCKTHRN 0x060e)", () => {
+describeConAssets([DS_STRINGS], "F1.7 #23 — monólogo de apertura del interrogatorio (escena del trono, BLCKTHRN 0x060e)", () => {
+  conDsStrings();
   // Textos byte-exactos (derivados 2026-07-14): DATA.OVL vía kernel print
   // (fileoff = DS_off + 0x10) + MISCMSG rec11 (DS 0xb54a). Ver el orden de prints
   // 0x0652→0x08ca en re/notes/blackthorn.md §3.1.
@@ -349,8 +353,9 @@ describe("F1.7 #23 — monólogo de apertura del interrogatorio (escena del tron
   // 0x70a4 + género(0x70c8 "man " / 0x70c0 " lady ") + 0x70ce, @0x089b-0x08bc
   const guardOrder = (word: string) => `\n\nGUARD! Release this good${word}at once!"`;
   // MISCMSG rec11 @0x08ca (DS 0xb54a), byte-exacto (con espacio final)
-  const WAIT_MANTRA =
-    '\n\n"Wait!"\n\n"Since I myself seek Avatarhood as once did thee, mayhap thou couldst aid me in my Quest by answering a question." ';
+  // Esperado LEÍDO DEL ASSET por un camino independiente del port (`leeAsset` crudo, no
+  // `dsRec`): lo que se comprueba sigue siendo que el monólogo emite ESTE record y no otro.
+  const WAIT_MANTRA = (): string => dsRecordDeAsset("MISCMSG.DAT", 11);
 
   // confirmTownExit(false) YA NO antepone el "No" del prompt de salida: ese eco es
   // PRESENTACIÓN y lo pinta INLINE el reductor de prompts (main.ts messageAppend tras
@@ -370,11 +375,11 @@ describe("F1.7 #23 — monólogo de apertura del interrogatorio (escena del tron
       FOOTSTEPS,
       greeting("Avatar"),
       guardOrder("man "),
-      WAIT_MANTRA,
+      WAIT_MANTRA(),
     ]);
     // El prompt de la 1ª pregunta llega DESPUÉS del monólogo (misma tanda de eventos).
     expect(promptOf(events)).toContain("What is the Mantra of the Mystic Shrine of Honesty");
-    const idxWait = events.findIndex((e) => e.text === WAIT_MANTRA);
+    const idxWait = events.findIndex((e) => e.text === WAIT_MANTRA());
     const idxPrompt = events.findIndex((e) => e.kind === "blackthorn-interrogation-prompt");
     expect(idxWait).toBeGreaterThanOrEqual(0);
     expect(idxPrompt).toBeGreaterThan(idxWait);
@@ -417,11 +422,12 @@ describe("F1.7 #23 — monólogo de apertura del interrogatorio (escena del tron
     );
     const msgs = scene(game.confirmTownExit(false));
     expect(msgs).toEqual([BLINDFOLD]); // 0x0665 salta a 0x08e7 tras la venda
-    expect(msgs).not.toContain(WAIT_MANTRA);
+    expect(msgs).not.toContain(WAIT_MANTRA());
   });
 });
 
-describe("F1.7-T5 — trigger real: captura SÓLO con guardia adyacente (npc_engine 0x13a7)", () => {
+describeConAssets([DS_STRINGS], "F1.7-T5 — trigger real: captura SÓLO con guardia adyacente (npc_engine 0x13a7)", () => {
+  conDsStrings();
   /** Game con un guardia del Palacio a distancia Manhattan `d` del party (eje este). */
   function gameWithGuardAt(d: number, over: Partial<GameState> = {}): Game {
     const s = makeState(over);
@@ -509,7 +515,8 @@ describe("F1.7-T5 — trigger real: captura SÓLO con guardia adyacente (npc_eng
  * una lista copiada mientras la mecánica cambia debajo. Lo que el test fija es la
  * REGLA (`aiTypes[ranura] > 3` ⇒ captura), no sus 24 respuestas.
  */
-describe("#64 — captura HORARIA del Palacio (selector de ranura NPC.OVL 0x12e0,)", () => {
+describeConAssets([DS_STRINGS], "#64 — captura HORARIA del Palacio (selector de ranura NPC.OVL 0x12e0,)", () => {
+  conDsStrings();
   /** Horario REAL de los guardias 8/9/15 del Palacio (game/assets/npcs.json "18"). */
   const PRE_ARRESTO = { aiTypes: [0, 4, 0], times: [21, 5, 11, 13] };
   /** Tras la alarma de arresto (`0x085e,`): hostilidad permanente, sin horario. */
@@ -586,7 +593,8 @@ describe("#64 — captura HORARIA del Palacio (selector de ranura NPC.OVL 0x12e0
   });
 });
 
-describe("#288 — advance_clock(2) de la escalada del interrogatorio (BLCKTHRN 0x05aa-0x05b4)", () => {
+describeConAssets([DS_STRINGS], "#288 — advance_clock(2) de la escalada del interrogatorio (BLCKTHRN 0x05aa-0x05b4)", () => {
+  conDsStrings();
   // Derivación asm (re/notes/blackthorn.md §3.2 + disasm careado): en `interrogate`
   // 0x054a, la rama del fallo (0x056e je 0x59e) con numLiving>=2 (0x059e) y warned!=0
   // (0x05aa) ejecuta `0x05b0 push 2 ; 0x05b4 call 0xffffacec` = advance_clock(2)

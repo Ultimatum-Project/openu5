@@ -18,6 +18,8 @@
 import { describe, expect, it } from "vitest";
 import type { CharacterState, GameState } from "../src/core/state.js";
 import type { GameEvent } from "../src/core/game.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 import {
   blackthornOnStage,
   buildBlackthornEntryScript,
@@ -280,7 +282,8 @@ describe("#324 guiones del VM (bytecodes DATA.OVL, posiciones derivadas a mano)"
 
 const kindsOf = (events: GameEvent[]): string[] => events.map((e) => e.kind);
 
-describe("#324 orquestación: el chorro partido en beats (runCaptureScene)", () => {
+describeConAssets([DS_STRINGS], "#324 orquestación: el chorro partido en beats (runCaptureScene)", () => {
+  conDsStrings();
   it("con rejilla: mensajes intercalados con segmentos y DOS esperas de tecla (0x0894/0x08cd)", () => {
     const { ctx } = makeCtx([char({ name: "Avatar" }), char({ name: "Iolo", class: "B" })]);
     const events = runCaptureScene(ctx);
@@ -321,7 +324,8 @@ describe("#324 orquestación: el chorro partido en beats (runCaptureScene)", () 
   });
 });
 
-describe("#324 orquestación: rondas del interrogatorio", () => {
+describeConAssets([DS_STRINGS], "#324 orquestación: rondas del interrogatorio", () => {
+  conDsStrings();
   function begin(chars: CharacterState[]) {
     const made = makeCtx(chars);
     runCaptureScene(made.ctx);

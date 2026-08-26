@@ -26,18 +26,15 @@ open line traces to an internal work queue with a defined method, and each
 - **Spanish localization** — full UI + game text i18n layer (English remains
   byte-exact to the original).
 
-## In progress — the "Grand Tour" gate
+## The "Grand Tour" gate — green
 
-The final milestone is **grand-tour-green**: an automated purist playthrough of
-ALL content with a 100% coverage manifest, every dungeon room sealed with a
-verdict, run twice byte-identically. Nothing ships as "the announcement" before
-that gate is green.
-
-Current room census `<check at génesis>`: the vast majority of the 112 dungeon
-room seals are VICTORY or faithful-dead-end; a queue of ~24 rooms across Wrong,
-Doom, Deceit, Covetous and Destard is being closed **by mechanism** (each room
-either becomes winnable through a derived mechanic, or is sealed as a faithful
-dead end with an assembly citation — never fabricated).
+The gate before any announcement was **grand-tour-green**: an automated purist
+playthrough of ALL content with a 100% coverage manifest, every dungeon room
+sealed with a verdict, run twice byte-identically. That census is closed:
+**112/112 dungeon rooms sealed, 0 queued** (70 VICTORY, 38 faithful dead ends,
+4 terminal traps — each sealed by a derived mechanic or an assembly citation,
+never fabricated), and the tour's main line is played end to end — including
+the endgame at Doom — with real keystrokes, twice, byte-identically.
 
 ## Honest open items (deliberate, catalogued)
 
@@ -60,13 +57,15 @@ its path to closure:
 
 ## After 1.0
 
-- **Browser "bring your own files" demo** — drag your GOG installer / `ultima5/`
-  folder, extraction runs client-side, play instantly. (Pipeline already proven
-  internally; polishing for public hosting.)
+- ~~Browser "bring your own files" demo~~ **shipped** — live at
+  [openu5.org](https://openu5.org): drop your GOG installer / `ultima5/` folder,
+  extraction runs client-side, play instantly.
 - English migration of the remaining RE notes (the deep-dive corpus started in
-  Spanish; `rng`, `combat` and `deliberate-divergences` go first).
+  Spanish; `rng`, `combat`, `bugs-of-the-original` and `deliberate-divergences`
+  are translated first).
 - HD/remaster skin exploration (strictly on top of the faithful layer).
-- Mobile touch deck.
+- ~~Mobile touch deck~~ **shipped** (portrait deck with the original's keyboard
+  commands).
 - Contributions of format corrections back to the Ultima Codex wiki.
 
 ## What will never be on this roadmap

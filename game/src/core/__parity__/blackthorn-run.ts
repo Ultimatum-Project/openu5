@@ -29,6 +29,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import type { CharacterState, GameState } from "../state.js";
 import { checkBlackthornCapture, type CaptureCtx } from "../world/blackthorn-capture.js";
+import { instalaDsStrings, type DsStrings } from "../data/ds-strings.js";
 import type { NpcManager, NpcRuntime } from "../npc/manager.js";
 import {
   blackthornCapture,
@@ -95,6 +96,15 @@ function partyFrom(statuses: string[]): CharacterState[] {
 }
 
 const ASSETS = resolve(dirname(fileURLToPath(import.meta.url)), "../../../assets");
+
+// Mensajes del búfer DS 0xB21E (FICHA β): en el juego los instala el arranque tras
+// `fetchJson`; aquí no hay arranque, así que este runner —que ejercita la ESCENA de
+// captura, no sólo el motor puro— los instala desde el mismo `game/assets` del que ya
+// lee `data.json`. Sin esto, `guardArms` revienta al pintar el monólogo del trono.
+instalaDsStrings(
+  JSON.parse(readFileSync(`${ASSETS}/ds-strings.json`, "utf-8")) as DsStrings,
+);
+
 function mantrasFromData(): string[] {
   return (JSON.parse(readFileSync(`${ASSETS}/data.json`, "utf-8")) as { mantras: string[] }).mantras;
 }

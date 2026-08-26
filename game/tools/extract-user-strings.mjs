@@ -78,11 +78,6 @@ const MSG_VAR = /^(messages?|lines|events|segments|out|log|warnings?)$/;
  *   SHARD_MSG_NAME (core/quest/items.ts) → "Falsehood!/Hatred!/Cowardice!" (DS 0x8D18/24/2E)
  *   LEVELUP_STAT_WORDS (core/quest/lordbritish.ts) → "stronger!/quicker!/wiser!" (exact-line)
  *   SHRINE_ATTR_LABELS (core/game.ts, ex-"LABEL") → "Strength/Dexterity/Intelligence" (Ztats stats)
- *   ORDAINED_PAGES (core/game.ts)        → frases del mandato ORDAINED (MISCMSG.DAT recs
- *                                          12-19, fileoff 0x3ab-0x481, tabla CAST2 DS
- *                                          0x4b5e); se emiten como ARG de tf() en
- *                                          submitShrineVisit → el sink text: no las aflora
- *                                          (carril audit-codex-shrine)
  *   STATUS_LABELS (core/party.ts)        → estado Ztats "Good Health/Poisoned/Dead/Asleep/Charmed"
  *                                          (DS 0x1a6a; alineado al binario, 8ª caza — antes G:"Good"/
  *                                          S:"Sleeping" divergían)
@@ -91,7 +86,6 @@ const MSG_VAR = /^(messages?|lines|events|segments|out|log|warnings?)$/;
  *       choke t() bajo 'es' los dejaba en inglés (hallazgo soak-2026-07-19). Son PropertyDeclaration
  *       (`private static readonly`), no VariableDeclaration → rama dedicada abajo: ---
  *   REFUGE_NARRATION (core/game.ts)      → narración del refuge (party_refuge 0x0910, DS 0x70e2+)
- *   REFUGE_KARMA_MESSAGES (core/game.ts) → discurso de resurrección de LB (KARMA.DAT rec0-4, 0x0b03)
  *   BLACKSMITH_SELL_* (core/shops/shoppe-greetings.ts) → charla del sell-flow del
  *                                          herrero (tablas DS 0x3d2e/0x3d3e/0x3d36,
  *                                          carril sell-chatter); accedidos por `ARR[rand]`
@@ -106,10 +100,13 @@ const MSG_VAR = /^(messages?|lines|events|segments|out|log|warnings?)$/;
  *                                          filas, que el barrido NO ve → los 3 Shards
  *                                          salían EN INGLÉS bajo ES (auditoría G2,
  *                                          mismo patrón que la fuga LOOT_OPEN_NAMES)
- *   BLCKTHRN_MISCMSG (core/world/blackthorn-capture.ts) → strings fijos MISCMSG.DAT
- *                                          del interrogatorio de captura (rec3-11);
- *                                          viajan por retornos cross-función que los
- *                                          sinks no ven (carril i18n-huecos)
+ *   --- 🔴 RETIRADOS EL 25-08 (FICHA β), y NO por limpieza: ORDAINED_PAGES,
+ *       REFUGE_KARMA_MESSAGES, CAMP_KARMA_MESSAGES y BLCKTHRN_MISCMSG ya NO contienen
+ *       literales. Su texto (KARMA/MISCMSG.DAT) sale hoy de `game/assets/ds-strings.json`
+ *       vía `dsRec()`, así que no hay literal que aflorar ni que aprobar: el allowlist
+ *       sobraba y `display-consts-censo.test.ts` lo dijo por sus nombres en cuanto las
+ *       tablas dejaron de existir. La cobertura i18n de esas frases NO se pierde — pasa a
+ *       la superficie `ds-strings.json` del corpus (game/tools/i18n-corpus.mjs). ---
  *   LOOT_GRANT_STRINGS (core/world/commands.ts) → fijos de lootItemName que sólo
  *                                          viven en un `return` del switch (id14
  *                                          sandalwood 0x14F0; carril i18n-huecos)
@@ -141,13 +138,13 @@ export const DISPLAY_CONST_NAMES = [
   "HUD_FAITHFUL_LABELS", "FLAME_BY_LOCATION", "SHADOWLORD_DOMAIN", "FLAME_NAME", "SHOP_UI",
   "CMD_STRINGS", "READY_UI", "USE_UI", "TALK_UI", "COMBAT_STRINGS", "CLASS_LABELS",
   "DUNGEON_BY_X", "TRAP_NAMES", "LOOT_OPEN_NAMES", "SHARD_MSG_NAME", "LEVELUP_STAT_WORDS",
-  "SHRINE_ATTR_LABELS", "ORDAINED_PAGES", "CAMP_KARMA_MESSAGES", "STATUS_LABELS",
-  "MISC_ECHO_STRINGS", "REFUGE_NARRATION", "REFUGE_KARMA_MESSAGES", "BLACKSMITH_SELL_PROMPTS",
+  "SHRINE_ATTR_LABELS", "STATUS_LABELS",
+  "MISC_ECHO_STRINGS", "REFUGE_NARRATION", "BLACKSMITH_SELL_PROMPTS",
   "BLACKSMITH_SELL_MORE", "BLACKSMITH_SELL_BYES", "BLACKSMITH_BUY_EXCLAIMS",
   "BLACKSMITH_BUY_INTROS", "BLACKSMITH_BUY_WHICH", "BLACKSMITH_BUY_ASKS",
   "BLACKSMITH_BUY_BROKE", "FURNITURE_SEARCH_PROSE", "CAST_TARGET_UI", "MIX_UI", "SHRINE_UI",
   "WELL_UI", "BLACKTHORN_UI", "LOOK_DESC", "FIELD_DESC", "USE_ITEM_NAMES",
-  "BLCKTHRN_MISCMSG", "LOOT_GRANT_STRINGS",
+  "LOOT_GRANT_STRINGS",
 ];
 const DISPLAY_CONSTS = new RegExp(`^(${DISPLAY_CONST_NAMES.join("|")})$`);
 

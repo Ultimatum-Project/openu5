@@ -31,6 +31,7 @@ import { parseDemoScene } from "./parsers/demo-scene.js";
 import { parseEndgameScene, parseEndgameArts } from "./parsers/endgame-scene.js";
 import { parseShrineScenes } from "./parsers/shrine-scene.js";
 import { parseEndgameNarration, parseEndgameDialogue } from "./parsers/endgame-msg.js";
+import { parseDsStrings } from "./parsers/ds-strings.js";
 import { packPic16Atlas, parsePic16, type Pic16Image } from "./parsers/pic16.js";
 import { bitToPixels, parseBit } from "./parsers/bit.js";
 import { packProportFont, parseProport } from "./parsers/proport.js";
@@ -85,6 +86,19 @@ export const REQUIRED_FILES: Record<string, number | null> = {
   "MISCMAPS.DAT": 1871,
   "END.DAT": 3698,
   "ENDMSG.DAT": 786,
+  // KARMA.DAT y MISCMSG.DAT entran el 25-08 con `ds-strings.json` (FICHA β): son los
+  // mensajes que el original carga al búfer DS 0xB21E y los ÚNICOS ficheros de texto del
+  // juego que no extraía nadie — por eso sus cadenas seguían transcritas a mano en
+  // `game/src/**` (638 de las 653 palabras de prosa de EA que el árbol público servía,
+  // medidas en `re/notes/acta-630-prosa-publicada.md`).
+  // Llevan tamaño exacto —a diferencia de los `null` de abajo— porque el motivo de
+  // aquellos no aplica: no son ficheros con variación legítima conocida entre ediciones,
+  // son dos blobs de texto fijo de la misma edición DOS contra la que se verificó el port,
+  // y su troceado por NUL es lo que fija los índices de registro que cita el manifiesto de
+  // fidelidad. Si una edición trajera otros tamaños, `inspectSourceFiles` lo DICE (con la
+  // cifra de las dos) en vez de emitir un asset con los registros corridos en silencio.
+  "KARMA.DAT": 761,
+  "MISCMSG.DAT": 2745,
   // 🔴 ESTOS TRES ENTRARON EL 07-08 Y NO SON UN AÑADIDO: ERAN UN AGUJERO.
   // `runPipeline` los lee con `read()` **sin guarda de existencia** (líneas 361, 370/373
   // y 378) y sin `try` alrededor — el `try` más cercano empieza en la 402. Faltando
@@ -458,6 +472,17 @@ export async function runPipeline(ioReal: PipelineIO, opts: PipelineOptions = {}
     narration: parseEndgameNarration(read("END.DAT")),
     dialogue: parseEndgameDialogue(read("ENDMSG.DAT")),
   });
+
+  // 8f-sexies. Mensajes del búfer DS 0xB21E (KARMA/MISCMSG/ENDMSG.DAT) — FICHA β de
+  // `re/notes/acta-380-i18n-en-claro.md`. Es el prerrequisito que faltaba para que los
+  // discursos de resurrección, el interrogatorio de Blackthorn y la máxima del santuario
+  // dejen de ser literales TRANSCRITOS en `game/src/**`: extraídos aquí, el port los lee
+  // del juego del propio usuario, como ya hace con los TLK. ENDMSG.DAT va también aquí
+  // —además de dentro de `endgame.json`, donde vive con su escena y su narración— para
+  // que el registro-a-registro que consume el core tenga UNA sola puerta y un solo
+  // formato; son 786 B.
+  io.log("• Mensajes DS 0xB21E (KARMA/MISCMSG/ENDMSG.DAT)…");
+  await io.putJson("ds-strings.json", parseDsStrings(read));
 
   // 8f-quater. Láminas EGA de las pantallas de historia del cierre (GAP 6): la casa del
   // Avatar (END1.16), el sueño de Blackthorn (END2.16) y el fondo del pergamino

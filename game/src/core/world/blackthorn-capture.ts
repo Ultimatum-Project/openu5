@@ -25,6 +25,7 @@ import {
   type InterrogationResult,
   TIME_SPELL_BADGE,
 } from "./blackthorn.js";
+import { dsRec } from "../data/ds-strings.js";
 import {
   blackthornOnStage,
   buildBlackoutIntroScript,
@@ -145,38 +146,61 @@ function sacrificeExplosionEvent(scene: CaptureSceneState): GameEvent {
  * traduce plantilla + virtud). La ronda `si` (0..3) del bucle 0x054a elige la
  * variante `si`; la variante 3 (autónoma) vive en BLCKTHRN_MISCMSG.
  */
-const INTERROGATION_QUESTION_TEMPLATES: readonly string[] = [
-  '"What is the Mantra of the Mystic Shrine of {}?"', // MISCMSG rec0 (DS 0xb21e) + virtud + ?"
-  '"Now tell me, what is the Mantra of {}?"', // MISCMSG rec1 (DS 0xb24b) + virtud + ?"
-  '"Resistance is futile! Thou must yield the truth unto me! Tell me, what is the Mantra of {}?"', // rec2 (0xb270) + virtud + ?"
-];
+function interrogationQuestionTemplate(round: number): string {
+  // rec0 (DS 0xb21e) / rec1 (0xb24b) / rec2 (0xb270), los tres + virtud + `?"`.
+  return `${dsRec("MISCMSG.DAT", round)}{}?"`;
+}
 /**
- * Strings FIJOS de MISCMSG.DAT del interrogatorio/captura. Agrupados en una
- * constante-display allowlistada (DISPLAY_CONSTS de extract-user-strings.mjs):
- * viajan por retornos cross-función que los sinks del barrido NO ven — sin el
- * allowlist quedarían fuera del manifiesto/corpus y la capa i18n no podría
- * traducirlos (guarda anti-fabricación).
+ * Strings FIJOS de MISCMSG.DAT del interrogatorio/captura.
+ *
+ * 🔴 EL TEXTO YA NO ESTÁ AQUÍ, y por eso esto son GETTERS y no un objeto de literales:
+ * hasta el 25-08 los ocho iban transcritos (127 de las 653 palabras de prosa de EA que
+ * el árbol público servía — el mayor bloque de `game/src`, ver
+ * `re/notes/acta-630-prosa-publicada.md`). Hoy llegan del MISCMSG.DAT del propio
+ * usuario vía `ds-strings.json`. El acceso es PEREZOSO a propósito: los sitios de uso
+ * siguen escritos igual (`BLCKTHRN_MISCMSG.warning`), pero el `dsRec` corre cuando se
+ * pinta la escena y no al importar el módulo — importar el core no puede exigir el
+ * asset (lo importan arneses y herramientas que nunca abren esta escena).
+ *
+ * Ya NO hace falta el allowlist `DISPLAY_CONSTS` de `extract-user-strings.mjs` que los
+ * metía en el manifiesto: no son literales del código, así que el barrido no los ve y
+ * no hay nada que aprobar. La guarda anti-fabricación que los cubría se sustituye por
+ * algo más fuerte — el texto ya no lo puede INVENTAR el port, sale del fichero del
+ * juego (ver `game/tests/ds-strings-fidelidad.test.ts`).
  */
 const BLCKTHRN_MISCMSG = {
   /** rec3 (DS 0xb2ca): 4ª pregunta, autónoma (sin virtud, sin cierre `?"`). */
-  finalQuestion: '"My patience with thee has worn away! SPEAK UNTO ME THE MANTRA, NOW!',
+  get finalQuestion(): string {
+    return dsRec("MISCMSG.DAT", 3);
+  },
   /** rec5: cede el mantra con party>1 → un compañero ejecutado (sacrifice_member(0)). */
-  mercifulDeath:
-    '"I thank thee, my friend! As a token of my esteem for thine honesty, I will grant thy companion a merciful death!"',
+  get mercifulDeath(): string {
+    return dsRec("MISCMSG.DAT", 5);
+  },
   /** rec9: cede el mantra estando el Avatar solo → perdón, sin sacrificio (con espacio final). */
-  rewardedLife: '"I sense Truth in thee.  This will be rewarded with thy life!" ',
+  get rewardedLife(): string {
+    return dsRec("MISCMSG.DAT", 9);
+  },
   /** rec10: el Avatar solo falla → a la mazmorra, sin caída de santuario (con espacio final). */
-  toDungeon: '"A child would catch thee in thy lies, foolish one! To the dungeon with thee!" ',
+  get toDungeon(): string {
+    return dsRec("MISCMSG.DAT", 10);
+  },
   /** rec7: primer fallo con party>1 → aviso (warned=1, BLCKTHRN 0x51c). */
-  warning: '"Make not the mistake of laughing at me, simple one!"',
+  get warning(): string {
+    return dsRec("MISCMSG.DAT", 7);
+  },
   /** rec4: 4º fallo con party>1 → el péndulo cae (sacrifice_member(1) 0x03bc). */
-  pendulum: "With a wave of Blackthorn's hand, the pendulum blade falls!",
+  get pendulum(): string {
+    return dsRec("MISCMSG.DAT", 4);
+  },
   /** rec6: acompaña al péndulo — "treachery" (con "\n\n" inicial). */
-  treachery:
-    '\n\n"None call me unfair! I have shown thee every kindness in the world and thou hast lied to me! Thy friend hath paid for thy treachery!"',
+  get treachery(): string {
+    return dsRec("MISCMSG.DAT", 6);
+  },
   /** rec11 (DS 0xb54a) @0x08ca: "Wait!" + petición de Avatarhood (con espacio final). */
-  interrogationIntro:
-    '\n\n"Wait!"\n\n"Since I myself seek Avatarhood as once did thee, mayhap thou couldst aid me in my Quest by answering a question." ',
+  get interrogationIntro(): string {
+    return dsRec("MISCMSG.DAT", 11);
+  },
 } as const;
 
 // Escena de captura / monólogo de apertura del interrogatorio (BLCKTHRN 0x060e,
@@ -381,7 +405,7 @@ function interrogationQuestion(ctx: CaptureCtx, round: number): string {
   if (!p || round >= 3) return BLCKTHRN_MISCMSG.finalQuestion;
   // COMPUESTO → tf() en call-site: plantilla + virtud (t(virtud) la traduce; en 'en'
   // es identidad byte-exacta con la concatenación prefijo+virtud+`?"` del binario).
-  return tf(INTERROGATION_QUESTION_TEMPLATES[round]!, p.virtue);
+  return tf(interrogationQuestionTemplate(round), p.virtue);
 }
 
 /**
@@ -427,8 +451,10 @@ export function submitInterrogationResponse(ctx: CaptureCtx, response: string): 
       events.push({
         kind: "message",
         // COMPUESTO → tf() en call-site (choke i18n); nombre = slot 1 del roster (0x55c8).
+        // rec8 (MISCMSG 0x25f, buf 0xb47d) + nombre + ' die!" ' (DATA.OVL 0x6fbc). El
+        // record llega del fichero del usuario (FICHA β); el sufijo lo compone el port.
         text: tf(
-          '\n\n"I will ask thee until the sand has fallen. And then will {} die!" \n\n',
+          `${dsRec("MISCMSG.DAT", 8)}{} die!" \n\n`,
           ctx.state.characters[1]?.name ?? "",
         ),
       });

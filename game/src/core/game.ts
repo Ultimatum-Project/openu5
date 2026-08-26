@@ -221,6 +221,7 @@ import type {
 } from "./world/shrine-scene.js";
 import type { CaptureSceneScript, CaptureSceneTiles } from "./world/blackthorn-scene.js";
 import { wishingWell, WELL_TILE, WISH_SPAWN_TILE } from "./world/wishingwell.js";
+import { dsRec } from "./data/ds-strings.js";
 import {
   crystalBallWins,
   CRYSTAL_BALL_TILE,
@@ -1427,10 +1428,22 @@ export class Game {
       }
     }
 
-    // Un NPC en la casilla destino bloquea el paso (turno consumido, sin mensaje):
-    // corre el turno del contexto igual que un paso que no mueve pero consume.
+    // Un NPC en la casilla destino bloquea el paso. En el binario ese bloqueo NO tiene
+    // cola propia: `town_move` (TOWN.OVL 0x0600) mira al ACTOR ANTES que al terreno
+    // —0x069c `call 0xffffb4be` → kernel 0x368E `find_object_at_xy` sobre la tabla viva
+    // de actores 0x5C5A (paso 8, +2=x, +3=y; la escribe `NPC.OVL 0x091c/0x0926` con
+    // `si = slot << 3`)— y con actor presente pone `[bp-4]=0` (0x06a9). Sólo la LISTA
+    // BLANCA de transportes/restos lo devuelve a 1 (0x06bf-0x06f5). Después, 0x0776
+    // `cmp [bp-4],0` manda a **0x083a**, que es EXACTAMENTE la misma cola donde cae el
+    // bloqueo por TERRENO: print DS 0x26d6 `b'Blocked!\n'` + beep(0xa5,0xc8) (0x0849).
+    // ⇒ andar contra un PNJ imprime y suena igual que andar contra un muro; el port lo
+    // resolvía por una vía aparte que consumía el turno y no emitía ninguna de las dos
+    // observables. El turno (1 min, TOWN 0x15D4) ya estaba bien y se conserva.
+    // Guarda: `game/tests/town-npc-bloqueo-mudo.test.ts`.
     const blocker = this.npcAtTarget(dir);
     if (blocker) {
+      events.push({ kind: "message", text: "Blocked!" }); // DS 0x26d6 (0x083a)
+      events.push(sfxEvent("move-blocked")); // beep(0xa5,0xc8) (0x0849)
       events.push(...this.runContextTurn({ consumed: true }));
       return events;
     }
@@ -3112,7 +3125,6 @@ export class Game {
       sky: this.skyRefreshCtx,
       dungeonState: this.dungeonState,
       enemyDefs: this.combatResources?.enemyDefs,
-      refugeKarmaMessages: Game.REFUGE_KARMA_MESSAGES,
       mapTileWithOverrides: (x, y) => this.mapTileWithOverrides(x, y),
       snapNpcsToSchedule: () => this.wakeSnapNpcs(),
       objectOrNpcAt: (x, y, floor) => this.objectOrNpcAt(x, y, floor),
@@ -6262,24 +6274,33 @@ export class Game {
    * prefijo DS 0x71be (`\n"`) antes del record (0x0b15) y el char `"` (0x22) al cerrar
    * (0x0b37 → 0x742a), así que la voz de LB sale entrecomillada (visible en video-M f058).
    * La comilla es parte de la CADENA user-facing (por eso va en el manifiesto/es.json con
-   * ellas). KARMA.DAT no se commitea (como MISCMSG.DAT); los strings sí, marcados [D]. Ver
-   * re/notes/death-resurrection-audit.md §3.
+   * ellas), y por eso se COMPONE aquí: el record de KARMA.DAT no la lleva dentro.
+   *
+   * 🔴 EL TEXTO YA NO ESTÁ EN ESTE FICHERO. Hasta el 25-08 los cinco records iban
+   * transcritos aquí como literales (eran 124 de las 653 palabras de prosa de EA que el
+   * árbol público servía, `re/notes/acta-630-prosa-publicada.md`); hoy llegan del
+   * KARMA.DAT del propio usuario vía `ds-strings.json`. Ver re/notes/death-resurrection-audit.md
+   * §3 y `game/src/core/data/ds-strings.ts`.
    */
-  private static readonly REFUGE_KARMA_MESSAGES: readonly string[] = [
-    "\"Thou hast strayed far from the path of the Avatar. Seek now to renew a life  of Virtue, lest thy soul pass finally beyond my reach!\"", // KARMA.DAT rec0 (karma 0-19)
-    "\"Thy soul seeks direction from thy heart, misguided one. Accept now this new  chance to prove thy worth, ere thou loseth the Way forever!\"", // rec1 (20-39)
-    "\"It is within thee to attain great power, O seeker. Search always for new  ways of Good, and arm thyself well for the trials which lie ahead!\"", // rec2 (40-59)
-    "\"Thou showest well the wisdom of an Avatar, but not yet hast thou achieved  the potential. Stay on the Path and thy soul shall flourish!\"", // rec3 (60-79)
-    "\"Well armed art thou to fight Death's embrace, O enlightened one! Return once  more to the world for thy Destiny awaits thee!\"", // rec4 (80-99)
-  ];
+  /** Cuántos records de KARMA.DAT recita el refuge (tabla DS 0x1a74; el 6º offset es basura). */
+  private static readonly REFUGE_KARMA_COUNT = 5;
 
-  /** Record de KARMA.DAT recitado en el refuge para un karma dado (0x0b03: karma/20, cap al último record). */
+  /**
+   * Record de KARMA.DAT recitado en el refuge para un karma dado (0x0b03: karma/20, cap
+   * al último record), ENVUELTO en las comillas que imprime el original.
+   */
   private static refugeKarmaSpeech(deathKarma: number): string {
+    // `?? 0` / no-finito → 0, igual que `campKarmaMessage` (world/camp.ts): el karma real
+    // es siempre un byte 0-99, así que esto NO cambia ninguna partida — sólo cubre los
+    // fixtures con estado parcial. Antes el índice NaN indexaba la tabla y devolvía
+    // `undefined`, que el `!` tapaba y acababa como "undefined" en la consola del juego;
+    // ahora el índice tiene que ser un número de verdad porque el record se PIDE.
+    const karma = Number.isFinite(deathKarma) ? deathKarma : 0;
     const idx = Math.min(
-      Math.floor(Math.max(0, deathKarma) / 20),
-      Game.REFUGE_KARMA_MESSAGES.length - 1,
+      Math.floor(Math.max(0, karma) / 20),
+      Game.REFUGE_KARMA_COUNT - 1,
     );
-    return Game.REFUGE_KARMA_MESSAGES[idx]!;
+    return `"${dsRec("KARMA.DAT", idx)}"`;
   }
 
   /**

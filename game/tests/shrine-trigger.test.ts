@@ -11,6 +11,8 @@ import { describe, expect, it } from "vitest";
 import type { CharacterState, ExtractedInitialState, GameState } from "../src/core/state.js";
 import { Game, type GameData, type GameEvent } from "../src/core/game.js";
 import type { WorldData } from "../src/core/world/map.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, dsRecordDeAsset, DS_STRINGS } from "./ds-strings-fixture.js";
 import {
   SHRINE_TILE, CODEX_TILE, BROKEN_SHRINE_TILE, type ShrineData,
 } from "../src/core/world/shrines.js";
@@ -118,7 +120,8 @@ describe("F1.4 · trigger de santuario VIVO", () => {
   });
 });
 
-describe("F1.4 · ceremonia de meditación (AL PISAR, sin yes/no)", () => {
+describeConAssets([DS_STRINGS], "F1.4 · ceremonia de meditación (AL PISAR, sin yes/no)", () => {
+  conDsStrings();
   // Pisar el santuario CORRE la ceremonia en el mismo paso (el original despacha del
   // step directo a shrine_visit CAST2 0x0966, sin prompt "Meditate?"). Devuelve los
   // eventos del `move` para asertarlos.
@@ -273,13 +276,13 @@ describe("F1.4 · ceremonia de meditación (AL PISAR, sin yes/no)", () => {
       "\nThe Codex of Ultimate Wisdom lies before thee...", // MISCMSG 0xa86
       "\nThe book is open to the page thou dost seek!\n\n", // 0x0890
       "Upon the hallowed page thou dost read:\n\n", // 0x08c0
-      '"Pride is a vice, which Pride itself inclines one to find in others, and overlook in oneself."\n\n', // lección LARGA virtud 7 (MISCMSG rec 27, 0x6bb — fix codex-lesson-swap)
-      "A STRANGE WIND CAUSES THE PAGE TO TURN!\n\n", // MISCMSG 0x0900
+      `"${dsRecordDeAsset("MISCMSG.DAT", 27)}"\n\n`, // lección LARGA virtud 7 (MISCMSG rec 27, 0x6bb — fix codex-lesson-swap)
+      dsRecordDeAsset("MISCMSG.DAT", 40), // "A STRANGE WIND…" — MISCMSG 0x0900
       "Thou dost read:\n\n", // DS 0x95ea
-      "BEYOND@SHAMES\nEGRESS@IN@[E\nCENTRE@OF@[E\nUNDERWORLD@[ERE IS@A@PLACE@OF\nDARKNESSo\n\n", // 0x092a
-      "BEYOND@[IS\nDARKNESS@LIES\n[E@GATE@TO@[E\nCORE@OF@[E\nWORLDo\n\n", // 0x097c
-      "WHEN@[OU@ART\nR^DY@[OU@MU_\nCALL@FOR[\nVERAMOCOR@TO UNLOCK@[E@GATE\nAND@VENTURE@PA_\nE[ER^L@WARDS\nAND@_^LERS@OF\nSOULSo\n\n", // 0x09b7
-      "[AT@WHICH@[E\nWORLD@HA[@LO_\nAWAITS@[Y@COMI]o\n\n", // 0x0a2b
+      dsRecordDeAsset("MISCMSG.DAT", 41), // profecía p1 — MISCMSG 0x092a
+      dsRecordDeAsset("MISCMSG.DAT", 42), // profecía p2 — MISCMSG 0x097c
+      dsRecordDeAsset("MISCMSG.DAT", 43), // profecía p3 (VERAMOCOR) — MISCMSG 0x09b7
+      dsRecordDeAsset("MISCMSG.DAT", 44), // profecía p4 — MISCMSG 0x0a2b
     ]);
     // Las 4 páginas de la PROFECÍA llevan `rune: true` (fuente RUNES.CH); la prosa NO.
     const runeMsgs = events.filter((e) => e.kind === "message" && e.rune).map((e) => e.text);

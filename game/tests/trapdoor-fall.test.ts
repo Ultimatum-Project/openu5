@@ -4,6 +4,8 @@ import { Game, type GameData } from "../src/core/game.js";
 import type { WorldData, SmallMapLocation } from "../src/core/world/map.js";
 import { buildRefugeSceneFigures } from "../src/skin/refugeScene.js";
 import { VIEW_HALF } from "../src/skin/api.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 
 /**
  * TRAMPILLA + TPK DE STONEGATE — `post_turn` TOWN.OVL 0x0F02 (#54 pieza (g)).
@@ -156,7 +158,8 @@ describe("trampilla: la caída (TOWN 0x0f63-0x103c)", () => {
   });
 });
 
-describe("trampilla en STONEGATE: el TPK (TOWN 0x0fa0-0x1037)", () => {
+describeConAssets([DS_STRINGS], "trampilla en STONEGATE: el TPK (TOWN 0x0fa0-0x1037)", () => {
+  conDsStrings();
   it("★ el mapa ENTERO pasa a lava 0x8F y NO se cambia de planta", () => {
     const { game, state } = townGame(STONEGATE, [0], [{ z: 0, x: 10, y: 10 }]);
     expect(game.pass().some((e) => e.text === "A TRAPDOOR!")).toBe(true);
@@ -215,7 +218,8 @@ describe("trampilla en STONEGATE: el TPK (TOWN 0x0fa0-0x1037)", () => {
  * Ambos targets de kernel resueltos con `re/tools/routine_census.resolve_near_call`
  * (bases 0x81d0 TOWN / 0xa290 BLCKTHRN), no por aritmética de sesgos a ojo.
  */
-describe("#112 · el visor NEGRO del TPK = escena de refuge, NO falta de luz", () => {
+describeConAssets([DS_STRINGS], "#112 · el visor NEGRO del TPK = escena de refuge, NO falta de luz", () => {
+  conDsStrings();
   it("★ el MISMO turno del TPK emite `refuge` y su PRIMER beat ennegrece el viewport", () => {
     const { game } = townGame(STONEGATE, [0], [{ z: 0, x: 10, y: 10 }], { karma: 50 });
     const ev = game.pass();

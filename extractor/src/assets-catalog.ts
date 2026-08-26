@@ -101,6 +101,12 @@ export const ASSETS_DE_EXTRACCION: readonly AssetDeExtraccion[] = [
   { ruta: "demo-scene.json", de: "MISCMAPS.DAT + DATA.OVL" },
   { ruta: "shrine-scene.json", de: "MISCMAPS.DAT" },
   { ruta: "endgame.json", de: "MISCMAPS.DAT + END.DAT + ENDMSG.DAT" },
+  // SIN `opcional` a propósito (mismo criterio que `font-ibm-ext.png` de #339): sale de
+  // ficheros OBLIGATORIOS, así que su ausencia acusa a una extracción VIEJA y el aviso de
+  // arranque (#293) debe echarla de menos por su nombre. Es justo lo que hace falta aquí:
+  // sin este asset el port NO tiene los discursos que imprime — antes los llevaba
+  // transcritos en el código (FICHA β).
+  { ruta: "ds-strings.json", de: "KARMA.DAT + MISCMSG.DAT + ENDMSG.DAT" },
   { ruta: "endgame-scenes.png", de: "END1/END2/ENDSC.16", opcional: true },
   { ruta: "endgame-scenes.json", de: "END1/END2/ENDSC.16", opcional: true },
   { ruta: "intro-pics.png", de: "CREATE/TEXT/STORY*/ULTIMA/STARTSC.16 + *.BIT", opcional: true },

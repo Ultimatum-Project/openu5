@@ -9,9 +9,9 @@
   },
   "totals": {
     "L": {
-      "surfaces": 26,
-      "strings": 4217,
-      "words": 27015
+      "surfaces": 28,
+      "strings": 4300,
+      "words": 28074
     },
     "M": {
       "surfaces": 7,
@@ -235,6 +235,36 @@
       "strings": 20,
       "words": 790,
       "hash": "sha256:d289ca538c642b7cafec3829acd94c36473e57a0378f5349d67a0e47691a0a3f"
+    },
+    {
+      "id": "ds-strings.json#records",
+      "cube": "L",
+      "source": [
+        "KARMA.DAT",
+        "MISCMSG.DAT",
+        "ENDMSG.DAT"
+      ],
+      "parser": "extractor/src/parsers/ds-strings.ts",
+      "chain": "KARMA/MISCMSG/ENDMSG.DAT → ds-strings.ts → registros NUL en orden de fichero",
+      "cite": "extractor/src/parsers/ds-strings.ts · re/notes/acta-ficha-beta-ds-strings.md",
+      "strings": 64,
+      "words": 738,
+      "hash": "sha256:a6f11dec5a9e67a1ca400f95a1fbb1a33893e5e0b04ceead4b6d2f6e0537d944"
+    },
+    {
+      "id": "ds-strings.json#composed",
+      "cube": "L",
+      "source": [
+        "KARMA.DAT",
+        "MISCMSG.DAT",
+        "ENDMSG.DAT"
+      ],
+      "parser": "extractor/src/parsers/ds-strings.ts",
+      "chain": "KARMA/MISCMSG/ENDMSG.DAT → ds-strings.ts → registros NUL → composición del port (comilla + record + comilla, record + virtud + `?\"`, …)",
+      "cite": "extractor/src/parsers/ds-strings.ts · re/notes/acta-ficha-beta-ds-strings.md",
+      "strings": 19,
+      "words": 321,
+      "hash": "sha256:6186ac1ef6f4c85634f41f7cbb479b8de28ddb1e2480fd375c47f00ff4e9d9a3"
     },
     {
       "id": "demo-scene.json#titles",

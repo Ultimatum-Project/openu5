@@ -12,6 +12,8 @@
  * kernel_print_ds 0x75c0; fileoff = DS+0x10). Ver re/notes/blackthorn.md §4.
  */
 import { describe, expect, it } from "vitest";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, dsRecordDeAsset, DS_STRINGS } from "./ds-strings-fixture.js";
 import type {
   CharacterState,
   ExtractedInitialState,
@@ -102,10 +104,18 @@ function makeGame(s: GameState = makeState()): Game {
 // Discurso de resurrección de Lord British — KARMA.DAT, indexado por karma/20 AL MORIR
 // (BLCKTHRN 0x0b03-0x0b3e; la tabla de offsets DS 0x1a74). Es la línea central de la escena
 // (video-M f058), ENVUELTA en comillas (prefijo DS 0x71be `\n"` + char `"` 0x0b37).
-const KARMA_STRAYED =
-  "Thou hast strayed far from the path of the Avatar. Seek now to renew a life  of Virtue, lest thy soul pass finally beyond my reach!";
-const KARMA_ENLIGHTENED =
-  "Well armed art thou to fight Death's embrace, O enlightened one! Return once  more to the world for thy Destiny awaits thee!";
+//
+// 🔴 EL ESPERADO SE LEE DEL ASSET, Y NO ES TAUTOLÓGICO — que es la objeción que mantuvo
+// este texto transcrito hasta el 25-08 (`acta-630` §2: «derivarlo de un asset es
+// imposible»). Hoy sí se puede y hay DOS caminos independientes al mismo KARMA.DAT: el
+// port lo lee por `dsRec()` (registro instalado en el arranque) y este aserto por
+// `leeAsset()` (lectura cruda del JSON). Lo que se comprueba es lo que siempre se
+// comprobó: que el port elige el RECORD correcto para ese karma y lo compone con sus
+// comillas. Derivarlo por `dsRec` SÍ sería tautológico, y por eso no se hace.
+// PEREZOSOS: `describe.skip` ejecuta su cuerpo, así que la lectura del asset no puede
+// ocurrir en carga de módulo (ver `ds-strings-fixture.ts`).
+const KARMA_STRAYED = (): string => dsRecordDeAsset("KARMA.DAT", 0); // karma 0-19
+const KARMA_ENLIGHTENED = (): string => dsRecordDeAsset("KARMA.DAT", 4); // karma 80-99
 
 /** Extrae el guión (`RefugeScript`) del evento `refuge` emitido, o null si no lo hay. */
 function refugeScript(events: readonly GameEvent[]): RefugeScript | null {
@@ -116,7 +126,8 @@ function beatMessages(script: RefugeScript): string[] {
   return script.beats.filter((b) => b.message).map((b) => b.message!);
 }
 
-describe("F1.7-T1 — Blackthorn refuge vivo (BLCKTHRN 0x0910)", () => {
+describeConAssets([DS_STRINGS], "F1.7-T1 — Blackthorn refuge vivo (BLCKTHRN 0x0910)", () => {
+  conDsStrings();
   it("party-wipe en pueblo: EMITE el guión de refuge SIN mutar; resolveRefuge despierta en LB", () => {
     const game = makeGame();
     const events = game.confirmTownExit(false); // TOWN 0x15D4: corre un townTurn
@@ -300,7 +311,7 @@ describe("F1.7-T1 — Blackthorn refuge vivo (BLCKTHRN 0x0910)", () => {
   it("resurrección: karma bajo (10/20→0) recita el record 0, ENTRE COMILLAS, entre trueno y 'Strange words'", () => {
     const game = makeGame(makeState({ karma: 10 }));
     const msgs = beatMessages(refugeScript(game.confirmTownExit(false))!);
-    const quoted = `"${KARMA_STRAYED}"`;
+    const quoted = `"${KARMA_STRAYED()}"`;
 
     expect(msgs).toContain(quoted); // discurso envuelto (0x71be `"` + 0x0b37 `"`)
     // Va ENTRE "peal of thunder" y "Strange words are intoned" (0x0ac5 → 0x0b41).
@@ -339,8 +350,8 @@ describe("F1.7-T1 — Blackthorn refuge vivo (BLCKTHRN 0x0910)", () => {
     const game = makeGame(makeState({ karma: 90 }));
     const msgs = beatMessages(refugeScript(game.confirmTownExit(false))!);
 
-    expect(msgs).toContain(`"${KARMA_ENLIGHTENED}"`);
-    expect(msgs).not.toContain(`"${KARMA_STRAYED}"`);
+    expect(msgs).toContain(`"${KARMA_ENLIGHTENED()}"`);
+    expect(msgs).not.toContain(`"${KARMA_STRAYED()}"`);
   });
 });
 
@@ -348,7 +359,8 @@ describe("F1.7-T1 — Blackthorn refuge vivo (BLCKTHRN 0x0910)", () => {
 // (E3c-2). El puente COMBAT↔DUNGEON: el combate de sala fija escapeFloorDelta y al
 // cerrar, endCombat lo aplica a dungeonState.pos.floor. Sólo en combate de sala
 // (gate por dungeonState) y sólo si el party huyó (no victoria). video-N f078.
-describe("Klimb-escape de sala: cambio de piso (E3c-2)", () => {
+describeConAssets([DS_STRINGS], "Klimb-escape de sala: cambio de piso (E3c-2)", () => {
+  conDsStrings();
   function dungeonAt(floor: number): DungeonState {
     const floors = Array.from({ length: 8 }, () =>
       Array.from({ length: 8 }, () => Array.from({ length: 8 }, () => ({ type: 0, sub: 0 }))),
@@ -424,7 +436,8 @@ describe("Klimb-escape de sala: cambio de piso (E3c-2)", () => {
  * no hay ni lo uno ni lo otro. Con la party ENTERA DORMIDA el cierre SÍ corre — y ese
  * es el control por condición separada de abajo.
  */
-describe("D7 — cierre del turno de pueblo saltado con party a −1 (TOWN 0x15bf)", () => {
+describeConAssets([DS_STRINGS], "D7 — cierre del turno de pueblo saltado con party a −1 (TOWN 0x15bf)", () => {
+  conDsStrings();
   it("party-wipe: el reloj NO avanza (advance_clock 0x15d4 queda dentro del salto)", () => {
     const game = makeGame(); // makeState() = los dos miembros 'D' ⇒ −1
     const antes = { ...game.state.time };

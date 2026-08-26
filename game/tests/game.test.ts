@@ -12,6 +12,8 @@ import type { CharacterState, ExtractedInitialState, GameState } from "../src/co
 import { Game, type CombatResources, type GameData } from "../src/core/game.js";
 import type { WorldData } from "../src/core/world/map.js";
 import { DoorManager, DOOR_TILES } from "../src/core/world/doors.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 
 function makeChar(over: Partial<CharacterState> = {}): CharacterState {
   return {
@@ -190,7 +192,8 @@ describe("Game.open — tile real vía base+overrides, SIN sustituto de puerta-a
   });
 });
 
-describe("Camp / Hole-up (H) — kernel_camp_holeup 0x3C9A", () => {
+describeConAssets([DS_STRINGS], "Camp / Hole-up (H) — kernel_camp_holeup 0x3C9A", () => {
+  conDsStrings();
   const msgs = (evs: ReturnType<Game["camp"]>): string[] =>
     evs.filter((e) => e.kind === "message").map((e) => e.text ?? "");
 

@@ -92,12 +92,18 @@ describe("#276 censo estructural de constantes-display — default-DENY", () => 
     expect(badReason, `exclusiones sin prefijo [interna]/[deuda]/[decision] o sin razón: ${badReason.join(", ")}`).toEqual([]);
   });
 
-  it("control positivo del censo: la población medida no colapsa (≥100 candidatos, ≥49 listados)", () => {
+  it("control positivo del censo: la población medida no colapsa (≥100 candidatos, ≥45 listados)", () => {
     // Si el predicado estructural se rompe (p.ej. un refactor del AST deja el censo en 0),
     // los asertos de arriba pasarían EN VERDE sin medir nada. Cotas de 2026-08-18 (main
     // c95e8296): 107 candidatos, 49 declaraciones de nombres listados.
+    // 🔴 RE-DERIVADA el 25-08 (FICHA β): 49 → **45**. No es aflojar la cota para que pase:
+    // las CUATRO que faltan —ORDAINED_PAGES, REFUGE_KARMA_MESSAGES, CAMP_KARMA_MESSAGES y
+    // BLCKTHRN_MISCMSG— dejaron de ser tablas de literales porque su texto salió del código
+    // al asset `ds-strings.json`, y por eso salieron también del allowlist de
+    // `extract-user-strings.mjs`. La cota baja EN EL MISMO COMMIT que su causa, que es la
+    // única forma de que siga siendo una medida y no un número heredado.
     expect(census.length).toBeGreaterThanOrEqual(100);
     const listedDecls = census.filter((c) => listed.has(c.name)).length;
-    expect(listedDecls).toBeGreaterThanOrEqual(49);
+    expect(listedDecls).toBeGreaterThanOrEqual(45);
   });
 });

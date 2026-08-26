@@ -111,6 +111,17 @@ import { initInnRegister, innRegisterKey } from "./core/shops/innRegisterPicker.
 import { type QuestionData } from "./ui/creation.js";
 import { FaithfulIntro, type FaithfulIntroText } from "./ui/faithful-intro.js";
 import { buildSpellDefs, matchSpellByInitials, type SpellDef } from "./core/magic/spells.js";
+// LA CEREMONIA `CAST2.OVL:0x0000` — el jingle-con-inversión-de-viewport común a las cuatro
+// vías de magia del binario (40 sitios de llamada, censo en el módulo). El cue histórico se
+// llama `time-spell` porque el port sólo lo conocía por el pergamino de tiempo; la rutina es
+// la MISMA para el (C)ast, la poción y los pergaminos.
+import {
+  VAS_REL_POR_PHASE_CEREMONY_INDEX,
+  VAS_REL_POR_SPELL_INDEX,
+  castCeremonyIndexOrNull,
+  potionCeremonyIndex,
+  scrollCeremonyIndex,
+} from "./core/magic/ceremony.js";
 import {
   buildMixReagentRows,
   initMixReagentPicker,
@@ -169,6 +180,7 @@ import { captureScreenshot } from "./ui/screenshot.js";
 import { refrescarMiniatura } from "./ui/shot-refresh.js";
 import { mountReplayUi, type ReplayUiHandle } from "./ui/replay-ui.js";
 import { avisaSiLaExtraccionEsVieja } from "./web/extraccion.js";
+import { instalaDsStrings, DS_STRINGS_ASSET, type DsStrings } from "./core/data/ds-strings.js";
 
 async function fetchJson<T>(url: string): Promise<T> {
   const res = await fetch(url);
@@ -285,6 +297,12 @@ async function boot(): Promise<void> {
       fetchJson<TalkScript[]>("/assets/talk/keep.json"),
     ]);
     const questions = await fetchJson<QuestionData>("/assets/questions.json");
+    // Mensajes del búfer DS 0xB21E (KARMA/MISCMSG/ENDMSG.DAT) — FICHA β. Va con los
+    // OBLIGATORIOS y no con los best-effort de abajo A PROPÓSITO: sin él el port no
+    // tiene los discursos de resurrección, el interrogatorio de Blackthorn ni las
+    // lecciones del Códice, y esas escenas reventarían LEJOS de aquí (en mitad de una
+    // partida) en vez de en el arranque con el aviso de `npm run extract`.
+    instalaDsStrings(await fetchJson<DsStrings>(DS_STRINGS_ASSET));
     // Guion de la cinemática fiel (The Summoning + The Story). Best-effort: si el
     // extractor no ha corrido, la intro fiel salta las páginas sin romper el boot.
     const story = (await fetch("/assets/story.json")
@@ -808,6 +826,36 @@ async function boot(): Promise<void> {
     // consola compartido para no tocar los ~60 call sites de main.ts. La piel
     // dev (PixiJS) se monta al final del boot vía SkinManager.
     const view = new CoreViewImpl(game);
+
+    /**
+     * LA CEREMONIA `CAST2.OVL:0x0000` — UNA primitiva para las cuatro vías de magia.
+     *
+     * El binario la llama desde 40 sitios repartidos en DOS overlays y ningún otro
+     * (CAST.OVL 34, CAST2.OVL 6; censo con `dispatch_table.near_calls_to_kernel(*,0x8106)`,
+     * derivación completa en `core/magic/ceremony.ts`). Todos empujan UN argumento gateado
+     * a `< 9`, y con él escala la rutina entera: la ráfaga de ruido de entrada, los dos
+     * `tone_sweep` espejo y —lo que aquí importa— la ventana en que el viewport queda
+     * INVERTIDO por el `rect` XOR (8,8)-(183,183).
+     *
+     * El port ya tenía la pieza completa (`TimeSpellFlash` + `timeSpellFlashWindowMs` +
+     * `invertViewportInterior`) y la disparaba SÓLO desde los pergaminos 2/3/7. El cue
+     * conserva el nombre histórico `time-spell` porque el port sólo conocía la rutina por
+     * ese camino; renombrarlo es cosmético y no se hace aquí.
+     */
+    const emitCeremony = (n: number | null): void => {
+      if (n !== null) view.emitSfx({ id: "time-spell", n });
+    };
+    /**
+     * (C)ast: el índice es el CÍRCULO (`CAST.OVL:0x0e0a-0x0e14`, el mismo `[bp-8]` que cobra
+     * el maná), y SIETE de los 48 no hacen ceremonia — los tres arma-hechizo y los cuatro
+     * abanicos de línea, que tienen sonido propio. Vas Rel Por tampoco la hace AQUÍ: la suya
+     * cuelga del gate de fase (0x0d31), así que se emite allí y no dos veces.
+     */
+    const emitCastCeremony = (spellIndex: number): void => {
+      if (spellIndex === VAS_REL_POR_SPELL_INDEX) return;
+      emitCeremony(castCeremonyIndexOrNull(spellIndex));
+    };
+
     const hud = {
       message: (text: string, rune?: boolean): void => view.pushConsole(text, "message", rune),
       // Fila MIXTA (#364-c): tramos {text,rune} cuando la fuente cambia a mitad de fila
@@ -2945,7 +2993,11 @@ async function boot(): Promise<void> {
           // TAIL común del Cast (CAST.OVL 0x11a6, result=0 → "Failed!" DS 0x4660): los gates de
           // maná/nivel consumen (r.consumed) y caen al tail — el de maná tras su "M.P. too low!".
           if (!r.ok && r.consumed) hud.message("Failed!");
-          if (r.ok) view.emitSfx({ id: "cast-spell" });
+          // CEREMONIA del (C)ast en ARENA — la MISMA `CAST2:0x0000` que el pergamino de
+          // tiempo, con el CÍRCULO por índice (CAST.OVL 0x0e0a-0x0e14). Faltaba entera: el
+          // careo denso mide separación 0,1 (SIN BIMODALIDAD) al castear, contra 182,5 del
+          // An Tym en la misma sesión.
+          if (r.ok) emitCastCeremony(def.index);
           const fxRaw = r.effect;
           // #91 P3 — en COMBATE los cuatro In*Grav son un ATAQUE con arma-hechizo, no un
           // camino aparte. `cast_field_wall` rama `g_location >= 0x80` (CAST.OVL
@@ -3995,7 +4047,11 @@ async function boot(): Promise<void> {
             return;
           }
           const phase = key.charCodeAt(0) - 0x31; // 0x0d29 `sub byte [bp-2], 0x31`
-          view.emitSfx({ id: "cast-spell" }); // jingle 8 de 0x0d31 (CAST2:0x0000)
+          // …y la CEREMONIA que ese jingle trae consigo. El literal 8 es el de `0x0d2d
+          // mov ax, 8`, y el SITIO es éste y no el (C)ast: `CAST.OVL:0x0cf0` sólo la dispara
+          // tras el gate `'1'..'8'` EXACTO (0x0d1d/0x0d23); las tres salidas tempranas caen
+          // en `0x0d46 sub ax,ax` y se la saltan. Por eso `emitCastCeremony` excluye el 46.
+          emitCeremony(VAS_REL_POR_PHASE_CEREMONY_INDEX);
           const events: GameEvent[] = [];
           if (!game.moonstoneTeleport(phase, events)) {
             hud.message("Failed!"); // 0x4804: esa piedra la llevas encima
@@ -4033,7 +4089,11 @@ async function boot(): Promise<void> {
           // Conjuro efectivamente lanzado: el barrido base de casting del speaker
           // (§3.5, 0x4368). Sólo suena si pasó los gates (r.ok) — con entrada tecleada
           // ya puede llegar un hechizo NO mezclado ("None mixed!"), que no castea.
-          if (r.ok) view.emitSfx({ id: "cast-spell" });
+          // CEREMONIA del (C)ast — la MISMA `CAST2:0x0000` del pergamino de tiempo, con el
+          // CÍRCULO por índice (CAST.OVL 0x0e0a-0x0e14). Es el 85 % de las inversiones de
+          // paleta del corpus de vídeo y el port no disparaba NINGUNA: careo denso propio
+          // sobre VAS LOR y MANI da separación 0,1 (SIN BIMODALIDAD) contra 182,5 del An Tym.
+          if (r.ok) emitCastCeremony(def.index);
           const fx = r.effect;
           if (!fx) return;
           // Los efectos globales (luz, estado temporal, viento, comida) ya
@@ -4157,7 +4217,11 @@ async function boot(): Promise<void> {
           // TAIL común del Cast (CAST.OVL 0x11a6, result=0 → "Failed!" DS 0x4660): los gates de
           // maná/nivel consumen (r.consumed) y caen al tail — el de maná tras su "M.P. too low!".
           if (!r.ok && r.consumed) hud.message("Failed!");
-          if (r.ok) view.emitSfx({ id: "cast-spell" });
+          // CEREMONIA del (C)ast en MAZMORRA — misma rutina y mismo índice-círculo. Las dos
+          // ramas de abajo ya citaban sus literales («el jingle 4 …», «el jingle 2 …») y decían
+          // que los cubría la fanfarria: los cubre ESTO, y el índice derivado del círculo sale
+          // igual al literal que ellas leyeron del asm — dos vías al mismo número.
+          if (r.ok) emitCastCeremony(def.index);
           const fx = r.effect;
           if (!fx) return;
           if (fx.kind === "fieldWall") {
@@ -4176,8 +4240,9 @@ async function boot(): Promise<void> {
             // el campo BAJO el grupo o, si no lo hay, el de ENFRENTE (deltas por facing
             // con `&7` en los dos ejes), conservando el bit iluminado (`and [bx],8`).
             // "Field destroyed!" en éxito (cola muda, res=0xFFFF) / "Failed!" en fallo.
-            // El jingle 4 del binario (`push 4 → CAST2:0x0000`) va cubierto por el
-            // emitSfx("cast-spell") genérico de arriba, como el resto de jingles del Cast.
+            // El jingle 4 del binario (`push 4 → CAST2:0x0000`) lo cubre el
+            // `emitCastCeremony` genérico de arriba: An Grav es hechizo 18 y su círculo es 4,
+            // así que el índice derivado COINCIDE con el literal de la rama.
             // Sin dungeonSpellTurn: como su gemela fieldWall (la rutina no toca 24e6).
             applyEvents(game.applyAnGravDispel());
           } else if (fx.kind === "disarmOrOpen") {
@@ -4187,7 +4252,8 @@ async function boot(): Promise<void> {
             // fuera sin tirada. "Disarmed!" (DS 0x45a1, si bit 0) + "Chest opened!"
             // (DS 0x45ac) en éxito (cola muda, res=0xFFFF) / "Failed!" en fallo. El
             // jingle 2 del binario (`push 2 → CAST2:0x0000` @0x02ee, a la ENTRADA de la
-            // rama) va cubierto por el emitSfx("cast-spell") genérico de arriba. Sin
+            // rama) lo cubre el `emitCastCeremony` de arriba: An Sanct es hechizo 6, círculo
+            // 2, y el índice derivado COINCIDE con el literal de la rama. Sin
             // dungeonSpellTurn: la rama no toca 24e6 (el `or ,2` es de la rama de puerta).
             // Antes de #286 este descriptor caía al `else` final (turno y nada más).
             applyEvents(game.applyAnSanctOpenChest());
@@ -4470,12 +4536,16 @@ async function boot(): Promise<void> {
             hud.messageAppend("Scroll"); // "Scroll\n\n" (DS 0x466a) → "Item: Scroll"
             const res = readScroll(game.state, idx, game.state.position.location);
             for (const m of res.messages) hud.message(m);
-            // Hechizo-de-tiempo aplicado (In Sanct 2 / In An 3 / An Tym 7): el setter
-            // CAST2 0x08f8 encadena el JINGLE + INVERSIÓN de viewport (CAST2 0x0000,
-            // XOR fn21) — cue `time-spell` (n=idx); la piel fiel pinta la inversión.
-            // La rama "No effect!" de An Tym (loc 0x1d/0x28) NO pasa por el setter.
-            if ((idx === 2 || idx === 3 || idx === 7) && !res.messages.includes("No effect!"))
-              view.emitSfx({ id: "time-spell", n: idx });
+            // CEREMONIA del pergamino (CAST2 0x0000, XOR fn21): la piel fiel pinta la
+            // inversión. 🔴 La lista cableada «2/3/7» dejaba fuera DOS entradas de la jump
+            // table de pergaminos (`0x1205`, tabla en 0x1340): Vas Lor (0, `0x1218 sub ax,ax`)
+            // e In Quas Wis (4, `0x1290 mov ax,4`). Ahora sale de `scrollCeremonyIndex`, que
+            // lleva la tabla entera con su derivación — y donde el índice NO es el nº de
+            // pergamino habría que verlo ahí, no aquí.
+            // La rama "No effect!" de An Tym (loc 0x1d/0x28) NO pasa por el setter; e
+            // In Quas Wis exige `g_location <= 0x7f` (0x127f), que fuera de la arena se
+            // cumple siempre en esta boca (la de arena es `applyCombatScroll`).
+            if (!res.messages.includes("No effect!")) emitCeremony(scrollCeremonyIndex(idx));
             const fu = res.followup;
             if (fu.kind === "windDir") {
               // Rel Hur: getdir (silencioso, señalado por el cursor) → viento si overworld.
@@ -4501,6 +4571,13 @@ async function boot(): Promise<void> {
             // es el caller 0x138e de CAST2 0x9e fuera de combate; en combate
             // auto-apunta al actor del turno — openCombatUsePicker ya lo calca).
             pickCastTarget((idx) => {
+              // CEREMONIA de la poción (CAST.OVL `0x139b push word ptr [bp+4]` / `0x139e
+              // call`): el índice es el COLOR. 🔴 Va DENTRO del callback y ANTES del reroll,
+              // que es donde está en el binario: la ceremonia sigue al target-select y sólo
+              // con objetivo válido (`0x1394 or ax,ax` / `0x1396 jge 0x139b` — cancelar gasta
+              // la poción y no destella), y el reroll de color es POSTERIOR (0x13a1), así que
+              // lo que suena es el color PEDIDO, no el que salga.
+              emitCeremony(potionCeremonyIndex(color));
               const target = game.state.characters[idx]!;
               const eff = rerollPotionColor(color, castRng);
               // g_location EFECTIVO (#123): la poción Blanca sólo revela mapa con
@@ -4566,6 +4643,10 @@ async function boot(): Promise<void> {
       // Consumo ANTES de aplicar (CAST 0x136a); "Potion\n" (DS 0x4706).
       if ((game.state.potionQuantities[color] ?? 0) > 0) game.state.potionQuantities[color]!--;
       hud.messageAppend("Potion"); // "Potion\n" (DS 0x4706) → "Item: Potion" (sin eco del color)
+      // CEREMONIA de la poción EN ARENA — el mismo `0x139e`, y aquí sin cancelación posible:
+      // la rama alta de `0x1375 cmp g_location, 0x7f` no pasa por «On who:», toma
+      // `g_cmb_actor` y cae directa al empuje del color.
+      emitCeremony(potionCeremonyIndex(color));
       // Reroll (1/16 fiasco / 1/16 otro color) + efecto, con la RNG DEL COMBATE (cb.rng,
       // stream compartido) — punto exacto 0x13a1. location 0x80 = arena (rama combate).
       const eff = rerollPotionColor(color, cb.rng);
@@ -4595,7 +4676,10 @@ async function boot(): Promise<void> {
       for (const m of res.messages) hud.message(m);
       // Hechizo-de-tiempo (2/3/7): jingle + inversión del viewport (CAST2 0x0000 vía
       // setter 0x08f8) — también en arena (testigo doom-n6: An Tym en sala de Doom).
-      if (idx === 2 || idx === 3 || idx === 7) view.emitSfx({ id: "time-spell", n: idx });
+      // 🔴 In Quas Wis (4) NO entra aquí aunque la tabla le dé literal: su handler 0x1278
+      // gatea `g_location <= 0x7f` (0x127f) ANTES de la ceremonia, y la arena es 0x80 —
+      // imprime «Not here!» y se va. Vas Lor (0) sí, que no lleva gate de location.
+      if (idx !== 4) emitCeremony(scrollCeremonyIndex(idx));
       if (res.followup.kind === "summonDaemon") {
         // Kal Xen Corp EN ARENA (CAST2 0x04c2, arg 1): SIEMPRE aliado, sin contest rand30
         // (a diferencia del Cast). playerCast siembra el daemon + consume el turno.

@@ -41,6 +41,8 @@ import type {
 } from "../src/core/state.js";
 import { Game, type GameData, type GameEvent } from "../src/core/game.js";
 import type { SmallMapLocation, WorldData } from "../src/core/world/map.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 
 // Esperados EN CRUDO, tomados del disasm (NO importados del código bajo prueba):
 const CASTILLO_LB = 0x11; // BLCKTHRN 0x0c09 `mov byte ptr [g_location], 0x11`
@@ -121,7 +123,8 @@ const hasRefuge = (ev: readonly GameEvent[]): boolean =>
 const vivos = (g: Game): number =>
   g.state.characters.filter((c) => c.status !== "D").length;
 
-describe("refuge — el pestillo no absorbe los death-checks siguientes (MAINOUT 0x0aa2 en la cabecera del bucle)", () => {
+describeConAssets([DS_STRINGS], "refuge — el pestillo no absorbe los death-checks siguientes (MAINOUT 0x0aa2 en la cabecera del bucle)", () => {
+  conDsStrings();
   it("consumidor que DESCARTA el guión: el turno siguiente APLICA el rescate (firma comida=63)", () => {
     const game = makeGame();
 

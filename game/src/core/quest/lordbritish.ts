@@ -21,6 +21,7 @@ import { addByteCapped } from "../counters.js";
 import { tf } from "../../i18n/index.js";
 import { canReachDoom } from "./shadowlords.js";
 import { questScroll } from "./endgame.js";
+import { dsRec } from "../data/ds-strings.js";
 
 /** Nivel máximo alcanzable (U5). El binario no lo clampa explícitamente: exp
  * cabe en 9999 → floor(9999/100)=99 → nivel 8 por la fórmula. Se clampa por
@@ -238,7 +239,7 @@ export function rescueLordBritish(
     // Rama BUENA — diálogo fiel de ENDMSG.DAT (records 3 y 9) + el pergamino de cierre.
     messages.push("Lord British carefully opens the box...");
     messages.push(
-      '"FOLLOW!" cries Lord British, as he extracts a small, red sphere from the wooden box. He then casts it to the floor. "Our worlds await!"',
+      dsRec("ENDMSG.DAT", 9).replace(/\n+$/, ""),
     );
     messages.push(...questScroll(state));
     return { ok: true, ending: "victory", messages };

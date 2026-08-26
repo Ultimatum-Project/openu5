@@ -44,6 +44,8 @@ import {
   type ShrineData,
 } from "../src/core/world/shrines.js";
 import { RitualInvert } from "../src/ui/ritual-invert.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 
 const SHRINES: ShrineData = {
   virtues: ["Honesty", "Compassion", "Valour", "Justice", "Sacrifice", "Honor", "Spirituality", "Humility"],
@@ -99,7 +101,8 @@ function ritoDeHonestidad(learned: boolean, quest: boolean): GameEvent[] {
 const idx = (evs: GameEvent[], p: (e: GameEvent) => boolean): number => evs.findIndex(p);
 
 // ─────────────────────────────────────────────────────────────────────────────────────
-describe("#330(A) · el TRUENO del WELL DONE (0x0c88 → kernel 0x3072 screen_shake_fx)", () => {
+describeConAssets([DS_STRINGS], "#330(A) · el TRUENO del WELL DONE (0x0c88 → kernel 0x3072 screen_shake_fx)", () => {
+  conDsStrings();
   it("CONTROL POSITIVO: el fixture entra de verdad en la rama WELL DONE", () => {
     const evs = ritoDeHonestidad(true, true);
     expect(

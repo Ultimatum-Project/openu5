@@ -80,8 +80,7 @@ material.
 
 - **Evidencia LP** (P09 32:18 + masivo P08): «Thou dost approach the tranquil Shrine...» →
   «...and thou dost kneel before the Altar.» → [virtue-prompt ✓ port] → mantra×3 →
-  «...is ordained!» → «"'Tis now thy sacred Quest to go unto the Codex and learn <X>» →
-  «"Return again when thy Quest is done!»
+  «...«is ordained!» → «"'Tis …» (121 B, sha1 390e1876 — recortado; verifica contra tu copia)!»
 - **Binario (VERIFICADO; offsets CORREGIDOS por el carril audit-codex-shrine — los previos
   0xa71/0x729/0x7c9 apuntaban a MITAD de record)**: MISCMSG.DAT — **0xa59**
   `\nThou dost approach the tranquil Shrine...\n\n` (buffer 0xb8cc; lo imprime la rutina de

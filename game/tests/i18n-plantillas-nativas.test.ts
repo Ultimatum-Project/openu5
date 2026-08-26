@@ -189,13 +189,23 @@ describe("#126 (B) — LINT: ninguna plantilla catalogada se compone con ${} nat
   });
 
   it("las nativas SIN key del santuario siguen ahí (control NEGATIVO del lint)", () => {
-    // Si estas tres dejaran de aparecer, el lint habría perdido alcance sin avisar: son
+    // Si estas dejaran de aparecer, el lint habría perdido alcance sin avisar: son
     // plantillas nativas REALES que el barrido ve y que NO son del género (§C).
+    //
+    // 🔴 `"{}"\n\n` ENTRA el 25-08 (FICHA β) y NO es una regresión del género: es
+    // `codexPage()`, que compone la comilla y el `\n\n` que el original imprime con
+    // putchar/DS alrededor del record de MISCMSG.DAT. No es del género porque el género
+    // exige que la NORMALIZACIÓN sea una key VIVA de es.json (plantilla catalogada que el
+    // compuesto nunca alcanzaría), y `huella('"{}"\n\n')` no está en es.json — verificado
+    // al añadirla, junto con las otras tres. Lo que sí está catalogado es el compuesto
+    // ENTERO (record + comillas), que es lo que recibe `t()` al pintar el mensaje: por eso
+    // la lección del Códice se sigue traduciendo, y lo carea
+    // `ds-strings-compuestas.test.ts` contra el corpus.
     const shrine = extractNativeInterpolations(join(SRC, "core"), shellFiles(SRC))
       .filter((f) => f.loc.startsWith("core/world/shrine-ceremonies.ts"))
       .map((f) => f.text)
       .sort();
-    expect(shrine).toEqual(["{} gp\n\n", "{} +1\n", "{}\n"].sort());
+    expect(shrine).toEqual(['"{}"\n\n', "{} gp\n\n", "{} +1\n", "{}\n"].sort());
   });
 
   it("el instrumento no está muerto: en modo nativo ve plantillas y en catálogo no las poda", () => {

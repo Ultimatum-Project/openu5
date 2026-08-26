@@ -128,8 +128,52 @@ export function buildCorpusBySurface({ assetsDir = ASSETS } = {}) {
     // era el único .DAT de texto sin superficie — el diálogo final de LB («Didst thou
     // bring my box?»…, part24:1643-1673) quedaba fuera de la guarda anti-fabricación.
     "endgame.json": "L",
+    // Superficie de los MENSAJES DEL BÚFER DS 0xB21E (KARMA/MISCMSG/ENDMSG.DAT →
+    // ds-strings.json, FICHA β). Entra en el MISMO commit en que los literales salen de
+    // `game/src`: hasta el 25-08 estos parlamentos llegaban al corpus por sus claves de
+    // `approved-strings.json`, y al retirarse esas 31 claves el inglés de es.json se
+    // habría quedado HUÉRFANO (medido: `i18n-manifest` en rojo con la traducción de la
+    // traición). El texto no ha desaparecido: ha cambiado de vehículo, y el corpus lo
+    // sigue por el vehículo nuevo.
   };
   for (const [f, cube] of Object.entries(CUBE_FILE)) surface(f, cube, collectStrings(readJson(A(f))));
+
+  // ds-strings.json (KARMA/MISCMSG/ENDMSG.DAT → búfer DS 0xB21E, FICHA β): los records
+  // CRUDOS y, además, las formas COMPUESTAS que el motor imprime de verdad.
+  //
+  // 🔴 POR QUÉ HACEN FALTA LAS DOS, y no basta con los records: la clave de `es.json` es
+  // la huella del string que recibe `t()`, y el motor no imprime el record pelado — lo
+  // ENVUELVE (el original imprime la comilla y el `\n\n` con putchar/DS aparte del
+  // record). Hasta el 25-08 esas formas compuestas llegaban al corpus por sus claves de
+  // `approved-strings.json`; al salir los literales de `game/src` esas 31 claves se
+  // retiraron y 19 traducciones de es.json se quedaron HUÉRFANAS (medido, no previsto:
+  // `i18n-manifest` en rojo). Se emiten aquí para que el corpus siga cubriendo lo que el
+  // motor emite.
+  //
+  // ⚠ ESTA TABLA ES UN ESPEJO DE LA COMPOSICIÓN DEL PORT, y dos implementaciones
+  // divergen. No se deja al cuidado de nadie: `game/tests/ds-strings-compuestas.test.ts`
+  // CAREA las formas de aquí contra las que emiten de verdad `game.ts`, `camp.ts`,
+  // `shrine-ceremonies.ts` y `blackthorn-capture.ts`, y enrojece si el port cambia una
+  // decoración sin tocar esta tabla.
+  const ds = readJson(A("ds-strings.json"));
+  const dsCrudos = Object.values(ds).flat().filter(hasLetter);
+  const K = ds["KARMA.DAT"] ?? [];
+  const M = ds["MISCMSG.DAT"] ?? [];
+  const E = ds["ENDMSG.DAT"] ?? [];
+  const dsCompuestas = [
+    // Discursos de resurrección/aparición: `"` + record + `"` (game.ts / camp.ts).
+    ...K.map((r) => `"${r}"`),
+    // Lecciones largas del Codex (recs 20-27): `"` + record + `"\n\n` (shrine-ceremonies.ts).
+    ...M.slice(20, 28).map((r) => `"${r}"\n\n`),
+    // Preguntas del interrogatorio (recs 0-2): record + virtud + `?"` (blackthorn-capture.ts).
+    ...M.slice(0, 3).map((r) => `${r}{}?"`),
+    // Amenaza del reloj de arena (rec8): record + nombre + ` die!" ` (blackthorn-capture.ts).
+    ...(M[8] === undefined ? [] : [`${M[8]}{} die!" \n\n`]),
+    // Escena del Códice (ENDMSG rec9): el port recorta el `\n` final (quest/lordbritish.ts).
+    ...(E[9] === undefined ? [] : [E[9].replace(/\n+$/, "")]),
+  ].filter(hasLetter);
+  surface("ds-strings.json#records", "L", dsCrudos);
+  surface("ds-strings.json#composed", "L", dsCompuestas);
 
   // demo-scene.json (MISCMAPS.DAT): los TÍTULOS de capítulo del attract-demo
   // («The Summoning»…) son texto user-facing real del binario; el resto del
@@ -181,6 +225,7 @@ export const COVERED_ASSET_FILES = [
   "intro-scenes.json",
   "questions.json",
   "endgame.json",
+  "ds-strings.json",
   "demo-scene.json",
   "data.json",
 ];

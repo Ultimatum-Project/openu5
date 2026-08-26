@@ -21,9 +21,28 @@ export const APPARITION_FIGURE_TILE = 0x174;
 export const APPARITION_FIGURE_FRAMES = 4;
 /** Celda FIJA de la figura — el centro/hoguera (5,5). Medido a 60 fps (rel-fuego (0,0)). */
 export const APPARITION_FIGURE_CELL = { col: 5, row: 5 } as const;
-/** Duración de cada pulso de inversión (ms). Clase C: testigo ≈2.75 s (calibrable). */
+/**
+ * Duración de cada pulso de inversión (ms). **Clase C, y ahora se sabe POR QUÉ**
+ * (#166/G1, `re/notes/cadencia-delay-pit.md`): el pulso es el hueco entre el
+ * `rect_XOR(8,8,0xb7,0xb7)` (OUTSUBS 0x08aa) y el primer render posterior
+ * (`run_n_frames(1)` @0x08d5), y lo único que hay en medio es
+ * `tone_sweep(1,0x9c4,0xea60,1,0x157c)` @0x08c1 — **`pcspeaker_tone_sweep` 0x2192,
+ * un busy-wait cuyo retardo INTERIOR está calibrado a la CPU (`g_snd_delay_calib`,
+ * medido al arrancar contra INT 1Ch @0x11b4) pero cuyo cuerpo EXTERIOR no lo está**.
+ * ⇒ el pulso dura lo que dura el HOST y **no tiene una cifra en ms derivable**.
+ *
+ * Por eso los tres testigos no concuerdan y no hay que reconciliarlos: son tres
+ * capturas de DOSBox distintas — 2200 aquí, ≈2,75 s en el testigo con el que se
+ * calibró, y **4567 ms medidos en el corpus Lord Fenton** (7 muestras, ep02 y ep12,
+ * ±33 ms; durante el pulso el viewport está congelado del todo, que es la firma del
+ * barrido). El asm no arbitra entre las tres. Recalibrable sin tocar la mecánica.
+ *
+ * Lo que el asm SÍ fija y el port ya deriva: **N pulsos = miembros vivos** (bucle
+ * 0x07fb) y la figura 0x174 fija en (5,5).
+ */
 export const APPARITION_INVERT_MS = 2200;
-/** Hueco entre pulsos (ms). Clase C: testigo ≈0.5 s. */
+/** Hueco entre pulsos (ms). Clase C por el mismo motivo (la campanilla `a2=0x1388`
+ *  @0x0896 es el mismo `tone_sweep`); testigo ≈0.5 s, LF mide 867 ms. */
 export const APPARITION_GAP_MS = 450;
 /**
  * COLA DE DISCURSO tras el último pulso (ms): la figura sigue materializada, con TODO

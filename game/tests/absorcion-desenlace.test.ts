@@ -33,6 +33,8 @@ import {
 } from "../src/core/combat/combat.js";
 import { Game, type GameData } from "../src/core/game.js";
 import type { WorldData } from "../src/core/world/map.js";
+import { describeConAssets } from "./assets-opcionales.js";
+import { conDsStrings, DS_STRINGS } from "./ds-strings-fixture.js";
 
 function load<T>(rel: string): T {
   return JSON.parse(readFileSync(fileURLToPath(new URL(rel, import.meta.url)), "utf8")) as T;
@@ -196,7 +198,8 @@ describe("el gate de absorb (0x1ebb-0x1eda) — los términos de posición, uno 
   });
 });
 
-describe("fin por tablero vacío (0x0cb0-0x0cc7) + desvío del teardown (DUNGEON 0x00cb)", () => {
+describeConAssets([DS_STRINGS], "fin por tablero vacío (0x0cb0-0x0cc7) + desvío del teardown (DUNGEON 0x00cb)", () => {
+  conDsStrings();
   it("absorber a TODOS los miembros vacía el tablero y cierra el combate — sin BATTLE IS LOST", () => {
     const c = celda();
     let guard = 0;

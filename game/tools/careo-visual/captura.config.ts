@@ -12,7 +12,10 @@ const ORIGIN = `http://localhost:${PORT}`;
 export default defineConfig({
   testDir: ".",
   testMatch: "captura-port.pw.ts",
-  timeout: 180_000,
+  // 🔴 180 s bastaban para los 14 compases del ch01 y NO para un episodio entero: el ch02
+  // conduce ~1070 compases (~15 min de reloj). El timeout es un parámetro del TAMAÑO del
+  // guion, no una constante del arnés.
+  timeout: Number(process.env.CAREO_TIMEOUT ?? 180_000),
   retries: 0,
   workers: 1,
   reporter: "list",
