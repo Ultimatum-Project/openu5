@@ -494,10 +494,9 @@ picker.addEventListener("change", () => {
 });
 play.addEventListener("click", () => {
   analitica.evento(EV.BYO_JUGAR);
-  // El juego vive en /play.html: el ensamblado (build-demo-publica.sh) renombra
-  // el index del juego para que la RAÍZ del sitio sea esta landing BYO (entrar
-  // a / sin extracción daba juego-sin-assets).
-  location.href = "/play.html";
+  // Ultimatum owns the public game route. The standalone engine remains at
+  // /play.html only as the host's same-origin runtime implementation.
+  location.href = "/games/ultima5/";
 });
 
 // ── LA VÍA DEL ZIP ───────────────────────────────────────────────────────────────────

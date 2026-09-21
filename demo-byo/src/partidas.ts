@@ -852,7 +852,7 @@ export function pintaPartidas(
       if (hayCopia) {
         const a = document.createElement("a");
         a.className = "guardado__accion";
-        a.href = `/play.html?save=${encodeURIComponent(p.id)}`;
+        a.href = `/games/ultima5/?save=${encodeURIComponent(p.id)}`;
         // 🔴 «Continuar» es falso sobre un momento legendario: no se continúa una partida
         // que no se ha jugado nunca. Es el MISMO enlace y el mismo destino —no hay una
         // segunda vía— y lo único que cambia es el verbo, que es lo que la tarjeta afirma.
@@ -914,7 +914,7 @@ export function pintaPartidas(
         fecha: fecha(r.createdAt),
       });
       if (hayCopia) {
-        const f = fila(r.label, meta, txt("repeticionVer"), `/play.html?replay=${encodeURIComponent(r.id)}`);
+        const f = fila(r.label, meta, txt("repeticionVer"), `/games/ultima5/?replay=${encodeURIComponent(r.id)}`);
         f.insertBefore(miniaturaReplay(inv.miniaturas.get(r.id)), f.firstChild);
         // 🔴 SIGUE SIENDO UN ENLACE CON `href` REAL, y el popover se monta ENCIMA: así
         // ctrl-clic, «abrir en otra pestaña» y el menú contextual siguen funcionando,
