@@ -214,7 +214,20 @@ export async function extractToCache(
   log: (msg: string) => void = () => {},
   opts: PipelineOptions = {},
 ): Promise<number> {
-  const cache = await caches.open(BYO_CACHE);
+  return extractToNamedCache(src, BYO_CACHE, log, opts);
+}
+
+/** Ultimatum staging seam: writes a complete extraction to an unpublished cache. */
+export async function extractToNamedCache(
+  src: SourceFiles,
+  cacheName: string,
+  log: (msg: string) => void = () => {},
+  opts: PipelineOptions = {},
+): Promise<number> {
+  if (cacheName !== BYO_CACHE && !/^ultimatum-u5-install-generation-[a-zA-Z0-9-]{8,80}$/.test(cacheName)) {
+    throw new Error("nombre de generación de Ultimatum no válido");
+  }
+  const cache = await caches.open(cacheName);
   const written = new Map<string, Uint8Array | Blob>();
   await runPipeline(makeIo(src, cache, written, log), opts);
 
@@ -252,6 +265,24 @@ export async function extractToCache(
  */
 export async function hasExtraction(): Promise<boolean> {
   if (!("caches" in globalThis)) return false;
+  try {
+    const controlName = "ultimatum-install-control-v1";
+    const pointerPath = "/__ultimatum/games/ultima5/active-install.json";
+    if (await caches.has(controlName)) {
+      const control = await caches.open(controlName);
+      const response = await control.match(pointerPath);
+      if (response) {
+        const pointer = await response.clone().json() as { cacheName?: unknown };
+        const name = typeof pointer?.cacheName === "string" ? pointer.cacheName : "";
+        if ((name === BYO_CACHE || /^ultimatum-u5-install-generation-[a-zA-Z0-9-]{8,80}$/.test(name)) && await caches.has(name)) {
+          const active = await caches.open(name);
+          if (await active.match(ASSETS_PREFIX + "manifest.json")) return true;
+        }
+      }
+    }
+  } catch {
+    // Preserve the original OpenU5 fallback when platform metadata is unreadable.
+  }
   if (!(await caches.has(BYO_CACHE))) return false;
   const cache = await caches.open(BYO_CACHE);
   return (await cache.match(ASSETS_PREFIX + "manifest.json")) !== undefined;

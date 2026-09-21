@@ -32,12 +32,13 @@ import {
 // copia, y el día que cambiara daría cero fotos en silencio.
 import { writeSaveShot } from "./core/save-keys.js";
 import { importNativeSave, type SaveSidecar } from "./core/saveNative.js";
-import { applyGypsyCreation, type ExtractedInitialState, type GameState, type WorldObject } from "./core/state.js";
+import { applyGypsyCreation, deserialize, serialize, type ExtractedInitialState, type GameState, type WorldObject } from "./core/state.js";
 import { DoorManager } from "./core/world/doors.js";
 import { SHOP_CLOSED_MESSAGE, shopIsOpen } from "./core/world/shop-hours.js";
 import type { SmallMapLocation, WorldData } from "./core/world/map.js";
 import type { Direction } from "./core/world/movement.js";
 import type { IntentSink } from "./skin/api.js";
+import { contextualActionAt, installUltimatumU5SessionBridge, signLookAction, type UltimatumU5Action, type UltimatumU5ContextAction, type UltimatumU5Prompt } from "./host/ultimatum-session.js";
 import { sfxForCombatEvent } from "./core/sfx.js";
 import { CoreViewImpl } from "./skin/coreview.js";
 import { initDebugMenu } from "./debug/index.js";
@@ -503,6 +504,7 @@ async function boot(): Promise<void> {
     // IN-PLACE sobre game.state (misma técnica que applyLoadedState) ANTES de crear la
     // vista, así el primer render ya pinta la partida cargada.
     const bootParams = new URLSearchParams(window.location.search);
+    const platformOwnsControls = bootParams.get("ultimatumControls") === "1" && window.parent !== window;
     // `?fresh` fuerza partida nueva (guard de determinismo del tour/pixeldiff/e2e); el
     // deep-link DEV (?x&?y) posiciona a mano, así que también salta la restauración.
     //
@@ -690,7 +692,7 @@ async function boot(): Promise<void> {
     // hora, mientras el deck (migrado en #334) ya había cambiado: dos verdades a la vez.
     /** Lee la preferencia VIVA (puede cambiar durante la sesión) y resuelve la precedencia. */
     const quiereLayoutPartidoAhora = (): boolean =>
-      layoutPartidoInicial(layoutPartidoGuardado(), banderaPartido, esPantallaTactil());
+      !platformOwnsControls && layoutPartidoInicial(layoutPartidoGuardado(), banderaPartido, esPantallaTactil());
     // ?nointro (DEV): salta la CINEMÁTICA fiel y arranca directo en el mundo con la
     // piel fiel montada. Sólo para el arnés píxel-diff (task #26 fase 2): la captura
     // Playwright necesita el mundo renderizado de forma DETERMINISTA, sin navegar el
@@ -906,7 +908,7 @@ async function boot(): Promise<void> {
     // juego — un hueco negro donde estaban los botones seguiría sin ser la pantalla de 1988.
     // La API de módulo del deck (`setExpectedInput`, `refreshTouchDeck`) es `active?.…` sobre
     // una instancia que aquí queda a `null`: sin instancia son no-ops, no errores.
-    if (!soloUiOriginal) new TouchControls(parent, game);
+    if (!soloUiOriginal && !platformOwnsControls) new TouchControls(parent, game);
     // PERFIL DE AUDIO por piel (task #27, `re/notes/audio-profile-1988.md`): la piel fiel
     // 1988 arranca SIN música de fondo — el DOS original en un PC estándar no tenía música,
     // sólo PC-speaker (la canción de Iolo, fanfarrias, etc. son SFX de speaker, y ésos SÍ
@@ -3602,6 +3604,17 @@ async function boot(): Promise<void> {
         ? { afterRender: (root: HTMLElement) => syncPixelFontSaves(root, true) }
         : {}),
     });
+    // In an Ultimatum host the platform owns save browsing and persistence UI.
+    // Standalone OpenU5 keeps its existing panel and localStorage behavior.
+    const platformOwnsSaveUi = bootParams.get("ultimatumSaves") === "1" && window.parent !== window;
+    const openSaveSurface = (): void => {
+      if (platformOwnsSaveUi) {
+        window.parent.postMessage({ type: "ultimatum:open-saves" }, window.location.origin);
+        return;
+      }
+      savePanel.show(game.state, mapName());
+    };
+
     // Hook DEV del arnés píxel-diff (task #26 fase 2) y del encadenado del Grand Tour
     // (F3): carga un SAVED.GAM NATIVO (bytes del original o del checkpoint del port,
     // 4192 B) en el estado vivo y re-renderiza.
@@ -5365,7 +5378,7 @@ async function boot(): Promise<void> {
           return;
         }
         cancelAutoWalk();
-        savePanel.show(game.state, mapName());
+        openSaveSurface();
         return;
       }
       // F8: toggle del speaker fiel (task #3). F8 no es un comando del original
@@ -5957,7 +5970,7 @@ async function boot(): Promise<void> {
 
     // Cada tecla puede abrir/cerrar un modal (selector, prompt) sin pasar por
     // applyEvents; re-deriva el gate del cursor (F-G) tras procesarla.
-    window.addEventListener("keydown", (ev) => {
+    const dispatchGameKey = (ev: KeyboardEvent): void => {
       handleGameKey(ev);
       // Cierra la tecla EN VUELO con el turno RESULTANTE. Si alguna rama la soltó
       // (`keyRec.drop()`), esto es un no-op. El turno es a la vez el índice de salto de
@@ -5980,7 +5993,8 @@ async function boot(): Promise<void> {
       // de procesarse es la que entra a una mazmorra o abre un combate. Antes esto lo
       // descubría un polling de 400 ms; ahora es evento (auditoría móvil, TANDA C).
       refreshTouchDeck();
-    });
+    };
+    window.addEventListener("keydown", dispatchGameKey);
 
     // Capa INTENCIÓN→COMANDO (E1-S1). Las pieles (y la botonera táctil) producen
     // intents; este sink los traduce a comandos del dispatcher original. Es la
@@ -6034,6 +6048,130 @@ async function boot(): Promise<void> {
         refreshTouchDeck();
       },
     };
+
+    const ultimatumMovementKeys: Record<Extract<UltimatumU5Action, { type: "move" }>["direction"], string> = {
+      north: "ArrowUp", south: "ArrowDown", east: "ArrowRight", west: "ArrowLeft",
+    };
+    const ultimatumCommandKeys: Record<Extract<UltimatumU5Action, { type: "command" }>["command"], string> = {
+      attack: "a", board: "b", cast: "c", enter: "e", fire: "f", get: "g",
+      "hole-up": "h", ignite: "i", jimmy: "j", klimb: "k", look: "l", mix: "m",
+      "new-order": "n", open: "o", push: "p", quit: "q", ready: "r", search: "s",
+      talk: "t", use: "u", view: "v", yell: "y", ztats: "z",
+    };
+    function ultimatumPromptState(): UltimatumU5Prompt | null {
+      const prompt = prompts.current;
+      if (!prompt) return null;
+      const snapshot = view.snapshot();
+      const visibleQuestion = [...snapshot.console].reverse().find((line) => /[A-Za-z0-9]/.test(line.text))?.text.trim();
+      const label = visibleQuestion || "Choose a response.";
+      if (prompt.type === "yesno" || prompt.type === "yesno-esc") {
+        return {
+          kind: "choice", label, canCancel: prompt.type === "yesno-esc",
+          options: [
+            { id: "yes", label: "Yes", keys: ["y"] },
+            { id: "no", label: "No", keys: ["n"] },
+          ],
+        };
+      }
+      if (prompt.type === "party-select") {
+        return {
+          kind: "choice", label: "Choose a party member.", canCancel: true,
+          options: [...snapshot.party.map((member, index) => ({
+            id: `party-${index}`, label: member.name, detail: `${member.hp}/${member.maxHp} HP · ${member.status}`, keys: [String(index + 1)],
+          })), { id: "cancel", label: "Cancel", keys: ["Escape"] }],
+        };
+      }
+      if (prompt.type === "rune") {
+        return {
+          kind: "choice", label: "Choose a prepared spell.", canCancel: true,
+          options: [...snapshot.inventory.items.map((spell) => ({
+            id: `spell-${spell.idx}`, label: spell.name, detail: `${spell.qty} prepared`,
+            keys: [...spell.name.split(/\s+/).map((word) => word[0]!.toUpperCase()), "Enter"],
+          })), { id: "cancel", label: "Cancel", keys: ["Escape"] }],
+        };
+      }
+      if (prompt.type === "digit") {
+        return {
+          kind: "choice", label: visibleQuestion || "Choose a number.", canCancel: Boolean(prompt.cancelKeys),
+          options: [...Array.from({ length: 10 }, (_, digit) => ({ id: `digit-${digit}`, label: String(digit), keys: [String(digit)] })), ...(prompt.cancelKeys ? [{ id: "cancel", label: "Cancel", keys: ["Escape"] }] : [])],
+        };
+      }
+      if (prompt.type === "number") return { kind: "number", label: visibleQuestion || "Enter an amount.", canCancel: true, maxLength: prompt.max };
+      if (prompt.type === "text") return { kind: "text", label, canCancel: Boolean(prompt.cancel) || !prompt.escKernel, maxLength: prompt.max };
+      if (prompt.type === "getkey") return { kind: "text", label, canCancel: true, maxLength: 1 };
+      if (prompt.type === "ready-picker") {
+        return {
+          kind: "direction", label: "Choose an item, then select it.", canCancel: true,
+          options: [{ id: "select", label: "Select", keys: ["Enter"] }],
+        };
+      }
+      return { kind: "text", label, canCancel: true, maxLength: 1 };
+    }
+    function dispatchUltimatumAction(action: UltimatumU5Action): void {
+      if (action.type === "tap-tile") {
+        dispatchUltimatumTapAction(action);
+        return;
+      }
+      if (action.type === "move") {
+        const signAction = signLookAction(view.snapshot(), action.direction);
+        if (signAction) {
+          dispatchUltimatumContextAction(signAction);
+          return;
+        }
+      }
+      const key = action.type === "move" ? ultimatumMovementKeys[action.direction]
+        : action.type === "command" ? ultimatumCommandKeys[action.command]
+        : action.type === "cancel" ? "Escape"
+        : action.type === "confirm" ? "Enter"
+        : action.type === "text" ? action.value
+        : action.type === "raw-key" ? action.key : "";
+      // Use the canonical game reducer directly. Physical keyboard events still use the
+      // DOM listener above, but platform/touch/controller actions never synthesize one.
+      dispatchGameKey({
+        key,
+        code: "",
+        repeat: false,
+        ctrlKey: false,
+        metaKey: false,
+        preventDefault() {},
+      } as KeyboardEvent);
+    }
+    function dispatchUltimatumContextAction(action: UltimatumU5ContextAction): void {
+      dispatchUltimatumAction({ type: "command", command: action.command });
+      if (action.direction) dispatchUltimatumAction({ type: "move", direction: action.direction });
+    }
+    function dispatchUltimatumTapAction(action: Extract<UltimatumU5Action, { type: "tap-tile" }>): void {
+      const snapshot = view.snapshot();
+      const context = contextualActionAt(snapshot, action.x, action.y);
+      if (!context) {
+        intents.dispatch(action);
+        return;
+      }
+      if (context.direction || (action.x === snapshot.center.x && action.y === snapshot.center.y)) {
+        dispatchUltimatumContextAction(context);
+        return;
+      }
+      const interact = (direction?: "north" | "south" | "east" | "west") => {
+        const fresh = contextualActionAt(view.snapshot(), action.x, action.y);
+        if (fresh) dispatchUltimatumContextAction({ ...fresh, ...(direction ? { direction } : {}) });
+      };
+      if (context.command === "enter") autoWalkCtl.walkTo(action, () => interact());
+      else autoWalkCtl.walkAdjacentTo(action, interact);
+    }
+
+    // Development bridge for the Ultimatum host proof-of-life. It deliberately
+    // exposes no storage or platform UI: the host owns those layers and wraps the
+    // returned engine checkpoint in its own game-scoped save envelope.
+    installUltimatumU5SessionBridge(window, {
+      view,
+      dispatchAction: dispatchUltimatumAction,
+      dispatchContextAction: dispatchUltimatumContextAction,
+      promptState: ultimatumPromptState,
+      serializeState: () => serialize(game.state),
+      validateState: (payload) => { deserialize(payload); },
+      restoreState: (payload) => applyLoadedState(deserialize(payload)),
+      cancelTransientInput: cancelAutoWalk,
+    });
 
     // Registro de pieles y montaje inicial (E1-S1). El core (game/view) no sabe
     // cuál está montada. E1-S8 registrará la piel fiel; F9 alternará en caliente.
@@ -6089,6 +6227,7 @@ async function boot(): Promise<void> {
     // leyeran por el mismo grifo.
     const quiereLayoutPartido =
       !soloUiOriginal &&
+      !platformOwnsControls &&
       layoutPartidoDisponible(layoutPartidoGuardado(), banderaPartido, esPantallaTactil());
     // `toggleLayoutPartido` se define ABAJO (necesita `skins`); el envoltorio sólo recibe
     // una lambda que lo llama, así que el orden de declaración no importa.
@@ -6350,6 +6489,7 @@ async function boot(): Promise<void> {
           // la página (vía diseñada), que es la única vuelta al partido en ese estado.
           layoutPartidoDisponible: () =>
             !soloUiOriginal &&
+            !platformOwnsControls &&
             layoutPartidoDisponible(layoutPartidoGuardado(), banderaPartido, esPantallaTactil()),
           layoutPartido: () => skins.currentId === portraitSkin?.id,
           setLayoutPartido: (on: boolean) => {
@@ -6409,7 +6549,7 @@ async function boot(): Promise<void> {
           openSaves: () => {
             if (!game.dungeonState && !game.combat) {
               cancelAutoWalk();
-              savePanel.show(game.state, mapName());
+              openSaveSurface();
             }
           },
           // Repeticiones: MISMA restricción que guardar, y por la misma razón — el

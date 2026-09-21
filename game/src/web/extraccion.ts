@@ -52,9 +52,38 @@ export interface DiagnosticoExtraccion {
 }
 
 /** Lo mínimo de `CacheStorage` que hace falta: se inyecta para poder probarlo. */
+export interface RespuestaCacheJson {
+  clone(): { json(): Promise<unknown> };
+}
+
+export interface CacheDeExtraccion {
+  keys(): Promise<readonly { url: string }[]>;
+  match?(ruta: string): Promise<RespuestaCacheJson | undefined>;
+}
+
 export interface AlmacenDeCaches {
   has(nombre: string): Promise<boolean>;
-  open(nombre: string): Promise<{ keys(): Promise<readonly { url: string }[]> }>;
+  open(nombre: string): Promise<CacheDeExtraccion>;
+}
+
+export const ULTIMATUM_CONTROL_CACHE = "ultimatum-install-control-v1";
+export const ULTIMATUM_POINTER_PATH = "/__ultimatum/games/ultima5/active-install.json";
+const ULTIMATUM_GENERATION_CACHE = /^ultimatum-u5-install-generation-[a-zA-Z0-9-]{8,80}$/;
+
+/** Resolve the platform-published extraction without invalidating legacy OpenU5 data. */
+export async function cacheExtraccionActiva(caches: AlmacenDeCaches): Promise<string | null> {
+  if (await caches.has(ULTIMATUM_CONTROL_CACHE)) {
+    const control = await caches.open(ULTIMATUM_CONTROL_CACHE);
+    const response = await control.match?.(ULTIMATUM_POINTER_PATH);
+    if (response) {
+      const pointer = await response.clone().json() as { cacheName?: unknown } | null;
+      const name = pointer && typeof pointer.cacheName === "string" ? pointer.cacheName : "";
+      if ((name === BYO_CACHE || ULTIMATUM_GENERATION_CACHE.test(name)) && await caches.has(name)) {
+        return name;
+      }
+    }
+  }
+  return await caches.has(BYO_CACHE) ? BYO_CACHE : null;
 }
 
 /**
@@ -97,8 +126,9 @@ export async function diagnosticaExtraccion(
   const vacio = { esExtraccionDelVisitante: false, faltan: [] as string[] };
   if (!caches) return vacio;
   try {
-    if (!(await caches.has(BYO_CACHE))) return vacio;
-    const cache = await caches.open(BYO_CACHE);
+    const nombre = await cacheExtraccionActiva(caches);
+    if (!nombre) return vacio;
+    const cache = await caches.open(nombre);
     const presentes = rutasDeClaves(await cache.keys(), base);
     return { esExtraccionDelVisitante: true, faltan: assetsQueFaltan(presentes) };
   } catch {

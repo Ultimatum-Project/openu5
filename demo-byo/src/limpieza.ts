@@ -67,6 +67,13 @@ export const PREFIJOS_LOCALSTORAGE = ["u5clone:", "u5.", "u5dbg-", "openu5-"] as
  * ocupando disco de alguien que pidió que no quedara nada.
  */
 export const PREFIJO_CACHES = "u5-";
+export const PREFIJOS_CACHES_ULTIMATUM = [PREFIJO_CACHES, "ultimatum-u5-install-generation-"] as const;
+export const CACHES_EXACTAS_ULTIMATUM = ["ultimatum-install-control-v1"] as const;
+
+export function cachePropia(nombre: string): boolean {
+  return CACHES_EXACTAS_ULTIMATUM.includes(nombre as (typeof CACHES_EXACTAS_ULTIMATUM)[number]) ||
+    PREFIJOS_CACHES_ULTIMATUM.some((prefijo) => nombre.startsWith(prefijo));
+}
 
 /** Lo que se fue, MEDIDO al borrar. Lo que se pinta detrás sale de aquí, no de una lista previa. */
 export interface ResumenLimpieza {
@@ -118,7 +125,7 @@ export async function borraCaches(): Promise<string[]> {
   } catch {
     return [];
   }
-  const fuera = nombres.filter((n) => n.startsWith(PREFIJO_CACHES));
+  const fuera = nombres.filter(cachePropia);
   for (const n of fuera) {
     try {
       await caches.delete(n);

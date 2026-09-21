@@ -19,6 +19,7 @@ import { EV } from "../../game/src/web/eventos.js";
 import { instalaIdiomaByo, txt } from "./idioma.js";
 import { atiendeEnlaceCompartido, instalaBotonMomentos } from "./momentos.js";
 import { borraTodo, leeInventario, pintaPartidas, type Inventario } from "./partidas.js";
+import { mountUltimatumImporter, type UltimatumImportController } from "./ultimatum-import.js";
 
 // Consentimiento (carril 1) ANTES que nada: mientras no haya permiso, `evento()`
 // descarta y no se carga ningún SDK. Los hitos de abajo son el embudo del BYO —
@@ -303,6 +304,90 @@ async function extrae(src: SourceFiles): Promise<void> {
 
 async function run(src: SourceFiles): Promise<void> {
   logEl.textContent = "";
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
+  if (ultimatumImporter?.enabled) {
+    await ultimatumImporter.review(src);
+    return;
+  }
   // Los ficheros YA están leídos: quien llama entró en «leyendo» antes de leerlos.
   log(txt("recibidos", { n: String(src.size) }));
   analitica.evento(EV.BYO_CARPETA, { ficheros: src.size });
@@ -423,6 +508,22 @@ play.addEventListener("click", () => {
 // para el único caso que existe para resolver.
 const pickerZip = document.getElementById("picker-zip") as HTMLInputElement;
 const viaZip = document.getElementById("via-zip")!;
+
+let ultimatumImporter: UltimatumImportController | undefined;
+ultimatumImporter = mountUltimatumImporter({
+  doc: document,
+  picker,
+  pickerZip,
+  log,
+  onInstalled: async (assets) => {
+    log(txt("extraccionOk", { n: String(assets) }));
+    ve({ k: "listo", assets });
+    await registerSw();
+    play.style.display = "inline-block";
+    play.focus();
+    await refrescaPartidas();
+  },
+});
 
 function pintaViaZip(): void {
   viaZip.textContent = "";
