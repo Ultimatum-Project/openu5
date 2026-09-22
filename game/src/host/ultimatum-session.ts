@@ -138,6 +138,34 @@ export function signLookAction(view: ViewSnapshot, direction: UltimatumU5Directi
   return action?.command === "look" && action.label === "Read sign" ? action : undefined;
 }
 
+/**
+ * Bump-to-interact resolver for Ultima V.
+ *
+ * A deliberate cardinal movement into an adjacent tile that holds an eligible
+ * conversation partner or an unlocked door should express that action instead
+ * of reporting blocked movement. It is the U5 counterpart of the Ultima IV
+ * `MobileAdjacent` resolver: side-effect free, returning the exact context
+ * action an explicit Interact would dispatch so OpenU5's own talk/open rules
+ * run unchanged.
+ *
+ * Conservative by design: world-mode ordinary exploration only; only the exact
+ * attempted destination tile (U5 has no talk-over rule); locked and magic doors
+ * resolve to `jimmy` upstream and are refused here so no key is spent; chests
+ * and other terrain never infer a command.
+ */
+export function bumpActionFor(view: ViewSnapshot, direction: UltimatumU5Direction): UltimatumU5ContextAction | undefined {
+  if (view.mode !== "world") return undefined;
+  if (!view.awaitingCommand || view.awaitingDirection || view.awaitingGetstring) return undefined;
+  const target = DIRECTIONS.find((entry) => entry.direction === direction);
+  if (!target) return undefined;
+  const action = contextualActionAt(view, view.center.x - 5 + target.col, view.center.y - 5 + target.row);
+  if (!action) return undefined;
+  if (action.command === "talk") return action;
+  if (action.command !== "open") return undefined;
+  const name = tileName((view.terrainWindow || view.window)[target.row * 11 + target.col]);
+  return /Door|Portcullis/.test(name) ? action : undefined;
+}
+
 function primaryAction(view: ViewSnapshot): UltimatumU5PrimaryAction {
   const options = contextualActions(view);
   return { label: options.length === 1 ? options[0]!.label : "Interact", enabled: options.length > 0, options };

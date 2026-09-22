@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import type { CoreView, ViewListener, ViewSnapshot } from "../src/skin/api.js";
 import type { UltimatumU5Action, UltimatumU5ContextAction } from "../src/host/ultimatum-session.js";
-import { contextualActionAt, contextualActions, createUltimatumU5SessionBridge, installUltimatumU5SessionBridge, interactionState, signLookAction } from "../src/host/ultimatum-session.js";
+import { bumpActionFor, contextualActionAt, contextualActions, createUltimatumU5SessionBridge, installUltimatumU5SessionBridge, interactionState, signLookAction } from "../src/host/ultimatum-session.js";
 
 const visible = {
   mode: "world",
@@ -185,6 +185,33 @@ describe("Ultimatum U5 session bridge", () => {
     expect(signLookAction(bySign, "east")).toEqual({ id: "look:east", label: "Read sign", command: "look", direction: "east" });
     expect(signLookAction(bySign, "west")).toBeUndefined();
     expect(contextualActions(bySign)).toContainEqual({ id: "look:east", label: "Read sign", command: "look", direction: "east" });
+  });
+
+  it("bumps into an adjacent conversable person to begin talking", () => {
+    const withNpc = { ...visible, actors: [{ id: "npc-1", tile: 336, col: 5, row: 4 }] } as ViewSnapshot;
+    expect(bumpActionFor(withNpc, "north")).toEqual({ id: "talk:north", label: "Talk", command: "talk", direction: "north" });
+    expect(bumpActionFor(withNpc, "south")).toBeUndefined();
+    const twoTilesAway = { ...visible, actors: [{ id: "npc-1", tile: 336, col: 7, row: 5 }] } as ViewSnapshot;
+    expect(bumpActionFor(twoTilesAway, "east")).toBeUndefined();
+  });
+
+  it("bumps an unlocked door open but never a locked door, chest, or empty tile", () => {
+    const terrain = new Int16Array(121);
+    terrain[5 * 11 + 6] = 184; // RegularDoor, immediately east.
+    expect(bumpActionFor({ ...visible, terrainWindow: terrain } as ViewSnapshot, "east")).toEqual({ id: "open:east", label: "Open", command: "open", direction: "east" });
+    for (const tile of [185 /* LockedDoor */, 151 /* MagicLockDoor */, 257 /* Chest */, 0]) {
+      const other = new Int16Array(121);
+      other[5 * 11 + 6] = tile;
+      expect(bumpActionFor({ ...visible, terrainWindow: other } as ViewSnapshot, "east")).toBeUndefined();
+    }
+  });
+
+  it("bumps only during ordinary world exploration", () => {
+    const withNpc = { ...visible, actors: [{ id: "npc-1", tile: 336, col: 5, row: 4 }] } as ViewSnapshot;
+    expect(bumpActionFor({ ...withNpc, mode: "dungeon" } as ViewSnapshot, "north")).toBeUndefined();
+    expect(bumpActionFor({ ...withNpc, mode: "combat" } as ViewSnapshot, "north")).toBeUndefined();
+    expect(bumpActionFor({ ...withNpc, awaitingDirection: true } as ViewSnapshot, "north")).toBeUndefined();
+    expect(bumpActionFor({ ...withNpc, awaitingCommand: false, awaitingGetstring: true } as ViewSnapshot, "north")).toBeUndefined();
   });
 
   it("publishes the engine terrain palette for faithful exploration-map colors", () => {

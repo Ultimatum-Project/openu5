@@ -38,7 +38,7 @@ import { SHOP_CLOSED_MESSAGE, shopIsOpen } from "./core/world/shop-hours.js";
 import type { SmallMapLocation, WorldData } from "./core/world/map.js";
 import type { Direction } from "./core/world/movement.js";
 import type { IntentSink } from "./skin/api.js";
-import { contextualActionAt, installUltimatumU5SessionBridge, signLookAction, type UltimatumU5Action, type UltimatumU5ContextAction, type UltimatumU5Prompt } from "./host/ultimatum-session.js";
+import { bumpActionFor, contextualActionAt, installUltimatumU5SessionBridge, signLookAction, type UltimatumU5Action, type UltimatumU5ContextAction, type UltimatumU5Prompt } from "./host/ultimatum-session.js";
 import { sfxForCombatEvent } from "./core/sfx.js";
 import { CoreViewImpl } from "./skin/coreview.js";
 import { initDebugMenu } from "./debug/index.js";
@@ -6058,6 +6058,13 @@ async function boot(): Promise<void> {
       "new-order": "n", open: "o", push: "p", quit: "q", ready: "r", search: "s",
       talk: "t", use: "u", view: "v", yell: "y", ztats: "z",
     };
+    // Bump interactions are a Controls preference. The host seeds the flag
+    // through the engine URL and may update it live over postMessage.
+    let ultimatumBumpEnabled = bootParams.get("ultimatumBump") !== "0";
+    window.addEventListener("message", (event) => {
+      if (event.origin !== window.location.origin || event.data?.type !== "ultimatum:bump-interactions") return;
+      ultimatumBumpEnabled = event.data.enabled !== false;
+    });
     function ultimatumPromptState(): UltimatumU5Prompt | null {
       const prompt = prompts.current;
       if (!prompt) return null;
@@ -6117,6 +6124,13 @@ async function boot(): Promise<void> {
         if (signAction) {
           dispatchUltimatumContextAction(signAction);
           return;
+        }
+        if (ultimatumBumpEnabled) {
+          const bumpAction = bumpActionFor(view.snapshot(), action.direction);
+          if (bumpAction) {
+            dispatchUltimatumContextAction(bumpAction);
+            return;
+          }
         }
       }
       const key = action.type === "move" ? ultimatumMovementKeys[action.direction]
