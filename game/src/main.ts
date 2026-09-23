@@ -6193,6 +6193,50 @@ async function boot(): Promise<void> {
       cancelTransientInput: cancelAutoWalk,
     });
 
+    // QA-only debug surface for the platform host (`?ultimatumDebug=1`). It
+    // teleports via the real small-map loader and can start the nearest NPC's
+    // conversation, so a reviewer can reach the conversation sheet quickly
+    // without walking. Gated by an explicit boot flag and never a game command.
+    if (bootParams.get("ultimatumDebug") === "1") {
+      const debugWhere = () => ({
+        location: game.state.position.location,
+        floor: game.state.position.floor,
+        x: game.state.position.x,
+        y: game.state.position.y,
+        mode: view.snapshot().mode,
+      });
+      const debugTeleport = (location: number, x?: number, y?: number) => {
+        applyEvents(game.debugTeleport(location, x, y));
+        view.notifyTurn([{ kind: "map-changed" }]);
+        hud.refresh();
+        refreshAwaiting();
+        return debugWhere();
+      };
+      const debugTalkNearest = () => {
+        const { location, floor, x, y } = game.state.position;
+        const candidates = (game.npcManager?.npcsAt(location, floor) ?? [])
+          .filter((npc) => npc.dialogNumber < 0x80)
+          .sort((a, b) => (Math.abs(a.x - x) + Math.abs(a.y - y)) - (Math.abs(b.x - x) + Math.abs(b.y - y)));
+        for (const npc of candidates) {
+          const target = game.talkScriptFor(npc);
+          if (!target) continue;
+          talkConsole.start(target);
+          return { started: true, slot: target.npc.slot, x: target.npc.x, y: target.npc.y };
+        }
+        return { started: false };
+      };
+      (window as unknown as Record<string, unknown>).__u5debug = {
+        where: debugWhere,
+        locations: () => (data.locationNames ?? [])
+          .map((name, index) => ({ id: index <= 12 ? index + 1 : index + 6, name }))
+          .filter((entry) => typeof entry.name === "string" && entry.name.length > 0),
+        teleport: debugTeleport,
+        npcs: () => (game.npcManager?.npcsAt(game.state.position.location, game.state.position.floor) ?? [])
+          .map((npc) => ({ slot: npc.slot, x: npc.x, y: npc.y, type: npc.type, dialog: npc.dialogNumber })),
+        talkNearest: debugTalkNearest,
+      };
+    }
+
     // Registro de pieles y montaje inicial (E1-S1). El core (game/view) no sabe
     // cuál está montada. E1-S8 registrará la piel fiel; F9 alternará en caliente.
     const skins = new SkinManager(parent, view, intents);

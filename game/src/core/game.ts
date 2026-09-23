@@ -6790,6 +6790,24 @@ export class Game {
    * cuenta turno ([bp-2]=1 sin cambiar mapa) → corre el turno del bucle. El default
    * "Enter What?" (0x09ee, [bp-2]=0) y el "Enter what?" de interior no consumen turno.
    */
+  /**
+   * QA-only teleport used by the platform host's `?ultimatumDebug=1` surface.
+   * It reuses the real small-map loader, so NPCs, doors, interior objects, hour
+   * tiles, and Shadowlord placement all match a genuine map change. It is not a
+   * game command and is unreachable without the explicit debug boot flag; it
+   * never consumes extra RNG beyond what `loadSmallMap` already does.
+   */
+  debugTeleport(location: number, x?: number, y?: number): GameEvent[] {
+    const events: GameEvent[] = [];
+    if (!Number.isSafeInteger(location) || location <= 0 || location > 0xff) return events;
+    this.loadSmallMap(location, events);
+    if (Number.isSafeInteger(x) && Number.isSafeInteger(y)) {
+      this.state.position.x = x as number;
+      this.state.position.y = y as number;
+    }
+    return events;
+  }
+
   enter(): GameEvent[] {
     const events: GameEvent[] = [];
     const pos = this.state.position;
