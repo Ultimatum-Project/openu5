@@ -64,6 +64,13 @@ export interface UltimatumU5Conversation {
   source: string | null;
   npc: string | null;
   askedTopics: readonly string[];
+  /**
+   * Temas OFRECIBLES ahora mismo: keywords válidas del NPC que el jugador ha
+   * oído pronunciar (más name/job/work y `bye`). El host los pinta como botones,
+   * de modo que teclear queda sólo para palabras no pronunciadas. Nunca lleva
+   * una keyword del .TLK sin descubrir.
+   */
+  topics: readonly string[];
 }
 
 export const EMPTY_U5_CONVERSATION: UltimatumU5Conversation = Object.freeze({
@@ -71,6 +78,7 @@ export const EMPTY_U5_CONVERSATION: UltimatumU5Conversation = Object.freeze({
   source: null,
   npc: null,
   askedTopics: Object.freeze([]),
+  topics: Object.freeze([]),
 });
 
 const TERRAIN_PALETTE: readonly number[] = Object.freeze(TILE_INFO.map((_info, tile) => defaultTileColor(tile)));

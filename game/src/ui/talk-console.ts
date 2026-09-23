@@ -108,6 +108,14 @@ export class TalkConsole {
   }
 
   /**
+   * Temas que el host puede OFRECER como botones: keywords válidas que el NPC ya
+   * ha pronunciado, más las implícitas y `bye`. Nunca enumera el .TLK entero.
+   */
+  get discoveredTopics(): readonly string[] {
+    return this.conversation?.discoveredTopics ?? [];
+  }
+
+  /**
    * ¿Volcado aparcado esperando tecla? — el keydown de main.ts enruta aquí la PRIMERA
    * tecla (cualquiera vale: el `getkey 0x266c` del KeyWait descarta el retorno, y el
    * bucle del Pause corta con el primer sondeo positivo de 0x5dde). Cubre las DOS

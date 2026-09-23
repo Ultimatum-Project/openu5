@@ -447,6 +447,14 @@ export class Conversation {
    */
   private readonly askedKeys: string[] = [];
   private readonly askedSeen = new Set<string>();
+  /**
+   * Palabras que el NPC (o su descripción) YA ha pronunciado en ESTA
+   * conversación, normalizadas. Es el espejo de `TopicJournal.observe` de
+   * Ultima IV: un tema sólo se OFRECE si el jugador lo ha oído, de modo que
+   * nunca se enumera el .TLK entero ni se revela un tema no descubierto.
+   * Teclear sigue disponible para palabras que no se han pronunciado.
+   */
+  private readonly heardWords = new Set<string>();
 
   private _ended = false;
   private buffer: DialogueOutput[] = [];
@@ -502,6 +510,40 @@ export class Conversation {
   /** Keywords ya preguntadas en esta conversación, en orden de primera consulta. */
   get askedKeywords(): readonly string[] {
     return this.askedKeys;
+  }
+
+  /**
+   * Temas ofrecibles: las keywords válidas del NPC que el jugador ha oído
+   * pronunciar (o que son implícitas: name/job/work), más `bye` al final como
+   * despedida. Es el equivalente U5 de `TopicJournal::choices`: nunca incluye
+   * una keyword del .TLK que no se haya pronunciado.
+   */
+  get discoveredTopics(): readonly string[] {
+    const implicit = new Set(["name", "job", "work"]);
+    const topics: string[] = [];
+    let hasBye = false;
+    for (const raw of this.qaKeys) {
+      const key = raw.toLowerCase();
+      if (key === "bye") { hasBye = true; continue; }
+      if (!implicit.has(key) && !this.wordWasHeard(key)) continue;
+      if (!topics.includes(key)) topics.push(key);
+    }
+    if (hasBye) topics.push("bye");
+    return topics;
+  }
+
+  /** ¿Se oyó la keyword (soporta keywords de varias palabras)? */
+  private wordWasHeard(keyword: string): boolean {
+    return keyword.split(/\s+/).filter(Boolean).every((word) => this.heardWords.has(word));
+  }
+
+  private observeHeard(text: string): void {
+    let word = "";
+    for (const character of text.toLowerCase()) {
+      if (character >= "a" && character <= "z") word += character;
+      else if (word) { this.heardWords.add(word); word = ""; }
+    }
+    if (word) this.heardWords.add(word);
   }
 
   private recordAsked(keyword: string): void {
@@ -648,6 +690,7 @@ export class Conversation {
     this.runeSegs = [];
     if (this.textBuf !== "") rawSegs.push({ text: this.textBuf, rune: this.runeMode });
     const joined = rawSegs.map((s) => s.text).join(""); // == el textBuf histórico
+    this.observeHeard(joined); // temas descubiertos: sólo lo pronunciado (espejo U4)
     const mixed = rawSegs.some((s) => s.rune) && rawSegs.some((s) => !s.rune);
     // tr() POR PIEZA antes de componer comillas/prefijos (C8): así el choke t() de
     // pushConsole (que vería el compuesto entrecomillado y no casaría la key .TLK)

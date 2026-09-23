@@ -6185,7 +6185,7 @@ async function boot(): Promise<void> {
       // interlocutor + keywords YA probadas. Fuera de charla, inactivo.
       conversationState: () =>
         talkConsole.active
-          ? { active: true, source: talkConsole.sourceId, npc: talkConsole.partnerName, askedTopics: talkConsole.askedTopics }
+          ? { active: true, source: talkConsole.sourceId, npc: talkConsole.partnerName, askedTopics: talkConsole.askedTopics, topics: talkConsole.discoveredTopics }
           : null,
       serializeState: () => serialize(game.state),
       validateState: (payload) => { deserialize(payload); },

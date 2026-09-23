@@ -17,7 +17,7 @@ const SCRIPT: TalkScript = {
   bye: [{ kind: "text", text: "Farewell." }],
   qa: [
     { keywords: ["dawn"], answer: [[{ kind: "text", text: "The password." }]] },
-    { keywords: ["item"], answer: [[{ kind: "text", text: "Take this." }]] },
+    { keywords: ["item"], answer: [[{ kind: "text", text: "Seek the dawn." }]] },
   ],
   labels: [],
 };
@@ -41,5 +41,17 @@ describe("Conversation asked topics", () => {
     convo.input("bye");
     expect(convo.askedKeywords).toEqual([]);
     expect(convo.askedKeywords).not.toContain("item");
+  });
+
+  it("offers implicit topics and only keywords the NPC has actually uttered", () => {
+    const convo = new Conversation(SCRIPT, CTX);
+    convo.start();
+    // Implicit topics plus Goodbye are always offered; scripted keywords are not
+    // heard yet, so they stay hidden (U4 TopicJournal behaviour).
+    expect(convo.discoveredTopics).toEqual(["name", "job", "work", "bye"]);
+    expect(convo.discoveredTopics).not.toContain("dawn");
+    // The "item" answer says "Seek the dawn." -> dawn is now discovered.
+    convo.input("item");
+    expect(convo.discoveredTopics).toContain("dawn");
   });
 });
