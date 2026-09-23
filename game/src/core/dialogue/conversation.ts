@@ -112,6 +112,18 @@ export type DialogueOutput =
   | { kind: "effect"; effect: DialogueEffect };
 
 /**
+ * Un tramo HABLADO del NPC ya emitido, para el diario de conversaciones de la
+ * plataforma: el texto (sin las comillas del intérprete) y la keyword que lo
+ * provocó (`topic`), o `null` para el saludo, la autopresentación y demás habla
+ * no ligada a un tema. Es el equivalente U5 de las «passages» que la plataforma
+ * persiste con hablante y lugar.
+ */
+export interface DialoguePassage {
+  text: string;
+  topic: string | null;
+}
+
+/**
  * #364-c — Inserta un texto LATINO en una lista de tramos en el offset `at` (medido
  * sobre la concatenación), partiendo el tramo que lo contenga si hace falta. Mantiene
  * la forma canónica (funde con el tramo latino adyacente). Lo usa `endSpeech` para
@@ -282,6 +294,13 @@ const PROFANITY_KEYWORDS: readonly string[] = [
  * terminador escrito a mano en la quinta posición (0x0edd).
  */
 const ASK_NAME_MATCH_CHARS = 4;
+
+/**
+ * Cota del diario de conversación: el host de plataforma persiste los últimos
+ * tramos hablados de la charla viva (o recién terminada). Basta un puñado para
+ * el diario; un guion largo no puede hacer crecer la instantánea sin límite.
+ */
+const MAX_PASSAGES = 64;
 
 // ─── Utilidades sobre líneas/ítems ───────────────────────────────────────────
 
@@ -455,6 +474,18 @@ export class Conversation {
    * Teclear sigue disponible para palabras que no se han pronunciado.
    */
   private readonly heardWords = new Set<string>();
+  /**
+   * Tema de la línea hablada en curso: la keyword que el jugador acaba de
+   * preguntar (QA del .TLK o sub-pregunta de label). `null` fuera de respuesta,
+   * para que el saludo/descripción no queden etiquetados con un tema ajeno.
+   */
+  private speakingTopic: string | null = null;
+  /**
+   * Líneas ya emitidas por el NPC en ESTA conversación, en orden y con su tema.
+   * El host de plataforma las persiste como diario de conversaciones (hablante,
+   * lugar, tema). Acotado a las últimas `MAX_PASSAGES`.
+   */
+  private readonly passageLog: DialoguePassage[] = [];
 
   private _ended = false;
   private buffer: DialogueOutput[] = [];
@@ -512,6 +543,11 @@ export class Conversation {
     return this.askedKeys;
   }
 
+  /** Líneas habladas por el NPC en esta conversación, con su tema, para el diario. */
+  get passages(): readonly DialoguePassage[] {
+    return this.passageLog;
+  }
+
   /**
    * Temas ofrecibles: las keywords válidas del NPC que el jugador ha oído
    * pronunciar (o que son implícitas: name/job/work), más `bye` al final como
@@ -552,6 +588,12 @@ export class Conversation {
     this.askedKeys.push(keyword);
   }
 
+  /** Guarda una línea hablada del NPC con el tema en curso (diario de plataforma). */
+  private recordPassage(text: string): void {
+    this.passageLog.push({ text, topic: this.speakingTopic });
+    while (this.passageLog.length > MAX_PASSAGES) this.passageLog.shift();
+  }
+
   /** ¿Conoce el NPC al Avatar ahora mismo? (ctx || AskName exitoso). */
   private get npcKnowsAvatar(): boolean {
     return this.knows || this.met;
@@ -571,6 +613,7 @@ export class Conversation {
   input(text: string): DialogueOutput[] {
     this.buffer = [];
     if (this._ended || this.gen === null) return this.buffer;
+    this.speakingTopic = null; // cada respuesta arranca sin tema heredado
     this.gen.next(text);
     return this.buffer;
   }
@@ -683,6 +726,9 @@ export class Conversation {
   }
 
   private flushLine(pause: false | "key" | "timed" = false): void {
+    // La descripción ("You see …") es narración, no habla del NPC: no entra al
+    // diario de conversaciones. Se captura ANTES de consumir el flag.
+    const wasSee = this.pendingSee;
     // #364-c — recoge los TRAMOS de la línea: los cerrados por op "Rune" + el resto de
     // `textBuf` con la fuente vigente. Sin toggles mid-line esto es UN tramo y el camino
     // de abajo reproduce byte a byte el comportamiento por-línea de siempre.
@@ -730,6 +776,9 @@ export class Conversation {
       if (pause) this.emit({ kind: "line", text: "", pause });
       return;
     }
+    // Diario de conversaciones: se registra el texto ANTES de que el intérprete
+    // añada la comilla de apertura/cierre, para guardar la prosa limpia.
+    if (!wasSee) this.recordPassage(text);
     if (this.speechActive && this.speechOpen) {
       // Comilla de APERTURA del discurso (TALK 0x4da). Si el literal ya la trae
       // (`"My name is `, `"I cannot…`), se consume el estado sin duplicarla. El glifo
@@ -880,10 +929,13 @@ export class Conversation {
       this.recordAsked(key);
       const answer = this.qaMap.get(key)!;
       // Respuesta de keyword = HABLADA (TALK 0xbb4 `"` + sección + 0xb8a `"`).
+      const previousTopic = this.speakingTopic;
+      this.speakingTopic = key; // etiqueta del diario para las líneas de esta respuesta
       this.beginSpeech();
       if (isName) this.speechOpen = false; // la comilla ya viaja en el prefijo
       yield* this.processAnswer(answer);
       this.endSpeech();
+      this.speakingTopic = previousTopic;
       if (isName) this.pendingPrefix = ""; // respuesta sin texto: no arrastrar el prefijo
       // La línea Bye lleva un EndConversation implícito (InitScript L303).
       if (key === "bye" && !this._ended) {
@@ -1133,7 +1185,10 @@ export class Conversation {
 
       const key = this.getQuestionKey(response, labelKeys);
       if (key !== undefined) {
+        const previousTopic = this.speakingTopic;
+        this.speakingTopic = key; // etiqueta del diario para la respuesta del label
         const r = yield* this.processSections(splitIntoSections(labelMap.get(key)!));
+        this.speakingTopic = previousTopic;
         if (r.goto !== undefined && !this._ended) {
           next = r.goto;
           continue;

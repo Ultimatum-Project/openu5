@@ -6184,8 +6184,11 @@ async function boot(): Promise<void> {
       // Estado de conversación para la hoja de plataforma: identidad estable del
       // interlocutor + keywords YA probadas. Fuera de charla, inactivo.
       conversationState: () => {
+        // Diario de la charla (viva o recién cerrada): líneas del NPC con su
+        // tema y hablante, para que el host las persista con el lugar.
+        const passages = talkConsole.journal.map((passage) => ({ text: passage.text, topic: passage.topic, source: passage.source, npc: passage.npc }));
         if (talkConsole.active) {
-          return { active: true, kind: "talk" as const, source: talkConsole.sourceId, npc: talkConsole.partnerName, askedTopics: talkConsole.askedTopics, topics: talkConsole.discoveredTopics, options: [] };
+          return { active: true, kind: "talk" as const, source: talkConsole.sourceId, npc: talkConsole.partnerName, askedTopics: talkConsole.askedTopics, topics: talkConsole.discoveredTopics, options: [], passages };
         }
         // A merchant runs the shop console, not the talk console, but it is the
         // same conversation window: expose its current key options as buttons.
@@ -6200,7 +6203,13 @@ async function boot(): Promise<void> {
               ? shop.options.map((option) => ({ id: option.key, label: option.label, keys: [option.key] }))
               : [{ id: "continue", label: "Continue", keys: [" "] }];
           }
-          return { active: true, kind: "shop" as const, source: `shop:${game.state.position.location}:${shop.type}`, npc: shop.type, askedTopics: [], topics: [], options };
+          return { active: true, kind: "shop" as const, source: `shop:${game.state.position.location}:${shop.type}`, npc: shop.type, askedTopics: [], topics: [], options, passages: [] };
+        }
+        // La charla terminó pero su diario sigue vivo: el host lo persiste con
+        // `active:false` antes de que la próxima conversación lo reemplace.
+        if (passages.length > 0) {
+          const owner = passages[0]!;
+          return { active: false, kind: "talk" as const, source: owner.source, npc: owner.npc, askedTopics: [], topics: [], options: [], passages };
         }
         return null;
       },

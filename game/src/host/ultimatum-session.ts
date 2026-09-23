@@ -70,6 +70,19 @@ export interface UltimatumU5ConversationOption {
   keys: readonly string[];
 }
 
+/**
+ * Una línea ya hablada por el NPC, para el diario de conversaciones de la
+ * plataforma. `topic` es la keyword que la provocó (null para saludo o
+ * autopresentación); `source`/`npc` identifican al hablante para que el host
+ * la persista con el lugar y permita buscar «quién dijo qué, dónde y sobre qué».
+ */
+export interface UltimatumU5ConversationPassage {
+  text: string;
+  topic: string | null;
+  source: string | null;
+  npc: string | null;
+}
+
 export interface UltimatumU5Conversation {
   active: boolean;
   /**
@@ -92,6 +105,12 @@ export interface UltimatumU5Conversation {
    * las pulsa en vez de teclear una letra de menú.
    */
   options: readonly UltimatumU5ConversationOption[];
+  /**
+   * Líneas ya pronunciadas por el NPC en la conversación viva, o en la que
+   * acaba de terminar (con `active:false`), para que el host las persista como
+   * diario con hablante, lugar y tema. Aditivo: ignorarlo no cambia nada.
+   */
+  passages: readonly UltimatumU5ConversationPassage[];
 }
 
 export const EMPTY_U5_CONVERSATION: UltimatumU5Conversation = Object.freeze({
@@ -102,6 +121,7 @@ export const EMPTY_U5_CONVERSATION: UltimatumU5Conversation = Object.freeze({
   askedTopics: Object.freeze([]),
   topics: Object.freeze([]),
   options: Object.freeze([]),
+  passages: Object.freeze([]),
 });
 
 const TERRAIN_PALETTE: readonly number[] = Object.freeze(TILE_INFO.map((_info, tile) => defaultTileColor(tile)));

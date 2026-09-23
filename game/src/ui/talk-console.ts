@@ -19,7 +19,7 @@
  * `prompts.current` (PromptManager) y el gate del cursor se re-deriva con
  * `refreshAwaiting` — misma semántica que los closures originales.
  */
-import { Conversation, type DialogueOutput } from "../core/dialogue/conversation.js";
+import { Conversation, type DialogueOutput, type DialoguePassage } from "../core/dialogue/conversation.js";
 import { applyDialogueEffect } from "../core/dialogue/effects.js";
 import { avatarName, partyEffectiveNames } from "../core/party.js";
 import { TALK_UI } from "../core/world/cmd-strings.js";
@@ -63,6 +63,13 @@ export interface TalkConsoleDeps {
 export class TalkConsole {
   private conversation: Conversation | null = null;
   private talkingTo: TalkTarget | null = null;
+  /**
+   * Diario de la conversación recién cerrada y su identidad, para que la
+   * plataforma alcance a persistir las últimas líneas (p. ej. la despedida)
+   * ya con `active:false`. `start()` lo limpia al abrir la siguiente charla.
+   */
+  private lastPassages: readonly DialoguePassage[] = [];
+  private lastIdentity: { source: string | null; npc: string } = { source: null, npc: "" };
   /**
    * VOLCADO APARCADO en una pausa del guion (bug 2, carril talk-celda-paginacion): el
    * resto de outputs pendientes tras una línea con `pause`, + la fase (efectos sí/no) y
@@ -113,6 +120,18 @@ export class TalkConsole {
    */
   get discoveredTopics(): readonly string[] {
     return this.conversation?.discoveredTopics ?? [];
+  }
+
+  /**
+   * Diario de conversación para la plataforma: las líneas habladas por el NPC
+   * (vivas o de la charla recién cerrada) con su tema, hablante e identidad
+   * estable. El host las persiste con el lugar para una búsqueda posterior.
+   */
+  get journal(): readonly (DialoguePassage & { source: string | null; npc: string })[] {
+    const source = this.sourceId ?? this.lastIdentity.source;
+    const npc = this.conversation ? this.npcName() : this.lastIdentity.npc;
+    const passages = this.conversation?.passages ?? this.lastPassages;
+    return passages.map((passage) => ({ ...passage, source, npc }));
   }
 
   /**
@@ -178,6 +197,9 @@ export class TalkConsole {
    */
   private end(): void {
     for (const m of this.deps.game.faulineiTheftOnTalkEnd()) this.deps.hud.message(m);
+    // La charla cierra: se conserva su diario (con la despedida incluida) hasta
+    // que empiece otra, para que la plataforma lo persista con `active:false`.
+    if (this.conversation) this.lastPassages = this.conversation.passages;
     this.conversation = null;
     this.talkingTo = null;
     // Higiene del aparcamiento (bug 2): un cierre con volcado aparcado (no debería
@@ -303,6 +325,9 @@ export class TalkConsole {
   start(target: TalkTarget): void {
     const { game } = this.deps;
     this.talkingTo = target;
+    // Nueva charla: se descarta el diario y la identidad de la anterior.
+    this.lastPassages = [];
+    this.lastIdentity = { source: `${target.npc.location}:${target.npc.slot}`, npc: this.npcName() };
     this.conversation = new Conversation(target.script, {
       // Nombre EFECTIVO (core/party.effectiveName): el binario imprime/compara el
       // registro CRUDO (0x55a8), pero su creación no admite nombre vacío (FONT.OVL
