@@ -6183,10 +6183,27 @@ async function boot(): Promise<void> {
       promptState: ultimatumPromptState,
       // Estado de conversación para la hoja de plataforma: identidad estable del
       // interlocutor + keywords YA probadas. Fuera de charla, inactivo.
-      conversationState: () =>
-        talkConsole.active
-          ? { active: true, source: talkConsole.sourceId, npc: talkConsole.partnerName, askedTopics: talkConsole.askedTopics, topics: talkConsole.discoveredTopics }
-          : null,
+      conversationState: () => {
+        if (talkConsole.active) {
+          return { active: true, kind: "talk" as const, source: talkConsole.sourceId, npc: talkConsole.partnerName, askedTopics: talkConsole.askedTopics, topics: talkConsole.discoveredTopics, options: [] };
+        }
+        // A merchant runs the shop console, not the talk console, but it is the
+        // same conversation window: expose its current key options as buttons.
+        if (shopConsole) {
+          const shop = shopConsole.snapshot();
+          // The key menu's options become buttons. Some phases (the blacksmith's
+          // any-key pause) arm a key with no options: offer Continue so the player
+          // never has to type a letter, while real text prompts stay typeable.
+          let options: { id: string; label: string; keys: string[] }[] = [];
+          if (prompts.current?.type === "shop") {
+            options = shop.options.length
+              ? shop.options.map((option) => ({ id: option.key, label: option.label, keys: [option.key] }))
+              : [{ id: "continue", label: "Continue", keys: [" "] }];
+          }
+          return { active: true, kind: "shop" as const, source: `shop:${game.state.position.location}:${shop.type}`, npc: shop.type, askedTopics: [], topics: [], options };
+        }
+        return null;
+      },
       serializeState: () => serialize(game.state),
       validateState: (payload) => { deserialize(payload); },
       restoreState: (payload) => applyLoadedState(deserialize(payload)),
@@ -6212,19 +6229,38 @@ async function boot(): Promise<void> {
         refreshAwaiting();
         return debugWhere();
       };
-      const debugTalkNearest = () => {
+      // Stand next to the nearest NPC and run the real (T)alk path, so merchants
+      // reach the shop console and guards/possessed reach their handlers exactly
+      // as in play. Uses the first cardinal side that has room for the party.
+      const DEBUG_STEPS = [
+        { direction: "north" as const, dx: 0, dy: -1 },
+        { direction: "south" as const, dx: 0, dy: 1 },
+        { direction: "east" as const, dx: 1, dy: 0 },
+        { direction: "west" as const, dx: -1, dy: 0 },
+      ];
+      // Walk up to an NPC and run the real startTalk. `pick` is the same gate the
+      // game uses, so the QA helper selects a valid target instead of bumping a
+      // neighbour that would answer "Funny, no response!".
+      const debugStartTalk = (mode: "talk" | "shop") => {
         const { location, floor, x, y } = game.state.position;
         const candidates = (game.npcManager?.npcsAt(location, floor) ?? [])
-          .filter((npc) => npc.dialogNumber < 0x80)
+          .filter((npc) => mode === "shop" ? Boolean(SHOP_TYPES[npc.dialogNumber]) : game.talkScriptFor(npc) !== null)
           .sort((a, b) => (Math.abs(a.x - x) + Math.abs(a.y - y)) - (Math.abs(b.x - x) + Math.abs(b.y - y)));
         for (const npc of candidates) {
-          const target = game.talkScriptFor(npc);
-          if (!target) continue;
-          talkConsole.start(target);
-          return { started: true, slot: target.npc.slot, x: target.npc.x, y: target.npc.y };
+          for (const step of DEBUG_STEPS) {
+            game.state.position.x = npc.x - step.dx;
+            game.state.position.y = npc.y - step.dy;
+            view.notifyTurn([{ kind: "map-changed" }]);
+            hud.refresh();
+            refreshAwaiting();
+            startTalk(step.direction);
+            return { started: true, slot: npc.slot, x: npc.x, y: npc.y, direction: step.direction };
+          }
         }
         return { started: false };
       };
+      const debugTalkNearest = () => debugStartTalk("talk");
+      const debugShopNearest = () => debugStartTalk("shop");
       (window as unknown as Record<string, unknown>).__u5debug = {
         where: debugWhere,
         locations: () => (data.locationNames ?? [])
@@ -6234,6 +6270,7 @@ async function boot(): Promise<void> {
         npcs: () => (game.npcManager?.npcsAt(game.state.position.location, game.state.position.floor) ?? [])
           .map((npc) => ({ slot: npc.slot, x: npc.x, y: npc.y, type: npc.type, dialog: npc.dialogNumber })),
         talkNearest: debugTalkNearest,
+        shopNearest: debugShopNearest,
       };
     }
 

@@ -229,11 +229,11 @@ describe("Ultimatum U5 session bridge", () => {
 
   it("publishes an inactive conversation descriptor by default", () => {
     const { bridge } = fixture();
-    expect(bridge.snapshot().conversation).toEqual({ active: false, source: null, npc: null, askedTopics: [], topics: [] });
+    expect(bridge.snapshot().conversation).toEqual({ active: false, kind: "talk", source: null, npc: null, askedTopics: [], topics: [], options: [] });
   });
 
   it("publishes the engine conversation identity and asked topics while talking", () => {
-    const conversation = Object.freeze({ active: true, source: "3:7", npc: "Thrud", askedTopics: Object.freeze(["job", "dawn"]), topics: Object.freeze(["name", "job", "work", "bye"]) });
+    const conversation = Object.freeze({ active: true, kind: "talk" as const, source: "3:7", npc: "Thrud", askedTopics: Object.freeze(["job", "dawn"]), topics: Object.freeze(["name", "job", "work", "bye"]), options: Object.freeze([]) });
     const bridge = createUltimatumU5SessionBridge({
       view: { snapshot: () => visible } as unknown as CoreView,
       dispatchAction: () => undefined,
@@ -244,7 +244,7 @@ describe("Ultimatum U5 session bridge", () => {
       cancelTransientInput: () => undefined,
       conversationState: () => conversation,
     });
-    expect(bridge.snapshot().conversation).toEqual({ active: true, source: "3:7", npc: "Thrud", askedTopics: ["job", "dawn"], topics: ["name", "job", "work", "bye"] });
+    expect(bridge.snapshot().conversation).toEqual({ active: true, kind: "talk", source: "3:7", npc: "Thrud", askedTopics: ["job", "dawn"], topics: ["name", "job", "work", "bye"], options: [] });
   });
 
   it("identifies a visible tapped interaction target without inventing a direction", () => {

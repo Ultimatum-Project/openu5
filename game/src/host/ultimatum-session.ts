@@ -59,8 +59,24 @@ export interface UltimatumU5InteractionState {
  * descubiertos). La plataforma acumula esas keywords por `source` para
  * autocompletar y sugerir temas sin espiar el guion.
  */
+/**
+ * Un botón de conversación que no es una keyword hablada: la opción de una
+ * tienda (Buy/Sell/Yes/No…). El host lo pinta y despacha sus `keys` como
+ * pulsaciones, igual que la opción equivalente del menú de tienda.
+ */
+export interface UltimatumU5ConversationOption {
+  id: string;
+  label: string;
+  keys: readonly string[];
+}
+
 export interface UltimatumU5Conversation {
   active: boolean;
+  /**
+   * "talk" para una conversación TLK (mercaderes NO: van por "shop"), "shop"
+   * para la consola de tienda, que también se presenta en la misma ventana.
+   */
+  kind: "talk" | "shop";
   source: string | null;
   npc: string | null;
   askedTopics: readonly string[];
@@ -71,14 +87,21 @@ export interface UltimatumU5Conversation {
    * una keyword del .TLK sin descubrir.
    */
   topics: readonly string[];
+  /**
+   * Opciones de la consola de tienda vigentes (vacío en una charla). El jugador
+   * las pulsa en vez de teclear una letra de menú.
+   */
+  options: readonly UltimatumU5ConversationOption[];
 }
 
 export const EMPTY_U5_CONVERSATION: UltimatumU5Conversation = Object.freeze({
   active: false,
+  kind: "talk",
   source: null,
   npc: null,
   askedTopics: Object.freeze([]),
   topics: Object.freeze([]),
+  options: Object.freeze([]),
 });
 
 const TERRAIN_PALETTE: readonly number[] = Object.freeze(TILE_INFO.map((_info, tile) => defaultTileColor(tile)));
