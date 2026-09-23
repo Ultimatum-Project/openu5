@@ -123,6 +123,14 @@ export class TalkConsole {
   }
 
   /**
+   * Palabra completa que reveló cada keyword ofrecible (p. ej. «abbey» para la
+   * abreviatura «abbe»), para que el botón muestre lo que el NPC dijo.
+   */
+  get topicLabels(): Readonly<Record<string, string>> {
+    return this.conversation?.topicLabels ?? {};
+  }
+
+  /**
    * Diario de conversación para la plataforma: las líneas habladas por el NPC
    * (vivas o de la charla recién cerrada) con su tema, hablante e identidad
    * estable. El host las persiste con el lugar para una búsqueda posterior.

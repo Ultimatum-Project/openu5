@@ -101,6 +101,12 @@ export interface UltimatumU5Conversation {
    */
   topics: readonly string[];
   /**
+   * Palabra completa que reveló cada keyword ofrecible (keyword normalizada ->
+   * término oído, p. ej. `abbe` -> `abbey`). El host la pinta en el botón en vez
+   * de la abreviatura del .TLK. Aditivo: vacío cuando no hay etiqueta mejor.
+   */
+  topicLabels: Readonly<Record<string, string>>;
+  /**
    * Opciones de la consola de tienda vigentes (vacío en una charla). El jugador
    * las pulsa en vez de teclear una letra de menú.
    */
@@ -120,6 +126,7 @@ export const EMPTY_U5_CONVERSATION: UltimatumU5Conversation = Object.freeze({
   npc: null,
   askedTopics: Object.freeze([]),
   topics: Object.freeze([]),
+  topicLabels: Object.freeze({}),
   options: Object.freeze([]),
   passages: Object.freeze([]),
 });

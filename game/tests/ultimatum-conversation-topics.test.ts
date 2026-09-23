@@ -55,3 +55,52 @@ describe("Conversation asked topics", () => {
     expect(convo.discoveredTopics).toContain("dawn");
   });
 });
+
+// U4's `TopicJournal::matches`: a four-letter .TLK abbreviation (ABBE) is
+// revealed by the full word the NPC says (ABBEY); longer keywords need the
+// whole word (HUMILITY is not revealed by HUMID).
+const ABBEY_SCRIPT: TalkScript = {
+  npcIndex: 0,
+  name: [{ kind: "text", text: "Tester" }],
+  description: [{ kind: "text", text: "a synthetic subject" }],
+  greeting: [{ kind: "text", text: "Welcome to Empath Abbey." }],
+  job: [{ kind: "text", text: "I keep the abbey." }],
+  bye: [{ kind: "text", text: "Farewell." }],
+  qa: [
+    { keywords: ["abbe"], answer: [[{ kind: "text", text: "Empath Abbey!" }]] },
+    { keywords: ["humility"], answer: [[{ kind: "text", text: "The shrine of Humility." }]] },
+  ],
+  labels: [],
+};
+
+// A known NPC emits its greeting; an unknown one emits the self-introduction.
+const KNOWN_CTX = { avatarName: "Avatar", npcKnowsAvatar: true };
+
+describe("Conversation topic discovery and labels", () => {
+  it("reveals a four-letter keyword from the full word the NPC said", () => {
+    const convo = new Conversation(ABBEY_SCRIPT, KNOWN_CTX);
+    convo.start();
+    // The greeting says "Abbey" -> the ABBE keyword is now offered, labelled
+    // with the whole word the NPC used.
+    expect(convo.discoveredTopics).toContain("abbe");
+    expect(convo.labelFor("abbe")).toBe("abbey");
+    expect(convo.topicLabels).toEqual({ abbe: "abbey" });
+  });
+
+  it("requires the whole word for keywords that are not four letters", () => {
+    const convo = new Conversation(ABBEY_SCRIPT, KNOWN_CTX);
+    convo.start();
+    // "Humility" was never said (only the greeting's "Abbey" was), so the
+    // longer keyword stays hidden even though it appears in the script.
+    expect(convo.discoveredTopics).not.toContain("humility");
+    expect(convo.labelFor("humility")).toBe("");
+  });
+
+  it("labels the abbreviation with the heard word even after asking", () => {
+    const convo = new Conversation(ABBEY_SCRIPT, KNOWN_CTX);
+    convo.start();
+    convo.input("abbe");
+    expect(convo.askedKeywords).toEqual(["abbe"]);
+    expect(convo.labelFor("abbe")).toBe("abbey");
+  });
+});

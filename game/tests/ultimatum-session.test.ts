@@ -229,11 +229,11 @@ describe("Ultimatum U5 session bridge", () => {
 
   it("publishes an inactive conversation descriptor by default", () => {
     const { bridge } = fixture();
-    expect(bridge.snapshot().conversation).toEqual({ active: false, kind: "talk", source: null, npc: null, askedTopics: [], topics: [], options: [], passages: [] });
+    expect(bridge.snapshot().conversation).toEqual({ active: false, kind: "talk", source: null, npc: null, askedTopics: [], topics: [], topicLabels: {}, options: [], passages: [] });
   });
 
   it("publishes the engine conversation identity and asked topics while talking", () => {
-    const conversation = Object.freeze({ active: true, kind: "talk" as const, source: "3:7", npc: "Thrud", askedTopics: Object.freeze(["job", "dawn"]), topics: Object.freeze(["name", "job", "work", "bye"]), options: Object.freeze([]), passages: Object.freeze([{ text: "I test the bridge.", topic: "job", source: "3:7", npc: "Thrud" }]) });
+    const conversation = Object.freeze({ active: true, kind: "talk" as const, source: "3:7", npc: "Thrud", askedTopics: Object.freeze(["job", "dawn"]), topics: Object.freeze(["name", "job", "work", "bye"]), topicLabels: Object.freeze({ abbe: "abbey" }), options: Object.freeze([]), passages: Object.freeze([{ text: "I test the bridge.", topic: "job", source: "3:7", npc: "Thrud" }]) });
     const bridge = createUltimatumU5SessionBridge({
       view: { snapshot: () => visible } as unknown as CoreView,
       dispatchAction: () => undefined,
@@ -244,7 +244,7 @@ describe("Ultimatum U5 session bridge", () => {
       cancelTransientInput: () => undefined,
       conversationState: () => conversation,
     });
-    expect(bridge.snapshot().conversation).toEqual({ active: true, kind: "talk", source: "3:7", npc: "Thrud", askedTopics: ["job", "dawn"], topics: ["name", "job", "work", "bye"], options: [], passages: [{ text: "I test the bridge.", topic: "job", source: "3:7", npc: "Thrud" }] });
+    expect(bridge.snapshot().conversation).toEqual({ active: true, kind: "talk", source: "3:7", npc: "Thrud", askedTopics: ["job", "dawn"], topics: ["name", "job", "work", "bye"], topicLabels: { abbe: "abbey" }, options: [], passages: [{ text: "I test the bridge.", topic: "job", source: "3:7", npc: "Thrud" }] });
   });
 
   it("identifies a visible tapped interaction target without inventing a direction", () => {

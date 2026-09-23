@@ -368,6 +368,20 @@ function keywordMatches(input: string, keyword: string): boolean {
   return idx === 0 || input.charCodeAt(idx - 1) === 0x20; // 0b5b / 0b5f: frontera
 }
 
+/**
+ * ¿La palabra PRONUNCIADA por el NPC `word` revela la keyword `keyword`? Espejo
+ * de `TopicJournal::matches` de Ultima IV (topicjournal.cpp L14-21): las keywords
+ * de CUATRO letras —la abreviatura del .TLK («ABBE»)— se revelan por prefijo de
+ * cuatro, así el NPC que dice «Abbey» descubre ABBE; las de otra longitud exigen
+ * la palabra COMPLETA, para no descubrir «humility» al leer «humid» ni «job» al
+ * leer «jobless». Ambas entradas ya van normalizadas a minúsculas.
+ */
+export function wordRevealsKeyword(word: string, keyword: string): boolean {
+  return keyword.length === 4
+    ? word.length >= 4 && word.slice(0, 4) === keyword
+    : word === keyword;
+}
+
 function lineContainsOp(line: ScriptLine, op: string): boolean {
   return line.some((it) => it.kind === "op" && it.op === op);
 }
@@ -568,9 +582,48 @@ export class Conversation {
     return topics;
   }
 
-  /** ¿Se oyó la keyword (soporta keywords de varias palabras)? */
+  /**
+   * ¿Se oyó la keyword? Cada palabra de la keyword debe quedar revelada por
+   * alguna palabra pronunciada, con la regla U4 de `wordRevealsKeyword`
+   * (ABBEY revela ABBE; HUMID no revela HUMILITY). Soporta keywords de varias
+   * palabras (p. ej. «an ylem»).
+   */
   private wordWasHeard(keyword: string): boolean {
-    return keyword.split(/\s+/).filter(Boolean).every((word) => this.heardWords.has(word));
+    const parts = keyword.toLowerCase().split(/\s+/).filter(Boolean);
+    if (parts.length === 0) return false;
+    return parts.every((part) => {
+      for (const word of this.heardWords) if (wordRevealsKeyword(word, part)) return true;
+      return false;
+    });
+  }
+
+  /**
+   * Palabra COMPLETA que reveló la keyword (p. ej. «abbey» para «abbe»), para
+   * que la plataforma muestre el término que el NPC dijo en vez de la
+   * abreviatura del .TLK. Vacío si el NPC aún no la ha pronunciado.
+   */
+  labelFor(keyword: string): string {
+    const key = keyword.toLowerCase().trim().replace(/\s+/g, "");
+    if (key.length === 0) return "";
+    for (const word of this.heardWords) if (wordRevealsKeyword(word, key)) return word;
+    return "";
+  }
+
+  /**
+   * Etiquetas de los temas ya ofrecibles o preguntados (keyword normalizada ->
+   * palabra completa oída). Sólo para keywords no implícitas: Name/Job/Work/
+   * Goodbye tienen su etiqueta fija en la plataforma. Nunca enumera el .TLK.
+   */
+  get topicLabels(): Readonly<Record<string, string>> {
+    const labels: Record<string, string> = {};
+    const implicit = new Set(["name", "job", "work", "bye"]);
+    for (const raw of [...this.discoveredTopics, ...this.askedKeys]) {
+      const key = raw.toLowerCase();
+      if (implicit.has(key) || labels[key]) continue;
+      const label = this.labelFor(key);
+      if (label && label !== key) labels[key] = label;
+    }
+    return labels;
   }
 
   private observeHeard(text: string): void {
