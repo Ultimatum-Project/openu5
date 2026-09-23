@@ -227,6 +227,26 @@ describe("Ultimatum U5 session bridge", () => {
     expect(bridge.snapshot().terrainPalette[5]).toBe(0x2e7d32);
   });
 
+  it("publishes an inactive conversation descriptor by default", () => {
+    const { bridge } = fixture();
+    expect(bridge.snapshot().conversation).toEqual({ active: false, source: null, npc: null, askedTopics: [] });
+  });
+
+  it("publishes the engine conversation identity and asked topics while talking", () => {
+    const conversation = Object.freeze({ active: true, source: "3:7", npc: "Thrud", askedTopics: Object.freeze(["job", "dawn"]) });
+    const bridge = createUltimatumU5SessionBridge({
+      view: { snapshot: () => visible } as unknown as CoreView,
+      dispatchAction: () => undefined,
+      dispatchContextAction: () => undefined,
+      serializeState: () => "{}",
+      validateState: () => undefined,
+      restoreState: () => undefined,
+      cancelTransientInput: () => undefined,
+      conversationState: () => conversation,
+    });
+    expect(bridge.snapshot().conversation).toEqual({ active: true, source: "3:7", npc: "Thrud", askedTopics: ["job", "dawn"] });
+  });
+
   it("identifies a visible tapped interaction target without inventing a direction", () => {
     const withNpc = { ...visible, actors: [{ id: "npc-1", tile: 336, col: 8, row: 5 }] } as ViewSnapshot;
     expect(contextualActionAt(withNpc, 13, 20)).toEqual({ id: "talk:here", label: "Talk", command: "talk" });

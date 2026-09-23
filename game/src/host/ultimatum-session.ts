@@ -49,6 +49,30 @@ export interface UltimatumU5InteractionState {
   primaryAction: UltimatumU5PrimaryAction;
 }
 
+/**
+ * Estado de conversación resuelto por el motor, para la hoja de conversación de
+ * la plataforma. Es ADITIVO al contrato v5: un host que lo ignore sigue igual.
+ *
+ * `source` es la identidad estable del interlocutor y `npc` su nombre mostrado;
+ * `askedTopics` son sólo las keywords que el jugador YA ha probado en ESTA
+ * conversación, nunca el catálogo .TLK completo (eso revelaría temas no
+ * descubiertos). La plataforma acumula esas keywords por `source` para
+ * autocompletar y sugerir temas sin espiar el guion.
+ */
+export interface UltimatumU5Conversation {
+  active: boolean;
+  source: string | null;
+  npc: string | null;
+  askedTopics: readonly string[];
+}
+
+export const EMPTY_U5_CONVERSATION: UltimatumU5Conversation = Object.freeze({
+  active: false,
+  source: null,
+  npc: null,
+  askedTopics: Object.freeze([]),
+});
+
 const TERRAIN_PALETTE: readonly number[] = Object.freeze(TILE_INFO.map((_info, tile) => defaultTileColor(tile)));
 
 export type UltimatumU5Action =
@@ -207,6 +231,7 @@ export interface UltimatumU5Snapshot {
   lifecycle: "running" | "paused" | "stopped";
   view: ViewSnapshot;
   interaction: UltimatumU5InteractionState;
+  conversation: UltimatumU5Conversation;
   terrainPalette: readonly number[];
 }
 
@@ -240,6 +265,7 @@ export interface UltimatumU5SessionDependencies {
   restoreState(payload: string): void;
   cancelTransientInput(): void;
   promptState?(): UltimatumU5Prompt | null;
+  conversationState?(): UltimatumU5Conversation | null;
   onShutdown?(): void;
 }
 
@@ -254,7 +280,7 @@ export function createUltimatumU5SessionBridge(
 
   const snapshot = (): UltimatumU5Snapshot => {
     const view = deps.view.snapshot();
-    return { contractVersion: ULTIMATUM_U5_SESSION_CONTRACT, revision, lastSequence, lifecycle, view, interaction: interactionState(view, lifecycle, deps.promptState?.()), terrainPalette: TERRAIN_PALETTE };
+    return { contractVersion: ULTIMATUM_U5_SESSION_CONTRACT, revision, lastSequence, lifecycle, view, interaction: interactionState(view, lifecycle, deps.promptState?.()), conversation: deps.conversationState?.() ?? EMPTY_U5_CONVERSATION, terrainPalette: TERRAIN_PALETTE };
   };
 
   const publishViewChange = (): void => {

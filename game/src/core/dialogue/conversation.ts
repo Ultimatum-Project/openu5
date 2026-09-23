@@ -438,6 +438,15 @@ export class Conversation {
   private knows: boolean;
   /** true si AskName ha reconocido al Avatar durante ESTA conversación. */
   private met = false;
+  /**
+   * Keywords YA preguntadas por el jugador en ESTA conversación (rama "Your
+   * interest?"), en orden de primera consulta. Es la señal que el host de
+   * plataforma consume para la ayuda de temas descubiertos: NUNCA enumera el
+   * .TLK entero (eso revelaría temas no descubiertos), sólo lo que el jugador
+   * ya ha probado. `bye` se excluye porque cierra la charla.
+   */
+  private readonly askedKeys: string[] = [];
+  private readonly askedSeen = new Set<string>();
 
   private _ended = false;
   private buffer: DialogueOutput[] = [];
@@ -488,6 +497,17 @@ export class Conversation {
   /** true si el NPC ha llegado a conocer al Avatar en esta conversación. */
   get metAvatar(): boolean {
     return this.met;
+  }
+
+  /** Keywords ya preguntadas en esta conversación, en orden de primera consulta. */
+  get askedKeywords(): readonly string[] {
+    return this.askedKeys;
+  }
+
+  private recordAsked(keyword: string): void {
+    if (keyword === "bye" || this.askedSeen.has(keyword)) return;
+    this.askedSeen.add(keyword);
+    this.askedKeys.push(keyword);
   }
 
   /** ¿Conoce el NPC al Avatar ahora mismo? (ctx || AskName exitoso). */
@@ -814,6 +834,7 @@ export class Conversation {
 
     const key = this.getQuestionKey(response, this.qaKeys);
     if (key !== undefined) {
+      this.recordAsked(key);
       const answer = this.qaMap.get(key)!;
       // Respuesta de keyword = HABLADA (TALK 0xbb4 `"` + sección + 0xb8a `"`).
       this.beginSpeech();

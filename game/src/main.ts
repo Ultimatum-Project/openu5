@@ -6181,6 +6181,12 @@ async function boot(): Promise<void> {
       dispatchAction: dispatchUltimatumAction,
       dispatchContextAction: dispatchUltimatumContextAction,
       promptState: ultimatumPromptState,
+      // Estado de conversación para la hoja de plataforma: identidad estable del
+      // interlocutor + keywords YA probadas. Fuera de charla, inactivo.
+      conversationState: () =>
+        talkConsole.active
+          ? { active: true, source: talkConsole.sourceId, npc: talkConsole.partnerName, askedTopics: talkConsole.askedTopics }
+          : null,
       serializeState: () => serialize(game.state),
       validateState: (payload) => { deserialize(payload); },
       restoreState: (payload) => applyLoadedState(deserialize(payload)),

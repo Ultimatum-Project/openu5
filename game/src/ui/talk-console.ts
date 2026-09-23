@@ -85,6 +85,29 @@ export class TalkConsole {
   }
 
   /**
+   * Identidad ESTABLE del interlocutor vivo (`location:slot`), o null fuera de
+   * charla. El host de plataforma la usa como clave del diario de temas
+   * descubiertos: sobrevive al guardado y no depende del nombre mostrado.
+   */
+  get sourceId(): string | null {
+    const npc = this.talkingTo?.npc;
+    return npc ? `${npc.location}:${npc.slot}` : null;
+  }
+
+  /** Nombre mostrado del interlocutor vivo (vacío fuera de charla). */
+  get partnerName(): string {
+    return this.npcName();
+  }
+
+  /**
+   * Keywords ya preguntadas en ESTA conversación, en orden. Read-only; el host
+   * las acumula por interlocutor para las sugerencias de temas descubiertos.
+   */
+  get askedTopics(): readonly string[] {
+    return this.conversation?.askedKeywords ?? [];
+  }
+
+  /**
    * ¿Volcado aparcado esperando tecla? — el keydown de main.ts enruta aquí la PRIMERA
    * tecla (cualquiera vale: el `getkey 0x266c` del KeyWait descarta el retorno, y el
    * bucle del Pause corta con el primer sondeo positivo de 0x5dde). Cubre las DOS
