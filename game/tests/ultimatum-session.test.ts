@@ -195,11 +195,19 @@ describe("Ultimatum U5 session bridge", () => {
     expect(bumpActionFor(twoTilesAway, "east")).toBeUndefined();
   });
 
-  it("bumps an unlocked door open but never a locked door, chest, or empty tile", () => {
-    const terrain = new Int16Array(121);
-    terrain[5 * 11 + 6] = 184; // RegularDoor, immediately east.
-    expect(bumpActionFor({ ...visible, terrainWindow: terrain } as ViewSnapshot, "east")).toEqual({ id: "open:east", label: "Open", command: "open", direction: "east" });
-    for (const tile of [185 /* LockedDoor */, 151 /* MagicLockDoor */, 257 /* Chest */, 0]) {
+  it("bumps an unlocked door open and reports a locked door without spending a key", () => {
+    const unlocked = new Int16Array(121);
+    unlocked[5 * 11 + 6] = 184; // RegularDoor, immediately east.
+    expect(bumpActionFor({ ...visible, terrainWindow: unlocked } as ViewSnapshot, "east")).toEqual({ id: "open:east", label: "Open", command: "open", direction: "east" });
+    for (const tile of [185 /* LockedDoor */, 151 /* MagicLockDoor */]) {
+      const locked = new Int16Array(121);
+      locked[5 * 11 + 6] = tile;
+      expect(bumpActionFor({ ...visible, terrainWindow: locked } as ViewSnapshot, "east")).toEqual({ id: "locked:east", label: "Locked door", command: "open", direction: "east" });
+    }
+  });
+
+  it("never bumps a chest or an empty tile", () => {
+    for (const tile of [257 /* Chest */, 0]) {
       const other = new Int16Array(121);
       other[5 * 11 + 6] = tile;
       expect(bumpActionFor({ ...visible, terrainWindow: other } as ViewSnapshot, "east")).toBeUndefined();

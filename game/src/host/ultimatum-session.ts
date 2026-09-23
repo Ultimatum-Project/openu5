@@ -149,9 +149,9 @@ export function signLookAction(view: ViewSnapshot, direction: UltimatumU5Directi
  * run unchanged.
  *
  * Conservative by design: world-mode ordinary exploration only; only the exact
- * attempted destination tile (U5 has no talk-over rule); locked and magic doors
- * resolve to `jimmy` upstream and are refused here so no key is spent; chests
- * and other terrain never infer a command.
+ * attempted destination tile (U5 has no talk-over rule); a locked or magic door
+ * reuses the engine's Open so it reports "Locked!" without spending a key;
+ * chests and other terrain never infer a command.
  */
 export function bumpActionFor(view: ViewSnapshot, direction: UltimatumU5Direction): UltimatumU5ContextAction | undefined {
   if (view.mode !== "world") return undefined;
@@ -161,9 +161,15 @@ export function bumpActionFor(view: ViewSnapshot, direction: UltimatumU5Directio
   const action = contextualActionAt(view, view.center.x - 5 + target.col, view.center.y - 5 + target.row);
   if (!action) return undefined;
   if (action.command === "talk") return action;
-  if (action.command !== "open") return undefined;
   const name = tileName((view.terrainWindow || view.window)[target.row * 11 + target.col]);
-  return /Door|Portcullis/.test(name) ? action : undefined;
+  if (!/Door|Portcullis/.test(name)) return undefined;
+  if (action.command === "open") return action;
+  // A locked or magic door resolves to Jimmy upstream. Bump must not spend a key,
+  // so it reuses the engine's Open instead: OpenU5 reports "Locked!" without
+  // consuming a key or a turn, giving the locked-door notice rather than the
+  // generic blocked message.
+  if (action.command === "jimmy") return { id: `locked:${direction}`, label: "Locked door", command: "open", direction };
+  return undefined;
 }
 
 function primaryAction(view: ViewSnapshot): UltimatumU5PrimaryAction {
