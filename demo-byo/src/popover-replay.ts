@@ -117,7 +117,7 @@ export function abreReplay(id: string, label: string): void {
   const marco = document.createElement("iframe");
   marco.className = "replay-modal__juego";
   marco.title = label;
-  marco.src = `/play.html?embed=1&nointro&replay=${encodeURIComponent(id)}`;
+  marco.src = `/games/ultima5/engine.html?embed=1&nointro&replay=${encodeURIComponent(id)}`;
   marco.addEventListener("load", () => cargando.remove());
 
   dlg.append(barra, cargando, marco);

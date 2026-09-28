@@ -227,7 +227,7 @@ async function unIntentoDeShot(id: string): Promise<boolean> {
     "position:fixed;left:0;top:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;z-index:-1";
   jaula.appendChild(marco);
   const q = encodeURIComponent(id);
-  marco.src = `/play.html?save=${q}&shot=${q}&embed=1&nointro`;
+  marco.src = `/games/ultima5/engine.html?save=${q}&shot=${q}&embed=1&nointro`;
 
   let alMensaje: ((e: MessageEvent) => void) | null = null;
   try {
